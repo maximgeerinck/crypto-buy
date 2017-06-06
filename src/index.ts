@@ -4,6 +4,8 @@ import * as schedule from 'node-schedule';
 import * as moment from 'moment';
 import ETH from './models/eth';
 
+import {createServer} from './server';
+
 // to support
 // http://coinmarketcap.com/currencies/ripple/#charts
 // http://coinmarketcap.com/currencies/btc/#charts
@@ -29,5 +31,12 @@ const fetchPrice = async () => {
 // execute every 5min
 const cronFetchPrice = schedule.scheduleJob('*/5 * * * *', () => {
     console.log(`${moment.now()}: fetching...`);
-    fetchPrice();
+    fetchPrice(); 
+});
+
+createServer(5000, '0.0.0.0').then(server => {
+    server.start((err) => {
+        if(err) throw err;
+        console.log('Server running at: ', server.info.uri);
+    });
 });

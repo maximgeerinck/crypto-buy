@@ -1,4 +1,5 @@
 build/
+src/config/app_dev.json
 
 ### Node ###
 # Logs
