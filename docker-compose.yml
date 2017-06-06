@@ -1,0 +1,19 @@
+version: '2'
+services:
+  mongo:
+    image: mongo
+    volumes:
+      - volume_database:/data/db
+  app:
+    build:
+      context: .
+    ports: ["5000:5000"]
+    depends_on:      
+      - mongo
+    environment:
+      - NODE_ENV=production      
+
+
+volumes:
+  volume_database:
+    external: true

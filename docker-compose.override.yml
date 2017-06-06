@@ -1,0 +1,14 @@
+version: '2'
+services:
+  app:
+    command: npm run dev
+    volumes:
+      - ./src:/usr/crypto_buy/src
+      - ./package.json:/usr/crypto_buy/package.json            
+    environment:      
+      - NODE_ENV=dev
+
+  mongo:
+    environment:
+      - "MONGO_PORT_27017_TCP_ADDR:0.0.0.0"
+    ports: ["27017:27017"]
