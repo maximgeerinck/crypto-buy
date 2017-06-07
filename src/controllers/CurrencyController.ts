@@ -1,4 +1,4 @@
-import eth from '../models/eth';
+import Currency from '../models/Currency';
 import * as Hapi from "hapi";
 
 class CurrencyController {
@@ -6,8 +6,8 @@ class CurrencyController {
 
         const limit = req.params.limit;
 
-        eth.find({})
-            .select('created_on symbol name supply change price.usd price.eur volume.usd volume.eur market_cap.usd market_cap.eur')
+        Currency.find({})
+            .select('currencies.id currencies.name currencies.symbol currencies.price.usd currencies.change')
             .sort({created_on: -1})
             .limit(parseInt(limit))
             .then(currencies => {
