@@ -2,16 +2,24 @@ version: '2'
 services:
   mongo:
     image: mongo
+    environment:
+      - "MONGO_PORT_27017_TCP_ADDR:0.0.0.0"
+    ports: ["27017:27017"]
     volumes:
       - volume_database:/data/db
   app:
     build:
-      context: .
+      context: ./backend
     ports: ["5000:5000"]
     depends_on:      
       - mongo
     environment:
-      - NODE_ENV=production      
+      - NODE_ENV=production     
+
+
+  frontend:
+    build:
+      context: ./frontend
 
 
 volumes:

@@ -3,13 +3,19 @@ services:
   app:
     command: npm run dev
     volumes:
-      - ./src:/usr/crypto_buy/src
-      - ./src/config/app_dev.json:/usr/crypto_buy/build/config/app_dev.json:ro
-      - ./package.json:/usr/crypto_buy/package.json            
+      - ./backend/src:/usr/crypto_buy/src
+      - ./backend/src/config/app_dev.json:/usr/crypto_buy/build/config/app_dev.json:ro
+      - ./backend/package.json:/usr/crypto_buy/package.json            
     environment:      
       - NODE_ENV=dev
 
-  mongo:
-    environment:
-      - "MONGO_PORT_27017_TCP_ADDR:0.0.0.0"
-    ports: ["27017:27017"]
+  # frontend:
+  #   command: npm run dev
+  #   volumes:
+  #     - ./frontend/config:/usr/crypto_buy/frontend/config
+  #     - ./frontend/public:/usr/crypto_buy/frontend/public
+  #     - ./frontend/scripts:/usr/crypto_buy/frontend/scripts
+  #     - ./frontend/src:/usr/crypto_buy/frontend/src
+  #     - ./frontend/package.json:/usr/crypto_buy/frontend/package.json
+  #     - ./frontend/webpack.config.json:/usr/crypto_buy/frontend/webpack.config.json
+  #     - ./frontend/frontend.json:/usr/crypto_buy/frontend/frontend.json

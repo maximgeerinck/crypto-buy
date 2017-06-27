@@ -1,0 +1,36 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-height: 100vh;
+    padding: 15vh 100px 0;
+    box-sizing: border-box;
+    h1 {
+        font-size: 40pt;
+        text-align: center;
+        color: white;
+        text-transform: uppercase;
+        text-shadow: 0 2px black;
+    }
+}
+
+.content {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 100px;
+    min-height: 5vh;
+}
+
+.focused {
+    width: 100%;
+    margin: 0 auto;
+    min-height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+    padding: 15vh 35% 0;
+    .container {
+        background: rgba(0, 0, 0, 0.24);
+        color: white;
+        padding: 20px;
+        text-align: center;
+    }
+}
