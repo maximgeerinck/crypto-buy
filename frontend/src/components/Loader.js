@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import style from './loader.scss';
-import cx from 'classnames';
 import PropTypes from 'prop-types';
 
 class Loader extends Component {

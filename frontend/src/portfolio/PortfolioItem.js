@@ -1,71 +1,81 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import cx from 'classnames';
-import Loader from '../components/Loader';
-
 import styles from './portfolio.scss';
-
-const round = (number, digits) => parseFloat(Math.round(number * 100) / 100).toFixed(digits);
+import { MdEdit, MdDelete } from 'react-icons/lib/md';
+import PropTypes from 'prop-types';
+import PortfolioItemEditForm from './PortfolioItemEditForm';
 
 class PortfolioItem extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      editMode: false
+    };
+  }
+
+  onEdit = item => {
+    this.props.onEdit(item);
+    this.setState({ editMode: false });
+  };
+
   render() {
-    const { name, symbol, changeHour, changeDay, changeWeek, changeTotal, price, amount } = this.props;
-
-    const loader = this.props.isUpdating ? <Loader className={styles.loader} color="#848484" /> : null;
-
-    const classChangeHour = changeHour > 0 ? styles.positive : styles.negative;
-    const classChangeDay = changeDay > 0 ? styles.positive : styles.negative;
-    const classChangeWeek = changeWeek > 0 ? styles.positive : styles.negative;
-    const classChangeTotal = changeTotal > 0
-      ? cx(styles.changeTotal, styles.positive)
-      : cx(styles.changeTotal, styles.negative);
+    const { id, symbol, amount, boughtPrice, source, boughtAt, onDelete } = this.props;
+    if (this.state.editMode) {
+      return (
+        <div className={styles.item}>
+          <PortfolioItemEditForm
+            id={id}
+            symbol={symbol}
+            amount={amount}
+            boughtPrice={boughtPrice}
+            source={source}
+            boughtAt={boughtAt}
+            onCancel={() => this.setState({ editMode: false })}
+            onSave={this.onEdit}
+          />
+        </div>
+      );
+    }
 
     return (
-      <div className={styles.portfolioItem}>
-        {loader}
+      <div className={styles.item}>
         <div className={styles.details}>
-          <h2>{name} ({symbol})</h2>
-          <ul className={styles.change}>
-            <li><span className={styles.changeType}>H</span><span className={classChangeHour}>{changeHour}%</span></li>
-            <li><span className={styles.changeType}>D</span><span className={classChangeDay}>{changeDay}%</span></li>
-            <li>
-              <span className={styles.changeType}>W</span><span className={classChangeWeek}>{changeWeek}%</span>
-            </li>
-          </ul>
-          <div className={styles.price}>
-            €{round(price * 0.88628518, 6)} * {amount} = €{round(price * 0.88628518 * amount, 6)}
-          </div>
+          {/*<img src={getCoinImage(name)} alt="Coin image" />*/}
+          <span className={styles.name}>{symbol}</span> <span className={styles.amount}>({amount})</span>
         </div>
-        <div className={classChangeTotal}>
-          {changeTotal}%
-        </div>
+        <ul className={styles.actions}>
+          <li>
+            <button onClick={() => this.setState({ editMode: true })}>
+              <MdEdit />
+            </button>
+          </li>
+          <li>
+            <button className={styles.deleteButton} onClick={() => onDelete()}>
+              <MdDelete />
+            </button>
+          </li>
+        </ul>
       </div>
     );
   }
 }
 
 PortfolioItem.propTypes = {
-  name: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   symbol: PropTypes.string.isRequired,
-  changeHour: PropTypes.number.isRequired,
-  changeDay: PropTypes.number.isRequired,
-  changeWeek: PropTypes.number.isRequired,
-  changeTotal: PropTypes.number.isRequired,
-  price: PropTypes.number.isRequired,
   amount: PropTypes.number.isRequired,
-  isUpdating: PropTypes.bool.isRequired
+  boughtPrice: PropTypes.number.isRequired,
+  boughtAt: PropTypes.string.isRequired,
+  source: PropTypes.string.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired
 };
 
 PortfolioItem.defaultProps = {
-  name: 'Ethereum',
-  symbol: 'ETH',
-  changeHour: 0,
-  changeDay: 0,
-  changeWeek: 0,
-  changeTotal: 0,
-  price: 0,
+  symbol: '',
   amount: 0,
-  isUpdating: false
+  boughtPrice: 0,
+  boughtAt: Date.now,
+  source: ''
 };
 
 export default PortfolioItem;

@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [{
+    "name": "Docker: Attach to Node",
+    "type": "node",
+    "request": "attach",
+    "port": 56745,
+    "address": "10.0.75.1",
+    "localRoot": "${workspaceRoot}/backend/",
+    "remoteRoot": "/usr/crypto_buy/build/"
+  }]
+}

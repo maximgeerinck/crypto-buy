@@ -58,12 +58,10 @@ export class MongoRepository<Model extends AbstractModel> {
 
   find(cond?: Object, fields?: Object, options?: Object): Promise<Array<Model>> {
     let self = this;
-    return this._model
-      .find(cond, options)
-      .then(daos => {
-        return daos.map(dao => self.parse(dao));
-      })
-      .catch(err => console.log(err));
+    return this._model.find(cond, options).then(daos => {
+      return daos.map(dao => self.parse(dao));
+    });
+    // .catch(err => console.log(err));
   }
 
   parse(dao: any): any {

@@ -2,37 +2,9 @@ import mongoose from '../db';
 import { Schema, Model, Document } from 'mongoose';
 import AbstractModel from './AbstractModel';
 import { genSalt, hashPassword } from '../utils/cypher-util';
-
-export interface IUserCredential {
-  password: string;
-  salt: string;
-  requestedOn: Date;
-  expired: boolean;
-  expiredOn?: Date;
-}
-
-export interface IUserCredentialDAO {
-  password: string;
-  salt: string;
-  requested_on: Date;
-  expired: boolean;
-  expired_on?: Date;
-}
-
-export interface IUserCurrency {
-  currency: string;
-  amount: number;
-  source: string;
-  // totalPrice: Date;
-  // boughtPrice: Number;
-}
-export interface IUserCurrencyDAO {
-  currency: string;
-  amount: number;
-  source: string;
-  // total_price: Date;
-  // bought_price: Number;
-}
+import UserCredential, { IUserCredential, IUserCredentialDAO } from './UserCredential';
+import UserCoin, { IUserCoin, IUserCoinDAO } from './UserCoin';
+import UserPreferences, { IUserPreferences, IUserPreferencesDAO } from './UserPreferences';
 
 export interface IUser {
   _id: any;
@@ -40,11 +12,12 @@ export interface IUser {
   enabled: boolean;
   expired: boolean;
   credentials?: Array<IUserCredential>;
-  portfolio: Array<IUserCurrency>;
+  portfolio: Array<IUserCoin>;
   activatedOn?: Date;
   createdOn: Date;
   updatedOn: Date;
   token: string;
+  preferences: IUserPreferences;
 }
 export interface IUserDAO extends Document {
   _id: any;
@@ -52,94 +25,12 @@ export interface IUserDAO extends Document {
   enabled: boolean;
   expired: boolean;
   credentials?: Array<IUserCredentialDAO>;
-  portfolio: Array<IUserCurrencyDAO>;
+  portfolio: Array<IUserCoinDAO>;
   activated_on: Date;
   created_on: Date;
   updated_on: Date;
   token: string;
-}
-
-export class UserCredential extends AbstractModel implements IUserCredential {
-  requestedOn: Date = new Date();
-  expiredOn?: Date;
-  password: string;
-  salt: string;
-
-  constructor(password: string, salt: string, readonly expired: boolean = false) {
-    super();
-    this.password = password;
-    this.salt = salt;
-  }
-
-  static parse(credential: IUserCredentialDAO): UserCredential {
-    let credentialObj = new UserCredential(credential.password, credential.salt, credential.expired);
-    credentialObj.requestedOn = credential.requested_on;
-    credentialObj.expiredOn = credential.expired_on;
-    return credentialObj;
-  }
-
-  static parseDomain(credential: IUserCredential): UserCredential {
-    let credentialObj = new UserCredential(credential.password, credential.salt, credential.expired);
-    credentialObj.requestedOn = credential.requestedOn;
-    credentialObj.expiredOn = credential.expiredOn;
-    return credentialObj;
-  }
-
-  toDAO() {
-    let credentialDAO = {
-      password: this.password,
-      salt: this.salt,
-      expired: this.expired,
-      expired_on: this.expiredOn,
-      requested_on: this.requestedOn
-    };
-
-    if (this.expiredOn) credentialDAO.expired_on = this.expiredOn;
-
-    return credentialDAO;
-  }
-}
-export class UserCurrency extends AbstractModel implements IUserCurrency {
-  constructor(
-    readonly currency: string,
-    readonly amount: number,
-    readonly source: string // readonly boughtPrice: Number, // readonly totalPrice: Date
-  ) {
-    super();
-  }
-
-  static parse(userCurrency: IUserCurrencyDAO): UserCurrency {
-    let userCurrencyObj = new UserCurrency(
-      userCurrency.currency,
-      userCurrency.amount,
-      userCurrency.source
-      // userCurrency.bought_price,
-      // userCurrency.total_price
-    );
-    return userCurrencyObj;
-  }
-
-  static parseDomain(userCurrency: IUserCurrency): UserCurrency {
-    let userCurrencyObj: UserCurrency = new UserCurrency(
-      userCurrency.currency,
-      userCurrency.amount,
-      userCurrency.source
-      // userCurrency.boughtPrice,
-      // userCurrency.totalPrice
-    );
-    return userCurrencyObj;
-  }
-
-  toDAO() {
-    let userCurrencyDAO = {
-      currency: this.currency,
-      amount: this.amount,
-      source: this.source
-      // bought_price: this.boughtPrice,
-      // total_price: this.totalPrice,
-    };
-    return userCurrencyDAO;
-  }
+  preferences: IUserPreferencesDAO;
 }
 
 export class User extends AbstractModel implements IUser {
@@ -148,24 +39,31 @@ export class User extends AbstractModel implements IUser {
   updatedOn: Date = new Date();
   activatedOn: Date;
   token: string = null;
+  portfolio: Array<UserCoin> = [];
+  preferences: UserPreferences = new UserPreferences('USD');
+  credentials: Array<UserCredential> = [];
 
   constructor(
     readonly email: string,
-    readonly credentials: Array<UserCredential>,
-    readonly portfolio: Array<UserCurrency>,
+    credentials: Array<UserCredential> = [],
+    portfolio: Array<UserCoin> = [],
     readonly createdOn: Date = new Date(),
     readonly _id: mongoose.Types.ObjectId = new mongoose.Types.ObjectId()
   ) {
     super();
+    this.portfolio = portfolio;
+    this.credentials = credentials;
   }
 
   static parse(user: IUserDAO): User {
     let credentials = user.credentials ? user.credentials.map(credential => UserCredential.parse(credential)) : null;
-    let portfolio = user.portfolio ? user.portfolio.map(currency => UserCurrency.parse(currency)) : null;
+    let portfolio = user.portfolio ? user.portfolio.map(Coin => UserCoin.parse(Coin)) : null;
 
     let userObj = new User(user.email, credentials, portfolio, user.created_on, user._id);
     userObj.token = user.token;
     userObj.updatedOn = user.updated_on;
+    userObj.preferences = UserPreferences.parse(user.preferences);
+
     return userObj;
   }
 
@@ -178,11 +76,13 @@ export class User extends AbstractModel implements IUser {
       ? user.credentials.map(credential => UserCredential.parseDomain(credential))
       : null;
 
-    let portfolio = user.portfolio ? user.portfolio.map(currency => UserCurrency.parseDomain(currency)) : null;
+    let portfolio = user.portfolio ? user.portfolio.map(Coin => UserCoin.parseDomain(Coin)) : null;
 
     let userObj = new User(user.email, credentials, portfolio, user.createdOn, user._id);
     userObj.token = user.token;
     userObj.updatedOn = user.updatedOn;
+    userObj.preferences = UserPreferences.parseDomain(user.preferences);
+
     return userObj;
   }
 
@@ -192,7 +92,7 @@ export class User extends AbstractModel implements IUser {
       credentials = this.credentials.map(credential => credential.toDAO());
     }
 
-    let portfolio: Array<IUserCurrencyDAO>;
+    let portfolio: Array<IUserCoinDAO>;
     if (this.portfolio) {
       portfolio = this.portfolio.map(item => item.toDAO());
     }
@@ -206,12 +106,13 @@ export class User extends AbstractModel implements IUser {
       activated_on: this.activatedOn,
       created_on: this.createdOn,
       updated_on: this.updatedOn,
-      portfolio: portfolio
+      portfolio: portfolio,
+      preferences: this.preferences.toDAO()
     };
   }
 }
 
-export interface IUserModel extends IUserDAO {}
+export interface IUserModel extends IUserDAO { }
 
 export const UserSchema = new mongoose.Schema(
   {
@@ -235,15 +136,19 @@ export const UserSchema = new mongoose.Schema(
     ],
     portfolio: [
       {
-        currency: { type: String, required: true },
+        symbol: { type: String, required: true },
         amount: { type: Number, required: true, default: 0.0 },
-        source: { type: String, required: true }
-        // total_price: { type: Date, required: true, default: Date.now },
-        // bought_price: { type: Number, required: true, default: 0.0 }
+        source: { type: String, required: true },
+        bought_price: { type: Number, required: false },
+        bought_at: { type: Date, required: true, default: Date.now }
       }
     ],
     activated_on: { type: String },
-    token: { type: String, required: false }
+    token: { type: String, required: false },
+    preferences: {
+      currency: { type: String, required: true, default: 'USD' },
+      initial_investment: { type: Number, required: true, default: 0 }
+    }
   },
   { timestamps: { createdAt: 'created_on', updatedAt: 'updated_on' } }
 );

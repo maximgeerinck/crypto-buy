@@ -23,11 +23,12 @@ class UserController {
 
     //TODO: Extract different validation methods
     let validator = new Validator();
-    UserService.createUser(email, password, domains).then(reply).catch(err => {
+    UserService.createUser(email, password).then(reply).catch(err => {
       let validationErrors: any = {};
 
+      console.log(err);
       if (err instanceof MongoError) {
-        if (err.message.indexOf('duplicate key') > -1) validator.addError(new ValidationError('email', 'E_DUP_KEY'));
+        if (err.message.indexOf('duplicate key') > -1) validator.addError(new ValidationError('email', 'email.inUse'));
       } else if (err.name == 'ValidationError') {
         for (let field in err.errors) {
           let f = field.split('.'); // for array validation
@@ -47,14 +48,19 @@ class UserController {
 
   me(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
     // get account details
-    UserService.getDetails(req.auth.credentials.user.email)
-      .then(user => {
-        reply(user);
-      })
-      .catch(err => {
-        console.log(err);
-        reply(Boom.badRequest());
-      });
+    UserService.getDetails(req.auth.credentials.email).then(reply).catch(err => {
+      console.log(err);
+      reply(Boom.badRequest());
+    });
+  }
+
+  updatePreferences(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
+    const preferences = req.payload;
+
+    let user = req.auth.credentials;
+    Object.assign(user.preferences, preferences);
+
+    UserService.update(user).then(user => reply(user)).catch(err => reply(Boom.badRequest()));
   }
 }
 

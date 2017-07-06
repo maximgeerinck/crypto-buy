@@ -1,6 +1,7 @@
 import * as types from './UserActionTypes';
 import { LOGOUT } from '../authentication/AuthenticationActionTypes';
 import { Record, Map } from 'immutable';
+import * as errorTypes from '../helpers/ErrorHelper';
 
 const USER = 'auth_user';
 
@@ -12,7 +13,8 @@ var InitialState = new Record({
   form: Map({
     validationErrors: null,
     isSubmitting: false,
-    succeeded: false
+    succeeded: false,
+    errors: {}
   })
 });
 
@@ -37,6 +39,8 @@ const UserReducer = (state = initialState, action) => {
     case types.UPDATE_SUCCESS:
       localStorage.setItem(USER, JSON.stringify(action.body));
       return state.set('user', action.body);
+    case errorTypes.ERROR_KNOWN:
+      return state.setIn(['form', 'errors'], action.body);
     case LOGOUT:
       localStorage.removeItem(USER);
       return state.set('user', null).set('isLoaded', false);

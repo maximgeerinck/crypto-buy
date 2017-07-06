@@ -6,8 +6,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
-import ValidationHelper, { ValidationType } from '../helpers/ValidationHelper';
-
 import formStyles from '../forms.scss';
 import pageStyle from '../components/page.scss';
 
@@ -63,14 +61,21 @@ class ForgotPasswordPage extends Component {
 
   _onForgot = (email, password) => {
     this.props.userActions.requestPassword(email);
+    this.setState({ submitted: true });
   };
 
   render() {
     const details = !this.state.submitted
       ? <ForgotPasswordForm onSubmit={this._onForgot} />
-      : <div className={pageStyle.container}><p>Please check your inbox with a link to reset your email</p></div>;
+      : <div className={pageStyle.container}>
+          <p>Please check your inbox with a link to reset your email</p>
+        </div>;
 
-    return <Page title="Forgot Password" custom className={pageStyle.focused}>{details}</Page>;
+    return (
+      <Page title="Forgot Password" custom className={pageStyle.focused}>
+        {details}
+      </Page>
+    );
   }
 }
 

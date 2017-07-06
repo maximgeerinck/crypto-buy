@@ -1,9 +1,14 @@
 import UserRepository from './UserRepository';
 import { genSalt, hashPassword, comparePassword } from '../utils/cypher-util';
-import { IUser, User, UserCredential } from '../models/user';
+import { IUser, User } from '../models/user';
+import UserCredential from '../models/UserCredential';
 import * as CypherUtil from '../utils/cypher-util';
 
 class UserService {
+  findOneById(_id: any) {
+    return UserRepository.findOne({ _id: _id });
+  }
+
   findUserByEmail(email: string): Promise<User> {
     return UserRepository.findOneByEmail(email);
   }
@@ -37,7 +42,7 @@ class UserService {
       });
   }
 
-  createUser(email: string, password: string, domains: Array<string>): Promise<IUser> {
+  createUser(email: string, password: string): Promise<IUser> {
     let credential = new UserCredential('', '');
     credential.requestedOn = new Date();
     return genSalt()
@@ -47,7 +52,8 @@ class UserService {
       })
       .then(hash => {
         credential.password = hash;
-        let user = new User(email, [credential], null);
+        let user = new User(email, [credential], []);
+        console.log(user);
         return UserRepository.create(user);
       });
   }
@@ -66,7 +72,7 @@ class UserService {
     return UserRepository.update(user._id, user);
   }
 
-  getDetails(email: string): Promise<IUser> {
+  getDetails(email: string): Promise<User> {
     return UserRepository.findOneByEmail(email);
   }
 
@@ -79,6 +85,10 @@ class UserService {
       user.addCredentials(credentials);
       return this.update(user);
     });
+  }
+
+  removeCoin(coinId: string, user: User): Promise<boolean> {
+    return UserRepository.removeItem(coinId, user._id);
   }
 }
 

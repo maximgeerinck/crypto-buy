@@ -4,9 +4,9 @@
   "description": "A crypto currency buyer/seller",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon -L -e ts,json --exec \"npm run compile\"",
-    "compile": "tsc && node build/index.js --port=8100"
+    "start": "npm run compile && node build/index.js",
+    "dev": "nodemon -L -e ts,json --exec \"npm run compile && node --inspect=56745 build/index.js\"",
+    "compile": "tsc"
   },
   "author": "Maxim Geerinck",
   "license": "UNLICENSED",

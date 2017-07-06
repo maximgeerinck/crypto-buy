@@ -1,1 +1,2 @@
-export const BASE_PATH = 'http://127.0.0.1:5000/';
+/* global process */
+export const BASE_PATH = process.env.SERVICE_URL;

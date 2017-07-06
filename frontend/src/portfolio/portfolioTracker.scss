@@ -1,0 +1,161 @@
+.portfolio {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.portfolioItem {
+  position: relative;
+  background: rgba(41, 41, 41, 0.70); // padding: 10px 15px;
+  width: 100%;
+  margin: 10px;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
+  .details {
+    flex: 3;
+    h2 {
+      font-size: 14pt;
+      margin: 0;
+      color: white;
+      display: flex;
+      align-items: center;
+      &>img {
+        width: 16px;
+        height: 16px;
+        margin-right: 10px;
+      }
+    }
+    .change {
+      flex: 1;
+      flex-direction: row;
+      display: flex;
+      margin: 0;
+      padding: 0;
+      font-size: 8pt;
+      margin: 5px 0;
+      &>li {
+        list-style: none;
+        border-right: 1px solid rgba(0, 0, 0, 0.2);
+        padding: 0 5px;
+        &:first-child {
+          padding-left: 0;
+        }
+        &:last-child {
+          border: none;
+        }
+      }
+      .changeType {
+        background: #2f2f2f;
+        color: white;
+        padding: 2px 5px;
+        font-size: 6pt;
+        text-align: center;
+        position: relative;
+        top: -1px;
+        margin: 4px;
+      }
+    }
+    .calculations {
+      display: none;
+    }
+    .price {
+      color: #c3c3c3;
+      font-size: 8pt;
+      margin: 10px 10px 0 0;
+    }
+  }
+  .changeTotal {
+    flex: 1;
+    font-size: 16pt;
+    font-weight: bold;
+    text-align: center;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .portfolioItem {
+    width: calc(50% - 20px);
+    .details {
+      h2 {
+        font-size: 18pt;
+        &>img {
+          width: 32px;
+          height: 32px;
+        }
+      }
+      .change {
+        &>li {
+          padding: 0 5px;
+        }
+      }
+      .calculations {
+        display: inline-block;
+      }
+    }
+    .changeTotal {
+      font-size: 24pt;
+    }
+  }
+}
+
+.negative {
+  color: #f35959;
+}
+
+.positive {
+  color: #70cc39;
+}
+
+.portfolioStats {
+  p {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background: none;
+  }
+  h3 {
+    text-align: center;
+    font-size: 40pt;
+    color: white;
+    text-shadow: 2px 2px 0 black;
+  }
+
+  .invested {
+    font-size: 16pt;
+    color: rgba(255, 255, 255, 0.78);
+    text-shadow: none;
+    background: rgba(159, 254, 136, 0.35);
+    border: 1px solid rgba(159, 254, 136, 0.35);
+    margin: 10px;
+    padding: 10px;
+    .investedChange {
+      margin-left: 10px;
+      font-size: 20pt;
+      font-weight: bold;
+      padding: 10px;
+      text-shadow: 0 3px 0 rgba(0, 0, 0, 0.2);
+    }
+    .investmentNotes {
+      color: #bbbbbb;
+      font-size: 10pt;
+    }
+  }
+}
+
+
+.loader {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 23px;
+  transform: scale(0.3);
+  color: gray;
+  &>div {
+    margin: 0;
+  }
+}

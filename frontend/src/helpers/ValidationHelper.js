@@ -1,11 +1,13 @@
 export const ValidationType = {
   V_DOMAIN_INVALID: 'V_DOMAIN_INVALID',
-  V_LOGIN_COMBO_INCORRECT: 'V_LOGIN_COMBO_INCORRECT'
+  V_LOGIN_COMBO_INCORRECT: 'V_LOGIN_COMBO_INCORRECT',
+  TIMEOUT: 'TIMEOUT'
 };
 
 const ValidationMessage = {
   V_DOMAIN_INVALID: 'It seems like you have entered an incorrect domain, `%s` is invalid',
-  V_LOGIN_COMBO_INCORRECT: 'You have entered an invalid email/password'
+  V_LOGIN_COMBO_INCORRECT: 'You have entered an invalid email/password',
+  TIMEOUT: 'Timeout'
 };
 
 const validationRules = {
@@ -16,6 +18,10 @@ const validationRules = {
   email: {
     rule: new RegExp('[a-z]*.email'),
     message: '%s is not a valid email'
+  },
+  email_inUse: {
+    rule: new RegExp('email.inUse'),
+    message: '%s is already in use'
   },
   min_length: {
     rule: new RegExp('[a-z]*.min'),

@@ -23,14 +23,22 @@ class Page extends Component {
     const className = this.props.className || null;
     const { navigationBar, children, title, custom } = this.props;
     const navbar = navigationBar ? <NavigationBar dispatch={dispatch} isAuthenticated={isAuthenticated} /> : null;
-    const titleContainer = title ? <h1>{title}</h1> : null;
+    const titleContainer = title
+      ? <h1>
+          {title}
+        </h1>
+      : null;
 
-    const childrenWrapper = !custom ? <div className={page.content}>{children}</div> : children;
+    const childrenWrapper = !custom
+      ? <div className={page.content}>
+          {children}
+        </div>
+      : children;
 
     return (
-      <div>
+      <div className={cx(page.page, className)}>
         {navbar}
-        <div className={cx(page.page, className)}>
+        <div className={page.body}>
           {titleContainer}
           {childrenWrapper}
         </div>

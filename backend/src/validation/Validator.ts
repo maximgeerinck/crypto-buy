@@ -2,19 +2,19 @@ import * as Boom from 'boom';
 import ValidationConstraint from './ValidationConstraint';
 
 export interface IValidationError {
-  name: string;
-  message: string;
+  path: string;
+  code: string;
   data?: any;
 }
 
 export class ValidationError implements IValidationError {
-  name: string;
-  message: string;
+  path: string;
+  code: string;
   data?: any;
 
   constructor(name: string, message: string, data?: any) {
-    this.name = name;
-    this.message = message;
+    this.path = name;
+    this.code = message;
     this.data = data;
   }
 }
@@ -41,15 +41,20 @@ class Validator {
   toObject() {
     let errors: any = {};
     for (let key in this.errors) {
-      errors[this.errors[key].name] = { code: this.errors[key].message, data: this.errors[key].data };
+      errors[this.errors[key].path] = { path: this.errors[key].path, code: this.errors[key].code };
     }
     return errors;
   }
 
   generateBadRequest(key: string = 'E_VALIDATION'): Boom.BoomError {
-    let boomErr = Boom.badRequest(key, this.toObject());
+    console.log('generating bad request');
+    // let boomErr = Boom.badRequest(key, this.toObject());
+
+    var error: any = Boom.badRequest();
+    error.reformat();
+    error.output.payload.validation = this.toObject();
     // boomErr.output.payload.data = boomErr.data;
-    return boomErr;
+    return error;
   }
 
   addValidation(constraint: ValidationConstraint) {

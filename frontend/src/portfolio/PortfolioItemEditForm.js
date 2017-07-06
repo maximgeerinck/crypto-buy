@@ -1,0 +1,121 @@
+import React, { Component } from 'react';
+import styles from './portfolio.scss';
+import PropTypes from 'prop-types';
+import cx from 'classnames';
+import formStyles from '../forms.scss';
+import moment from 'moment';
+
+class PortfolioItemEditForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      symbol: props.symbol,
+      amount: props.amount,
+      boughtPrice: props.boughtPrice,
+      source: props.source,
+      boughtAt: props.boughtAt,
+      id: props.id
+    };
+  }
+
+  onSave = e => {
+    e.preventDefault();
+    this.props.onSave(this.state);
+  };
+
+  render() {
+    const { onCancel } = this.props;
+    const { symbol, amount, boughtPrice, source, boughtAt } = this.state;
+
+    return (
+      <div style={{ width: '100%' }}>
+        <div className={styles.details}>
+          <span className={styles.name}>{symbol}</span> <span className={styles.amount}>({amount})</span>
+        </div>
+        <form className={cx(formStyles.form, styles.addForm)} onSubmit={this.onSave}>
+          <div className={formStyles.group}>
+            <label htmlFor="name">Name:</label>
+            <input
+              type="text"
+              id="name"
+              placeholder="ETH"
+              value={symbol}
+              onChange={e => this.setState({ name: e.target.value })}
+            />
+          </div>
+          <div className={formStyles.group}>
+            <label htmlFor="amount">Amount:</label>
+            <input
+              type="number"
+              id="amount"
+              placeholder="0.00"
+              value={amount}
+              onChange={e => this.setState({ amount: e.target.value })}
+            />
+          </div>
+          <div className={formStyles.group}>
+            <label htmlFor="price">Price you bought 1 coin for:</label>
+            <input
+              type="number"
+              id="price"
+              placeholder="0.00"
+              value={boughtPrice}
+              onChange={e => this.setState({ boughtPrice: e.target.value })}
+            />
+          </div>
+          <div className={formStyles.group}>
+            <label htmlFor="source">Source:</label>
+            <input
+              type="text"
+              id="source"
+              placeholder="gdax.com"
+              value={source}
+              onChange={e => this.setState({ source: e.target.value })}
+            />
+          </div>
+          <div className={formStyles.group}>
+            <label htmlFor="purchase_date">Purchase Date:</label>
+            <input
+              type="datetime-local"
+              id="purchase_date"
+              placeholder="04-02-2017 12:20"
+              value={boughtAt}
+              onChange={e => this.setState({ boughtAt: moment(e.target.value).format('YYYY-MM-DDTHH:mm:ss') })}
+            />
+          </div>
+          <div className={formStyles.group}>
+            <button type="submit" className={formStyles.button}>
+              Save changes
+            </button>
+          </div>
+          <div className={formStyles.group}>
+            <button onClick={onCancel} className={cx(formStyles.button, formStyles.danger)}>
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    );
+  }
+}
+
+PortfolioItemEditForm.propTypes = {
+  id: PropTypes.string.isRequired,
+  symbol: PropTypes.string.isRequired,
+  amount: PropTypes.number.isRequired,
+  boughtPrice: PropTypes.number.isRequired,
+  boughtAt: PropTypes.string.isRequired,
+  source: PropTypes.string.isRequired,
+  onCancel: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired
+};
+
+PortfolioItemEditForm.defaultProps = {
+  symbol: '',
+  amount: 0,
+  boughtPrice: 0,
+  boughtAt: Date.now(),
+  source: ''
+};
+
+export default PortfolioItemEditForm;

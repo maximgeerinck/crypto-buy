@@ -1,18 +1,26 @@
-.form {
+@mixin form() {
+  width: 100%;
   .group {
     display: flex;
+    flex-direction: column;
+    &+.group {
+      margin-top: 10px;
+    }
     &.row {
       display: block;
-      input, textarea {
+      input,
+      textarea {
         width: 100%;
       }
     }
-    input, textarea {
+    input,
+    textarea,
+    .input {
+      background: #FEFEFE;
       display: block;
       padding: 15px 20px;
       border-radius: 3px;
       border: 1px solid #c5c5c5;
-      width: 30%;
       box-sizing: border-box;
       color: darken(white, 40);
       &:focus {
@@ -33,48 +41,37 @@
       font-size: 9pt;
       color: #313131;
     }
-    button {
-      border: none;
-      background: #98d459;
-      color: white;
-      padding: 15px 25px;
-      border-radius: 5px;
-      box-sizing: border-box;
+    &>span.descriptor {
+      font-style: italic;
+      color: gray;
+      margin: 5px;
       font-size: 10pt;
-      cursor: pointer;
     }
-    & + .group {
-      margin-top: 10px;
-    }
+  }
+  .validationError {
+    font-size: 10pt;
+    color: #d45959;
+    display: block;
+    padding: 5px;
   }
 }
 
+.form {
+  @include form();
+}
+
 .formFullPage {
+  @include form();
   .group {
-    input, textarea {
-      display: block;
-      padding: 15px 20px;
-      border-radius: 3px;
-      border: none;
-      width: 100%;
+    input,
+    textarea {
       background: rgba(0, 0, 0, 0.28);
-      box-sizing: border-box;
-      color: darken(white, 30);
+      border: none;
+      color: darken(white, 20);
       &:focus {
         outline: 0;
         color: white;
       }
-    }
-    input, textarea, .select {
-      &.invalid {
-        box-shadow: 0 1px 0px 0 #d45959;
-      }
-    }
-    .validationError {
-      font-size: 10pt;
-      color: #d45959;
-      display: block;
-      padding: 5px;
     }
     label {
       display: block;
@@ -83,19 +80,14 @@
       font-size: 9pt;
       color: #a7a7a7;
     }
-    & + .group {
-      margin-top: 20px;
-    }
-    button {
-      border: none;
-      background: #98d459;
-      color: white;
-      padding: 15px 25px;
-      border-radius: 5px;
-      width: 100%;
-      box-sizing: border-box;
-      font-size: 10pt;
-      cursor: pointer;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .form {
+    flex-direction: column;
+    .group {
+      // flex-direction: row;
     }
   }
 }
@@ -126,6 +118,29 @@
     text-decoration: none;
     &:hover {
       text-decoration: underline;
+    }
+  }
+}
+
+.button {
+  border: none;
+  background: #98d459;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 10pt;
+  cursor: pointer;
+  transition: 150ms all ease-in-out;
+  &:hover {
+    box-shadow: inset 0 0 0 3px #8cd244;
+    background: #acdc7b;
+  }
+  &.error,
+  &.danger {
+    background: #dc7b7b;
+    &:hover {
+      box-shadow: inset 0 0 0 3px #d24444;
     }
   }
 }

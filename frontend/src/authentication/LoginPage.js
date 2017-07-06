@@ -29,11 +29,19 @@ export class LoginForm extends Component {
   };
 
   render() {
-    const errorContainer = this.props.isInvalid
+    let errorContainer = this.props.isInvalid
       ? <div className={formStyles.validationSummary}>
           {ValidationHelper.constructMessage(ValidationType.V_LOGIN_COMBO_INCORRECT)}
         </div>
       : null;
+
+    if (this.props.error) {
+      errorContainer = (
+        <div className={formStyles.validationSummary}>
+          {ValidationHelper.constructMessage(ValidationType.TIMEOUT)}
+        </div>
+      );
+    }
 
     return (
       <form className={formStyles.formFullPage} onSubmit={this._onLogin}>
@@ -58,7 +66,9 @@ export class LoginForm extends Component {
         {errorContainer}
 
         <div className={formStyles.group}>
-          <button type="submit">Login</button>
+          <button type="submit" className={formStyles.button}>
+            Login
+          </button>
         </div>
         <div className={formStyles.noAccount}>
           <Link to="/register">Don't have an account yet?</Link>
@@ -79,12 +89,18 @@ class LoginPage extends Component {
 
   render() {
     const isInvalid = this.props.auth.form.get('isInvalid');
+    const error = this.props.auth.error;
 
     let submitting, form;
     if (this.props.auth.form.get('isSubmitting')) {
-      submitting = <div className={pageStyle.container}><Loader /><div>Logging in...</div></div>;
+      submitting = (
+        <div className={pageStyle.container}>
+          <Loader />
+          <div>Logging in...</div>
+        </div>
+      );
     } else {
-      form = <LoginForm onSubmit={this._onLogin} isInvalid={isInvalid} />;
+      form = <LoginForm onSubmit={this._onLogin} isInvalid={isInvalid} error={error} />;
     }
 
     return (

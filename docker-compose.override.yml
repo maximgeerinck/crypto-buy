@@ -4,8 +4,9 @@ services:
     command: npm run dev
     volumes:
       - ./backend/src:/usr/crypto_buy/src
-      - ./backend/src/config/app_dev.json:/usr/crypto_buy/build/config/app_dev.json:ro
-      - ./backend/package.json:/usr/crypto_buy/package.json            
+      - ./backend/config/app_dev.json:/usr/crypto_buy/build/config/app_dev.json:ro
+      - ./backend/package.json:/usr/crypto_buy/package.json:ro          
+    ports: ["56745:56745"]
     environment:      
       - NODE_ENV=dev
 

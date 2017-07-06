@@ -7,9 +7,8 @@ import PropTypes from 'prop-types';
 import * as UserActions from './UserActions';
 
 import pageStyle from '../components/page.scss';
-import ValidationHelper, { ValidationType } from '../helpers/ValidationHelper';
+import ValidationHelper from '../helpers/ValidationHelper';
 import { Link } from 'react-router';
-import cx from 'classnames';
 import formStyles from '../forms.scss';
 import { browserHistory } from 'react-router';
 
@@ -43,7 +42,6 @@ class RegisterForm extends Component {
 
     return (
       <form className={formStyles.formFullPage} onSubmit={this.onCreate}>
-
         <div className={formStyles.group}>
           <label htmlFor="Email">Email</label>
           <input
@@ -67,11 +65,13 @@ class RegisterForm extends Component {
             className={validation.password ? formStyles.invalid : null}
           />
           <span className={formStyles.validationError}>
-            {ValidationHelper.parse(validation.password, ['password'])}
+            {ValidationHelper.parse(validation.password, ['password', 6])}
           </span>
         </div>
         <div className={formStyles.group}>
-          <button type="submit">Create your account</button>
+          <button type="submit" className={formStyles.button}>
+            Create your account
+          </button>
         </div>
         <div className={formStyles.noAccount}>
           <Link to="/login">Already have an account? Login here</Link>
@@ -103,18 +103,28 @@ class RegisterPage extends Component {
   };
 
   render() {
-    const validationErrors = this.props.user.form.get('validationErrors');
+    // const validationErrors = this.props.user.form.get('validationErrors');
+    const validationErrors = this.props.user.form.get('errors');
 
     let submitting = null,
       successfulMessage = null,
       form = null;
 
     if (this.props.user.form.get('isSubmitting')) {
-      submitting = <div className={pageStyle.container}><Loader /><div>Registering...</div></div>;
+      submitting = (
+        <div className={pageStyle.container}>
+          <Loader />
+          <div>Registering...</div>
+        </div>
+      );
     }
 
     if (this.props.user.form.get('succeeded')) {
-      successfulMessage = <div className={pageStyle.container}><p>Registration successful! You may login now.</p></div>;
+      successfulMessage = (
+        <div className={pageStyle.container}>
+          <p>Registration successful! You may login now.</p>
+        </div>
+      );
       setTimeout(() => {
         browserHistory.push('/login');
       }, 3000);

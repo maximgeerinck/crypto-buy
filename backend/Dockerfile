@@ -20,9 +20,15 @@ RUN npm install --silent
 
 # copy sources
 COPY ./src ./src
+COPY ./config ./config
+COPY ./mails ./mails
+COPY ./public ./public
+
+# COMPILE
+RUN npm run compile
 
 # create env file with the port
 ENV PORT 5000
 EXPOSE $PORT
 
-CMD ["pm2-docker", "src/process.json"]
+CMD ["pm2-docker", "process.json"]
