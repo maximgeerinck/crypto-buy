@@ -12,17 +12,17 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@types/node-schedule": "^1.2.0",
+    "bcrypt": "^0.8.7",
     "coinbase-node": "^0.2.1",
     "hapi": "^16.4.1",
-    "moment": "^2.18.1",
-    "mongoose": "^4.10.4",
-    "node-schedule": "^1.2.3",
-    "superagent": "^3.5.2",
-    "bcrypt": "^0.8.7",
     "hapi-auth-jwt2": "^7.2.4",
     "joi": "^10.6.0",
     "jsonwebtoken": "^7.3.0",
-    "nodemailer": "^4.0.1"
+    "moment": "^2.18.1",
+    "mongoose": "^4.10.4",
+    "node-schedule": "^1.2.3",
+    "nodemailer": "^4.0.1",
+    "superagent": "^3.5.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^1.0.0",

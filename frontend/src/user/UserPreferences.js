@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import CurrencyChooser from '../currency/CurrencyChooser';
 import formStyles from '../forms.scss';
+import debounce from 'debounce';
 
 class UserCurrencyPreference extends Component {
   render() {
@@ -18,8 +19,29 @@ UserCurrencyPreference.propTypes = {
 
 class UserPreferences extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      initialInvestment: props.initialInvestment
+    }
+  }
+
+  componentWillMount() {
+    this.delayedCallback = debounce(e => {
+      this.props.onSave({ initialInvestment: e.target.value })
+    }, 500);
+  }
+
+  _onChangeInvestment = e => {
+    e.persist();
+    this.setState({ initialInvestment: e.target.value });
+    this.delayedCallback(e);
+    // debounce(this.props.onSave({ initialInvestment: e.target.value }), 1000);
+  }
+
   render() {
-    const { currency, initialInvestment } = this.props;
+    const { currency } = this.props;
+    const { initialInvestment } = this.state;
     return (
       <form className={formStyles.form}>
         <div className={formStyles.group}>
@@ -34,7 +56,7 @@ class UserPreferences extends Component {
         </div>
         <div className={formStyles.group}>
           <label htmlFor="initialInvestment">Initial investment</label>
-          <input type="number" placeholder="0.00" value={initialInvestment} id="initialInvestment" onChange={e => this.props.onSave({ initialInvestment: e.target.value })}/>
+          <input type="number" placeholder="0.00" value={initialInvestment} id="initialInvestment" onChange={this._onChangeInvestment}/>
           <span className={formStyles.descriptor}>Here you can enter a total initial investment if you don't remember the amount spend per coin (if this is > 0, then the price per coin will be ignored)</span>
         </div>
       </form>
