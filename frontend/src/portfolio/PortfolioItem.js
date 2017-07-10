@@ -14,11 +14,19 @@ class PortfolioItem extends Component {
 
   onEdit = item => {
     this.props.onEdit(item);
-    this.setState({ editMode: false });
   };
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.validationErrors) {
+      this.setState({ editMode: true });
+    } else if (this.state.editMode) {
+      this.setState({ editMode: false });
+    }
+  }
+
   render() {
-    const { id, symbol, amount, boughtPrice, source, boughtAt, onDelete } = this.props;
+    const { id, symbol, amount, boughtPrice, source, boughtAt, onDelete, validationErrors } = this.props;
+
     if (this.state.editMode) {
       return (
         <div className={styles.item}>
@@ -31,6 +39,7 @@ class PortfolioItem extends Component {
             boughtAt={boughtAt}
             onCancel={() => this.setState({ editMode: false })}
             onSave={this.onEdit}
+            validationErrors={validationErrors}
           />
         </div>
       );
@@ -63,7 +72,7 @@ PortfolioItem.propTypes = {
   id: PropTypes.string.isRequired,
   symbol: PropTypes.string.isRequired,
   amount: PropTypes.number.isRequired,
-  boughtPrice: PropTypes.number.isRequired,
+  boughtPrice: PropTypes.number,
   boughtAt: PropTypes.string.isRequired,
   source: PropTypes.string.isRequired,
   onDelete: PropTypes.func.isRequired,

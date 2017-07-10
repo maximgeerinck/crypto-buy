@@ -35,7 +35,7 @@ class AccountPage extends Component {
         <h2>Preferences</h2>
         <UserPreferences currency={user.preferences.currency} initialInvestment={user.preferences.initialInvestment} onSave={this.onSavePreferences} />
         <h2>Add Currency</h2>
-        <PortfolioAddItemForm />
+        <PortfolioAddItemForm initialInvestment={user.preferences.initialInvestment}/>
         <h2>Portfolio</h2>
         <Portfolio />
       </Page>

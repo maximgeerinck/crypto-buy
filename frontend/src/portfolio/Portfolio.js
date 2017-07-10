@@ -22,6 +22,9 @@ class Portfolio extends Component {
     const coins = this.props.portfolio.coins.get('items');
 
     const coinContainers = coins.map((i, key) => {
+
+      const validationErrors = this.props.portfolio.coins.get('validationErrors')[key];
+
       return (
         <PortfolioItem
           id={i._id}
@@ -31,8 +34,9 @@ class Portfolio extends Component {
           boughtPrice={i.boughtPrice}
           source={i.source}
           boughtAt={moment(i.boughtAt).format('YYYY-MM-DDTHH:mm:ss')} // '2017-10-10T10:12'
-          onEdit={coin => this.props.portfolioActions.updateCoin(coin)}
+          onEdit={coin => this.props.portfolioActions.updateCoin(key, coin)}
           onDelete={() => this.onDelete(i._id)}
+          validationErrors={validationErrors}
         />
       );
     });

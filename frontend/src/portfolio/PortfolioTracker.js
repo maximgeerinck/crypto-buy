@@ -86,7 +86,8 @@ class PortfolioTrackerPage extends Component {
       // total increase since you bought
       let oldNumber = i.boughtPrice * i.amount;
       let newNumber = i.amount * c.price.usd;
-      let changeTotal = (newNumber - oldNumber) / oldNumber * 100;
+
+      const changeTotal = oldNumber === 0 ? 0 : (newNumber - oldNumber) / oldNumber * 100;
 
       return (
         <PortfolioTrackerItem
@@ -115,6 +116,8 @@ class PortfolioTrackerPage extends Component {
       investedGainedPercentage > 0 ?
       cx(styles.investedChange, styles.positive) :
       cx(styles.investedChange, styles.negative);
+
+    document.title = `${round(totalPrice, 2)} ${userCurrency} (${investedGainedPercentage}%)`;
 
     return (
       <Page custom className={cx(pageStyles.focused, homeStyles.main)}>

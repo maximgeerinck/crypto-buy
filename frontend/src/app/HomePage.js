@@ -37,7 +37,7 @@ simple dashboard.
 </button>
         </ul>
 
-        <img src={exampleImage} className={homeStyles.adv} />
+        <img src={exampleImage} className={homeStyles.adv} alt="preview"/>
       </Page>
     );
   }

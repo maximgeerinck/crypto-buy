@@ -5,23 +5,17 @@ import * as PortfolioActions from './PortfolioActions';
 import PropTypes from 'prop-types';
 import formStyles from '../forms.scss';
 import Loader from '../components/Loader';
+import ValidationHelper from '../helpers/ValidationHelper';
 
 class PortfolioItemForm extends Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   name: undefined,
-    //   amount: undefined,
-    //   boughtPrice: undefined,
-    //   source: undefined,
-    //   boughtAt: undefined
-    // };
     this.state = {
-      symbol: 'BNT',
-      amount: 1000,
-      boughtPrice: 1,
-      source: 'liqui.io',
-      boughtAt: '2017-06-28T10:10'
+      name: undefined,
+      amount: undefined,
+      boughtPrice: undefined,
+      source: undefined,
+      boughtAt: undefined
     };
   }
 
@@ -36,6 +30,9 @@ class PortfolioItemForm extends Component {
 
     const buttonText = isSubmitting ? <Loader style={{ transform: 'scale(0.9)' }} /> : 'Add coin';
 
+    const showPricePerCoin = this.props.initialInvestment > 0 ? { display: 'none' } : null;
+    const validation = this.props.validationErrors || {};
+
     return (
       <form className={formStyles.form} onSubmit={this.onSubmit}>
         <div className={formStyles.group}>
@@ -47,6 +44,9 @@ class PortfolioItemForm extends Component {
             value={symbol}
             onChange={e => this.setState({ symbol: e.target.value })}
           />
+          <span className={formStyles.validationError}>
+            {ValidationHelper.parse(validation.symbol, ['Symbol'])}
+          </span>
         </div>
         <div className={formStyles.group}>
           <label htmlFor="amount">Amount:</label>
@@ -57,8 +57,11 @@ class PortfolioItemForm extends Component {
             value={amount}
             onChange={e => this.setState({ amount: e.target.value })}
           />
+          <span className={formStyles.validationError}>
+            {ValidationHelper.parse(validation.amount, ['Amount'])}
+          </span>
         </div>
-        <div className={formStyles.group}>
+        <div className={formStyles.group} style={showPricePerCoin}>
           <label htmlFor="price">Price you bought 1 coin for:</label>
           <input
             type="number"
@@ -67,6 +70,9 @@ class PortfolioItemForm extends Component {
             value={boughtPrice}
             onChange={e => this.setState({ boughtPrice: e.target.value })}
           />
+          <span className={formStyles.validationError}>
+            {ValidationHelper.parse(validation.boughtPrice, ['Purchase price'])}
+          </span>
         </div>
         <div className={formStyles.group}>
           <label htmlFor="source">Source:</label>
@@ -77,6 +83,9 @@ class PortfolioItemForm extends Component {
             value={source}
             onChange={e => this.setState({ source: e.target.value })}
           />
+          <span className={formStyles.validationError}>
+            {ValidationHelper.parse(validation.source, ['Source'])}
+          </span>
         </div>
         <div className={formStyles.group}>
           <label htmlFor="purchase_date">Purchase Date:</label>
@@ -87,6 +96,9 @@ class PortfolioItemForm extends Component {
             value={boughtAt}
             onChange={e => this.setState({ boughtAt: e.target.value })}
           />
+          <span className={formStyles.validationError}>
+            {ValidationHelper.parse(validation.boughtAt, ['Purchase date'])}
+          </span>
         </div>
         <div className={formStyles.group}>
           <button type="submit" className={formStyles.button}>
@@ -100,7 +112,9 @@ class PortfolioItemForm extends Component {
 
 PortfolioItemForm.PropTypes = {
   onSubmit: PropTypes.func.isRequired,
-  isSubmitting: PropTypes.bool
+  isSubmitting: PropTypes.bool,
+  validationErrors: PropTypes.object,
+  initialInvestment: PropTypes.number
 };
 
 class AddPortfolio extends Component {
@@ -109,17 +123,21 @@ class AddPortfolio extends Component {
   };
 
   render() {
-    console.log('rendering');
     return (
       <div>
-        <PortfolioItemForm onSubmit={this.onSubmit} isSubmitting={this.props.portfolio.form.get('isSubmitting')} />
+        <PortfolioItemForm 
+          onSubmit={this.onSubmit} 
+          isSubmitting={this.props.portfolio.form.get('isSubmitting')}
+          validationErrors={this.props.portfolio.form.get('errors')}
+          initialInvestment={this.props.user.user.preferences.initialInvestment}/>
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  portfolio: state.portfolio
+  portfolio: state.portfolio,
+  user: state.user
 });
 
 const mapDispatchToProps = dispatch => {

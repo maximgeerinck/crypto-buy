@@ -23,25 +23,32 @@ class Page extends Component {
     const className = this.props.className || null;
     const { navigationBar, children, title, custom } = this.props;
     const navbar = navigationBar ? <NavigationBar dispatch={dispatch} isAuthenticated={isAuthenticated} /> : null;
-    const titleContainer = title
-      ? <h1>
+    const titleContainer = title ?
+      <h1>
           {title}
-        </h1>
-      : null;
+        </h1> :
+      null;
 
-    const childrenWrapper = !custom
-      ? <div className={page.content}>
+    const childrenWrapper = !custom ?
+      <div className={page.content}>
           {children}
-        </div>
-      : children;
+        </div> :
+      children;
 
     return (
       <div className={cx(page.page, className)}>
         {navbar}
         <div className={page.body}>
           {titleContainer}
-          {childrenWrapper}
-        </div>
+          {childrenWrapper}          
+        </div>        
+
+        <footer>
+          <p className={page.copyright}><a href="https://cryptotrackr.com">&copy; Cryptotrackr 2017</a></p>
+          <p className={page.donation}>
+            Donation address: <span className={page.address}>0x82C3CE03a9ed41DD047B7DD833751E031C451017</span>
+          </p>
+        </footer>
       </div>
     );
   }

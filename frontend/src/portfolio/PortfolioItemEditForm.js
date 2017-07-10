@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import formStyles from '../forms.scss';
 import moment from 'moment';
+import ValidationHelper from '../helpers/ValidationHelper';
 
 class PortfolioItemEditForm extends Component {
   constructor(props) {
@@ -27,6 +28,8 @@ class PortfolioItemEditForm extends Component {
     const { onCancel } = this.props;
     const { symbol, amount, boughtPrice, source, boughtAt } = this.state;
 
+    const validation = this.props.validationErrors || {};
+
     return (
       <div style={{ width: '100%' }}>
         <div className={styles.details}>
@@ -42,6 +45,9 @@ class PortfolioItemEditForm extends Component {
               value={symbol}
               onChange={e => this.setState({ name: e.target.value })}
             />
+            <span className={formStyles.validationError}>
+              {ValidationHelper.parse(validation.name, ['name'])}
+            </span>
           </div>
           <div className={formStyles.group}>
             <label htmlFor="amount">Amount:</label>
@@ -52,6 +58,9 @@ class PortfolioItemEditForm extends Component {
               value={amount}
               onChange={e => this.setState({ amount: e.target.value })}
             />
+            <span className={formStyles.validationError}>
+              {ValidationHelper.parse(validation.amount, ['amount'])}
+            </span>
           </div>
           <div className={formStyles.group}>
             <label htmlFor="price">Price you bought 1 coin for:</label>
@@ -62,6 +71,9 @@ class PortfolioItemEditForm extends Component {
               value={boughtPrice}
               onChange={e => this.setState({ boughtPrice: e.target.value })}
             />
+            <span className={formStyles.validationError}>
+              {ValidationHelper.parse(validation.boughtPrice, ['Purchase price'])}
+            </span>
           </div>
           <div className={formStyles.group}>
             <label htmlFor="source">Source:</label>
@@ -82,6 +94,9 @@ class PortfolioItemEditForm extends Component {
               value={boughtAt}
               onChange={e => this.setState({ boughtAt: moment(e.target.value).format('YYYY-MM-DDTHH:mm:ss') })}
             />
+            <span className={formStyles.validationError}>
+              {ValidationHelper.parse(validation.boughtAt, ['Purchase date'])}
+            </span>
           </div>
           <div className={formStyles.group}>
             <button type="submit" className={formStyles.button}>
@@ -103,11 +118,12 @@ PortfolioItemEditForm.propTypes = {
   id: PropTypes.string.isRequired,
   symbol: PropTypes.string.isRequired,
   amount: PropTypes.number.isRequired,
-  boughtPrice: PropTypes.number.isRequired,
+  boughtPrice: PropTypes.number,
   boughtAt: PropTypes.string.isRequired,
   source: PropTypes.string.isRequired,
   onCancel: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired
+  onSave: PropTypes.func.isRequired,
+  validationErrors: PropTypes.object
 };
 
 PortfolioItemEditForm.defaultProps = {
@@ -115,7 +131,8 @@ PortfolioItemEditForm.defaultProps = {
   amount: 0,
   boughtPrice: 0,
   boughtAt: Date.now(),
-  source: ''
+  source: '',
+  validationErrors: {}
 };
 
 export default PortfolioItemEditForm;

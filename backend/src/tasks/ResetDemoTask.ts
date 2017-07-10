@@ -16,7 +16,7 @@ const portfolioDemo = [
 ];
 
 const resetDemoUser = () => {
-    return UserService.findUserByEmail(DEMO_USER)
+    return UserService.findOneById("595feaa4017f8a001444893d")
         .then(user => {
             user.portfolio = portfolioDemo;
             UserService.update(user);

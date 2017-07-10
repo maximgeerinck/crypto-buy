@@ -13,11 +13,11 @@ class PortfolioTrackerItem extends Component {
 
     const loader = this.props.isUpdating ? <Loader className={styles.loader} color="#848484" /> : null;
 
-    const classChangeHour = changeHour > 0 ? styles.positive : styles.negative;
-    const classChangeDay = changeDay > 0 ? styles.positive : styles.negative;
-    const classChangeWeek = changeWeek > 0 ? styles.positive : styles.negative;
+    const classChangeHour = changeHour >= 0 ? styles.positive : styles.negative;
+    const classChangeDay = changeDay >= 0 ? styles.positive : styles.negative;
+    const classChangeWeek = changeWeek >= 0 ? styles.positive : styles.negative;
     const classChangeTotal =
-      changeTotal > 0 ? cx(styles.changeTotal, styles.positive) : cx(styles.changeTotal, styles.negative);
+      changeTotal >= 0 ? cx(styles.changeTotal, styles.positive) : cx(styles.changeTotal, styles.negative);
 
     return (
       <div className={styles.portfolioItem}>
@@ -48,12 +48,12 @@ class PortfolioTrackerItem extends Component {
           </ul>
           <div className={styles.price}>
             <span className={styles.calculations}>
-              {currency} {round(price, 6)} * {amount} ={' '}
+              Current: {currency} {round(price, 6)} * {amount} ={' '}
             </span>
             {currency}  {round(price * amount, 6)}
           </div>
         </div>
-        <div className={classChangeTotal}>
+        <div className={classChangeTotal}>          
           {round(changeTotal, 2)}%
         </div>
       </div>

@@ -12,7 +12,7 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@types/node-schedule": "^1.2.0",
-    "bcrypt": "^0.8.7",
+    "bcrypt": "*",
     "coinbase-node": "^0.2.1",
     "hapi": "^16.4.1",
     "hapi-auth-jwt2": "^7.2.4",

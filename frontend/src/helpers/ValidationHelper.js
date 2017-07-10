@@ -30,6 +30,14 @@ const validationRules = {
   max_length: {
     rule: new RegExp('[a-z]*.max'),
     message: '%s should be maximum %s characters long'
+  },
+  number: {
+    rule: new RegExp('number.base'),
+    message: '%s should be a number and is required'
+  },
+  date: {
+    rule: new RegExp('date.base'),
+    message: '%s should be a valid date and is required'
   }
 };
 

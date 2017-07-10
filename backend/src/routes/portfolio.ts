@@ -1,4 +1,13 @@
 import PortfolioController from '../controllers/PortfolioController';
+import * as Joi from 'joi';
+
+const coin = Joi.object().keys({
+  symbol: Joi.string().required(),
+  amount: Joi.number().required(),
+  source: Joi.string(),
+  boughtPrice: Joi.number(),
+  boughtAt: Joi.date()
+})
 
 module.exports = [
   {
@@ -9,12 +18,29 @@ module.exports = [
   {
     method: 'POST',
     path: '/portfolio/coins/add',
-    handler: PortfolioController.addCoins
+    handler: PortfolioController.addCoins,
+    config: {
+      validate: {
+        payload: Joi.array().items(coin)
+      }
+    }
   },
   {
     method: 'POST',
     path: '/portfolio/coin/update',
-    handler: PortfolioController.updateCoin
+    handler: PortfolioController.updateCoin,
+    config: {
+      validate: {
+        payload: {
+          id: Joi.string(),
+          symbol: Joi.string().required(),
+          amount: Joi.number().required(),
+          boughtPrice: Joi.number().default(0),
+          source: Joi.string(),
+          boughtAt: Joi.date()
+        }
+      }
+    }
   },
   {
     method: 'POST',
