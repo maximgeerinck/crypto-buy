@@ -84,10 +84,12 @@ class PortfolioTrackerPage extends Component {
       totalPrice += i.amount * (c.price.usd * rate);
 
       // total increase since you bought
-      let oldNumber = i.boughtPrice * i.amount;
-      let newNumber = i.amount * c.price.usd;
-
-      const changeTotal = oldNumber === 0 ? 0 : (newNumber - oldNumber) / oldNumber * 100;
+      let changeTotal = 0;
+      if (i.boughtPrice) {
+        let oldNumber = i.boughtPrice * i.amount;
+        let newNumber = i.amount * c.price.usd;
+        changeTotal = oldNumber === 0 ? 0 : (newNumber - oldNumber) / oldNumber * 100;
+      }
 
       return (
         <PortfolioTrackerItem

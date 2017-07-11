@@ -43,7 +43,7 @@ class PortfolioItemEditForm extends Component {
               id="name"
               placeholder="ETH"
               value={symbol}
-              onChange={e => this.setState({ name: e.target.value })}
+              onChange={e => this.setState({ symbol: e.target.value.toUpperCase() })}
             />
             <span className={formStyles.validationError}>
               {ValidationHelper.parse(validation.name, ['name'])}
