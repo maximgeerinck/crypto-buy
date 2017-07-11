@@ -52,6 +52,7 @@ class PortfolioItemForm extends Component {
           <label htmlFor="amount">Amount:</label>
           <input
             type="number"
+            step="any"
             id="amount"
             placeholder="0.00"
             value={amount}
@@ -65,6 +66,7 @@ class PortfolioItemForm extends Component {
           <label htmlFor="price">Price you bought 1 coin for:</label>
           <input
             type="number"
+            step="any"
             id="price"
             placeholder="0.00"
             value={boughtPrice}
