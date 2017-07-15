@@ -8,6 +8,8 @@ import Portfolio from "../portfolio/Portfolio";
 import PortfolioAddItemForm from "../portfolio/PortfolioAddItemForm";
 import UserPreferences from "./UserPreferences";
 
+import styles from "./account.scss";
+
 class AccountPage extends Component {
     componentWillMount() {
         if (!this.props.user.isLoaded) this.props.userActions.me();
@@ -30,7 +32,9 @@ class AccountPage extends Component {
 
         return (
             <Page title="Account">
-                Welcome <span>{user.email}</span>
+                <div className={styles.welcome}>
+                    Welcome back <span className={styles.strong}>{user.email}</span>
+                </div>
                 <h2>Preferences</h2>
                 <UserPreferences
                     currency={user.preferences.currency}

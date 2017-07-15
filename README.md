@@ -26,3 +26,19 @@ echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 echo 'vm.swappiness=10' >> /etc/sysctl.conf
 echo 'vm.vfs_cache_pressure=50' >> /etc/sysctl.conf
 ```
+
+
+## Backup mongo db
+```
+docker run \
+    --rm \
+    --link mongo:mongo \
+    -v /root:/backup mongo bash \
+    -c 'mongodump --out /backup --host $MONGO_PORT_27017_TCP_ADDR'
+```
+
+and copy to machine using
+
+```
+docker-machine scp -r dev:/root/test .
+```

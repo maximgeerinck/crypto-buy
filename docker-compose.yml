@@ -2,11 +2,11 @@ version: '2'
 services:
   mongo:
     image: mongo
-    # environment:
-    #   - "MONGO_PORT_27017_TCP_ADDR:127.0.0.1"
-    ports: ["27017:27017"]
     volumes:
       - volume_database:/data/db
+    ports: ["127.0.0.1:27017:27017"]
+    environment:
+      - MONGO_PORT_27017_TCP_ADDR=127.0.0.1
   app:
     build:
       context: ./backend

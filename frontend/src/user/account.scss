@@ -1,1 +1,17 @@
-
+h2 {
+    font-weight: 200;
+    font-family: Raleway;
+    text-transform: uppercase;
+    color: #122231;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.strong {
+    font-weight: bold;
+}
+.welcome {
+    padding: 20px;
+    background: rgba(105, 151, 104, 0.27);
+    text-align: center;
+    color: #304f4a;
+}
