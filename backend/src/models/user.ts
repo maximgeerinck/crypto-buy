@@ -1,9 +1,9 @@
+import { Document, Model, Schema } from "mongoose";
 import mongoose from "../db";
-import { Schema, Model, Document } from "mongoose";
-import AbstractModel from "./AbstractModel";
 import { genSalt, hashPassword } from "../utils/cypher-util";
-import UserCredential, { IUserCredential, IUserCredentialDAO } from "./UserCredential";
+import AbstractModel from "./AbstractModel";
 import UserCoin, { IUserCoin, IUserCoinDAO } from "./UserCoin";
+import UserCredential, { IUserCredential, IUserCredentialDAO } from "./UserCredential";
 import UserPreferences, { IUserPreferences, IUserPreferencesDAO } from "./UserPreferences";
 import UserShareSettings, { IUserShareSettings, IUserShareSettingsDAO } from "./UserShareSettings";
 
@@ -122,8 +122,8 @@ export class User extends AbstractModel implements IUser {
             created_on: this.createdOn,
             updated_on: this.updatedOn,
             portfolio,
-            shareSettings: this.shareSettings.toDAO(),
-            preferences: this.preferences.toDAO()
+            share_settings: this.shareSettings ? this.shareSettings.toDAO() : {},
+            preferences: this.preferences ? this.preferences.toDAO() : undefined
         };
     }
 }
@@ -166,7 +166,7 @@ export const UserSchema = new mongoose.Schema(
             initial_investment: { type: Number, required: true, default: 0 }
         },
         share_settings: {
-            token: { type: String, required: true },
+            token: { type: String, required: false },
             amount: { type: Boolean, required: true, default: false },
             bought_at: { type: Boolean, required: true, default: false },
             price: { type: Boolean, required: true, default: false },

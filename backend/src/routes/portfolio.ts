@@ -40,7 +40,7 @@ module.exports = [
                     boughtAt: Joi.date()
                 }
             }
-        },
+        }
     },
     {
         method: "POST",
@@ -54,8 +54,8 @@ module.exports = [
     },
     {
         method: "GET",
-        path: "/portfolio/{link}",
+        path: "/portfolio/{token}",
         handler: PortfolioController.sharedPortfolio,
         config: { auth: false }
-    },
+    }
 ];

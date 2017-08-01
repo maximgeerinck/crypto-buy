@@ -6,12 +6,8 @@ import cx from "classnames";
 import Clipboard from "clipboard";
 
 class SharePortfolio extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     componentDidMount() {
-        const clipboard = new Clipboard(this.refs.copyButton, {
+        new Clipboard(this.refs.copyButton, {
             text: (trigger) => {
                 return this.refs.shareUrl.value;
             }
@@ -34,14 +30,12 @@ class SharePortfolio extends Component {
     };
 
     render() {
-        const { token, price, source, boughtAt, amount } = this.props.settings;
-        const generated = ~token;
+        const { token } = this.props.settings;
+        const generated = token !== undefined;
 
         const buttonText = generated ? "Copy" : "Generate";
         const formAction = generated ? this.copy : this.share;
-        const inputText = generated
-            ? `https://cryptotrackr.com/portfolio/${token}`
-            : "Generate your unique share link!";
+        const inputText = generated ? `https://cryptotrackr.com/share/${token}` : "Generate your unique share link!";
 
         return (
             <form className={formStyles.form} onSubmit={formAction}>

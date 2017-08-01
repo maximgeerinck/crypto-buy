@@ -33,7 +33,7 @@ class AccountPage extends Component {
                 </Page>
             );
 
-        const user = this.props.user.user;
+        const user = this.props.user.get("user").toObject();
 
         return (
             <Page title="Account">

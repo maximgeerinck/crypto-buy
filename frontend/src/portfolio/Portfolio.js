@@ -5,7 +5,6 @@ import * as PortfolioActions from "./PortfolioActions";
 import styles from "./portfolio.scss";
 import PortfolioItem from "./PortfolioItem";
 import Loader from "../components/Loader";
-import moment from "moment";
 
 class Portfolio extends Component {
     componentWillMount() {
@@ -34,11 +33,7 @@ class Portfolio extends Component {
             );
         });
 
-        return (
-            <div className={styles.portfolio}>
-                {coinContainers}
-            </div>
-        );
+        return <div className={styles.portfolio}>{coinContainers}</div>;
     }
 }
 

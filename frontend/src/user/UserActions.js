@@ -96,6 +96,7 @@ export const resetPassword = (token, email, password) => {
 
 export const share = (settings) => {
     return (dispatch, getState) => {
+        dispatch(shareLinkRequest());
         return api.post("portfolio/share", { settings }, getState().auth.token).then((shareSettings) => {
             dispatch(shareLinkSuccess(shareSettings));
         });

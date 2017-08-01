@@ -1,5 +1,5 @@
 import * as types from "./ShareActionTypes";
-import { Record, Map, List } from "immutable";
+import { Record, Map } from "immutable";
 
 var InitialState = new Record({
     coins: Map({

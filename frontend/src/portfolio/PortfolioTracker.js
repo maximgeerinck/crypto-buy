@@ -45,9 +45,15 @@ class PortfolioTrackerPage extends Component {
     }
 
     render() {
-        const { portfolio, currency, user } = this.props;
+        const { portfolio, currency } = this.props;
+        const user = this.props.user.get("user").toObject();
 
-        if (portfolio.coins.get("loading") || portfolio.stats.get("loading") || currency.loading || !user.isLoaded)
+        if (
+            portfolio.coins.get("loading") ||
+            portfolio.stats.get("loading") ||
+            currency.loading ||
+            !this.props.user.isLoaded
+        )
             return (
                 <Page custom className={homeStyles.main}>
                     <Loader />
@@ -63,8 +69,8 @@ class PortfolioTrackerPage extends Component {
                 </div>
             ) : null;
 
-        const userCurrency = user.user.preferences.currency || "USD",
-            userInitialInvestment = user.user.preferences.initialInvestment || 0;
+        const userCurrency = user.preferences.currency || "USD",
+            userInitialInvestment = user.preferences.initialInvestment || 0;
 
         let totalPrice = 0,
             invested = 0,

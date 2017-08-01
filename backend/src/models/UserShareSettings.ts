@@ -21,7 +21,7 @@ export default class UserShareSettings implements IUserShareSettings {
             settings.price,
             settings.source,
             settings.bought_at,
-            settings.amount,
+            settings.amount
         );
     }
 
@@ -31,7 +31,7 @@ export default class UserShareSettings implements IUserShareSettings {
             settings.price,
             settings.source,
             settings.boughtAt,
-            settings.amount,
+            settings.amount
         );
     }
 
@@ -40,7 +40,7 @@ export default class UserShareSettings implements IUserShareSettings {
         readonly price: boolean = false,
         readonly source: boolean = false,
         readonly boughtAt: boolean = false,
-        readonly amount: boolean = false,
+        readonly amount: boolean = false
     ) {}
 
     public toDAO(): IUserShareSettingsDAO {
@@ -49,7 +49,7 @@ export default class UserShareSettings implements IUserShareSettings {
             price: this.price,
             source: this.source,
             bought_at: this.boughtAt,
-            amount: this.amount,
+            amount: this.amount
         } as IUserShareSettingsDAO;
     }
 }
