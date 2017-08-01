@@ -19,14 +19,17 @@ class ImageRotatorApp extends Component {
         ReactGA.pageview(window.location.pathname);
     }
 
-    componentDidMount() {
+    componentWillMount() {
         if (
             localStorage.getItem(VERSION_KEY) === null ||
-            localStorage.getItem(VERSION_KEY) !== window.cryptotrackr.version
+            parseInt(localStorage.getItem(VERSION_KEY)) !== window.cryptotrackr.version
         ) {
             localStorage.clear();
             localStorage.setItem(VERSION_KEY, window.cryptotrackr.version);
-            browserHistory.replace("/");
+
+            if (localStorage.getItem("user")) {
+                browserHistory.replace("/");
+            }
         }
     }
 
