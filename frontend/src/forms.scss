@@ -1,5 +1,6 @@
 @mixin form() {
     width: 100%;
+
     .group {
         display: flex;
         flex-direction: column;
@@ -16,6 +17,11 @@
         input,
         textarea,
         .input {
+            &:disabled {
+                background: rgba(0, 0, 0, 0.05);
+                color: #585858;
+            }
+
             background: #fefefe;
             display: block;
             padding: 15px 20px;
@@ -48,6 +54,11 @@
             font-size: 10pt;
         }
     }
+
+    .inline {
+        flex-direction: row;
+    }
+
     .validationError {
         font-size: 10pt;
         color: #d45959;

@@ -18,30 +18,8 @@ export interface IUserCoinDAO {
     bought_at?: Date;
 }
 export default class UserCoin extends AbstractModel implements IUserCoin {
-    symbol: string;
-    amount: number;
-    source: string;
-    boughtPrice: number;
-    boughtAt: Date = null;
-
-    constructor(
-        symbol: string,
-        amount: number,
-        source: string,
-        boughtPrice: number,
-        boughtAt: Date = null,
-        readonly _id: mongoose.Types.ObjectId = new mongoose.Types.ObjectId() // readonly boughtPrice: Number, // readonly totalPrice: Date
-    ) {
-        super();
-        this.symbol = symbol;
-        this.amount = amount;
-        this.source = source;
-        this.boughtPrice = boughtPrice;
-        this.boughtAt = boughtAt;
-    }
-
-    static parse(userCoin: IUserCoinDAO): UserCoin {
-        let userCoinObj = new UserCoin(
+    public static parse(userCoin: IUserCoinDAO): UserCoin {
+        const userCoinObj = new UserCoin(
             userCoin.symbol,
             userCoin.amount,
             userCoin.source,
@@ -52,8 +30,8 @@ export default class UserCoin extends AbstractModel implements IUserCoin {
         return userCoinObj;
     }
 
-    static parseDomain(userCoin: IUserCoin): UserCoin {
-        let userCoinObj: UserCoin = new UserCoin(
+    public static parseDomain(userCoin: IUserCoin): UserCoin {
+        const userCoinObj: UserCoin = new UserCoin(
             userCoin.symbol,
             userCoin.amount,
             userCoin.source,
@@ -64,8 +42,30 @@ export default class UserCoin extends AbstractModel implements IUserCoin {
         return userCoinObj;
     }
 
+    public symbol: string;
+    public amount: number;
+    public source: string;
+    public boughtPrice: number;
+    public boughtAt: Date = null;
+
+    constructor(
+        symbol: string,
+        amount: number,
+        source: string,
+        boughtPrice: number,
+        boughtAt: Date = null,
+        readonly _id: mongoose.Types.ObjectId = new mongoose.Types.ObjectId()
+    ) {
+        super();
+        this.symbol = symbol;
+        this.amount = amount;
+        this.source = source;
+        this.boughtPrice = boughtPrice;
+        this.boughtAt = boughtAt;
+    }
+
     toDAO() {
-        let userCoinDAO: IUserCoinDAO = {
+        const userCoinDAO: IUserCoinDAO = {
             _id: this._id,
             symbol: this.symbol,
             amount: this.amount,
