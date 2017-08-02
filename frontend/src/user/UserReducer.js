@@ -3,7 +3,7 @@ import { LOGOUT } from "../authentication/AuthenticationActionTypes";
 import { Record, Map } from "immutable";
 import * as errorTypes from "../helpers/ErrorHelper";
 
-const USER = "auth_user";
+export const USER = "auth_user";
 
 var InitialState = new Record({
     user: new Map({

@@ -4,12 +4,13 @@ import routes from "../routes";
 import ReactGA from "react-ga";
 import { browserHistory } from "react-router";
 import "./index.scss";
+import { USER } from "../user/UserReducer";
 
 const TRACKING_ID = "UA-101986081-1";
 
 ReactGA.initialize(TRACKING_ID);
 window.cryptotrackr = {
-    version: 1
+    version: 3
 };
 const VERSION_KEY = "cryptotrackr_version";
 
@@ -20,6 +21,8 @@ class ImageRotatorApp extends Component {
     }
 
     componentWillMount() {
+        let userLoggedIn = localStorage.getItem(USER) !== null;
+
         if (
             localStorage.getItem(VERSION_KEY) === null ||
             parseInt(localStorage.getItem(VERSION_KEY)) !== window.cryptotrackr.version
@@ -27,7 +30,8 @@ class ImageRotatorApp extends Component {
             localStorage.clear();
             localStorage.setItem(VERSION_KEY, window.cryptotrackr.version);
 
-            if (localStorage.getItem("user")) {
+            // only redirect if user key was found
+            if (userLoggedIn) {
                 browserHistory.replace("/");
             }
         }
