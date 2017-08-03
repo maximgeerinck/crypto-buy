@@ -34,7 +34,7 @@ class PortfolioController {
 
         Array.prototype.push.apply(req.auth.credentials.portfolio, coins);
 
-        return UserService.update(req.auth.credentials).then((user) => {
+        return UserService.update(req.auth.credentials).then(user => {
             // refactor request object
             const coins = user.portfolio;
             coins.forEach((coin: any) => {
@@ -55,20 +55,16 @@ class PortfolioController {
     public updateCoin(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         const { id, symbol, boughtPrice, amount, boughtAt, source } = req.payload;
 
-        const user: DomainUser = req.auth.credentials;
+        let user: DomainUser = req.auth.credentials;
 
         for (const key in user.portfolio) {
             const coin = user.portfolio[key];
-            if (coin._id === id) {
-                user.portfolio[key].symbol = symbol;
-                user.portfolio[key].amount = amount;
-                user.portfolio[key].boughtAt = boughtAt;
-                user.portfolio[key].boughtPrice = boughtPrice;
-                user.portfolio[key].source = source;
+            if (coin._id == id) {
+                user.portfolio[key] = new UserCoin(symbol, amount, source, boughtPrice, boughtAt);
             }
         }
 
-        UserService.update(user).then((user) => {
+        UserService.update(user).then(user => {
             // refactor request object
             const coins = user.portfolio;
             coins.forEach((coin: any) => {
@@ -92,7 +88,7 @@ class PortfolioController {
         const user: DomainUser = req.auth.credentials;
 
         UserService.removeCoin(id, user).then(() => {
-            reply(user.portfolio.filter((uc) => uc._id !== id));
+            reply(user.portfolio.filter(uc => uc._id !== id));
         });
     }
 
@@ -122,10 +118,10 @@ class PortfolioController {
         const settings: any = req.payload.settings;
 
         UserService.sharePortfolio(user, settings.price, settings.source, settings.boughtAt, settings.amount)
-            .then((shareSettings) => {
+            .then(shareSettings => {
                 reply(shareSettings);
             })
-            .catch((err) => {
+            .catch(err => {
                 if (err === "E_NOT_FOUND") {
                     return reply(Boom.notFound());
                 }
@@ -146,14 +142,14 @@ class PortfolioController {
 
                 // link them to current value
                 CoinRepository.findCoinsBySymbols(Object.keys(portfolio))
-                    .then((details) => {
+                    .then(details => {
                         reply(details);
                     })
-                    .catch((err) => {
+                    .catch(err => {
                         console.log(err);
                     });
             })
-            .catch((err) => {
+            .catch(err => {
                 if (err === "E_NOT_FOUND") {
                     return reply(Boom.notFound());
                 }

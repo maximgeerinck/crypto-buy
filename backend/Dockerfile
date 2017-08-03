@@ -21,8 +21,8 @@ RUN npm install
 # copy sources
 COPY ./src ./src
 COPY ./config ./config
-COPY ./mails ./mails
-COPY ./public ./public
+# COPY ./mails ./mails
+# COPY ./public ./public
 
 # COMPILE
 RUN npm run compile
