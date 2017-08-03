@@ -88,7 +88,7 @@ class PortfolioController {
         const user: DomainUser = req.auth.credentials;
 
         UserService.removeCoin(id, user).then(() => {
-            reply(user.portfolio.filter(uc => uc._id !== id));
+            reply(user.portfolio.filter(uc => uc._id != id));
         });
     }
 
