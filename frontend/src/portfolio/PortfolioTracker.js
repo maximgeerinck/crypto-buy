@@ -102,6 +102,7 @@ class PortfolioTrackerPage extends Component {
             return (
                 <PortfolioTrackerItem
                     key={key}
+                    id={c.id}
                     name={c.name}
                     symbol={c.symbol}
                     changeHour={c.change.percent_1h}

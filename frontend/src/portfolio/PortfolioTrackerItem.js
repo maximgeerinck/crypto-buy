@@ -19,7 +19,8 @@ class PortfolioTrackerItem extends Component {
             price,
             amount,
             currency,
-            showStatistics
+            showStatistics,
+            id
         } = this.props;
 
         const loader = this.props.isUpdating ? <Loader className={styles.loader} color="#848484" /> : null;
@@ -30,53 +31,58 @@ class PortfolioTrackerItem extends Component {
         const classChangeTotal =
             changeTotal >= 0 ? cx(styles.changeTotal, styles.positive) : cx(styles.changeTotal, styles.negative);
 
-        const statistics = showStatistics ? (
-            <ul className={styles.change}>
-                <li>
-                    <span className={styles.changeType}>H</span>
-                    <span className={classChangeHour}>{changeHour}%</span>
-                </li>
-                <li>
-                    <span className={styles.changeType}>D</span>
-                    <span className={classChangeDay}>{changeDay}%</span>
-                </li>
-                <li>
-                    <span className={styles.changeType}>W</span>
-                    <span className={classChangeWeek}>{changeWeek}%</span>
-                </li>
-            </ul>
-        ) : (
-            undefined
-        );
+        const statistics = showStatistics
+            ? <ul className={styles.change}>
+                  <li>
+                      <span className={styles.changeType}>H</span>
+                      <span className={classChangeHour}>
+                          {changeHour}%
+                      </span>
+                  </li>
+                  <li>
+                      <span className={styles.changeType}>D</span>
+                      <span className={classChangeDay}>
+                          {changeDay}%
+                      </span>
+                  </li>
+                  <li>
+                      <span className={styles.changeType}>W</span>
+                      <span className={classChangeWeek}>
+                          {changeWeek}%
+                      </span>
+                  </li>
+              </ul>
+            : undefined;
 
-        const prices = showStatistics ? (
-            <div className={styles.price}>
-                <span className={styles.calculations}>
-                    Current: {currency} {round(price, 6)} * {amount} ={" "}
-                </span>
-                {currency} {round(price * amount, 6)}
-            </div>
-        ) : (
-            undefined
-        );
+        const prices = showStatistics
+            ? <div className={styles.price}>
+                  <span className={styles.calculations}>
+                      Current: {currency} {round(price, 6)} * {amount} ={" "}
+                  </span>
+                  {currency} {round(price * amount, 6)}
+              </div>
+            : undefined;
 
         return (
             <div className={styles.portfolioItem}>
                 {loader}
                 <div className={styles.details}>
                     <h2>
-                        <img src={getCoinImage(name)} alt="Coin" /> {name} ({symbol})
+                        <img src={getCoinImage(id)} alt="Coin" /> {name} ({symbol})
                     </h2>
                     {statistics}
                     {prices}
                 </div>
-                <div className={classChangeTotal}>{round(changeTotal, 2)}%</div>
+                <div className={classChangeTotal}>
+                    {round(changeTotal, 2)}%
+                </div>
             </div>
         );
     }
 }
 
 PortfolioTrackerItem.propTypes = {
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     symbol: PropTypes.string.isRequired,
     changeHour: PropTypes.number.isRequired,
