@@ -7,6 +7,7 @@ import user from "../user/UserReducer";
 import portfolio from "../portfolio/PortfolioReducer";
 import currency from "../currency/CurrencyReducer";
 import share from "../share/ShareReducer";
+import coins from "../coin/CoinReducer";
 
 const rootReducer = combineReducers({
     form,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
     portfolio,
     currency,
     share,
+    coins,
     routing: routerReducer
 });
 

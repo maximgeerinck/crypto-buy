@@ -2,7 +2,7 @@ import PortfolioController from "../controllers/PortfolioController";
 import * as Joi from "joi";
 
 const coin = Joi.object().keys({
-    symbol: Joi.string().required(),
+    coinId: Joi.string().required(),
     amount: Joi.number().required(),
     source: Joi.string(),
     boughtPrice: Joi.number(),
@@ -33,7 +33,7 @@ module.exports = [
             validate: {
                 payload: {
                     id: Joi.string(),
-                    symbol: Joi.string().required(),
+                    coinId: Joi.string().required(),
                     amount: Joi.number().required(),
                     boughtPrice: Joi.number().default(0),
                     source: Joi.string(),

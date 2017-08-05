@@ -39,10 +39,10 @@ export interface IUserDAO extends Document {
 export class User extends AbstractModel implements IUser {
     public static parse(user: IUserDAO): User {
         const credentials = user.credentials
-            ? user.credentials.map((credential) => UserCredential.parse(credential))
+            ? user.credentials.map(credential => UserCredential.parse(credential))
             : null;
 
-        const portfolio = user.portfolio ? user.portfolio.map((Coin) => UserCoin.parse(Coin)) : undefined;
+        const portfolio = user.portfolio ? user.portfolio.map(Coin => UserCoin.parse(Coin)) : undefined;
         const shareSettings = user.share_settings ? UserShareSettings.parse(user.share_settings) : undefined;
 
         const userObj = new User(user.email, credentials, portfolio, user.created_on, user._id);
@@ -56,10 +56,10 @@ export class User extends AbstractModel implements IUser {
 
     public static parseDomain(user: IUser): User {
         const credentials = user.credentials
-            ? user.credentials.map((credential) => UserCredential.parseDomain(credential))
+            ? user.credentials.map(credential => UserCredential.parseDomain(credential))
             : null;
 
-        const portfolio = user.portfolio ? user.portfolio.map((Coin) => UserCoin.parseDomain(Coin)) : null;
+        const portfolio = user.portfolio ? user.portfolio.map(Coin => UserCoin.parseDomain(Coin)) : null;
         const shareSettings = user.shareSettings ? UserShareSettings.parseDomain(user.shareSettings) : undefined;
 
         const userObj = new User(user.email, credentials, portfolio, user.createdOn, user.id);
@@ -104,12 +104,12 @@ export class User extends AbstractModel implements IUser {
     public toDAO() {
         let credentials: IUserCredentialDAO[];
         if (this.credentials) {
-            credentials = this.credentials.map((credential) => credential.toDAO());
+            credentials = this.credentials.map(credential => credential.toDAO());
         }
 
         let portfolio: IUserCoinDAO[];
         if (this.portfolio) {
-            portfolio = this.portfolio.map((item) => item.toDAO());
+            portfolio = this.portfolio.map(item => item.toDAO());
         }
 
         return {
@@ -152,7 +152,7 @@ export const UserSchema = new mongoose.Schema(
         ],
         portfolio: [
             {
-                symbol: { type: String, required: true },
+                coin_id: { type: String, required: true },
                 amount: { type: Number, required: true, default: 0.0 },
                 source: { type: String, required: true },
                 bought_price: { type: Number, required: false },

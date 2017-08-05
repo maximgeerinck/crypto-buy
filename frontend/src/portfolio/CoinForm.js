@@ -5,6 +5,7 @@ import Loader from "../components/Loader";
 import ValidationHelper from "../helpers/ValidationHelper";
 import cx from "classnames";
 import moment from "moment";
+import CoinSelectorContainer from "../coin/CoinSelectorContainer";
 
 class CoinForm extends Component {
     constructor(props) {
@@ -33,12 +34,18 @@ class CoinForm extends Component {
         clearInterval(this.timer);
     }
 
-    onSubmit = (e) => {
+    onSubmit = e => {
         e.preventDefault();
         this.props.onSubmit(this.state.coin);
     };
 
-    onChange = (e) => {
+    onCoinSelect = val => {
+        let coin = this.state.coin;
+        coin.coinId = val;
+        this.props.onChange(coin);
+    };
+
+    onChange = e => {
         e.preventDefault();
         if (e.target.name === "boughtAt") {
             clearInterval(this.timer);
@@ -55,7 +62,7 @@ class CoinForm extends Component {
     };
 
     render() {
-        const { symbol, amount, boughtPrice, source } = this.state.coin;
+        const { coinId, amount, boughtPrice, source } = this.state.coin;
         const boughtAt = moment(this.state.coin.boughtAt).format("YYYY-MM-DDTHH:mm:ss");
 
         const { isSubmitting } = this.props;
@@ -79,17 +86,15 @@ class CoinForm extends Component {
         return (
             <form className={formStyles.form} onSubmit={this.onSubmit}>
                 <div className={formStyles.group}>
-                    <label htmlFor="symbol">Symbol:</label>
-                    <input
-                        type="text"
-                        id="symbol"
-                        name="symbol"
-                        placeholder="ETH"
-                        value={symbol}
-                        onChange={this.onChange}
+                    <label htmlFor="symbol">Coin:</label>
+                    <CoinSelectorContainer
+                        name="coinId"
+                        value={coinId}
+                        onSelect={this.onCoinSelect}
+                        className={formStyles.input}
                     />
                     <span className={formStyles.validationError}>
-                        {ValidationHelper.parse(validation.symbol, [ "Symbol" ])}
+                        {ValidationHelper.parse(validation.coinId, ["Coin"])}
                     </span>
                 </div>
                 <div className={formStyles.group}>
@@ -104,7 +109,7 @@ class CoinForm extends Component {
                         onChange={this.onChange}
                     />
                     <span className={formStyles.validationError}>
-                        {ValidationHelper.parse(validation.amount, [ "Amount" ])}
+                        {ValidationHelper.parse(validation.amount, ["Amount"])}
                     </span>
                 </div>
                 <div className={formStyles.group} style={showPricePerCoin}>
@@ -119,7 +124,7 @@ class CoinForm extends Component {
                         onChange={this.onChange}
                     />
                     <span className={formStyles.validationError}>
-                        {ValidationHelper.parse(validation.boughtPrice, [ "Purchase price" ])}
+                        {ValidationHelper.parse(validation.boughtPrice, ["Purchase price"])}
                     </span>
                 </div>
                 <div className={formStyles.group}>
@@ -133,7 +138,7 @@ class CoinForm extends Component {
                         onChange={this.onChange}
                     />
                     <span className={formStyles.validationError}>
-                        {ValidationHelper.parse(validation.source, [ "Source" ])}
+                        {ValidationHelper.parse(validation.source, ["Source"])}
                     </span>
                 </div>
                 <div className={formStyles.group}>
@@ -147,7 +152,7 @@ class CoinForm extends Component {
                         onChange={this.onChange}
                     />
                     <span className={formStyles.validationError}>
-                        {ValidationHelper.parse(validation.boughtAt, [ "Purchase date" ])}
+                        {ValidationHelper.parse(validation.boughtAt, ["Purchase date"])}
                     </span>
                 </div>
                 <div className={formStyles.group}>

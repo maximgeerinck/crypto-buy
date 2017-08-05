@@ -24,7 +24,7 @@ class PortfolioController {
         const coins = req.payload.map(
             (coin: IUserCoin) =>
                 new UserCoin(
-                    coin.symbol,
+                    coin.coinId,
                     coin.amount,
                     coin.source,
                     coin.boughtPrice,
@@ -53,14 +53,14 @@ class PortfolioController {
      * @memberof PortfolioController
      */
     public updateCoin(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
-        const { id, symbol, boughtPrice, amount, boughtAt, source } = req.payload;
+        const { id, coinId, boughtPrice, amount, boughtAt, source } = req.payload;
 
         let user: DomainUser = req.auth.credentials;
 
         for (const key in user.portfolio) {
             const coin = user.portfolio[key];
-            if (coin._id == id) {
-                user.portfolio[key] = new UserCoin(symbol, amount, source, boughtPrice, boughtAt);
+            if (coin.id == id) {
+                user.portfolio[key] = new UserCoin(coinId, amount, source, boughtPrice, boughtAt);
             }
         }
 
@@ -68,8 +68,8 @@ class PortfolioController {
             // refactor request object
             const coins = user.portfolio;
             coins.forEach((coin: any) => {
-                coin.id = coin._id;
-                delete coin._id;
+                coin.id = coin.id;
+                delete coin.id;
             });
             reply(coins);
         });
@@ -88,7 +88,7 @@ class PortfolioController {
         const user: DomainUser = req.auth.credentials;
 
         UserService.removeCoin(id, user).then(() => {
-            reply(user.portfolio.filter(uc => uc._id != id));
+            reply(user.portfolio.filter(uc => uc.id != id));
         });
     }
 
@@ -102,8 +102,7 @@ class PortfolioController {
     public index(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         const coins = req.auth.credentials.portfolio;
         coins.forEach((coin: any) => {
-            coin.id = coin._id;
-            delete coin._id;
+            coin.id = coin.id;
         });
         return reply(coins);
     }
@@ -137,11 +136,11 @@ class PortfolioController {
 
                 // unique values
                 for (const coin of result) {
-                    portfolio[coin.symbol] = coin;
+                    portfolio[coin.coinId] = coin;
                 }
 
                 // link them to current value
-                CoinRepository.findCoinsBySymbols(Object.keys(portfolio))
+                CoinRepository.findCoinsByIds(Object.keys(portfolio))
                     .then(details => {
                         reply(details);
                     })

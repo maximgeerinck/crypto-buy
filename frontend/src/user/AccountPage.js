@@ -8,6 +8,7 @@ import Portfolio from "../portfolio/Portfolio";
 import PortfolioAddItemForm from "../portfolio/PortfolioAddItemForm";
 import UserPreferences from "./UserPreferences";
 import SharePortfolio from "./SharePortfolio";
+import CoinSelector from "../coin/CoinSelectorContainer";
 
 import styles from "./account.scss";
 
@@ -16,11 +17,11 @@ class AccountPage extends Component {
         if (!this.props.user.isLoaded) this.props.userActions.me();
     }
 
-    onSavePreferences = (preferences) => {
+    onSavePreferences = preferences => {
         this.props.userActions.updatePreferences(preferences);
     };
 
-    share = (settings) => {
+    share = settings => {
         this.props.userActions.share(settings);
     };
 
@@ -61,11 +62,11 @@ class AccountPage extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     user: state.user
 });
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return {
         userActions: bindActionCreators(UserActions, dispatch)
     };

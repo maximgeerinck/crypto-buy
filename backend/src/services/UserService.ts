@@ -24,11 +24,11 @@ class UserService {
         let verifiedUser: IUser = null;
 
         return UserRepository.findCredentialByEmail(email)
-            .then((user) => {
+            .then(user => {
                 verifiedUser = user;
                 return comparePassword(password, user.credentials[user.credentials.length - 1].password);
             })
-            .then((res) => {
+            .then(res => {
                 if (!res) {
                     throw new Error("E_NOT_FOUND");
                 }
@@ -39,10 +39,10 @@ class UserService {
     public requestToken(email: string): Promise<string> {
         // check if exists
         return CypherUtil.genToken()
-            .then((token) => {
+            .then(token => {
                 return UserRepository.findOneAndUpdate({ email }, { token });
             })
-            .then((updatedUser) => {
+            .then(updatedUser => {
                 return updatedUser.token;
             });
     }
@@ -51,23 +51,23 @@ class UserService {
         const credential = new UserCredential("", "");
         credential.requestedOn = new Date();
         return genSalt()
-            .then((salt) => {
+            .then(salt => {
                 credential.salt = salt;
                 return hashPassword(password, salt);
             })
-            .then((hash) => {
+            .then(hash => {
                 credential.password = hash;
-                const user = new User(email, [ credential ], []);
+                const user = new User(email, [credential], []);
                 return UserRepository.create(user);
             });
     }
 
     public createCredentials(password: string): Promise<UserCredential> {
         return genSalt()
-            .then((salt) => {
-                return hashPassword(password, salt).then((hash) => [ salt, hash ]);
+            .then(salt => {
+                return hashPassword(password, salt).then(hash => [salt, hash]);
             })
-            .then((params) => {
+            .then(params => {
                 return new UserCredential(params[1], params[0]);
             });
     }
@@ -85,7 +85,7 @@ class UserService {
     }
 
     public addCredentials(user: User, password: string): Promise<User> {
-        return this.createCredentials(password).then((credentials) => {
+        return this.createCredentials(password).then(credentials => {
             user.addCredentials(credentials);
             return this.update(user);
         });
@@ -106,17 +106,17 @@ class UserService {
         const shareSettings = new UserShareSettings(token, price, source, boughtAt, amount);
         user.setShareSettings(shareSettings);
 
-        return this.update(user).then((_) => shareSettings);
+        return this.update(user).then(_ => shareSettings);
     }
 
     public getSharedPortfolio(token: string): Promise<any> {
-        return UserRepository.getUserSharedPortfolio(token).then((user) => {
+        return UserRepository.getUserSharedPortfolio(token).then(user => {
             const portfolio: any = [];
             const settings: UserShareSettings = user.shareSettings;
 
             for (const coin of user.portfolio) {
                 portfolio.push({
-                    symbol: coin.symbol,
+                    coinId: coin.coinId,
                     amount: settings.amount ? coin.amount : undefined,
                     boughtAt: settings.boughtAt ? coin.boughtAt : undefined,
                     boughtPrice: settings.price ? coin.boughtPrice : undefined,

@@ -9,9 +9,21 @@ import formStyles from "../forms.scss";
 class AddPortfolio extends Component {
     constructor(props) {
         super(props);
-        this.state = {
+        this.state = this.getInitialState();
+    }
+
+    onSubmit = coin => {
+        this.props.portfolioActions.addCoins([coin]).then(success => {
+            if (success) {
+                this.setState(this.getInitialState());
+            }
+        });
+    };
+
+    getInitialState() {
+        const initialState = {
             coin: {
-                symbol: undefined,
+                coinId: undefined,
                 amount: undefined,
                 boughtPrice: undefined,
                 source: undefined,
@@ -19,13 +31,10 @@ class AddPortfolio extends Component {
             },
             showForm: false
         };
+        return initialState;
     }
 
-    onSubmit = (coin) => {
-        this.props.portfolioActions.addCoins([ coin ]);
-    };
-
-    onChange = (coin) => {
+    onChange = coin => {
         this.setState({ coin: coin });
     };
 
@@ -57,12 +66,12 @@ class AddPortfolio extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     portfolio: state.portfolio,
     user: state.user
 });
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return {
         portfolioActions: bindActionCreators(PortfolioActions, dispatch)
     };

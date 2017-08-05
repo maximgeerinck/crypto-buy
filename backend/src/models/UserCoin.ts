@@ -2,8 +2,8 @@ import mongoose from "../db";
 import AbstractModel from "./AbstractModel";
 
 export interface IUserCoin {
-    _id: any;
-    symbol: string;
+    id: any;
+    coinId: string;
     amount: number;
     source: string;
     boughtPrice: number;
@@ -11,7 +11,7 @@ export interface IUserCoin {
 }
 export interface IUserCoinDAO {
     _id: any;
-    symbol: string;
+    coin_id: string;
     amount: number;
     source: string;
     bought_price: number;
@@ -20,7 +20,7 @@ export interface IUserCoinDAO {
 export default class UserCoin extends AbstractModel implements IUserCoin {
     public static parse(userCoin: IUserCoinDAO): UserCoin {
         const userCoinObj = new UserCoin(
-            userCoin.symbol,
+            userCoin.coin_id,
             userCoin.amount,
             userCoin.source,
             userCoin.bought_price,
@@ -32,32 +32,32 @@ export default class UserCoin extends AbstractModel implements IUserCoin {
 
     public static parseDomain(userCoin: IUserCoin): UserCoin {
         const userCoinObj: UserCoin = new UserCoin(
-            userCoin.symbol,
+            userCoin.coinId,
             userCoin.amount,
             userCoin.source,
             userCoin.boughtPrice,
             userCoin.boughtAt,
-            userCoin._id
+            userCoin.id
         );
         return userCoinObj;
     }
 
-    public symbol: string;
+    public coinId: string;
     public amount: number;
     public source: string;
     public boughtPrice: number;
     public boughtAt: Date = null;
 
     constructor(
-        symbol: string,
+        coinId: string,
         amount: number,
         source: string,
         boughtPrice: number,
         boughtAt: Date = null,
-        readonly _id: mongoose.Types.ObjectId = new mongoose.Types.ObjectId()
+        readonly id: mongoose.Types.ObjectId = new mongoose.Types.ObjectId()
     ) {
         super();
-        this.symbol = symbol;
+        this.coinId = coinId;
         this.amount = amount;
         this.source = source;
         this.boughtPrice = boughtPrice;
@@ -66,8 +66,8 @@ export default class UserCoin extends AbstractModel implements IUserCoin {
 
     toDAO() {
         const userCoinDAO: IUserCoinDAO = {
-            _id: this._id,
-            symbol: this.symbol,
+            _id: this.id,
+            coin_id: this.coinId,
             amount: this.amount,
             source: this.source,
             bought_price: this.boughtPrice

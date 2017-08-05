@@ -8,19 +8,19 @@ import Clipboard from "clipboard";
 class SharePortfolio extends Component {
     componentDidMount() {
         new Clipboard(this.refs.copyButton, {
-            text: (trigger) => {
+            text: trigger => {
                 return this.refs.shareUrl.value;
             }
         });
     }
 
-    share = (e) => {
+    share = e => {
         e.preventDefault();
         this.props.onGenerate({ source: false, price: false, boughtAt: false, amount: false });
         return 0;
     };
 
-    copy = (e) => {
+    copy = e => {
         e.preventDefault();
         const url = this.refs.shareUrl.value;
         this.refs.shareUrl.value = "Copied!";
@@ -31,7 +31,7 @@ class SharePortfolio extends Component {
 
     render() {
         const { token } = this.props.settings;
-        const generated = token !== undefined;
+        const generated = token !== null;
 
         const buttonText = generated ? "Copy" : "Generate";
         const formAction = generated ? this.copy : this.share;

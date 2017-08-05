@@ -14,6 +14,7 @@ import Loader from "../components/Loader";
 import { reduceItems } from "./PortfolioHelper";
 import cx from "classnames";
 import pageStyles from "../components/page.scss";
+import PortfolioPieChart from "./PortfolioPieChart";
 
 import { round } from "../helpers/MathHelper";
 
@@ -21,7 +22,11 @@ export class PortfolioTracker extends Component {
     render() {
         const children = this.props.children;
 
-        return <div className={styles.portfolio}>{children}</div>;
+        return (
+            <div className={styles.portfolio}>
+                {" "}{children}{" "}
+            </div>
+        );
     }
 }
 
@@ -41,7 +46,7 @@ class PortfolioTrackerPage extends Component {
 
     componentDidMount() {
         // load portfolio stats
-        // setInterval(this.props.portfolioActions.details, 5000);
+        setInterval(this.props.portfolioActions.details, 10000);
     }
 
     render() {
@@ -61,13 +66,13 @@ class PortfolioTrackerPage extends Component {
             );
 
         const noCoins =
-            portfolio.stats.get("coins").length === 0 ? (
-                <div style={{ "text-align": "center", "margin-top": "20px" }}>
-                    <a href="/account" className={formStyles.button}>
-                        You have not added coins yet, add them here
-                    </a>
-                </div>
-            ) : null;
+            portfolio.stats.get("coins").length === 0
+                ? <div style={{ "text-align": "center", "margin-top": "20px" }}>
+                      <a href="/account" className={formStyles.button}>
+                          You have not added coins yet, add them here{" "}
+                      </a>{" "}
+                  </div>
+                : null;
 
         const userCurrency = user.preferences.currency || "USD",
             userInitialInvestment = user.preferences.initialInvestment || 0;
@@ -76,18 +81,19 @@ class PortfolioTrackerPage extends Component {
             invested = 0,
             rate = currency.rates[userCurrency];
 
-        const isFetching = portfolio.page.get("isFetching");
+        const isFetching = portfolio.stats.get("loading");
 
         const itemContainers = portfolio.stats.get("coins").map((c, key) => {
             const items = reduceItems(portfolio.coins.get("items"));
-            const i = items[c.symbol];
 
-            invested += i.boughtPrice * i.amount;
-            totalPrice += i.amount * (c.price.usd * rate);
+            const i = items[c.id];
 
             // total increase since you bought
             let changeTotal = c.change.percent_1h;
             if (i.boughtPrice) {
+                invested += i.boughtPrice * i.amount;
+                totalPrice += i.amount * (c.price.usd * rate);
+
                 let oldNumber = i.boughtPrice * i.amount;
                 let newNumber = i.amount * c.price.usd;
                 changeTotal = oldNumber === 0 ? 0 : (newNumber - oldNumber) / oldNumber * 100;
@@ -123,41 +129,52 @@ class PortfolioTrackerPage extends Component {
 
         document.title = `${round(totalPrice, 2)} ${userCurrency} (${investedGainedPercentage}%)`;
 
+        // PIE CHART DATA
+        const chartData = portfolio.stats.get("coins").map(coin => {
+            const items = reduceItems(portfolio.coins.get("items"));
+            const i = items[coin.id];
+            let price = round(coin.price.usd * rate * i.amount, 2);
+
+            return {
+                symbol: coin.symbol,
+                total: parseFloat(price)
+            };
+        });
+
+        const chart = portfolio.stats.get("coins").length === 0 ? null : <PortfolioPieChart data={chartData} />;
+
         return (
             <Page custom className={cx(pageStyles.focused, homeStyles.main)}>
-                {/* investment statistics*/}
+                {" "}{/* investment statistics*/}{" "}
                 <div className={styles.portfolioStats}>
                     <h3>
-                        {userCurrency} {round(totalPrice, 2)}
+                        {" "}{userCurrency} {round(totalPrice, 2)}{" "}
                     </h3>
-
                     <div className={styles.invested}>
                         <p className={investedChange}>
-                            {userCurrency} {investedGainedAmount} ({investedGainedPercentage}%)
-                        </p>
+                            {" "}{userCurrency} {investedGainedAmount}({investedGainedPercentage} % ){" "}
+                        </p>{" "}
                         <p className={styles.investmentNotes}>
-                            ( based on investment of {userCurrency} {round(invested, 2)} )
-                        </p>
-                    </div>
+                            (based on investment of {userCurrency} {round(invested, 2)}){" "}
+                        </p>{" "}
+                    </div>{" "}
                 </div>
-
-                {/* Portfolio */}
-                <PortfolioTracker>{itemContainers}</PortfolioTracker>
-
-                {noCoins}
+                {chart}
+                {/* Portfolio */} <PortfolioTracker> {itemContainers} </PortfolioTracker>
+                {noCoins}{" "}
             </Page>
         );
     }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     portfolio: state.portfolio,
     auth: state.auth,
     currency: state.currency,
     user: state.user
 });
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
     return {
         portfolioActions: bindActionCreators(PortfolioActions, dispatch),
         currencyActions: bindActionCreators(CurrencyActions, dispatch),

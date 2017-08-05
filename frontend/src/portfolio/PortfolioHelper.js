@@ -1,21 +1,22 @@
 export const reduceItems = items => {
-  var reducer = (allCoins, coin) => {
-    if (coin.symbol in allCoins) {
-      // allCoins[coin.symbol].amount
-      allCoins[coin.symbol].cost =
-        (allCoins[coin.symbol].amount * allCoins[coin.symbol].cost + coin.amount * coin.boughtPrice) /
-        (allCoins[coin.symbol].amount + coin.amount);
-      allCoins[coin.symbol].amount += coin.amount;
-    } else {
-      allCoins[coin.symbol] = {
-        amount: coin.amount,
-        boughtPrice: coin.boughtPrice,
-        symbol: coin.symbol
-      };
-    }
+    var reducer = (allCoins, coin) => {
+        if (coin.coinId in allCoins) {
+            // allCoins[coin.symbol].amount
+            allCoins[coin.coinId].cost =
+                (allCoins[coin.coinId].amount * allCoins[coin.coinId].cost + coin.amount * coin.boughtPrice) /
+                (allCoins[coin.coinId].amount + coin.amount);
+            allCoins[coin.coinId].amount += coin.amount;
+        } else {
+            allCoins[coin.coinId] = {
+                amount: coin.amount,
+                boughtPrice: coin.boughtPrice,
+                symbol: coin.symbol,
+                coinId: coin.coinId
+            };
+        }
+        delete allCoins["undefined"];
+        return allCoins;
+    };
 
-    return allCoins;
-  };
-
-  return items.reduce(reducer, {});
+    return items.reduce(reducer, {});
 };

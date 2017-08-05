@@ -32,34 +32,34 @@ let initialState = new InitialState();
 
 const PortfolioReducer = (state = initialState, action) => {
     // reset actions
-    state = state.setIn([ "coins", "validationErrors" ], List([]));
+    state = state.setIn(["coins", "validationErrors"], List([])).setIn(["form", "errors"], List([]));
 
     switch (action.type) {
         case types.RETRIEVE_ITEMS_SUCCESS:
             return state
-                .setIn([ "coins", "items" ], action.body)
-                .setIn([ "coins", "validationErrors" ], action.body.map((coin) => null))
-                .setIn([ "coins", "loading" ], false);
+                .setIn(["coins", "items"], action.body)
+                .setIn(["coins", "validationErrors"], action.body.map(coin => null))
+                .setIn(["coins", "loading"], false);
 
         case types.COIN_DETAILS_REQUEST:
-            return state.setIn([ "page", "isFetching" ], true);
+            return state.setIn(["page", "isFetching"], true);
 
         case types.COIN_DETAILS_SUCCESS:
-            return state.setIn([ "stats", "coins" ], action.body).setIn([ "stats", "loading" ], false);
+            return state.setIn(["stats", "coins"], action.body).setIn(["stats", "loading"], false);
 
         case types.COIN_DETAILS_FAILURE:
-            return state.setIn([ "page", "isFetching" ], false);
+            return state.setIn(["page", "isFetching"], false);
 
         case types.COINS_ADD_REQUEST:
-            return state.setIn([ "form", "isSubmitting" ], true);
+            return state.setIn(["form", "isSubmitting"], true);
 
         case types.COINS_ADD_SUCCESS:
         case types.COIN_UPDATE_SUCCESS:
-            return state.setIn([ "coins", "items" ], action.body).setIn([ "form", "isSubmitting" ], false);
+            return state.setIn(["coins", "items"], action.body).setIn(["form", "isSubmitting"], false);
 
         case types.COIN_DELETE_SUCCESS:
             localStorage.setItem(PORTFOLIO, JSON.stringify(action.body));
-            return state.setIn([ "coins", "items" ], action.body).setIn([ "form", "isSubmitting" ], false);
+            return state.setIn(["coins", "items"], action.body).setIn(["form", "isSubmitting"], false);
 
         case types.COINS_ADD_FAILURE:
             // filter out the index if exists
@@ -68,12 +68,12 @@ const PortfolioReducer = (state = initialState, action) => {
                 errors[key.replace("0.", "")] = action.body[key];
             }
 
-            return state.setIn([ "form", "errors" ], errors).setIn([ "form", "isSubmitting" ], false);
+            return state.setIn(["form", "errors"], errors).setIn(["form", "isSubmitting"], false);
 
         case types.COIN_UPDATE_FAILURE:
             var changedErrors = [].concat(state.coins.get("validationErrors"));
             changedErrors[action.key] = action.body;
-            return state.setIn([ "coins", "validationErrors" ], changedErrors);
+            return state.setIn(["coins", "validationErrors"], changedErrors);
 
         default:
             return state;
