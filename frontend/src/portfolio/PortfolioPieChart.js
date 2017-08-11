@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { PieChart, Pie, Legend, Cell, Tooltip } from "recharts";
+import { PieChart, Pie, Cell, Tooltip } from "recharts";
 import styles from "./portfolio.scss";
 
 const COLORS = ["#2E1F27", "#DD7230", "#607744", "#F4C95D", "#E7E393", "3E6990", "#F9A03F"];

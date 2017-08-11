@@ -90,9 +90,10 @@ class PortfolioTrackerPage extends Component {
 
             // total increase since you bought
             let changeTotal = c.change.percent_1h;
+            totalPrice += i.amount * (c.price.usd * rate);
+            
             if (i.boughtPrice) {
-                invested += i.boughtPrice * i.amount;
-                totalPrice += i.amount * (c.price.usd * rate);
+                invested += i.boughtPrice * i.amount;                
 
                 let oldNumber = i.boughtPrice * i.amount;
                 let newNumber = i.amount * c.price.usd;

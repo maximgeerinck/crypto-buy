@@ -34,9 +34,7 @@ class PortfolioItem extends Component {
             return <div />;
         }
 
-        const image = coin.coinId
-            ? <img src={getCoinImage(coin.coinId)} alt="Coin image" className={styles.image} />
-            : null;
+        const image = coin.coinId ? <img src={getCoinImage(coin.coinId)} alt="Coin" className={styles.image} /> : null;
 
         const editForm = this.state.editMode
             ? <CoinForm

@@ -10,7 +10,7 @@ const TRACKING_ID = "UA-101986081-1";
 
 ReactGA.initialize(TRACKING_ID);
 window.cryptotrackr = {
-    version: 3
+    version: 5
 };
 const VERSION_KEY = "cryptotrackr_version";
 
@@ -21,7 +21,7 @@ class ImageRotatorApp extends Component {
     }
 
     componentWillMount() {
-        let userLoggedIn = localStorage.getItem(USER) !== null;
+        let userLoggedIn = localStorage.getItem(USER) != null;
 
         if (
             localStorage.getItem(VERSION_KEY) === null ||

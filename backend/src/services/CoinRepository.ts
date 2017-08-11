@@ -3,8 +3,15 @@ import CoinModel, { Coin } from "../models/Coin";
 import { IUserCredential, IUserCredentialDAO } from "../models/UserCredential";
 import { IRepositoryAdapter, MongoRepository } from "./repository";
 
+interface ICoinStatistic {
+    [key: string]: {
+        [date: string]: number;
+    };
+}
+
 interface ICoinRepository {
     findCoinsByIds(ids: string[]): Promise<Coin[]>;
+    sparklineWeek(ids: string[]): Promise<ICoinStatistic>;
 }
 
 class CoinRepository extends MongoRepository<Coin> implements ICoinRepository {
@@ -27,6 +34,31 @@ class CoinRepository extends MongoRepository<Coin> implements ICoinRepository {
 
                 return result.map(Coin.parse);
             });
+    }
+
+    public sparklineWeek(ids: string[]): Promise<ICoinStatistic> {
+        return CoinModel.aggregate([
+            { $match: { "coins.id": { $in: ids } } },
+            // Unwind the array to denormalize
+            { $unwind: "$coins" },
+            // Match specific array elements
+            { $match: { "coins.id": { $in: ids } } },
+
+            // Group back to array form
+            {
+                $group: {
+                    _id: "$_id",
+                    coins: { $push: "$coins" }
+                }
+            },
+            { $sort: { _id: -1 } },
+            { $limit: 7 }
+        ]).then((results: any) => {
+            for (let result of results) {
+                console.log(result);
+            }
+            return null;
+        });
     }
 }
 

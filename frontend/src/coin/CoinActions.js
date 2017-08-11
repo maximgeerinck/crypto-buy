@@ -1,7 +1,5 @@
 import * as types from "./CoinActionTypes";
 import api from "../app/api";
-import moment from "moment";
-import * as ErrorHelper from "../helpers/ErrorHelper";
 
 const retrieveCoinsSuccess = coins => ({ type: types.COINS_SUCCESS, body: coins });
 

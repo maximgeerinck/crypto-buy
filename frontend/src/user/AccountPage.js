@@ -8,7 +8,6 @@ import Portfolio from "../portfolio/Portfolio";
 import PortfolioAddItemForm from "../portfolio/PortfolioAddItemForm";
 import UserPreferences from "./UserPreferences";
 import SharePortfolio from "./SharePortfolio";
-import CoinSelector from "../coin/CoinSelectorContainer";
 
 import styles from "./account.scss";
 

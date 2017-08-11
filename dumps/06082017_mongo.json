@@ -1,0 +1,3596 @@
+[
+	{
+		"_id" : ObjectId("595ca77fa088bc002ad8b743"),
+		"token" : null,
+		"email" : "geerinck.maxim@gmail.com",
+		"created_on" : ISODate("2017-07-05T08:46:54.832Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.631Z"),
+		"preferences" : {
+			"currency" : "EUR",
+			"initial_investment" : 1825
+		},
+		"portfolio" : [
+			{
+				"amount" : 0.00324104,
+				"bought_at" : ISODate("2017-05-31T00:00:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 211.6938,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595ca77ea088bc002ad8b73c")
+			},
+			{
+				"amount" : 2453.89379504,
+				"bought_at" : ISODate("2017-06-04T00:00:00Z"),
+				"coin_id" : "siacoin",
+				"bought_price" : 0.015331426,
+				"source" : "poloniex",
+				"_id" : ObjectId("595ca77ea088bc002ad8b73d")
+			},
+			{
+				"amount" : 235.59520371,
+				"bought_at" : ISODate("2017-07-05T08:46:55.233Z"),
+				"coin_id" : "iconomi",
+				"bought_price" : 2.2,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595ca77ea088bc002ad8b73e")
+			},
+			{
+				"amount" : 5.00436856,
+				"bought_at" : ISODate("2017-07-05T08:46:55.233Z"),
+				"coin_id" : "mysterium",
+				"bought_price" : 2,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595ca77ea088bc002ad8b73f")
+			},
+			{
+				"amount" : 1298.7,
+				"bought_at" : ISODate("2017-07-05T08:46:55.232Z"),
+				"coin_id" : "cofound-it",
+				"bought_price" : 0.1725,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595ca77ea088bc002ad8b740")
+			},
+			{
+				"amount" : 64.935,
+				"bought_at" : ISODate("2017-06-27T22:00:00Z"),
+				"coin_id" : "mobilego",
+				"bought_price" : 1.59,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595ca77ea088bc002ad8b741")
+			},
+			{
+				"amount" : 30.17511854,
+				"bought_at" : ISODate("2017-07-13T05:57:07Z"),
+				"coin_id" : "metal",
+				"bought_price" : 3.37793376,
+				"source" : "bittrex.com",
+				"_id" : ObjectId("59670bb5597d5f0014b4b995")
+			},
+			{
+				"amount" : 31,
+				"bought_at" : ISODate("2017-07-13T18:59:03Z"),
+				"coin_id" : "stratis",
+				"source" : "bittrex.com",
+				"_id" : ObjectId("5967c2f9597d5f0014c0417b")
+			},
+			{
+				"amount" : 2.5,
+				"bought_at" : ISODate("2017-07-14T07:38:30Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 176.39,
+				"source" : "gdax.com",
+				"_id" : ObjectId("596874fb597d5f0014cb2fa6")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-08-01T21:01:36.639Z"),
+				"expired" : false,
+				"_id" : ObjectId("5980ec30512d2600147d6209"),
+				"salt" : "$2a$10$Lu../PxyExO9ot4dnChn3.",
+				"password" : "$2a$10$Lu../PxyExO9ot4dnChn3.Xh.oS7HJVYVj6HDout/iBIuNEp0xoS6"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false,
+			"token" : "2514a383-0fdd-4a44-a1ce-875e417235b0"
+		}
+	},
+	{
+		"_id" : ObjectId("595caf1e29d136001485ec0c"),
+		"token" : null,
+		"email" : "krishde@gmail.com",
+		"created_on" : ISODate("2017-07-05T09:19:26.735Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.641Z"),
+		"preferences" : {
+			"currency" : "AUD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [ ],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-05T09:19:59.983Z"),
+				"expired" : false,
+				"_id" : ObjectId("595caf3f29d136001485ec11"),
+				"salt" : "$2a$10$uGAZ08t9jxpKj65dyr/eNu",
+				"password" : "$2a$10$uGAZ08t9jxpKj65dyr/eNuE1oN.YMx.VZahSA3p/X/OZhYgyHIQDC"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595caf2a29d136001485ec0f"),
+		"token" : null,
+		"email" : "as@asd.com",
+		"created_on" : ISODate("2017-07-05T09:19:38.953Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.644Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 3,
+				"bought_at" : ISODate("2017-06-28T08:10:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 378,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595caf4d29d136001485efcc")
+			},
+			{
+				"amount" : 8,
+				"bought_at" : ISODate("2017-06-28T08:10:00Z"),
+				"coin_id" : "litecoin",
+				"bought_price" : 47,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595caf6329d136001485efce")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-12T20:59:22.729Z"),
+				"expired" : false,
+				"_id" : ObjectId("59668daa597d5f0014acc29d"),
+				"salt" : "$2a$10$XkqAdn5KEZPHvwbG2B0Rne",
+				"password" : "$2a$10$XkqAdn5KEZPHvwbG2B0RneheKHt.5qA/9IMFzd0MhOANTL9d0yKJ2"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595cb6ae29d1360014866358"),
+		"token" : null,
+		"email" : "rmbrkfld@gmail.com",
+		"created_on" : ISODate("2017-07-05T09:51:42.337Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.650Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 19,
+				"bought_at" : ISODate("2017-06-28T09:10:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 100,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595cb6d229d1360014866714")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-05T09:52:18.898Z"),
+				"expired" : false,
+				"_id" : ObjectId("595cb6d229d1360014866715"),
+				"salt" : "$2a$10$Xy4smm.Wkw9VV4HDWufyI.",
+				"password" : "$2a$10$Xy4smm.Wkw9VV4HDWufyI.zmA0u9o9TizKkQASjo5kgYLmMMFXzpe"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595cba0e29d1360014869b44"),
+		"token" : null,
+		"email" : "notmyacc90@gmail.com",
+		"created_on" : ISODate("2017-07-05T10:06:06.372Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.658Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 11,
+				"bought_at" : ISODate("2017-06-28T14:10:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 209,
+				"source" : "coinbase.com",
+				"_id" : ObjectId("595cba3e29d1360014869b46")
+			},
+			{
+				"amount" : 11,
+				"bought_at" : ISODate("2017-06-28T14:10:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 209,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595cba6d29d1360014869f06")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-05T10:07:41.458Z"),
+				"expired" : false,
+				"_id" : ObjectId("595cba6d29d1360014869f07"),
+				"salt" : "$2a$10$QvyEer0j7AkH.1XZMcxHcu",
+				"password" : "$2a$10$QvyEer0j7AkH.1XZMcxHcu5dAn.Kxn.bB6aqSDuv6/rdDAet2HGym"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595cba6529d1360014869f04"),
+		"token" : null,
+		"email" : "haunhbb@gmail.com",
+		"created_on" : ISODate("2017-07-05T10:07:33.986Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.661Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 1500,
+				"bought_at" : ISODate("2017-06-28T03:10:00Z"),
+				"coin_id" : "aragon",
+				"bought_price" : null,
+				"source" : "bittrex.com",
+				"_id" : ObjectId("595cba9929d136001486a2c2")
+			},
+			{
+				"amount" : 54411.337,
+				"bought_at" : ISODate("2017-06-28T03:10:00Z"),
+				"coin_id" : "batcoin",
+				"bought_price" : null,
+				"source" : "bittrex.com",
+				"_id" : ObjectId("595cbb1a29d136001486aa38")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-05T10:11:49.346Z"),
+				"expired" : false,
+				"_id" : ObjectId("595cbb6529d136001486adf5"),
+				"salt" : "$2a$10$kytjY/5XBDmXx5ajhPrCSe",
+				"password" : "$2a$10$kytjY/5XBDmXx5ajhPrCSe8qGPRw6Ki2OTFAV9sXTakeLez87kr2e"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595cbf3a29d136001486ed51"),
+		"token" : null,
+		"email" : "zsombor.fedor@icloud.com",
+		"created_on" : ISODate("2017-07-05T10:28:10.730Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.667Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 1,
+				"bought_at" : ISODate("2017-06-28T08:10:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 253,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595cbf8129d136001486f10f")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-05T10:29:21.245Z"),
+				"expired" : false,
+				"_id" : ObjectId("595cbf8129d136001486f110"),
+				"salt" : "$2a$10$xWCSF0ZJjXU.aoQqfIoNy.",
+				"password" : "$2a$10$xWCSF0ZJjXU.aoQqfIoNy.aPvJE4Inpi8tWDnieAqN.LoS5r.J.uG"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595cd4df29d136001488443b"),
+		"token" : null,
+		"email" : "tsej@coned.com",
+		"created_on" : ISODate("2017-07-05T12:00:31.371Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.672Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 117,
+				"bought_at" : ISODate("2017-06-28T14:10:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 75,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595cd50d29d136001488443e")
+			},
+			{
+				"amount" : 1000,
+				"bought_at" : ISODate("2017-06-28T14:10:00Z"),
+				"coin_id" : "bancor",
+				"bought_price" : 1,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595cd55229d1360014884bb6")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-05T12:02:26.299Z"),
+				"expired" : false,
+				"_id" : ObjectId("595cd55229d1360014884bb7"),
+				"salt" : "$2a$10$KQRAjMbHYyNYaHRtCXRNLO",
+				"password" : "$2a$10$KQRAjMbHYyNYaHRtCXRNLO63/5TNR0v.wTFUhH4fh4yl5RN3IRSQ."
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595cd6cf29d136001488621b"),
+		"token" : null,
+		"email" : "sof2er@gmail.com",
+		"created_on" : ISODate("2017-07-05T12:08:47.579Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.674Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [ ],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-05T12:08:47.587Z"),
+				"expired" : false,
+				"password" : "$2a$10$H5lepzmtlo94wwR2KvD4TOqihBiM1NJjvMwejYasTc928S9lzaz.y",
+				"salt" : "$2a$10$H5lepzmtlo94wwR2KvD4TO",
+				"_id" : ObjectId("595cd6cf29d136001488621c")
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595cd83e29d136001488788b"),
+		"token" : null,
+		"email" : "23chicco84@libero.it",
+		"created_on" : ISODate("2017-07-05T12:14:54.262Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.678Z"),
+		"preferences" : {
+			"currency" : "EUR",
+			"initial_investment" : 800
+		},
+		"portfolio" : [
+			{
+				"amount" : 190.21583,
+				"bought_at" : ISODate("2017-05-29T08:10:00Z"),
+				"coin_id" : "iconomi",
+				"bought_price" : 1.54,
+				"source" : "kraken.com",
+				"_id" : ObjectId("595cd8cc29d13600148883c0")
+			},
+			{
+				"amount" : 484.98537355,
+				"bought_at" : ISODate("2017-06-23T08:10:00Z"),
+				"coin_id" : "cofound-it",
+				"bought_price" : 0.21,
+				"source" : "bittrex.com",
+				"_id" : ObjectId("595cdbd629d136001488b455")
+			},
+			{
+				"amount" : 5105.53475207,
+				"bought_at" : ISODate("2017-07-04T08:10:00Z"),
+				"coin_id" : "musicoin",
+				"bought_price" : 0.029,
+				"source" : "bittrex.com",
+				"_id" : ObjectId("595cdc3129d136001488b812")
+			},
+			{
+				"amount" : 0.04732331,
+				"bought_at" : ISODate("2017-08-03T19:17:46.931Z"),
+				"coin_id" : "bitcoin-cash",
+				"bought_price" : 300,
+				"source" : "bittrex.com",
+				"_id" : ObjectId("598376db89363f0014a251b6")
+			},
+			{
+				"amount" : 88.91691204,
+				"bought_at" : ISODate("2017-08-03T19:18:51.916Z"),
+				"coin_id" : "monaco",
+				"bought_price" : 0.76,
+				"source" : "bittrex.com",
+				"_id" : ObjectId("5983777a89363f0014a25dc0")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-08-03T19:20:26.359Z"),
+				"expired" : false,
+				"_id" : ObjectId("5983777a89363f0014a25dc1"),
+				"salt" : "$2a$10$R9U3V4GWWiBaS4aq7N9YeO",
+				"password" : "$2a$10$R9U3V4GWWiBaS4aq7N9YeOZvkhAmWR3ckxDMTb317b66ujpRfE50K"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false,
+			"token" : null
+		}
+	},
+	{
+		"_id" : ObjectId("595cd9c429d13600148892b3"),
+		"token" : null,
+		"email" : "tristan.vonballuseck@hotmail.com",
+		"created_on" : ISODate("2017-07-05T12:21:24.640Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.682Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [ ],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-05T12:24:30.983Z"),
+				"expired" : false,
+				"_id" : ObjectId("595cda7e29d1360014889def"),
+				"salt" : "$2a$10$.Q4x/AM0mUt8fPZMRSB5ue",
+				"password" : "$2a$10$.Q4x/AM0mUt8fPZMRSB5ueCDlnEwqulgCEJEbdExD/SF9fyLsuy0G"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595cde4329d136001488d9ad"),
+		"token" : null,
+		"email" : "kars-93@hotmail.com",
+		"created_on" : ISODate("2017-07-05T12:40:35.498Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.692Z"),
+		"preferences" : {
+			"currency" : "EUR",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 2,
+				"bought_at" : ISODate("2017-06-28T08:10:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 210,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595cdeb029d136001488e12b")
+			},
+			{
+				"amount" : 5,
+				"bought_at" : ISODate("2017-06-28T06:10:00Z"),
+				"coin_id" : "cloakcoin",
+				"bought_price" : 7.9,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595cdef429d136001488e4ea")
+			},
+			{
+				"amount" : 15,
+				"bought_at" : ISODate("2017-06-28T02:10:00Z"),
+				"coin_id" : "viacoin",
+				"bought_price" : 1.26,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595cdf5929d136001488ec69")
+			},
+			{
+				"amount" : 2.5,
+				"bought_at" : ISODate("2017-06-27T16:10:00Z"),
+				"coin_id" : "stratis",
+				"bought_price" : 7.22,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595ce04c29d136001488fb5f")
+			},
+			{
+				"amount" : 50,
+				"bought_at" : ISODate("2017-06-28T08:10:00Z"),
+				"coin_id" : "blackcoin",
+				"bought_price" : 0.4726,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595ce28e29d1360014891cfb")
+			},
+			{
+				"amount" : 10,
+				"bought_at" : ISODate("2017-06-28T06:10:00Z"),
+				"coin_id" : "peercoin",
+				"bought_price" : 2.17,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595ce30129d1360014892472")
+			},
+			{
+				"amount" : 5,
+				"bought_at" : ISODate("2017-06-28T04:10:00Z"),
+				"coin_id" : "radium",
+				"bought_price" : 6.42,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595ce32629d136001489282e")
+			},
+			{
+				"amount" : 10.5,
+				"bought_at" : ISODate("2017-06-28T02:10:00Z"),
+				"coin_id" : "emercoin",
+				"bought_price" : 1.46,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595ce35a29d1360014892bea")
+			},
+			{
+				"amount" : 15,
+				"bought_at" : ISODate("2017-06-28T00:10:00Z"),
+				"coin_id" : "crown",
+				"bought_price" : 1.02,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595ce3ae29d1360014892fa6")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-05T13:03:42.408Z"),
+				"expired" : false,
+				"_id" : ObjectId("595ce3ae29d1360014892fa7"),
+				"salt" : "$2a$10$os0qB2VadmTRhf.kprUe3.",
+				"password" : "$2a$10$os0qB2VadmTRhf.kprUe3.h6NjgmDXU39ZpLAKmTFim4lyqkt5Dei"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595ce96129d1360014898921"),
+		"token" : null,
+		"email" : "mhoef19l@yahoo.com",
+		"created_on" : ISODate("2017-07-05T13:28:01.174Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.704Z"),
+		"preferences" : {
+			"currency" : "EUR",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 100,
+				"bought_at" : ISODate("2017-03-28T08:10:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 38,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595ce98929d1360014898cde")
+			},
+			{
+				"amount" : 1,
+				"bought_at" : ISODate("2017-03-28T08:10:00Z"),
+				"coin_id" : "bitcoin",
+				"bought_price" : 2400,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595ce9c429d136001489909b")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-05T13:29:40.838Z"),
+				"expired" : false,
+				"_id" : ObjectId("595ce9c429d136001489909c"),
+				"salt" : "$2a$10$pyNLJeHoReIlrFpAmmc3Ce",
+				"password" : "$2a$10$pyNLJeHoReIlrFpAmmc3CeO/AZk8CC7UlFOax///jfQAwSkfOEZ6y"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595cead729d136001489a340"),
+		"token" : null,
+		"email" : "crissb1337@hotmail.com",
+		"created_on" : ISODate("2017-07-05T13:34:15.429Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.706Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [ ],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-05T13:34:15.440Z"),
+				"expired" : false,
+				"password" : "$2a$10$xHgmdfg3e2AJaaSrR9ENUed0NOZUAMMugMe51Z7oQk7TkETr79AFS",
+				"salt" : "$2a$10$xHgmdfg3e2AJaaSrR9ENUe",
+				"_id" : ObjectId("595cead729d136001489a341")
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595cf34629d13600148a25b2"),
+		"token" : null,
+		"email" : "nannooskeeska@gmail.com",
+		"created_on" : ISODate("2017-07-05T14:10:14.846Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.711Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 55,
+				"bought_at" : ISODate("2017-06-28T15:10:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 1,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595cf36729d13600148a296e")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-05T14:10:47.157Z"),
+				"expired" : false,
+				"_id" : ObjectId("595cf36729d13600148a296f"),
+				"salt" : "$2a$10$oGGnU7fuc6s3RYC7443Ete",
+				"password" : "$2a$10$oGGnU7fuc6s3RYC7443EteE/qsJYnx3r.bp6FBf27r76Onen35LEC"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595cfcec29d13600148ac249"),
+		"token" : null,
+		"email" : "jdude88@gmail.com",
+		"created_on" : ISODate("2017-07-05T14:51:24.626Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.713Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [ ],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-05T14:51:24.651Z"),
+				"expired" : false,
+				"password" : "$2a$10$J72b7IrdBa1CgHlY7iJVPO.bploj2c6u/tUcPfEcl33B4n9WrzQ0q",
+				"salt" : "$2a$10$J72b7IrdBa1CgHlY7iJVPO",
+				"_id" : ObjectId("595cfcec29d13600148ac24a")
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595cff2e29d13600148ae3d9"),
+		"token" : null,
+		"email" : "kessayli@hotmail.com",
+		"created_on" : ISODate("2017-07-05T15:01:02.007Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.719Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 280,
+				"bought_at" : ISODate("2017-06-29T00:10:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 80,
+				"source" : "Coinbase",
+				"_id" : ObjectId("595cff6e29d13600148aeb51")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-05T15:02:06.917Z"),
+				"expired" : false,
+				"_id" : ObjectId("595cff6e29d13600148aeb52"),
+				"salt" : "$2a$10$MKheUQnlzjlENDcR.0aJKu",
+				"password" : "$2a$10$MKheUQnlzjlENDcR.0aJKuQMLlyfkv8lPJOXEHF0K3pxkLPsAUIfi"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595d060329d13600148b53af"),
+		"token" : null,
+		"email" : "hasan.mutlu@me.com",
+		"created_on" : ISODate("2017-07-05T15:30:11.626Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.721Z"),
+		"preferences" : {
+			"currency" : "EUR",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 0.48432383,
+				"bought_at" : ISODate("2017-06-28T08:10:00Z"),
+				"coin_id" : "bitcoin",
+				"bought_price" : 1,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595d0ebb29d13600148bdda1")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-05T16:07:23.045Z"),
+				"expired" : false,
+				"_id" : ObjectId("595d0ebb29d13600148bdda2"),
+				"salt" : "$2a$10$OOnScgZUGa16nwzUErx/ru",
+				"password" : "$2a$10$OOnScgZUGa16nwzUErx/ruhlqmmMdbr3RtqkUDXX77rqP/FL0gdf."
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595d0d0829d13600148bc381"),
+		"token" : null,
+		"email" : "akono.x.brathwaite@gmail.com",
+		"created_on" : ISODate("2017-07-05T16:00:08.449Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.723Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [ ],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-05T16:00:08.471Z"),
+				"expired" : false,
+				"password" : "$2a$10$Oa1jrpNZiHh.AJ2pvcF9yuRuzIEHLQL7gnZxPhO2lz7Vu4IHqeUPu",
+				"salt" : "$2a$10$Oa1jrpNZiHh.AJ2pvcF9yu",
+				"_id" : ObjectId("595d0d0829d13600148bc382")
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595d16ae29d13600148c5c58"),
+		"token" : null,
+		"email" : "cream158@hotmail.com",
+		"created_on" : ISODate("2017-07-05T16:41:18.139Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.726Z"),
+		"preferences" : {
+			"currency" : "EUR",
+			"initial_investment" : 3000
+		},
+		"portfolio" : [
+			{
+				"amount" : 2100,
+				"bought_at" : ISODate("2017-07-15T12:09:24Z"),
+				"coin_id" : "iconomi",
+				"bought_price" : 0.4761904761904762,
+				"source" : "kraken.com",
+				"_id" : ObjectId("596343878016360014d44cbc")
+			},
+			{
+				"amount" : 334.83,
+				"bought_at" : ISODate("2017-07-10T18:51:36Z"),
+				"coin_id" : "bcap",
+				"bought_price" : 1.497005988023952,
+				"source" : "Liqui.io",
+				"_id" : ObjectId("5963e8fb597d5f001482685a")
+			},
+			{
+				"amount" : 613,
+				"bought_at" : ISODate("2017-07-10T16:51:36Z"),
+				"coin_id" : "eos",
+				"bought_price" : 0.8156606851549755,
+				"source" : "EOS_Crowdsale",
+				"_id" : ObjectId("5963e924597d5f001482685d")
+			},
+			{
+				"amount" : 0.264,
+				"bought_at" : ISODate("2017-07-15T12:05:53Z"),
+				"coin_id" : "byteball",
+				"bought_price" : 326,
+				"source" : "EOS_Crowdsale",
+				"_id" : ObjectId("5963e92e597d5f001482685f")
+			},
+			{
+				"amount" : 0.06,
+				"bought_at" : ISODate("2017-07-10T12:51:36Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 0,
+				"source" : "Kraken",
+				"_id" : ObjectId("5963e950597d5f0014826c1c")
+			},
+			{
+				"amount" : 827.925,
+				"bought_at" : ISODate("2017-07-19T09:22:22.675Z"),
+				"coin_id" : "omisego",
+				"bought_price" : 0.6038647342995169,
+				"source" : "bittrex",
+				"_id" : ObjectId("596f24d05523fa00149a9168")
+			},
+			{
+				"amount" : 0.94944,
+				"bought_at" : ISODate("2017-08-02T14:54:53.076Z"),
+				"coin_id" : "bitcoin",
+				"bought_price" : 790,
+				"source" : "kraken.com",
+				"_id" : ObjectId("59836cea89363f0014a1a960")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-08-03T18:35:22.609Z"),
+				"expired" : false,
+				"_id" : ObjectId("59836cea89363f0014a1a961"),
+				"salt" : "$2a$10$0JuP6vSgjfWlQmRk2Fg1Au",
+				"password" : "$2a$10$0JuP6vSgjfWlQmRk2Fg1Au5xQX6tNocff5UXCwCDVtJDzDkx4N202"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false,
+			"token" : "b05ce72d-2096-43dc-b68d-89e5f204a511"
+		}
+	},
+	{
+		"_id" : ObjectId("595d253f29d13600148d3fba"),
+		"token" : null,
+		"email" : "matthoganproductions@gmail.com",
+		"created_on" : ISODate("2017-07-05T17:43:27.114Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.731Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 32,
+				"bought_at" : ISODate("2017-06-28T17:10:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 256,
+				"source" : "GDAX",
+				"_id" : ObjectId("595d259029d13600148d4376")
+			},
+			{
+				"amount" : 1443.038,
+				"bought_at" : ISODate("2017-06-29T00:10:00Z"),
+				"coin_id" : "golem-network-tokens",
+				"bought_price" : 0.460237,
+				"source" : "shapeshift.io",
+				"_id" : ObjectId("595d25b829d13600148d4732")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-05T17:45:28.795Z"),
+				"expired" : false,
+				"_id" : ObjectId("595d25b829d13600148d4733"),
+				"salt" : "$2a$10$aBZtVAK0RQv1a9YiqDSqIe",
+				"password" : "$2a$10$aBZtVAK0RQv1a9YiqDSqIeWyVTY2f6XJ2jJXafXRr9x302npwT32G"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595d2b9b29d13600148da475"),
+		"token" : null,
+		"email" : "gcrouquet@gmail.com",
+		"created_on" : ISODate("2017-07-05T18:10:35.622Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.733Z"),
+		"preferences" : {
+			"currency" : "CHF",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 1000,
+				"bought_at" : ISODate("2017-06-28T08:10:00Z"),
+				"coin_id" : "bancor",
+				"bought_price" : 1,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595d43fe29d13600148f281e")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-05T19:55:31.163Z"),
+				"expired" : false,
+				"_id" : ObjectId("595d443329d13600148f2bda"),
+				"salt" : "$2a$10$9XC1wMbqYBNXHT0.hwMTh.",
+				"password" : "$2a$10$9XC1wMbqYBNXHT0.hwMTh.EpiM/tKdUbGI3fuY1YfBSZLSe4fSju6"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595d33a029d13600148e2334"),
+		"token" : null,
+		"email" : "troy.len1@gmail.com",
+		"created_on" : ISODate("2017-07-05T18:44:48.013Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.735Z"),
+		"preferences" : {
+			"currency" : "CAD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 1300,
+				"bought_at" : ISODate("2017-06-28T16:10:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 1,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595d340129d13600148e2aab")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-05T18:46:25.641Z"),
+				"expired" : false,
+				"_id" : ObjectId("595d340129d13600148e2aac"),
+				"salt" : "$2a$10$TOZo6yb9sxRXRFSp23TLi.",
+				"password" : "$2a$10$TOZo6yb9sxRXRFSp23TLi.Lb/0i.rxDZvby.th6P0mF4kfbj.k1ZS"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595d36a929d13600148e53ac"),
+		"token" : null,
+		"email" : "c.egelhoff172@gmai.com",
+		"created_on" : ISODate("2017-07-05T18:57:45.031Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.737Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 4.4,
+				"bought_at" : ISODate("2017-07-05T16:51:00Z"),
+				"coin_id" : "litecoin",
+				"bought_price" : 0.0195,
+				"source" : "poloniex",
+				"_id" : ObjectId("595d4cda29d13600148fb5be")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-05T20:32:26.528Z"),
+				"expired" : false,
+				"_id" : ObjectId("595d4cda29d13600148fb5bf"),
+				"salt" : "$2a$10$Sjcw6I2ZOzr68XfSJLqd3u",
+				"password" : "$2a$10$Sjcw6I2ZOzr68XfSJLqd3u0xgjHzKK8a6gR43ei5z3P3qVgpJEyRW"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595d5af729d1360014909559"),
+		"token" : null,
+		"email" : "ph.menoud@gmail.com",
+		"created_on" : ISODate("2017-07-05T21:32:39.641Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.738Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [ ],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-05T21:32:39.655Z"),
+				"expired" : false,
+				"password" : "$2a$10$HtDiM7n8n3gToJbWYVUeeeNGzF9OkSEI6BprdrrUBmYmltHezFhoi",
+				"salt" : "$2a$10$HtDiM7n8n3gToJbWYVUeee",
+				"_id" : ObjectId("595d5af729d136001490955a")
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595d8ed929d136001493d0a8"),
+		"token" : null,
+		"email" : "grant.marshall@gmail.com",
+		"created_on" : ISODate("2017-07-06T01:14:01.332Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.741Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 4.5,
+				"bought_at" : ISODate("2017-06-28T17:10:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 1,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595d8f3a29d136001493d464")
+			},
+			{
+				"amount" : 2,
+				"bought_at" : ISODate("2017-06-29T00:10:00Z"),
+				"coin_id" : "litecoin",
+				"bought_price" : 1,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595d8f5629d136001493d820")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-06T01:16:18.567Z"),
+				"expired" : false,
+				"_id" : ObjectId("595d8f6229d136001493d822"),
+				"salt" : "$2a$10$16CA5ZRXJQ58mz7lXzkbNe",
+				"password" : "$2a$10$16CA5ZRXJQ58mz7lXzkbNeKU7t/b/dk5WHVA76G649ufOKwCNNKk6"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595d9d3429d136001494b402"),
+		"token" : null,
+		"email" : "nickrunje@gmail.com",
+		"created_on" : ISODate("2017-07-06T02:15:16.582Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.743Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [ ],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-06T02:15:16.616Z"),
+				"expired" : false,
+				"password" : "$2a$10$vWsRWXTuFOWEPZtS9qa1Aeg.ket3DSq4FQkWCch/9wYHsrBZz3AQy",
+				"salt" : "$2a$10$vWsRWXTuFOWEPZtS9qa1Ae",
+				"_id" : ObjectId("595d9d3429d136001494b403")
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595de79c29d1360014995157"),
+		"token" : null,
+		"email" : "8fd7616f@opayq.com",
+		"created_on" : ISODate("2017-07-06T07:32:44.032Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.745Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 15.82,
+				"bought_at" : ISODate("2017-06-28T14:10:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 335,
+				"source" : "",
+				"_id" : ObjectId("595de82a29d1360014995c87")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-06T07:35:06.375Z"),
+				"expired" : false,
+				"_id" : ObjectId("595de82a29d1360014995c88"),
+				"salt" : "$2a$10$C6B.liIQ8TBFdWxk9YdENe",
+				"password" : "$2a$10$C6B.liIQ8TBFdWxk9YdENeXSOvsc7nLpY2jDllVvob8F.tHP8tg0m"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595e279129d13600149d4abc"),
+		"token" : null,
+		"email" : "nicefire@gmail.com",
+		"created_on" : ISODate("2017-07-06T12:05:37.278Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.747Z"),
+		"preferences" : {
+			"currency" : "AUD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 22.53,
+				"bought_at" : ISODate("2017-06-28T00:10:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 377,
+				"source" : "Coinbase",
+				"_id" : ObjectId("595e281329d13600149d5235")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-06T12:07:47.568Z"),
+				"expired" : false,
+				"_id" : ObjectId("595e281329d13600149d5236"),
+				"salt" : "$2a$10$txJ0o8/9VcpXppXE7Sz3UO",
+				"password" : "$2a$10$txJ0o8/9VcpXppXE7Sz3UOjLtI/SdC6A61s7DlABsVhiAF7J32YBu"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595e612a463c0300142c381a"),
+		"token" : null,
+		"email" : "zaeem.malhi@gmail.com",
+		"created_on" : ISODate("2017-07-06T16:11:22.131Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.754Z"),
+		"preferences" : {
+			"currency" : "BTC",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 1095.69772864,
+				"bought_at" : ISODate("2017-06-25T05:10:00Z"),
+				"coin_id" : "siacoin",
+				"bought_price" : 0.00000642,
+				"source" : "poloniex",
+				"_id" : ObjectId("595e6386463c0300142c5d62")
+			},
+			{
+				"amount" : 25569.85170259,
+				"bought_at" : ISODate("2017-06-14T00:10:00Z"),
+				"coin_id" : "dogecoin",
+				"bought_price" : 0.00000116,
+				"source" : "poloniex",
+				"_id" : ObjectId("595e63e9463c0300142c64d8")
+			},
+			{
+				"amount" : 22793.8390079,
+				"bought_at" : ISODate("2017-06-26T19:10:00Z"),
+				"coin_id" : "bytecoin-bcn",
+				"bought_price" : 0.00000115,
+				"source" : "poloniex",
+				"_id" : ObjectId("595e641f463c0300142c64da")
+			},
+			{
+				"amount" : 2,
+				"bought_at" : ISODate("2017-06-19T14:10:00Z"),
+				"coin_id" : "stratis",
+				"bought_price" : 0.00075582,
+				"source" : "poloniex",
+				"_id" : ObjectId("595e6465463c0300142c6c50")
+			},
+			{
+				"amount" : 12.70726295,
+				"bought_at" : ISODate("2017-06-27T09:10:00Z"),
+				"coin_id" : "library-credit",
+				"bought_price" : 0.00024321,
+				"source" : "poloniex",
+				"_id" : ObjectId("595e64a1463c0300142c700d")
+			},
+			{
+				"amount" : 69.93175805,
+				"bought_at" : ISODate("2017-06-13T04:10:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 0.00001527,
+				"source" : "poloniex",
+				"_id" : ObjectId("595e653a463c0300142c7788")
+			},
+			{
+				"amount" : 1.71198315,
+				"bought_at" : ISODate("2017-06-20T23:10:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 0.13140757,
+				"source" : "poloniex",
+				"_id" : ObjectId("595e6564463c0300142c7b44")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-06T16:29:24.811Z"),
+				"expired" : false,
+				"_id" : ObjectId("595e6564463c0300142c7b45"),
+				"salt" : "$2a$10$uhHa3x5xYUxjsOnEgOYu2e",
+				"password" : "$2a$10$uhHa3x5xYUxjsOnEgOYu2enUcW5eKkKrh957qtCWclZ/Byhxjpl8e"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595e64c9463c0300142c7010"),
+		"token" : null,
+		"email" : "edo.urbancic@gmail.com",
+		"created_on" : ISODate("2017-07-06T16:26:49.601Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.757Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 4.67,
+				"bought_at" : ISODate("2017-06-28T08:10:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 160,
+				"source" : "Kraken",
+				"_id" : ObjectId("595e7edc463c0300142e1178")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-06T18:18:04.848Z"),
+				"expired" : false,
+				"_id" : ObjectId("595e7edc463c0300142e1179"),
+				"salt" : "$2a$10$Hyi3zQCa93CGiTmg7L0pke",
+				"password" : "$2a$10$Hyi3zQCa93CGiTmg7L0pke4x3jbw3Ft4yr8.dHxJPVEv0s2QlGm3e"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595e8dab463c0300142efcbc"),
+		"token" : null,
+		"email" : "ciarancallaghan94@gmail.com",
+		"created_on" : ISODate("2017-07-06T19:21:15.022Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.760Z"),
+		"preferences" : {
+			"currency" : "EUR",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 0.0826,
+				"bought_at" : ISODate("2017-06-28T09:10:00Z"),
+				"coin_id" : "bancor",
+				"bought_price" : 2500,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595e8f61463c0300142f16ea")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-06T19:29:25.688Z"),
+				"expired" : false,
+				"_id" : ObjectId("595e8f95463c0300142f1aa9"),
+				"salt" : "$2a$10$Ntn7RiSPKFeQ6t1AMIwGTO",
+				"password" : "$2a$10$Ntn7RiSPKFeQ6t1AMIwGTOC1TraZx2KkBYAJ1g/ugHxe66HWUUhHG"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595e9dc5017f8a00142fccd7"),
+		"token" : null,
+		"email" : "camohiddendj@gmail.com",
+		"created_on" : ISODate("2017-07-06T20:29:57.673Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.761Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [ ],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-06T20:29:57.689Z"),
+				"expired" : false,
+				"password" : "$2a$10$enaX5FSG.Hzo3D0RaXQPd.D8zJQfYeX0h9Dt33TbobP7xjzLYzUQ.",
+				"salt" : "$2a$10$enaX5FSG.Hzo3D0RaXQPd.",
+				"_id" : ObjectId("595e9dc5017f8a00142fccd8")
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595eba63017f8a00143198ac"),
+		"token" : null,
+		"email" : "cleverketchup@gmail.com",
+		"created_on" : ISODate("2017-07-06T22:32:03.606Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.767Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [ ],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-06T22:32:03.617Z"),
+				"expired" : false,
+				"password" : "$2a$10$Jmvbd8VEFC.ZoO9A3IenweAz6X7LSpkpxJAkmoXqXj/OHlKW3CxrW",
+				"salt" : "$2a$10$Jmvbd8VEFC.ZoO9A3Ienwe",
+				"_id" : ObjectId("595eba63017f8a00143198ad")
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595ebaa5017f8a0014319c6c"),
+		"token" : null,
+		"email" : "tomnolan0909@gmail.com",
+		"created_on" : ISODate("2017-07-06T22:33:09.715Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.769Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [ ],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-06T22:33:09.721Z"),
+				"expired" : false,
+				"password" : "$2a$10$O0gCPEW0yMorTAUDgCRO..nSZDo.TMrERCZNkM0BuZymMDZePUTTK",
+				"salt" : "$2a$10$O0gCPEW0yMorTAUDgCRO..",
+				"_id" : ObjectId("595ebaa5017f8a0014319c6d")
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595ecbaa017f8a001432a997"),
+		"token" : null,
+		"email" : "sravdeals@gmail.com",
+		"created_on" : ISODate("2017-07-06T23:45:46.192Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.773Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 1000,
+				"bought_at" : ISODate("2017-06-28T17:10:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 1,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595ecbcf017f8a001432ad56")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-06T23:46:23.615Z"),
+				"expired" : false,
+				"_id" : ObjectId("595ecbcf017f8a001432ad57"),
+				"salt" : "$2a$10$iAIAdAvTSnJTMlDpGI2bLu",
+				"password" : "$2a$10$iAIAdAvTSnJTMlDpGI2bLulBH.0B4aSa52DbrMKgx4jGElK4S/rQm"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595ee6fa017f8a0014345efd"),
+		"token" : null,
+		"email" : "arin.nahapatian@gmail.com",
+		"created_on" : ISODate("2017-07-07T01:42:18.981Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.775Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 212
+		},
+		"portfolio" : [
+			{
+				"amount" : 1.01538,
+				"bought_at" : ISODate("2017-03-17T17:10:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 42,
+				"source" : "Coinbase",
+				"_id" : ObjectId("595ee769017f8a001434667d")
+			},
+			{
+				"amount" : 0.064,
+				"bought_at" : ISODate("1984-07-06T17:10:00Z"),
+				"coin_id" : "bitcoin",
+				"bought_price" : 2608.04,
+				"source" : "Coinbase",
+				"_id" : ObjectId("595f1743017f8a0014376127")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-07T05:08:31.184Z"),
+				"expired" : false,
+				"_id" : ObjectId("595f174f017f8a001437612b"),
+				"salt" : "$2a$10$5NVXi.oKOi16UJEOMOlMM.",
+				"password" : "$2a$10$5NVXi.oKOi16UJEOMOlMM.504t9GLr7D2yIzwr6pjXzwwZm4pn9I2"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595f41fb017f8a00143a098e"),
+		"token" : null,
+		"email" : "clever_ketchup@hotmail.com",
+		"created_on" : ISODate("2017-07-07T08:10:35.892Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.778Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 1000,
+				"bought_at" : ISODate("2017-06-28T07:10:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 1,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595f4216017f8a00143a0d4d")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-07T08:11:15.064Z"),
+				"expired" : false,
+				"_id" : ObjectId("595f4223017f8a00143a0d4f"),
+				"salt" : "$2a$10$u4rqTpP1D0X8PzEi/SGto.",
+				"password" : "$2a$10$u4rqTpP1D0X8PzEi/SGto.pY.HYP2soJgxbRDXyeyfTbyDNioBoM."
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595f4397017f8a00143a23bf"),
+		"token" : null,
+		"email" : "arthurkoolen@gmail.com",
+		"created_on" : ISODate("2017-07-07T08:17:27.343Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.781Z"),
+		"preferences" : {
+			"currency" : "EUR",
+			"initial_investment" : 391.04
+		},
+		"portfolio" : [
+			{
+				"amount" : 150,
+				"bought_at" : ISODate("2017-06-28T08:10:00Z"),
+				"coin_id" : "eos",
+				"bought_price" : 0,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595f442a017f8a00143a2b3d")
+			},
+			{
+				"amount" : 1.21556,
+				"bought_at" : ISODate("2017-06-28T06:10:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 0,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595f4464017f8a00143a2efe")
+			},
+			{
+				"amount" : 108.96,
+				"bought_at" : ISODate("2017-06-28T08:10:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 0,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595f44d7017f8a00143a367a")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-07T08:26:32.344Z"),
+				"expired" : false,
+				"_id" : ObjectId("595f45b8017f8a00143a4573"),
+				"salt" : "$2a$10$vE/ZTkIhVNXPluL5qk2JG.",
+				"password" : "$2a$10$vE/ZTkIhVNXPluL5qk2JG.pO3F0XcdziqNwR1WV9lVwb00aGlOj/6"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595f7da7017f8a00143dc302"),
+		"token" : null,
+		"email" : "fah@live.com",
+		"created_on" : ISODate("2017-07-07T12:25:11.611Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.785Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 10000
+		},
+		"portfolio" : [
+			{
+				"amount" : 3,
+				"bought_at" : ISODate("2017-06-28T07:10:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 370,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595f7e01017f8a00143dc6c2")
+			},
+			{
+				"amount" : 7,
+				"bought_at" : ISODate("2017-06-28T05:10:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 49,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595f7e1f017f8a00143dca82")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-07T12:28:57.323Z"),
+				"expired" : false,
+				"_id" : ObjectId("595f7e89017f8a00143dce44"),
+				"salt" : "$2a$10$bgcHdm46EL34jXAtcyesLe",
+				"password" : "$2a$10$bgcHdm46EL34jXAtcyesLeeGxe08oUWj8ZrxWhWGOd65GDCPnVeNO"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595f9a2b017f8a00143f8783"),
+		"token" : null,
+		"email" : "tencaat@gmail.com",
+		"created_on" : ISODate("2017-07-07T14:26:51.210Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.787Z"),
+		"preferences" : {
+			"currency" : "EUR",
+			"initial_investment" : 400
+		},
+		"portfolio" : [
+			{
+				"amount" : 400,
+				"bought_at" : ISODate("2017-06-28T08:10:00Z"),
+				"coin_id" : "iconomi",
+				"bought_price" : 0.5,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595f9ac9017f8a00143f92be")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-07T14:29:29.451Z"),
+				"expired" : false,
+				"_id" : ObjectId("595f9ac9017f8a00143f92bf"),
+				"salt" : "$2a$10$DF7W.ZbTn6h4lsAHt7K8rO",
+				"password" : "$2a$10$DF7W.ZbTn6h4lsAHt7K8rOP19fpck8LuYE6yFKpruj8n2LGYmMVKS"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595fac2d017f8a001440a63e"),
+		"token" : null,
+		"email" : "vitali.voinovski@gmail.com",
+		"created_on" : ISODate("2017-07-07T15:43:41.987Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.789Z"),
+		"preferences" : {
+			"currency" : "EUR",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 1000,
+				"bought_at" : ISODate("2017-06-28T07:10:00Z"),
+				"coin_id" : "bancor",
+				"bought_price" : 1,
+				"source" : "liqui.io",
+				"_id" : ObjectId("595fac8c017f8a001440adb3")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-07T15:45:16.726Z"),
+				"expired" : false,
+				"_id" : ObjectId("595fac8c017f8a001440adb4"),
+				"salt" : "$2a$10$1lNwF0gbJqPZIE3I.Zvx8e",
+				"password" : "$2a$10$1lNwF0gbJqPZIE3I.Zvx8eMGGS42eLFz0ffEnBCqHr.GPkgxNb94C"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("595feaa4017f8a001444893d"),
+		"token" : null,
+		"email" : "demo@cryptotrackr.com",
+		"created_on" : ISODate("2017-07-07T20:10:12.733Z"),
+		"updated_on" : ISODate("2017-08-06T07:30:00.045Z"),
+		"preferences" : {
+			"currency" : "AED",
+			"initial_investment" : 1000
+		},
+		"portfolio" : [
+			{
+				"amount" : 12.568,
+				"bought_at" : ISODate("2017-05-31T00:00:00Z"),
+				"bought_price" : 211.6938,
+				"source" : "gdax.com",
+				"coin_id" : "ETH",
+				"_id" : ObjectId("59861324e4fe02001422172f")
+			},
+			{
+				"amount" : 1.478,
+				"bought_at" : ISODate("2017-05-31T00:00:00Z"),
+				"bought_price" : 211.6938,
+				"source" : "liqui.io",
+				"coin_id" : "ETH",
+				"_id" : ObjectId("59861324e4fe020014221730")
+			},
+			{
+				"amount" : 2500,
+				"bought_at" : ISODate("2017-06-04T00:00:00Z"),
+				"bought_price" : 0.015331426,
+				"source" : "poloniex",
+				"coin_id" : "XRP",
+				"_id" : ObjectId("59861324e4fe020014221731")
+			},
+			{
+				"amount" : 235.59520371,
+				"bought_at" : ISODate("2017-08-06T07:30:00.041Z"),
+				"bought_price" : 2.2,
+				"source" : "liqui.io",
+				"coin_id" : "STRT",
+				"_id" : ObjectId("59861324e4fe020014221732")
+			},
+			{
+				"amount" : 1000,
+				"bought_at" : ISODate("2017-06-01T00:00:00Z"),
+				"bought_price" : 0.480048,
+				"source" : "liqui.io",
+				"coin_id" : "GNT",
+				"_id" : ObjectId("59861324e4fe020014221733")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-08-06T07:30:00.040Z"),
+				"expired" : false,
+				"_id" : ObjectId("5986c578e4fe0200142e17e2"),
+				"salt" : "$2a$10$QJDQ6QwkZ2qrPncJ2dq8Fu",
+				"password" : "$2a$10$QJDQ6QwkZ2qrPncJ2dq8FuSsPSpkK58cD.CI3xpS28oL7HTi3UXWu"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"token" : null,
+			"price" : false,
+			"source" : false,
+			"bought_at" : false,
+			"amount" : false
+		}
+	},
+	{
+		"_id" : ObjectId("59601b09e38eff001ebffc16"),
+		"token" : null,
+		"email" : "jamesdeanbarrett@gmail.com",
+		"created_on" : ISODate("2017-07-07T23:36:41.468Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.795Z"),
+		"preferences" : {
+			"currency" : "GBP",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 5000,
+				"bought_at" : ISODate("2017-06-28T09:10:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 0,
+				"source" : "liqui.io",
+				"_id" : ObjectId("59601b61e38eff001ec0038d")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-07T23:38:09.760Z"),
+				"expired" : false,
+				"_id" : ObjectId("59601b61e38eff001ec0038e"),
+				"salt" : "$2a$10$Tj8r.I/9TxyHaoQ7VkyQfe",
+				"password" : "$2a$10$Tj8r.I/9TxyHaoQ7VkyQfeGL8zMYTvZO4isQyene/kcMBJERVGMNC"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("596240b3e38eff001ee2120c"),
+		"token" : null,
+		"email" : "ken.feldmann@icloud.com",
+		"created_on" : ISODate("2017-07-09T14:41:55.565Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.799Z"),
+		"preferences" : {
+			"currency" : "EUR",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 0.42338435951622383,
+				"bought_at" : ISODate("2017-07-09T14:43:15Z"),
+				"coin_id" : "ethereum",
+				"_id" : ObjectId("59624103e38eff001ee2197f")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-09T14:43:15.275Z"),
+				"expired" : false,
+				"_id" : ObjectId("59624103e38eff001ee21980"),
+				"salt" : "$2a$10$DogR8vscTHLNoVgaGcfSDe",
+				"password" : "$2a$10$DogR8vscTHLNoVgaGcfSDeK0.0LWk8eDsTBpY3wnQhYSxRIwD7PhK"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("59644f83597d5f001488c81c"),
+		"token" : null,
+		"email" : "iliketoemail@ymail.com",
+		"created_on" : ISODate("2017-07-11T04:09:39.528Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.806Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 1714.8890022,
+				"bought_at" : ISODate("2017-07-11T07:00:00Z"),
+				"coin_id" : "ardor",
+				"bought_price" : 0.0990055,
+				"source" : "poloniex",
+				"_id" : ObjectId("596594f5597d5f00149d08f9")
+			},
+			{
+				"amount" : 1.05207,
+				"bought_at" : ISODate("2017-07-11T14:00:00Z"),
+				"coin_id" : "bitcoin",
+				"bought_price" : 2200,
+				"source" : "coinbase",
+				"_id" : ObjectId("59659533597d5f00149d0cc7")
+			},
+			{
+				"amount" : 519.0587015,
+				"bought_at" : ISODate("2017-07-11T21:00:00Z"),
+				"coin_id" : "bitshares",
+				"bought_price" : 0.1120715,
+				"source" : "poloniex",
+				"_id" : ObjectId("5965955e597d5f00149d0cc9")
+			},
+			{
+				"amount" : 2.69078677,
+				"bought_at" : ISODate("2017-07-12T11:00:00Z"),
+				"coin_id" : "dash",
+				"bought_price" : 175.3463,
+				"source" : "poloniex",
+				"_id" : ObjectId("59659592597d5f00149d1099")
+			},
+			{
+				"amount" : 4.26508257,
+				"bought_at" : ISODate("2017-07-12T18:00:00Z"),
+				"coin_id" : "ethereum-classic",
+				"bought_price" : 13.61867,
+				"source" : "poloniex",
+				"_id" : ObjectId("596595ea597d5f00149d1834")
+			},
+			{
+				"amount" : 17.00948381,
+				"bought_at" : ISODate("2017-07-13T01:00:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 148,
+				"source" : "poloniex",
+				"_id" : ObjectId("59659624597d5f00149d1c02")
+			},
+			{
+				"amount" : 0.79846073,
+				"bought_at" : ISODate("2017-07-13T08:00:00Z"),
+				"coin_id" : "gnosis-gno",
+				"bought_price" : 213.2671,
+				"source" : "poloniex",
+				"_id" : ObjectId("59659652597d5f00149d1c04")
+			},
+			{
+				"amount" : 643.71298425,
+				"bought_at" : ISODate("2017-07-13T15:00:00Z"),
+				"coin_id" : "golem-network-tokens",
+				"bought_price" : 0.2640225,
+				"source" : "poloniex",
+				"_id" : ObjectId("59659678597d5f00149d1fd2")
+			},
+			{
+				"amount" : 11.07280995,
+				"bought_at" : ISODate("2017-07-13T22:00:00Z"),
+				"coin_id" : "factom",
+				"bought_price" : 15.37605,
+				"source" : "poloniex",
+				"_id" : ObjectId("596596f4597d5f00149d276d")
+			},
+			{
+				"amount" : 3.79106746,
+				"bought_at" : ISODate("2017-07-14T05:00:00Z"),
+				"coin_id" : "litecoin",
+				"bought_price" : 44.85313,
+				"source" : "poloniex",
+				"_id" : ObjectId("59659718597d5f00149d2b3b")
+			},
+			{
+				"amount" : 24615.5518875,
+				"bought_at" : ISODate("2017-07-14T12:00:00Z"),
+				"coin_id" : "siacoin",
+				"bought_price" : 0.0068855,
+				"source" : "poloniex",
+				"_id" : ObjectId("59659745597d5f00149d2f09")
+			},
+			{
+				"amount" : 57.82507894,
+				"bought_at" : ISODate("2017-07-14T19:00:00Z"),
+				"coin_id" : "stratis",
+				"bought_price" : 2.943963,
+				"source" : "poloniex",
+				"_id" : ObjectId("59659771597d5f00149d2f0b")
+			},
+			{
+				"amount" : 1987.3874405,
+				"bought_at" : ISODate("2017-07-15T02:00:00Z"),
+				"coin_id" : "nem",
+				"bought_price" : 0.1809265,
+				"source" : "poloniex",
+				"_id" : ObjectId("59659795597d5f00149d32d9")
+			},
+			{
+				"amount" : 7.80386962,
+				"bought_at" : ISODate("2017-07-15T09:00:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 46.0733,
+				"source" : "poloniex",
+				"_id" : ObjectId("596597bc597d5f00149d32dc")
+			},
+			{
+				"amount" : 1376.310433,
+				"bought_at" : ISODate("2017-07-15T16:00:00Z"),
+				"coin_id" : "ripple",
+				"bought_price" : 0.2612495,
+				"source" : "poloniex",
+				"_id" : ObjectId("596597e6597d5f00149d36aa")
+			},
+			{
+				"amount" : 0.91863546,
+				"bought_at" : ISODate("2017-07-15T23:00:00Z"),
+				"coin_id" : "ripple",
+				"bought_price" : 184.7662,
+				"source" : "poloniex",
+				"_id" : ObjectId("59659814597d5f00149d3a78")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-18T04:37:02.159Z"),
+				"expired" : false,
+				"_id" : ObjectId("596d906e5523fa001480b53a"),
+				"salt" : "$2a$10$d2xeUC3SXIrf78glZRWKke",
+				"password" : "$2a$10$d2xeUC3SXIrf78glZRWKkejv.rWfkRqw2BhLQZZcj/PGTv5sTlhgK"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("59653a8e597d5f0014974ff4"),
+		"token" : null,
+		"email" : "matthewepler@gmail.com",
+		"created_on" : ISODate("2017-07-11T20:52:30.285Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.809Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 1450
+		},
+		"portfolio" : [
+			{
+				"amount" : 0.30664634,
+				"bought_at" : ISODate("2017-07-11T23:53:42Z"),
+				"coin_id" : "bitcoin",
+				"_id" : ObjectId("59656506597d5f001499fe9b")
+			},
+			{
+				"amount" : 2.809,
+				"bought_at" : ISODate("2017-07-12T03:53:42Z"),
+				"coin_id" : "ethereum",
+				"_id" : ObjectId("59656519597d5f001499fe9d")
+			},
+			{
+				"amount" : 505.775,
+				"bought_at" : ISODate("2017-07-12T07:53:42Z"),
+				"coin_id" : "golem-network-tokens",
+				"_id" : ObjectId("59656527597d5f00149a026a")
+			},
+			{
+				"amount" : 10.182,
+				"bought_at" : ISODate("2017-07-12T11:53:42Z"),
+				"coin_id" : "augur",
+				"_id" : ObjectId("5965652c597d5f00149a026c")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-11T23:57:06.240Z"),
+				"expired" : false,
+				"_id" : ObjectId("596565d2597d5f00149a0dd0"),
+				"salt" : "$2a$10$.aguyRQs4ZWOF80e.PqMHu",
+				"password" : "$2a$10$.aguyRQs4ZWOF80e.PqMHuEHO5s7PBWUkA4vAulSsja3pG4rII/lu"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("59682f49597d5f0014c71d81"),
+		"token" : null,
+		"email" : "oleg.estrin@gmail.com",
+		"created_on" : ISODate("2017-07-14T02:41:13.324Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.817Z"),
+		"preferences" : {
+			"currency" : "AUD",
+			"initial_investment" : 792
+		},
+		"portfolio" : [
+			{
+				"amount" : 0.29140309,
+				"bought_at" : ISODate("2017-06-29T16:42:06Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 377.48,
+				"source" : "coinbase",
+				"_id" : ObjectId("59682f95597d5f0014c72151")
+			},
+			{
+				"amount" : 0.08606284,
+				"bought_at" : ISODate("2017-07-04T06:42:06Z"),
+				"coin_id" : "bitcoin",
+				"bought_price" : 3352.09,
+				"source" : "coinbase",
+				"_id" : ObjectId("59682fb7597d5f0014c72520")
+			},
+			{
+				"amount" : 0.0578,
+				"bought_at" : ISODate("2017-07-09T20:42:06Z"),
+				"coin_id" : "bitcoin",
+				"bought_price" : 3375,
+				"source" : "coinbase",
+				"_id" : ObjectId("59682fca597d5f0014c72522")
+			},
+			{
+				"amount" : 2.85480305,
+				"bought_at" : ISODate("2017-07-09T00:11:00Z"),
+				"coin_id" : "litecoin",
+				"bought_price" : 60.97,
+				"source" : "coinbase",
+				"_id" : ObjectId("59682ffd597d5f0014c728f1")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-14T02:48:20.674Z"),
+				"expired" : false,
+				"_id" : ObjectId("596830f4597d5f0014c73828"),
+				"salt" : "$2a$10$9.8ZhKquBhnd2xcKjWS9N.",
+				"password" : "$2a$10$9.8ZhKquBhnd2xcKjWS9N.0igiSuxpMzZcM7LXSvNiAOWJh/.rc/K"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("596870df597d5f0014cafe2d"),
+		"token" : null,
+		"email" : "grantduncanuk@gmail.com",
+		"created_on" : ISODate("2017-07-14T07:21:03.765Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.819Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [ ],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-14T07:21:03.786Z"),
+				"expired" : false,
+				"password" : "$2a$10$1AVRcJ7QotvOfpOBc8o5muDRXKfj/k2DrkpH7uUaU1h5x2F0cUnym",
+				"salt" : "$2a$10$1AVRcJ7QotvOfpOBc8o5mu",
+				"_id" : ObjectId("596870df597d5f0014cafe2e")
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("59687e4a597d5f0014cb9667"),
+		"token" : null,
+		"email" : "rene.reineke@gmail.com",
+		"created_on" : ISODate("2017-07-14T08:18:18.841Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.820Z"),
+		"preferences" : {
+			"currency" : "EUR",
+			"initial_investment" : 0
+		},
+		"portfolio" : [ ],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-08-05T14:24:46.107Z"),
+				"expired" : false,
+				"_id" : ObjectId("5985d52e89363f0014cb02a0"),
+				"salt" : "$2a$10$Rgf/oMMKJf9F78YMz6mu1u",
+				"password" : "$2a$10$Rgf/oMMKJf9F78YMz6mu1uNQCN8KNxdDrgy7uuJ50JAvwtnWLezQy"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false,
+			"token" : null
+		},
+		"activated_on" : null
+	},
+	{
+		"_id" : ObjectId("59689be0597d5f0014ccce68"),
+		"token" : null,
+		"email" : "johnbrett7@gmail.com",
+		"created_on" : ISODate("2017-07-14T10:24:32.497Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.822Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 1000
+		},
+		"portfolio" : [
+			{
+				"amount" : 12,
+				"bought_at" : ISODate("2017-07-14T09:25:40Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 170,
+				"source" : "gdax.com",
+				"_id" : ObjectId("59689c23597d5f0014ccd244")
+			},
+			{
+				"amount" : 12,
+				"bought_at" : ISODate("2017-07-14T10:25:50Z"),
+				"coin_id" : "bitcoin",
+				"bought_price" : 170,
+				"source" : "gdax.com",
+				"_id" : ObjectId("59689c2d597d5f0014ccd246")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-14T10:25:49.092Z"),
+				"expired" : false,
+				"_id" : ObjectId("59689c2d597d5f0014ccd247"),
+				"salt" : "$2a$10$rF.apkcih7cPNGAAjkbDSe",
+				"password" : "$2a$10$rF.apkcih7cPNGAAjkbDSewSnw0tL24hvfOI3AecU0Ra0zP5IzjKq"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("596d3f555523fa00147b9435"),
+		"token" : null,
+		"email" : "k.aleksandrov777@gmail.com",
+		"created_on" : ISODate("2017-07-17T22:51:01.795Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.824Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 100
+		},
+		"portfolio" : [ ],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-17T22:55:19.610Z"),
+				"expired" : false,
+				"_id" : ObjectId("596d40575523fa00147ba389"),
+				"salt" : "$2a$10$Xd5SQS/BkuHf.cxuTtHSMu",
+				"password" : "$2a$10$Xd5SQS/BkuHf.cxuTtHSMueWCwsE3qwTG0Iw3z3QiZEZM48xwQUS2"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("596f16975523fa001499a69f"),
+		"token" : null,
+		"email" : "tt1@maildu.de",
+		"created_on" : ISODate("2017-07-19T08:21:43.011Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.832Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 740
+		},
+		"portfolio" : [
+			{
+				"amount" : 0.12989281,
+				"bought_at" : ISODate("2017-07-19T08:23:48.178Z"),
+				"coin_id" : "bitcoin",
+				"bought_price" : 0,
+				"_id" : ObjectId("5985798389363f0014c4d751")
+			},
+			{
+				"amount" : 1.58087127,
+				"bought_at" : ISODate("2017-07-19T08:23:59.178Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 0,
+				"_id" : ObjectId("596f17205523fa001499ae55")
+			},
+			{
+				"amount" : 275.542,
+				"bought_at" : ISODate("2017-07-19T08:24:31.181Z"),
+				"coin_id" : "ethereum",
+				"_id" : ObjectId("596f173f5523fa001499b232")
+			},
+			{
+				"amount" : 70,
+				"bought_at" : ISODate("2017-07-19T08:24:48.180Z"),
+				"coin_id" : "flash",
+				"_id" : ObjectId("596f17505523fa001499b234")
+			},
+			{
+				"amount" : 2.234349,
+				"bought_at" : ISODate("2017-07-19T08:25:01.176Z"),
+				"coin_id" : "polybius",
+				"_id" : ObjectId("596f175d5523fa001499b236")
+			},
+			{
+				"amount" : 68.17697937,
+				"bought_at" : ISODate("2017-07-19T08:25:16.176Z"),
+				"coin_id" : "octanox",
+				"_id" : ObjectId("596f176c5523fa001499b611")
+			},
+			{
+				"amount" : 10000,
+				"bought_at" : ISODate("2017-07-19T08:27:37.194Z"),
+				"coin_id" : "ethereum",
+				"_id" : ObjectId("596f17f95523fa001499bdc6")
+			},
+			{
+				"amount" : 0.10003878,
+				"bought_at" : ISODate("2017-08-02T07:56:14.725Z"),
+				"coin_id" : "bitcoin-cash",
+				"_id" : ObjectId("598185a0512d26001487a36b")
+			},
+			{
+				"amount" : 11.02176002,
+				"bought_at" : ISODate("2017-08-02T14:13:39.036Z"),
+				"coin_id" : "minereum",
+				"bought_price" : 0,
+				"_id" : ObjectId("5985796889363f0014c4d74f")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-08-05T07:53:39.430Z"),
+				"expired" : false,
+				"_id" : ObjectId("5985798389363f0014c4d752"),
+				"salt" : "$2a$10$kaFj7AAst1Ljd5vnmnL9wO",
+				"password" : "$2a$10$kaFj7AAst1Ljd5vnmnL9wO5P6FyMTsHODtXhthvq4/mBtIVfWZM8m"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false,
+			"token" : null
+		}
+	},
+	{
+		"_id" : ObjectId("596fd8b15523fa0014a619d8"),
+		"token" : null,
+		"email" : "jrabalais@gmail.com",
+		"created_on" : ISODate("2017-07-19T22:09:53.094Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.836Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 133,
+				"bought_at" : ISODate("2017-07-19T22:10:41.865Z"),
+				"coin_id" : "ethereum",
+				"_id" : ObjectId("596fd8e15523fa0014a61db5")
+			},
+			{
+				"amount" : 30000,
+				"bought_at" : ISODate("2017-07-19T22:13:07.837Z"),
+				"coin_id" : "etheroll",
+				"_id" : ObjectId("596fd9735523fa0014a62948")
+			},
+			{
+				"amount" : 12000,
+				"bought_at" : ISODate("2017-07-19T22:14:11.548Z"),
+				"coin_id" : "iconomi",
+				"_id" : ObjectId("596fd9b35523fa0014a62d29")
+			},
+			{
+				"amount" : 300000,
+				"bought_at" : ISODate("2017-07-19T22:14:26.549Z"),
+				"coin_id" : "golem-network-tokens",
+				"_id" : ObjectId("596fd9c25523fa0014a62d2b")
+			},
+			{
+				"amount" : 35512,
+				"bought_at" : ISODate("2017-07-19T22:14:42.549Z"),
+				"coin_id" : "batcoin",
+				"_id" : ObjectId("596fd9d25523fa0014a62d2d")
+			},
+			{
+				"amount" : 157600,
+				"bought_at" : ISODate("2017-07-19T22:14:57.547Z"),
+				"coin_id" : "iota",
+				"_id" : ObjectId("596fd9e15523fa0014a62d2f")
+			},
+			{
+				"amount" : 1010737,
+				"bought_at" : ISODate("2017-07-19T22:15:12.547Z"),
+				"coin_id" : "funfair",
+				"_id" : ObjectId("596fd9f05523fa0014a6310c")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-19T22:15:12.034Z"),
+				"expired" : false,
+				"_id" : ObjectId("596fd9f05523fa0014a6310d"),
+				"salt" : "$2a$10$IW1ReXjj1QDaBBlihrNzi.",
+				"password" : "$2a$10$IW1ReXjj1QDaBBlihrNzi.qT4zdongm19cuQrDehzdHtRwaO4b.lG"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("59716c775523fa0014c0139a"),
+		"token" : null,
+		"email" : "bayodeokusanya@yahoo.com",
+		"created_on" : ISODate("2017-07-21T02:52:39.573Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.839Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 50
+		},
+		"portfolio" : [
+			{
+				"amount" : 0.01855421,
+				"bought_at" : ISODate("2017-07-09T01:27:06Z"),
+				"coin_id" : "bitcoin",
+				"bought_price" : 0,
+				"source" : "coinbase.com",
+				"_id" : ObjectId("59716fed5523fa0014c04dfa")
+			},
+			{
+				"amount" : 0.03841778,
+				"bought_at" : ISODate("2017-07-09T20:38:06Z"),
+				"coin_id" : "bitcoin",
+				"source" : "coinbase.com",
+				"_id" : ObjectId("5971703a5523fa0014c051e1")
+			},
+			{
+				"amount" : 0.0193082,
+				"bought_at" : ISODate("2017-07-10T10:23:33Z"),
+				"coin_id" : "bitcoin",
+				"bought_price" : 0,
+				"source" : "coinbase.com",
+				"_id" : ObjectId("597170ba5523fa0014c059ac")
+			},
+			{
+				"amount" : 0.02152755,
+				"bought_at" : ISODate("2017-07-13T15:13:33Z"),
+				"coin_id" : "bitcoin",
+				"source" : "coinbase.com",
+				"_id" : ObjectId("597170fa5523fa0014c05d92")
+			},
+			{
+				"amount" : 0.004276,
+				"bought_at" : ISODate("2017-07-14T08:20:33Z"),
+				"coin_id" : "bitcoin",
+				"source" : "coinbase.com",
+				"_id" : ObjectId("5971716f5523fa0014c0655e")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-21T03:13:51.427Z"),
+				"expired" : false,
+				"_id" : ObjectId("5971716f5523fa0014c0655f"),
+				"salt" : "$2a$10$CD1PCGQl3fSJVgnq4UJhge",
+				"password" : "$2a$10$CD1PCGQl3fSJVgnq4UJhgetuGk.ALbebSwzGEIkkDh3IdGBFbACD2"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("59728f865523fa0014d2f5c2"),
+		"token" : null,
+		"email" : "elliottdesign3d@gmail.com",
+		"created_on" : ISODate("2017-07-21T23:34:30.656Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.842Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [ ],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-08-01T21:35:02.506Z"),
+				"expired" : false,
+				"_id" : ObjectId("5980f406512d2600147dea58"),
+				"salt" : "$2a$10$spCFdzOOpCjINab8uThtQe",
+				"password" : "$2a$10$spCFdzOOpCjINab8uThtQeGL49XEwQCS13YTBM58sLs5L7HBiGDla"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false,
+			"token" : null
+		}
+	},
+	{
+		"_id" : ObjectId("59765f0d5523fa001412575e"),
+		"token" : null,
+		"email" : "vkarapetanc@gmail.com",
+		"created_on" : ISODate("2017-07-24T20:56:45.103Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.844Z"),
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [ ],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-24T20:56:45.144Z"),
+				"expired" : false,
+				"password" : "$2a$10$yBwEtJ8.2NuWj/GMCebM4e/iYLTX1SmVFxMOkgtkFZbrsbWO1vVz6",
+				"salt" : "$2a$10$yBwEtJ8.2NuWj/GMCebM4e",
+				"_id" : ObjectId("59765f0d5523fa001412575f")
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("597d4e435523fa0014878524"),
+		"token" : null,
+		"email" : "joel.wab@gmail.com",
+		"created_on" : ISODate("2017-07-30T03:10:59.138Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.846Z"),
+		"preferences" : {
+			"currency" : "CAD",
+			"initial_investment" : 3480
+		},
+		"portfolio" : [
+			{
+				"amount" : 10,
+				"bought_at" : ISODate("2017-06-13T03:12:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 300,
+				"_id" : ObjectId("597d4eaa5523fa0014878d20")
+			},
+			{
+				"amount" : 18,
+				"bought_at" : ISODate("2017-06-13T03:12:00Z"),
+				"coin_id" : "litecoin",
+				"bought_price" : 50,
+				"_id" : ObjectId("597d4ec25523fa001487911c")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-07-30T03:13:06.138Z"),
+				"expired" : false,
+				"_id" : ObjectId("597d4ec25523fa001487911d"),
+				"salt" : "$2a$10$7bDU4DV9EV/hhRPn8hLhA.",
+				"password" : "$2a$10$7bDU4DV9EV/hhRPn8hLhA.oCSqLoJFQEtUI2/BPm1jQzFwP0VzfTe"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null,
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		}
+	},
+	{
+		"_id" : ObjectId("59817f91512d260014873b0f"),
+		"token" : null,
+		"email" : "philippeleune1@gmail.com",
+		"created_on" : ISODate("2017-08-02T07:30:25.765Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.853Z"),
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false,
+			"token" : "3c138daa-5301-4c43-a4db-adecc3afa9a5"
+		},
+		"preferences" : {
+			"currency" : "EUR",
+			"initial_investment" : 5000
+		},
+		"portfolio" : [ ],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-08-02T07:31:05.948Z"),
+				"expired" : false,
+				"_id" : ObjectId("59817fb9512d260014873f19"),
+				"salt" : "$2a$10$FDleKbStkqfe/y9jWbp68O",
+				"password" : "$2a$10$FDleKbStkqfe/y9jWbp68O3Derr0pK2cv9mMbKZvCeyvS6sJP4mAi"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null
+	},
+	{
+		"_id" : ObjectId("59817f9a512d260014873b12"),
+		"token" : null,
+		"email" : "sanikovich@gmail.com",
+		"created_on" : ISODate("2017-08-02T07:30:34.411Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.859Z"),
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false,
+			"token" : "78a6c64d-b2f4-4467-bd25-846688a4464b"
+		},
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 100,
+				"bought_at" : ISODate("2017-08-02T07:33:01.757Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 24,
+				"source" : "https://www.gdax.com/trade/BTC-USD",
+				"_id" : ObjectId("59818051512d26001487471f")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-08-02T07:33:37.609Z"),
+				"expired" : false,
+				"_id" : ObjectId("59818051512d260014874720"),
+				"salt" : "$2a$10$Hdiu6CluWsN.Rm4dmio/PO",
+				"password" : "$2a$10$Hdiu6CluWsN.Rm4dmio/POcEXozt.gicwOdCx8WJigyHLmCvwCLVu"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null
+	},
+	{
+		"_id" : ObjectId("598181d4512d260014876330"),
+		"token" : null,
+		"email" : "elenaartux@gmail.com",
+		"created_on" : ISODate("2017-08-02T07:40:04.023Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.863Z"),
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false,
+			"token" : null
+		},
+		"preferences" : {
+			"currency" : "BTC",
+			"initial_investment" : 1
+		},
+		"portfolio" : [
+			{
+				"amount" : 3000,
+				"bought_at" : ISODate("2017-08-02T07:48:17.900Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 96,
+				"_id" : ObjectId("59818397512d260014877f51")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-08-02T07:47:35.192Z"),
+				"expired" : false,
+				"_id" : ObjectId("59818397512d260014877f52"),
+				"salt" : "$2a$10$GGl27B0xMj2h83SZr.jQFO",
+				"password" : "$2a$10$GGl27B0xMj2h83SZr.jQFOKcutoclMsDQVroAAwi4Xv/ErJwYsmN."
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null
+	},
+	{
+		"_id" : ObjectId("5981854d512d260014879b62"),
+		"token" : null,
+		"email" : "sapientum@gmail.com",
+		"created_on" : ISODate("2017-08-02T07:54:53.343Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.867Z"),
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false,
+			"token" : null
+		},
+		"preferences" : {
+			"currency" : "DKK",
+			"initial_investment" : 0
+		},
+		"portfolio" : [
+			{
+				"amount" : 1,
+				"bought_at" : ISODate("2017-08-02T07:55:54.482Z"),
+				"coin_id" : "ethereum",
+				"_id" : ObjectId("5981858b512d260014879f67")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-08-02T07:55:55.150Z"),
+				"expired" : false,
+				"_id" : ObjectId("5981858b512d260014879f68"),
+				"salt" : "$2a$10$ucYXSMm9OWVj6HMp5XoEne",
+				"password" : "$2a$10$ucYXSMm9OWVj6HMp5XoEnewEvjeajxgsCx8dZ7DayBFVvwqrO4/WO"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null
+	},
+	{
+		"_id" : ObjectId("59818fb8512d260014884fc9"),
+		"token" : null,
+		"email" : "keencommandercrypto@gmail.com",
+		"created_on" : ISODate("2017-08-02T08:39:20.229Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.871Z"),
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		},
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [ ],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-08-02T08:39:20.232Z"),
+				"expired" : false,
+				"password" : "$2a$10$ZPZ.tAfXrMURzxPgYSC1oe1MzD7a0TDJejbtwK96GqpPtnijYvYP.",
+				"salt" : "$2a$10$ZPZ.tAfXrMURzxPgYSC1oe",
+				"_id" : ObjectId("59818fb8512d260014884fca")
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0
+	},
+	{
+		"_id" : ObjectId("598190df512d2600148863da"),
+		"token" : null,
+		"email" : "x@xoo.ooo",
+		"created_on" : ISODate("2017-08-02T08:44:15.848Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.887Z"),
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false,
+			"token" : "0e1dee23-1d1e-4f56-8755-f522c0c7c599"
+		},
+		"preferences" : {
+			"currency" : "CNY",
+			"initial_investment" : 100000
+		},
+		"portfolio" : [
+			{
+				"amount" : 1.8,
+				"bought_at" : ISODate("2017-08-02T08:45:17.189Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 1000,
+				"_id" : ObjectId("59819132512d2600148867ea")
+			},
+			{
+				"amount" : 9.2,
+				"bought_at" : ISODate("2017-08-02T08:45:35.189Z"),
+				"coin_id" : "bitcoin",
+				"bought_price" : 6000,
+				"_id" : ObjectId("59819144512d2600148867ec")
+			},
+			{
+				"amount" : 253,
+				"bought_at" : ISODate("2017-08-02T08:45:57.189Z"),
+				"coin_id" : "byteball",
+				"bought_price" : 3000,
+				"_id" : ObjectId("5981915a512d260014886bf0")
+			},
+			{
+				"amount" : 28000,
+				"bought_at" : ISODate("2017-08-02T08:47:18.310Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 0.4,
+				"_id" : ObjectId("598191ac512d260014886ff9")
+			},
+			{
+				"amount" : 4.2,
+				"bought_at" : ISODate("2017-08-02T08:47:38.310Z"),
+				"coin_id" : "zcash",
+				"bought_price" : 800,
+				"_id" : ObjectId("598191c1512d2600148873fd")
+			},
+			{
+				"amount" : 50,
+				"bought_at" : ISODate("2017-08-02T08:47:59.310Z"),
+				"coin_id" : "qtum",
+				"bought_price" : 50,
+				"_id" : ObjectId("598191d5512d2600148873ff")
+			},
+			{
+				"amount" : 1222,
+				"bought_at" : ISODate("2017-08-02T08:48:36.310Z"),
+				"coin_id" : "gxshares",
+				"bought_price" : 50,
+				"_id" : ObjectId("598191fa512d260014887403")
+			},
+			{
+				"amount" : 500,
+				"bought_at" : ISODate("2017-08-02T08:49:04.310Z"),
+				"coin_id" : "eos",
+				"bought_price" : 6,
+				"_id" : ObjectId("59819217512d260014887808")
+			},
+			{
+				"amount" : 17000,
+				"bought_at" : ISODate("2017-08-02T08:49:19.310Z"),
+				"coin_id" : "bitshares",
+				"bought_price" : 0.2,
+				"_id" : ObjectId("59819225512d26001488780a")
+			},
+			{
+				"amount" : 3006,
+				"bought_at" : ISODate("2017-08-02T08:49:33.311Z"),
+				"coin_id" : "siacoin",
+				"bought_price" : 0.1,
+				"_id" : ObjectId("59819233512d26001488780c")
+			},
+			{
+				"amount" : 99196.72,
+				"bought_at" : ISODate("2017-08-02T08:54:11.706Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 0.01,
+				"_id" : ObjectId("5981934b512d260014888c1e")
+			},
+			{
+				"amount" : 27000,
+				"bought_at" : ISODate("2017-08-02T09:02:21.706Z"),
+				"coin_id" : "ardor",
+				"bought_price" : 0.2,
+				"_id" : ObjectId("598426df89363f0014ae1a8c")
+			},
+			{
+				"amount" : 22000,
+				"bought_at" : ISODate("2017-08-02T09:06:51.707Z"),
+				"coin_id" : "stellar",
+				"bought_price" : 0.001,
+				"_id" : ObjectId("59819645512d26001488c03e")
+			},
+			{
+				"amount" : 9.2,
+				"bought_at" : ISODate("2017-08-02T09:14:36.062Z"),
+				"coin_id" : "bitcoin-cash",
+				"bought_price" : 0.0001,
+				"_id" : ObjectId("59819816512d26001488e052")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-08-04T07:48:47.251Z"),
+				"expired" : false,
+				"_id" : ObjectId("598426df89363f0014ae1a8d"),
+				"salt" : "$2a$10$1EDmPoXjIRDfdRYnKqu/NO",
+				"password" : "$2a$10$1EDmPoXjIRDfdRYnKqu/NOxsABkaWwI54WgqM58URjPrEBbjhE2F6"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null
+	},
+	{
+		"_id" : ObjectId("5981a32b512d260014899cb6"),
+		"token" : null,
+		"email" : "wnhmml@gmail.com",
+		"created_on" : ISODate("2017-08-02T10:02:19.004Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.892Z"),
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false,
+			"token" : null
+		},
+		"preferences" : {
+			"currency" : "CNY",
+			"initial_investment" : 1000
+		},
+		"portfolio" : [
+			{
+				"amount" : 200,
+				"bought_at" : ISODate("2017-07-14T16:00:00Z"),
+				"coin_id" : "status",
+				"bought_price" : 0.55,
+				"source" : "yunbi.com",
+				"_id" : ObjectId("5981a48c512d26001489b4c7")
+			},
+			{
+				"amount" : 200,
+				"bought_at" : ISODate("2017-07-31T16:00:00Z"),
+				"coin_id" : "goldblocks",
+				"bought_price" : 3000,
+				"source" : "bittrex.com",
+				"_id" : ObjectId("5981a4f0512d26001489b8cd")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-08-02T10:09:52.215Z"),
+				"expired" : false,
+				"_id" : ObjectId("5981a4f0512d26001489b8ce"),
+				"salt" : "$2a$10$R9VMmHqANyzX.0Vkyt1HJu",
+				"password" : "$2a$10$R9VMmHqANyzX.0Vkyt1HJuweJk/dmz0oEy9Vo4yfQOjpR9t5Tj1gO"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null
+	},
+	{
+		"_id" : ObjectId("5981a650512d26001489d0dc"),
+		"token" : null,
+		"email" : "seyi.akin@gmail.com",
+		"created_on" : ISODate("2017-08-02T10:15:44.603Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.894Z"),
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		},
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [ ],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-08-02T10:15:44.608Z"),
+				"expired" : false,
+				"password" : "$2a$10$8nFS0xkzkO0H66fPlKAKnebBgf7BZ.bQvQDGYKPVKmMioZqnmYbD6",
+				"salt" : "$2a$10$8nFS0xkzkO0H66fPlKAKne",
+				"_id" : ObjectId("5981a650512d26001489d0dd")
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0
+	},
+	{
+		"_id" : ObjectId("5981bdae512d2600148b61ad"),
+		"token" : null,
+		"email" : "j2004403@mvrht.net",
+		"created_on" : ISODate("2017-08-02T11:55:26.370Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.897Z"),
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false,
+			"token" : null
+		},
+		"preferences" : {
+			"currency" : "EUR",
+			"initial_investment" : 0
+		},
+		"portfolio" : [ ],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-08-02T11:56:06.928Z"),
+				"expired" : false,
+				"_id" : ObjectId("5981bdd6512d2600148b65b1"),
+				"salt" : "$2a$10$.yxtAHeltqjZJO78cZk0ge",
+				"password" : "$2a$10$.yxtAHeltqjZJO78cZk0geDvlXWO/jjhgpIKk47ftAfhUf7RXMaRq"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null
+	},
+	{
+		"_id" : ObjectId("5981f52e512d2600148f179e"),
+		"token" : null,
+		"email" : "anonymorf@gmail.com",
+		"created_on" : ISODate("2017-08-02T15:52:14.889Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.900Z"),
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		},
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [ ],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-08-02T15:52:14.901Z"),
+				"expired" : false,
+				"password" : "$2a$10$4AAvRU55AWA4qDmusSo/Ge79MqJRqXz7EAzn5FlOE9c.Ydog/BiL2",
+				"salt" : "$2a$10$4AAvRU55AWA4qDmusSo/Ge",
+				"_id" : ObjectId("5981f52e512d2600148f179f")
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0
+	},
+	{
+		"_id" : ObjectId("5981f60b512d2600148f23a7"),
+		"token" : null,
+		"email" : "dhooks1@att.net",
+		"created_on" : ISODate("2017-08-02T15:55:55.265Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.906Z"),
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false,
+			"token" : null
+		},
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 1000000
+		},
+		"portfolio" : [
+			{
+				"amount" : 50000,
+				"bought_at" : ISODate("2016-12-31T05:31:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 0.12,
+				"_id" : ObjectId("5981f97d512d2600148f5fd9")
+			},
+			{
+				"amount" : 50000,
+				"bought_at" : ISODate("2016-12-31T05:31:00Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 0.12,
+				"_id" : ObjectId("5981f995512d2600148f63dd")
+			},
+			{
+				"amount" : 50000,
+				"bought_at" : ISODate("2017-08-02T16:16:52.334Z"),
+				"coin_id" : "omisego",
+				"bought_price" : 0.1,
+				"source" : "bittrix",
+				"_id" : ObjectId("5981faf4512d2600148f77ec")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-08-02T16:17:50.478Z"),
+				"expired" : false,
+				"_id" : ObjectId("5981fb2e512d2600148f7bf1"),
+				"salt" : "$2a$10$QY7t/jxtFGoLwMdLJLkthu",
+				"password" : "$2a$10$QY7t/jxtFGoLwMdLJLkthuXJY7b70AtBQzlvK.L/GWGNEpWbbqesG"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null
+	},
+	{
+		"_id" : ObjectId("59820e0d512d26001490c097"),
+		"token" : null,
+		"email" : "andreacampeau@hotmail.com",
+		"created_on" : ISODate("2017-08-02T17:38:21.853Z"),
+		"updated_on" : ISODate("2017-08-06T03:58:32.361Z"),
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false,
+			"token" : null
+		},
+		"preferences" : {
+			"currency" : "BTC",
+			"initial_investment" : 8
+		},
+		"portfolio" : [
+			{
+				"amount" : 71.0329578,
+				"bought_at" : ISODate("2017-08-02T19:09:50.773Z"),
+				"coin_id" : "veritaseum",
+				"bought_price" : 0.0021,
+				"_id" : ObjectId("5982237f512d260014922d61")
+			},
+			{
+				"amount" : 23020,
+				"bought_at" : ISODate("2017-08-02T19:11:51.771Z"),
+				"coin_id" : "pillar",
+				"bought_price" : 0.0004,
+				"_id" : ObjectId("598223f8512d260014923567")
+			},
+			{
+				"amount" : 100,
+				"bought_at" : ISODate("2017-08-02T19:12:32.784Z"),
+				"coin_id" : "populous",
+				"bought_price" : 1e-8,
+				"_id" : ObjectId("59822421512d26001492396b")
+			},
+			{
+				"amount" : 4600,
+				"bought_at" : ISODate("2017-08-02T19:14:22.774Z"),
+				"coin_id" : "bitquence",
+				"bought_price" : 0.00001648,
+				"_id" : ObjectId("5982248f512d260014924171")
+			},
+			{
+				"amount" : 665.99,
+				"bought_at" : ISODate("2017-08-02T19:26:30.782Z"),
+				"coin_id" : "status",
+				"bought_price" : 0.00002075,
+				"_id" : ObjectId("59822767512d260014927196")
+			},
+			{
+				"amount" : 99.99,
+				"bought_at" : ISODate("2017-08-02T19:27:18.786Z"),
+				"coin_id" : "golem-network-tokens",
+				"bought_price" : 0.0001503,
+				"_id" : ObjectId("59822797512d26001492759a")
+			},
+			{
+				"amount" : 121.23259519,
+				"bought_at" : ISODate("2017-08-02T19:28:12.784Z"),
+				"coin_id" : "humaniq",
+				"bought_price" : 0.00007461,
+				"_id" : ObjectId("598227cd512d26001492799e")
+			},
+			{
+				"amount" : 238.5510403,
+				"bought_at" : ISODate("2017-08-02T19:29:01.781Z"),
+				"coin_id" : "tenx",
+				"bought_price" : 0.00044642,
+				"_id" : ObjectId("598227fe512d260014927da2")
+			},
+			{
+				"amount" : 375,
+				"bought_at" : ISODate("2017-08-02T19:37:57.792Z"),
+				"coin_id" : "adex",
+				"bought_price" : 0.000090667,
+				"_id" : ObjectId("59822a17512d260014929db5")
+			},
+			{
+				"amount" : 5564.2,
+				"bought_at" : ISODate("2017-08-02T19:40:24.794Z"),
+				"coin_id" : "insurex",
+				"bought_price" : 0.0000637,
+				"_id" : ObjectId("59822aa9512d26001492a9bf")
+			},
+			{
+				"amount" : 13898.711523857,
+				"bought_at" : ISODate("2017-08-02T19:42:59.799Z"),
+				"coin_id" : "district0x",
+				"bought_price" : 0.00000593,
+				"_id" : ObjectId("59822b44512d26001492b1c5")
+			},
+			{
+				"amount" : 0.37982011,
+				"bought_at" : ISODate("2017-08-02T19:48:27.610Z"),
+				"coin_id" : "bitcoin",
+				"bought_price" : 1e-8,
+				"_id" : ObjectId("59822c8c512d26001492c9d3")
+			},
+			{
+				"amount" : 0.371,
+				"bought_at" : ISODate("2017-08-02T19:49:16.613Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 1e-8,
+				"_id" : ObjectId("59822cbc512d26001492cdd7")
+			},
+			{
+				"amount" : 0.1470388,
+				"bought_at" : ISODate("2017-08-04T21:12:45.340Z"),
+				"coin_id" : "bitcoin",
+				"bought_price" : 1e-7,
+				"_id" : ObjectId("5984e34e89363f0014babbef")
+			},
+			{
+				"amount" : 0.21770662,
+				"bought_at" : ISODate("2017-08-04T21:13:41.326Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 1e-7,
+				"_id" : ObjectId("5984e38589363f0014babffc")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-08-04T21:13:41.621Z"),
+				"expired" : false,
+				"_id" : ObjectId("5984e38589363f0014babffd"),
+				"salt" : "$2a$10$k7KrdreyBeOE5xQlIeQYje",
+				"password" : "$2a$10$k7KrdreyBeOE5xQlIeQYjejUobaU7oaqxOVI./pLNxh953TmDf5sW"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null
+	},
+	{
+		"_id" : ObjectId("59821f33512d26001491e52d"),
+		"token" : null,
+		"email" : "andrewfrolov+tracker@gmail.com",
+		"created_on" : ISODate("2017-08-02T18:51:31.412Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.921Z"),
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false,
+			"token" : null
+		},
+		"preferences" : {
+			"currency" : "BTC",
+			"initial_investment" : 5
+		},
+		"portfolio" : [
+			{
+				"amount" : 16,
+				"bought_at" : ISODate("2017-08-02T18:53:11.733Z"),
+				"coin_id" : "ethereum",
+				"bought_price" : 0.081875,
+				"_id" : ObjectId("59821f98512d26001491ed35")
+			},
+			{
+				"amount" : 70.2,
+				"bought_at" : ISODate("2017-08-02T18:53:27.732Z"),
+				"coin_id" : "litecoin",
+				"bought_price" : 0.01882276,
+				"_id" : ObjectId("59821fa8512d26001491ed37")
+			},
+			{
+				"amount" : 70.2,
+				"bought_at" : ISODate("2017-08-02T18:54:06.731Z"),
+				"coin_id" : "civic",
+				"bought_price" : 0.00006924,
+				"_id" : ObjectId("59821fce512d26001491f13d")
+			}
+		],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-08-02T18:54:20.143Z"),
+				"expired" : false,
+				"_id" : ObjectId("59821fdc512d26001491f13f"),
+				"salt" : "$2a$10$is8gXYY5k6gYLsNvwQ4xl.",
+				"password" : "$2a$10$is8gXYY5k6gYLsNvwQ4xl.c5Qd.KTNL7oamdH/qwHiauxeqHST9mu"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null
+	},
+	{
+		"_id" : ObjectId("598268eb512d26001496d3e0"),
+		"token" : null,
+		"email" : "pzellan@gmail.com",
+		"created_on" : ISODate("2017-08-03T00:06:03.597Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.926Z"),
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false,
+			"token" : null
+		},
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 50000
+		},
+		"portfolio" : [ ],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-08-03T00:06:43.565Z"),
+				"expired" : false,
+				"_id" : ObjectId("59826913512d26001496d3e2"),
+				"salt" : "$2a$10$j82bYvEB/w707OW1t3YFdu",
+				"password" : "$2a$10$j82bYvEB/w707OW1t3YFduW8mtnssNHikzn9abxPI/ublj6bW4ygC"
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0,
+		"activated_on" : null
+	},
+	{
+		"_id" : ObjectId("5985f29a89363f0014ccff91"),
+		"token" : null,
+		"email" : "inasacu@gmail.com",
+		"created_on" : ISODate("2017-08-05T16:30:18.026Z"),
+		"updated_on" : ISODate("2017-08-05T18:49:11.929Z"),
+		"share_settings" : {
+			"amount" : false,
+			"bought_at" : false,
+			"price" : false,
+			"source" : false
+		},
+		"preferences" : {
+			"currency" : "USD",
+			"initial_investment" : 0
+		},
+		"portfolio" : [ ],
+		"credentials" : [
+			{
+				"requestedOn" : ISODate("2017-08-05T16:30:18.034Z"),
+				"expired" : false,
+				"password" : "$2a$10$0E1W7KRcyC1Id1WiNzk25OP4.znYR9T/vToc9dXMbAdhGVGHApO2O",
+				"salt" : "$2a$10$0E1W7KRcyC1Id1WiNzk25O",
+				"_id" : ObjectId("5985f29a89363f0014ccff92")
+			}
+		],
+		"expired" : false,
+		"enabled" : true,
+		"__v" : 0
+	}
+]
