@@ -4,23 +4,38 @@ import formStyles from "../forms.scss";
 import styles from "./share.scss";
 import cx from "classnames";
 import Clipboard from "clipboard";
+import ShareOption from "./ShareOption";
 
 class SharePortfolio extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            options: {
+                source: false,
+                price: false,
+                boughtAt: false,
+                amount: false
+            }
+        };
+    }
+
     componentDidMount() {
         new Clipboard(this.refs.copyButton, {
-            text: trigger => {
+            text: (trigger) => {
                 return this.refs.shareUrl.value;
             }
         });
     }
 
-    share = e => {
-        e.preventDefault();
-        this.props.onGenerate({ source: false, price: false, boughtAt: false, amount: false });
+    share = (e) => {
+        if (e) {
+            e.preventDefault();
+        }
+        this.props.onGenerate(this.state.options);
         return 0;
     };
 
-    copy = e => {
+    copy = (e) => {
         e.preventDefault();
         const url = this.refs.shareUrl.value;
         this.refs.shareUrl.value = "Copied!";
@@ -29,9 +44,19 @@ class SharePortfolio extends Component {
         }, 1000);
     };
 
+    onChangeOption = (key) => {
+        let options = this.state.options;
+        options[key] = !options[key];
+        this.setState({ options: options });
+        if (this.props.settings.token !== undefined) {
+            this.share();
+        }
+    };
+
     render() {
         const { token } = this.props.settings;
-        const generated = token !== null;
+        const { options } = this.state;
+        const generated = token !== undefined;
 
         const buttonText = generated ? "Copy" : "Generate";
         const formAction = generated ? this.copy : this.share;
@@ -45,12 +70,24 @@ class SharePortfolio extends Component {
                     </button>
                     <input type="url" value={inputText} disabled ref="shareUrl" />
                 </div>
-                {/* <div className={cx(formStyles.group, formStyles.inline)}>
-                    <input type="checkbox" checked="false" /> Show Price
-                    <input type="checkbox" checked="false" /> Show Purchase Date
-                    <input type="checkbox" checked="false" /> Show Source
-                    <input type="checkbox" checked="false" /> Show Amount
-                </div> */}
+                <div className={cx(formStyles.group, formStyles.inline)}>
+                    <ShareOption text="Price" enabled={options.price} onToggle={(_) => this.onChangeOption("price")} />
+                    <ShareOption
+                        text="Purchase date"
+                        enabled={options.boughtAt}
+                        onToggle={(_) => this.onChangeOption("boughtAt")}
+                    />
+                    <ShareOption
+                        text="Source"
+                        enabled={options.source}
+                        onToggle={(_) => this.onChangeOption("source")}
+                    />
+                    <ShareOption
+                        text="Amount"
+                        enabled={options.amount}
+                        onToggle={(_) => this.onChangeOption("amount")}
+                    />
+                </div>
             </form>
         );
     }

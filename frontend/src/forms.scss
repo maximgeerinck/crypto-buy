@@ -4,6 +4,7 @@
     .group {
         display: flex;
         flex-direction: column;
+        flex-wrap: wrap;
         & + .group {
             margin-top: 10px;
         }

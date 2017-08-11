@@ -54,10 +54,7 @@ class CoinRepository extends MongoRepository<Coin> implements ICoinRepository {
             { $sort: { _id: -1 } },
             { $limit: 7 }
         ]).then((results: any) => {
-            for (let result of results) {
-                console.log(result);
-            }
-            return null;
+            return results;
         });
     }
 }

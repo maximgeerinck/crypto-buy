@@ -71,6 +71,7 @@
     "react-slick": "^0.14.11",
     "react-syntax-highlighter": "^5.5.0",
     "react-tap-event-plugin": "^2.0.0",
+    "recharts": "^1.0.0-alpha.2",
     "redux": "^3.5.2",
     "redux-form": "^6.1.1",
     "redux-logger": "^2.7.0",

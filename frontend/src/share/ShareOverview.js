@@ -17,8 +17,26 @@ class ShareOverview extends Component {
     }
 
     render() {
-        const items = this.props.share.coins.get("items").map((item) => {
-            return <PortfolioTrackerItem {...item} showStatistics={false} changeTotal={item.change.percentDay} />;
+        const coins = this.props.share.coins.get("items").toObject();
+
+        const items = Object.entries(coins).map(([ key, val ]) => {
+            console.log(val.amount);
+            return val.details ? (
+                <PortfolioTrackerItem
+                    key={val.details.id}
+                    id={val.details.id}
+                    name={val.details.name}
+                    symbol={val.details.name}
+                    changeHour={val.details.change.percentHour}
+                    changeDay={val.details.change.percentDay}
+                    changeWeek={val.details.change.percentWeek}
+                    price={val.details.price.usd}
+                    amount={val.amount ? val.amount * val.details.price.usd : undefined}
+                    currency="USD"
+                    showStatistics={true}
+                    changeTotal={val.details.change.percentDay}
+                />
+            ) : null;
         });
 
         return (

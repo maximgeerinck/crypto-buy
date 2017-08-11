@@ -53,7 +53,6 @@ class UserRepository extends MongoRepository<UserDomain> implements IUserReposit
 
     public getUserSharedPortfolio(token: string): Promise<UserDomain> {
         return this._model.findOne({ "share_settings.token": token }).then((u) => {
-            console.log(u);
             const user = this.parse(u);
             return user;
         });

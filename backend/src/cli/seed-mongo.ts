@@ -17,13 +17,19 @@ let promises: any = [];
 
 // - USERS
 const portfolioMaxim = [
-    new DomainUserCoin("ETH", 1.039, "gdax.com", 211.6938, moment("2017, 05, 31", "YYYY, MM, DD").toDate()),
-    new DomainUserCoin("ETH", 0.00324104, "liqui.io", 211.6938, moment("2017, 05, 31", "YYYY, MM, DD").toDate()),
-    new DomainUserCoin("SC", 2453.89379504, "poloniex", 0.015331426, moment("2017, 06, 04", "YYYY, MM, DD").toDate()),
-    new DomainUserCoin("ICN", 235.59520371, "liqui.io", 2.2),
-    new DomainUserCoin("MYST", 5.00436856, "liqui.io", 2),
-    new DomainUserCoin("CFI", 1298.7, "liqui.io", 0.1725),
-    new DomainUserCoin("MGO", 64.935, "liqui.io", 1.59, moment("2017, 06, 28", "YYYY, MM, DD").toDate())
+    new DomainUserCoin("ethereum", 1.039, "gdax.com", 211.6938, moment("2017, 05, 31", "YYYY, MM, DD").toDate()),
+    new DomainUserCoin("ethereum", 0.00324104, "liqui.io", 211.6938, moment("2017, 05, 31", "YYYY, MM, DD").toDate()),
+    new DomainUserCoin(
+        "siacoin",
+        2453.89379504,
+        "poloniex",
+        0.015331426,
+        moment("2017, 06, 04", "YYYY, MM, DD").toDate()
+    ),
+    new DomainUserCoin("iconomi", 235.59520371, "liqui.io", 2.2),
+    new DomainUserCoin("mysterium", 5.00436856, "liqui.io", 2),
+    new DomainUserCoin("cofound-it", 1298.7, "liqui.io", 0.1725),
+    new DomainUserCoin("mobilego", 64.935, "liqui.io", 1.59, moment("2017, 06, 28", "YYYY, MM, DD").toDate())
 ];
 
 let preferences = new UserPreferences("EUR");

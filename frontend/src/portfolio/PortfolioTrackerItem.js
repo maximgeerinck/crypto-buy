@@ -31,37 +31,36 @@ class PortfolioTrackerItem extends Component {
         const classChangeTotal =
             changeTotal >= 0 ? cx(styles.changeTotal, styles.positive) : cx(styles.changeTotal, styles.negative);
 
-        const statistics = showStatistics
-            ? <ul className={styles.change}>
-                  <li>
-                      <span className={styles.changeType}>H</span>
-                      <span className={classChangeHour}>
-                          {changeHour}%
-                      </span>
-                  </li>
-                  <li>
-                      <span className={styles.changeType}>D</span>
-                      <span className={classChangeDay}>
-                          {changeDay}%
-                      </span>
-                  </li>
-                  <li>
-                      <span className={styles.changeType}>W</span>
-                      <span className={classChangeWeek}>
-                          {changeWeek}%
-                      </span>
-                  </li>
-              </ul>
-            : undefined;
+        const statistics = showStatistics ? (
+            <ul className={styles.change}>
+                <li>
+                    <span className={styles.changeType}>H</span>
+                    <span className={classChangeHour}>{changeHour}%</span>
+                </li>
+                <li>
+                    <span className={styles.changeType}>D</span>
+                    <span className={classChangeDay}>{changeDay}%</span>
+                </li>
+                <li>
+                    <span className={styles.changeType}>W</span>
+                    <span className={classChangeWeek}>{changeWeek}%</span>
+                </li>
+            </ul>
+        ) : (
+            undefined
+        );
 
-        const prices = showStatistics
-            ? <div className={styles.price}>
-                  <span className={styles.calculations}>
-                      Current: {currency} {round(price, 6)} * {amount} ={" "}
-                  </span>
-                  {currency} {round(price * amount, 6)}
-              </div>
-            : undefined;
+        const prices =
+            showStatistics && amount ? (
+                <div className={styles.price}>
+                    <span className={styles.calculations}>
+                        Current: {currency} {round(price, 6)} * {amount} ={" "}
+                    </span>
+                    {currency} {round(price * amount, 6)}
+                </div>
+            ) : (
+                undefined
+            );
 
         return (
             <div className={styles.portfolioItem}>
@@ -73,9 +72,7 @@ class PortfolioTrackerItem extends Component {
                     {statistics}
                     {prices}
                 </div>
-                <div className={classChangeTotal}>
-                    {round(changeTotal, 2)}%
-                </div>
+                <div className={classChangeTotal}>{round(changeTotal, 2)}%</div>
             </div>
         );
     }
