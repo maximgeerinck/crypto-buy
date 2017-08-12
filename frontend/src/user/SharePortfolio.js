@@ -71,7 +71,7 @@ class SharePortfolio extends Component {
                     <input type="url" value={inputText} disabled ref="shareUrl" />
                 </div>
                 <div className={cx(formStyles.group, formStyles.inline)}>
-                    <ShareOption text="Price" enabled={options.price} onToggle={(_) => this.onChangeOption("price")} />
+                    {/* <ShareOption text="Price" enabled={options.price} onToggle={(_) => this.onChangeOption("price")} />
                     <ShareOption
                         text="Purchase date"
                         enabled={options.boughtAt}
@@ -81,7 +81,7 @@ class SharePortfolio extends Component {
                         text="Source"
                         enabled={options.source}
                         onToggle={(_) => this.onChangeOption("source")}
-                    />
+                    /> */}
                     <ShareOption
                         text="Amount"
                         enabled={options.amount}

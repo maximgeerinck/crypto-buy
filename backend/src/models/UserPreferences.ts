@@ -1,37 +1,37 @@
-import AbstractModel from './AbstractModel';
+import AbstractModel from "./AbstractModel";
 
 export interface IUserPreferences {
-  currency: String;
-  initialInvestment: Number;
+    currency: string;
+    initialInvestment: number;
 }
 
 export interface IUserPreferencesDAO {
-  currency: String;
-  initial_investment: Number;
+    currency: string;
+    initial_investment: number;
 }
 
 export default class UserPreferences extends AbstractModel implements IUserPreferences {
-  currency: String = 'USD';
-  initialInvestment: Number = 0;
+    public static parse(user: IUserPreferencesDAO): UserPreferences {
+        return new UserPreferences(user.currency, user.initial_investment);
+    }
 
-  constructor(currency: String, initialInvestment: Number = 0) {
-    super();
-    this.currency = currency;
-    this.initialInvestment = initialInvestment;
-  }
+    public static parseDomain(user: IUserPreferences): UserPreferences {
+        return new UserPreferences(user.currency, user.initialInvestment);
+    }
 
-  toDAO() {
-    return {
-      currency: this.currency,
-      initial_investment: this.initialInvestment
-    };
-  }
+    public currency: string = "USD";
+    public initialInvestment: number = 0;
 
-  static parse(user: IUserPreferencesDAO): UserPreferences {
-    return new UserPreferences(user.currency, user.initial_investment);
-  }
+    constructor(currency: string, initialInvestment: number = 0) {
+        super();
+        this.currency = currency;
+        this.initialInvestment = initialInvestment;
+    }
 
-  static parseDomain(user: IUserPreferences): UserPreferences {
-    return new UserPreferences(user.currency, user.initialInvestment);
-  }
+    public toDAO() {
+        return {
+            currency: this.currency,
+            initial_investment: this.initialInvestment
+        };
+    }
 }

@@ -17,7 +17,9 @@ export class MongoRepository<Model extends AbstractModel> {
     }
 
     public create(item: Model): Promise<Model> {
-        return this._model.create(item.toDAO()).then((item) => this.parse(item));
+        return this._model.create(item.toDAO()).then((item: any) => {
+            return this.parse(item);
+        });
     }
 
     public update(id: mongoose.Types.ObjectId, item: Model): Promise<Model> {

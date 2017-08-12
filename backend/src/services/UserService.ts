@@ -2,14 +2,15 @@ import * as uuid from "uuid";
 import { IUser, User } from "../models/user";
 import UserCoin from "../models/UserCoin";
 import UserCredential from "../models/UserCredential";
-import UserShareSettings from "../models/UserShareSettings";
+import ShareModel, { IUserShareSettings, UserShareSettings } from "../models/UserShareSettings";
 import { comparePassword, genSalt, hashPassword } from "../utils/cypher-util";
 import * as CypherUtil from "../utils/cypher-util";
+import ShareRepository from "./ShareRepository";
 import UserRepository from "./UserRepository";
 
 class UserService {
     public findOneById(id: any) {
-        return UserRepository.findOneById(id);
+        return UserRepository.findOneByIdWithShares(id);
     }
 
     public findUserByEmail(email: string): Promise<User> {
@@ -76,10 +77,6 @@ class UserService {
         return UserRepository.update(user.id, user);
     }
 
-    public getDetails(email: string): Promise<User> {
-        return UserRepository.findOneByEmail(email);
-    }
-
     public findUsersWithoutCredentials(): Promise<User[]> {
         return UserRepository.find({ credentials: { $size: 0 } });
     }
@@ -97,37 +94,22 @@ class UserService {
 
     public sharePortfolio(
         user: User,
-        price: boolean = false,
-        source: boolean = false,
-        boughtAt: boolean = false,
-        amount: boolean = false
+        amount: boolean = false,
+        graph: boolean = false,
+        change: boolean = false,
+        price: boolean = false
     ): Promise<UserShareSettings> {
         const token = uuid.v4();
-        const shareSettings = new UserShareSettings(token, price, source, boughtAt, amount);
-        user.setShareSettings(shareSettings);
 
-        return this.update(user).then((_) => shareSettings);
-    }
+        const settings = new UserShareSettings(token, amount, graph, change, price);
+        settings.setUser(user);
 
-    public getSharedPortfolio(token: string): Promise<any> {
-        return UserRepository.getUserSharedPortfolio(token).then((user) => {
-            const portfolio: any = [];
-            const settings: UserShareSettings = user.shareSettings;
-
-            for (const coin of user.portfolio) {
-                portfolio.push(
-                    Object.assign(
-                        { coinId: coin.coinId },
-                        settings.amount && { amount: coin.amount },
-                        settings.boughtAt && { boughtAt: coin.boughtAt },
-                        settings.price && { boughtPrice: coin.boughtPrice },
-                        settings.source && { source: coin.source }
-                    )
-                );
-            }
-
-            return portfolio;
-        });
+        return ShareRepository.create(settings)
+            .then((settings: any) => {
+                user.addShare(settings);
+                return this.update(user).then((_) => settings);
+            })
+            .catch((err) => console.log(err));
     }
 }
 

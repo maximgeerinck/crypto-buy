@@ -5,7 +5,7 @@ import AbstractModel from "./AbstractModel";
 import UserCoin, { IUserCoin, IUserCoinDAO } from "./UserCoin";
 import UserCredential, { IUserCredential, IUserCredentialDAO } from "./UserCredential";
 import UserPreferences, { IUserPreferences, IUserPreferencesDAO } from "./UserPreferences";
-import UserShareSettings, { IUserShareSettings, IUserShareSettingsDAO } from "./UserShareSettings";
+import { IUserShareSettings, IUserShareSettingsDAO, UserShareSettings } from "./UserShareSettings";
 
 export interface IUser {
     id: any;
@@ -19,7 +19,7 @@ export interface IUser {
     updatedOn: Date;
     token: string;
     preferences: IUserPreferences;
-    shareSettings: IUserShareSettings;
+    shares: IUserShareSettings[];
 }
 export interface IUserDAO extends Document {
     _id: any;
@@ -33,20 +33,26 @@ export interface IUserDAO extends Document {
     updated_on: Date;
     token: string;
     preferences: IUserPreferencesDAO;
-    share_settings: IUserShareSettingsDAO;
+    shares?: IUserShareSettingsDAO[];
 }
 
 export class User extends AbstractModel implements IUser {
     public static parse(user: IUserDAO): User {
+        if (!user || typeof user !== "object") {
+            throw new Error("MODEL_PARSE_EXCEPTION");
+        }
+
         const credentials = user.credentials
-            ? user.credentials.map(credential => UserCredential.parse(credential))
+            ? user.credentials.map((credential) => UserCredential.parse(credential))
             : null;
 
-        const portfolio = user.portfolio ? user.portfolio.map(Coin => UserCoin.parse(Coin)) : undefined;
-        const shareSettings = user.share_settings ? UserShareSettings.parse(user.share_settings) : undefined;
+        const portfolio = user.portfolio ? user.portfolio.map((Coin) => UserCoin.parse(Coin)) : undefined;
+        const shares = user.shares.map(
+            (share: any) => (!mongoose.Types.ObjectId.isValid(share) ? UserShareSettings.parse(share) : undefined)
+        );
 
         const userObj = new User(user.email, credentials, portfolio, user.created_on, user._id);
-        userObj.shareSettings = shareSettings;
+        userObj.shares = shares;
         userObj.token = user.token;
         userObj.updatedOn = user.updated_on;
         userObj.preferences = UserPreferences.parse(user.preferences);
@@ -56,14 +62,14 @@ export class User extends AbstractModel implements IUser {
 
     public static parseDomain(user: IUser): User {
         const credentials = user.credentials
-            ? user.credentials.map(credential => UserCredential.parseDomain(credential))
+            ? user.credentials.map((credential) => UserCredential.parseDomain(credential))
             : null;
 
-        const portfolio = user.portfolio ? user.portfolio.map(Coin => UserCoin.parseDomain(Coin)) : null;
-        const shareSettings = user.shareSettings ? UserShareSettings.parseDomain(user.shareSettings) : undefined;
+        const portfolio = user.portfolio ? user.portfolio.map((Coin) => UserCoin.parseDomain(Coin)) : null;
+        const shares = user.shares ? user.shares.map((share) => UserShareSettings.parseDomain(share)) : undefined;
 
         const userObj = new User(user.email, credentials, portfolio, user.createdOn, user.id);
-        userObj.shareSettings = shareSettings;
+        userObj.shares = shares;
         userObj.token = user.token;
         userObj.updatedOn = user.updatedOn;
         userObj.preferences = UserPreferences.parseDomain(user.preferences);
@@ -79,7 +85,7 @@ export class User extends AbstractModel implements IUser {
     public portfolio: UserCoin[] = [];
     public preferences: UserPreferences = new UserPreferences("USD");
     public credentials: UserCredential[] = [];
-    public shareSettings: UserShareSettings;
+    public shares: UserShareSettings[] = [];
 
     constructor(
         readonly email: string,
@@ -93,23 +99,27 @@ export class User extends AbstractModel implements IUser {
         this.credentials = credentials;
     }
 
+    public addShare(share: UserShareSettings) {
+        this.shares.push(share);
+    }
+
     public addCredentials(credentials: UserCredential) {
         this.credentials.push(credentials);
     }
 
-    public setShareSettings(shareSettings: UserShareSettings): void {
-        this.shareSettings = shareSettings;
+    public setShares(shares: UserShareSettings[]) {
+        this.shares = shares;
     }
 
     public toDAO() {
         let credentials: IUserCredentialDAO[];
         if (this.credentials) {
-            credentials = this.credentials.map(credential => credential.toDAO());
+            credentials = this.credentials.map((credential) => credential.toDAO());
         }
 
         let portfolio: IUserCoinDAO[];
         if (this.portfolio) {
-            portfolio = this.portfolio.map(item => item.toDAO());
+            portfolio = this.portfolio.map((item) => item.toDAO());
         }
 
         return {
@@ -122,7 +132,7 @@ export class User extends AbstractModel implements IUser {
             created_on: this.createdOn,
             updated_on: this.updatedOn,
             portfolio,
-            share_settings: this.shareSettings ? this.shareSettings.toDAO() : {},
+            shares: this.shares ? this.shares.map((share) => share.id) : [],
             preferences: this.preferences ? this.preferences.toDAO() : undefined
         };
     }
@@ -165,13 +175,7 @@ export const UserSchema = new mongoose.Schema(
             currency: { type: String, required: true, default: "USD" },
             initial_investment: { type: Number, required: true, default: 0 }
         },
-        share_settings: {
-            token: { type: String, required: false },
-            amount: { type: Boolean, required: true, default: false },
-            bought_at: { type: Boolean, required: true, default: false },
-            price: { type: Boolean, required: true, default: false },
-            source: { type: Boolean, required: true, default: false }
-        }
+        shares: [ { type: Schema.Types.ObjectId, ref: "Share" } ]
     },
     { timestamps: { createdAt: "created_on", updatedAt: "updated_on" } }
 );

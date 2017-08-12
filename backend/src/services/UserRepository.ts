@@ -7,11 +7,18 @@ import { IRepositoryAdapter, MongoRepository } from "./repository";
 interface IUserRepository {
     findCredentialByEmail(email: string): Promise<UserDomain>;
     findOneByEmail(email: string): Promise<UserDomain>;
+    findOneByIdWithShares(id: string): Promise<UserDomain>;
 }
 
 class UserRepository extends MongoRepository<UserDomain> implements IUserRepository {
     constructor() {
         super(User, "User");
+    }
+
+    public findOneByIdWithShares(id: string): Promise<UserDomain> {
+        return this._model.findOne({ _id: id }).populate("shares").then((user) => {
+            return this.parse(user);
+        });
     }
 
     public removeItem(id: string, userId: mongoose.Types.ObjectId): Promise<boolean> {
@@ -48,13 +55,8 @@ class UserRepository extends MongoRepository<UserDomain> implements IUserReposit
     }
 
     public findOneByEmail(email: string): Promise<UserDomain> {
-        return this._model.findOne({ email }).select("-credentials").exec().then((user) => this.parse(user));
-    }
-
-    public getUserSharedPortfolio(token: string): Promise<UserDomain> {
-        return this._model.findOne({ "share_settings.token": token }).then((u) => {
-            const user = this.parse(u);
-            return user;
+        return this._model.findOne({ email }).select("-credentials").then((user) => {
+            return this.parse(user);
         });
     }
 }

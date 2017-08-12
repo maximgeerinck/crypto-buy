@@ -7,8 +7,13 @@ export const loadPortfolioFailure = (errors) => ({ type: types.SHARE_PORTFOLIO_L
 
 export const loadPortfolio = (token) => {
     return (dispatch, getState) => {
-        api.get(`portfolio/${token}`).then((portfolio) => {
-            dispatch(loadPortfolioSuccess(portfolio));
-        });
+        api
+            .get(`portfolio/${token}`)
+            .then((portfolio) => {
+                dispatch(loadPortfolioSuccess(portfolio));
+            })
+            .catch((err) => {
+                dispatch(loadPortfolioFailure(err));
+            });
     };
 };

@@ -22,11 +22,7 @@ export class PortfolioTracker extends Component {
     render() {
         const children = this.props.children;
 
-        return (
-            <div className={styles.portfolio}>
-                {" "}{children}{" "}
-            </div>
-        );
+        return <div className={styles.portfolio}> {children} </div>;
     }
 }
 
@@ -66,13 +62,13 @@ class PortfolioTrackerPage extends Component {
             );
 
         const noCoins =
-            portfolio.stats.get("coins").length === 0
-                ? <div style={{ "text-align": "center", "margin-top": "20px" }}>
-                      <a href="/account" className={formStyles.button}>
-                          You have not added coins yet, add them here{" "}
-                      </a>{" "}
-                  </div>
-                : null;
+            portfolio.stats.get("coins").length === 0 ? (
+                <div style={{ "text-align": "center", "margin-top": "20px" }}>
+                    <a href="/account" className={formStyles.button}>
+                        You have not added coins yet, add them here{" "}
+                    </a>{" "}
+                </div>
+            ) : null;
 
         const userCurrency = user.preferences.currency || "USD",
             userInitialInvestment = user.preferences.initialInvestment || 0;
@@ -91,9 +87,9 @@ class PortfolioTrackerPage extends Component {
             // total increase since you bought
             let changeTotal = c.change.percent_1h;
             totalPrice += i.amount * (c.price.usd * rate);
-            
+
             if (i.boughtPrice) {
-                invested += i.boughtPrice * i.amount;                
+                invested += i.boughtPrice * i.amount;
 
                 let oldNumber = i.boughtPrice * i.amount;
                 let newNumber = i.amount * c.price.usd;
@@ -132,7 +128,7 @@ class PortfolioTrackerPage extends Component {
         document.title = `${round(totalPrice, 2)} ${userCurrency} (${investedGainedPercentage}%)`;
 
         // PIE CHART DATA
-        const chartData = portfolio.stats.get("coins").map(coin => {
+        const chartData = portfolio.stats.get("coins").map((coin) => {
             const items = reduceItems(portfolio.coins.get("items"));
             const i = items[coin.id];
             let price = round(coin.price.usd * rate * i.amount, 2);
@@ -147,21 +143,24 @@ class PortfolioTrackerPage extends Component {
 
         return (
             <Page custom className={cx(pageStyles.focused, homeStyles.main)}>
-                {" "}{/* investment statistics*/}{" "}
+                {" "}
+                {/* investment statistics*/}{" "}
                 <div className={styles.portfolioStats}>
                     <h3>
-                        {" "}{userCurrency} {round(totalPrice, 2)}{" "}
+                        {" "}
+                        {userCurrency} {round(totalPrice, 2)}{" "}
                     </h3>
                     <div className={styles.invested}>
                         <p className={investedChange}>
-                            {" "}{userCurrency} {investedGainedAmount}({investedGainedPercentage} % ){" "}
+                            {" "}
+                            {userCurrency} {investedGainedAmount}({investedGainedPercentage} % ){" "}
                         </p>{" "}
                         <p className={styles.investmentNotes}>
                             (based on investment of {userCurrency} {round(invested, 2)}){" "}
                         </p>{" "}
                     </div>{" "}
+                    {chart}
                 </div>
-                {chart}
                 {/* Portfolio */} <PortfolioTracker> {itemContainers} </PortfolioTracker>
                 {noCoins}{" "}
             </Page>
@@ -169,14 +168,14 @@ class PortfolioTrackerPage extends Component {
     }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     portfolio: state.portfolio,
     auth: state.auth,
     currency: state.currency,
     user: state.user
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
     return {
         portfolioActions: bindActionCreators(PortfolioActions, dispatch),
         currencyActions: bindActionCreators(CurrencyActions, dispatch),

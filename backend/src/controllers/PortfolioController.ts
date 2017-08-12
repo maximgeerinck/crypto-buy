@@ -106,59 +106,6 @@ class PortfolioController {
         });
         return reply(coins);
     }
-
-    /**
-     * Create a shared link
-     * @param req
-     * @param reply
-     */
-    public share(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
-        const user: DomainUser = req.auth.credentials;
-        const settings: any = req.payload.settings;
-
-        UserService.sharePortfolio(user, settings.price, settings.source, settings.boughtAt, settings.amount)
-            .then((shareSettings) => {
-                reply(shareSettings);
-            })
-            .catch((err) => {
-                if (err === "E_NOT_FOUND") {
-                    return reply(Boom.notFound());
-                }
-                return reply(Boom.badRequest());
-            });
-    }
-
-    public sharedPortfolio(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
-        const { token } = req.params;
-        UserService.getSharedPortfolio(token)
-            .then((result: any) => {
-                const portfolio: any = {};
-
-                // unique values
-                for (const coin of result) {
-                    portfolio[coin.coinId] = coin;
-                }
-
-                // link them to current value
-                CoinRepository.findCoinsByIds(Object.keys(portfolio))
-                    .then((details) => {
-                        for (const coinDetail of details) {
-                            portfolio[coinDetail.id].details = coinDetail;
-                        }
-
-                        reply(portfolio);
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    });
-            })
-            .catch((err) => {
-                if (err === "E_NOT_FOUND") {
-                    return reply(Boom.notFound());
-                }
-                return reply(Boom.badRequest());
-            });
-    }
 }
 
 export default new PortfolioController();

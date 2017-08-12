@@ -1,11 +1,11 @@
-import UserService from "../services/UserService";
-import * as Hapi from "hapi";
-import { IUser, User } from "../models/user";
 import * as Boom from "boom";
+import * as Hapi from "hapi";
 import { MongoError } from "mongodb";
 import { Error as MongooseError } from "mongoose";
-import Validator, { ValidationError } from "../validation/Validator";
+import { IUser, User } from "../models/user";
 import UserRepository from "../services/UserRepository";
+import UserService from "../services/UserService";
+import Validator, { ValidationError } from "../validation/Validator";
 
 // interface ICreateValidationErrors {
 //     email?: string,
@@ -21,7 +21,7 @@ class UserController {
     public create(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         const { email, password, domains } = req.payload;
 
-        //TODO: Extract different validation methods
+        // TODO: Extract different validation methods
         let validator = new Validator();
         UserService.createUser(email, password).then(reply).catch((err) => {
             let validationErrors: any = {};
@@ -31,8 +31,8 @@ class UserController {
                 if (err.message.indexOf("duplicate key") > -1)
                     validator.addError(new ValidationError("email", "email.inUse"));
             } else if (err.name == "ValidationError") {
-                for (let field in err.errors) {
-                    let f = field.split("."); // for array validation
+                for (const field in err.errors) {
+                    const f = field.split("."); // for array validation
                     validator.addError(new ValidationError(f[0], err.errors[field].message));
                 }
             }
@@ -48,17 +48,15 @@ class UserController {
     }
 
     public me(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
-        // get account details
-        UserService.getDetails(req.auth.credentials.email).then(reply).catch((err) => {
-            console.log(err);
-            reply(Boom.badRequest());
-        });
+        const user: User = req.auth.credentials;
+        delete user.credentials;
+        reply(user);
     }
 
     public updatePreferences(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         const preferences = req.payload;
 
-        let user = req.auth.credentials;
+        const user = req.auth.credentials;
         Object.assign(user.preferences, preferences);
 
         UserService.update(user).then((user) => reply(user)).catch((err) => reply(Boom.badRequest()));

@@ -1,5 +1,5 @@
-import PortfolioController from "../controllers/PortfolioController";
 import * as Joi from "joi";
+import PortfolioController from "../controllers/PortfolioController";
 
 const coin = Joi.object().keys({
     coinId: Joi.string().required(),
@@ -46,16 +46,5 @@ module.exports = [
         method: "POST",
         path: "/portfolio/coin/remove",
         handler: PortfolioController.removeCoin
-    },
-    {
-        method: "POST",
-        path: "/portfolio/share",
-        handler: PortfolioController.share
-    },
-    {
-        method: "GET",
-        path: "/portfolio/{token}",
-        handler: PortfolioController.sharedPortfolio,
-        config: { auth: false }
     }
 ];

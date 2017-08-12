@@ -10,6 +10,9 @@ import homeStyles from "../app/home.scss";
 
 import { PortfolioTracker } from "../portfolio/PortfolioTracker";
 import PortfolioTrackerItem from "../portfolio/PortfolioTrackerItem";
+import PortfolioPieChart from "../portfolio/PortfolioPieChart";
+import Loader from "../components/Loader";
+import NotFoundPage from "../components/NotFoundPage";
 
 class ShareOverview extends Component {
     componentDidMount() {
@@ -17,11 +20,34 @@ class ShareOverview extends Component {
     }
 
     render() {
+        if (this.props.share.notFound) {
+            return <NotFoundPage title="Portfolio not found" text="We could not find the portfolio you were looking for" className={pageStyles.shareNotFoundPage}/>;
+        }
+
+        if (this.props.share.coins.get("isLoading")) {
+            return (
+                <Page custom className={cx(pageStyles.focused, homeStyles.main)}>
+                    <Loader />
+                </Page>
+            );
+        }
+
         const coins = this.props.share.coins.get("items").toObject();
+        let chartData = [];
 
         const items = Object.entries(coins).map(([ key, val ]) => {
-            console.log(val.amount);
-            return val.details ? (
+            if (!val.details) {
+                return undefined;
+            }
+
+            if (val.amount) {
+                chartData.push({
+                    symbol: val.details.symbol,
+                    total: parseFloat(val.amount ? val.amount * val.details.price.usd : undefined)
+                });
+            }
+
+            return (
                 <PortfolioTrackerItem
                     key={val.details.id}
                     id={val.details.id}
@@ -31,16 +57,19 @@ class ShareOverview extends Component {
                     changeDay={val.details.change.percentDay}
                     changeWeek={val.details.change.percentWeek}
                     price={val.details.price.usd}
-                    amount={val.amount ? val.amount * val.details.price.usd : undefined}
+                    amount={val.amount ? val.amount : undefined}
                     currency="USD"
                     showStatistics={true}
                     changeTotal={val.details.change.percentDay}
                 />
-            ) : null;
+            );
         });
+
+        const chart = chartData.length > 0 ? <PortfolioPieChart data={chartData} /> : undefined;
 
         return (
             <Page custom className={cx(pageStyles.focused, homeStyles.main)}>
+                {chart}
                 <PortfolioTracker>{items}</PortfolioTracker>
             </Page>
         );
