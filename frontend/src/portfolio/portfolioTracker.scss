@@ -10,7 +10,7 @@
     position: relative;
     background: rgba(41, 41, 41, 0.70); // padding: 10px 15px;
     width: 100%;
-    margin: 10px;
+    margin: 10px 0;
     flex-direction: row;
     display: flex;
     align-items: center;
@@ -80,6 +80,7 @@
 @media only screen and (min-width: 1024px) {
     .portfolioItem {
         width: calc(50% - 20px);
+        margin: 10px;
         .details {
             h2 {
                 font-size: 18pt;
