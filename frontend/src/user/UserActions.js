@@ -17,9 +17,6 @@ const updateSucceeded = (user) => ({ type: types.UPDATE_SUCCESS, body: user });
 
 const requestPasswordRequest = () => ({ type: types.REQUEST_PASSWORD_REQUEST });
 
-const shareLinkRequest = () => ({ type: types.SHARE_REQUEST });
-const shareLinkSuccess = (shareSettings) => ({ type: types.SHARE_SUCCESS, body: shareSettings });
-
 export const logout = () => ({ type: LOGOUT });
 
 export const me = () => {
@@ -28,7 +25,10 @@ export const me = () => {
 
         return api
             .get("user/me", getState().auth.token)
-            .then((user) => dispatch(userSuccess(user)))
+            .then((user) => {
+                console.log(user);
+                dispatch(userSuccess(user));
+            })
             .catch(() => dispatch(userFailed()));
     };
 };
@@ -91,14 +91,5 @@ export const requestPassword = (email) => {
 export const resetPassword = (token, email, password) => {
     return (dispatch) => {
         return api.post("reset", { email, token, password });
-    };
-};
-
-export const share = (settings) => {
-    return (dispatch, getState) => {
-        dispatch(shareLinkRequest());
-        return api.post("portfolio/share", { settings }, getState().auth.token).then((shareSettings) => {
-            dispatch(shareLinkSuccess(shareSettings));
-        });
     };
 };

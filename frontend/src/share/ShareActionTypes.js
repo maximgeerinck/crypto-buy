@@ -1,3 +1,7 @@
-export const SHARE_PORTFOLIO_LOAD_REQUEST = "share/portfolio/load/request";
-export const SHARE_PORTFOLIO_LOAD_SUCCESS = "share/portfolio/load/success";
-export const SHARE_PORTFOLIO_LOAD_FAILURE = "share/portfolio/load/failure";
+export const SHARE_LOAD_SUCCESS = "share/load/success";
+export const SHARE_LOAD_REQUEST = "share/load/request";
+export const SHARE_LOAD_FAILURE = "share/load/failure";
+
+export const SHARE_DELETE_SUCCESS = "share/delete/success";
+export const SHARE_REQUEST = "share/request";
+export const SHARE_SUCCESS = "share/success";

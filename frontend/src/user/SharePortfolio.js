@@ -1,101 +1,58 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import formStyles from "../forms.scss";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import * as ShareActions from "../share/ShareActions";
+import * as UserActions from "./UserActions";
 import styles from "./share.scss";
-import cx from "classnames";
-import Clipboard from "clipboard";
-import ShareOption from "./ShareOption";
+
+import ShareItem from "./ShareItem";
+import ShareForm from "./ShareForm";
 
 class SharePortfolio extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            options: {
-                source: false,
-                price: false,
-                boughtAt: false,
-                amount: false
-            }
-        };
-    }
-
-    componentDidMount() {
-        new Clipboard(this.refs.copyButton, {
-            text: (trigger) => {
-                return this.refs.shareUrl.value;
-            }
-        });
-    }
-
-    share = (e) => {
-        if (e) {
-            e.preventDefault();
-        }
-        this.props.onGenerate(this.state.options);
-        return 0;
-    };
-
-    copy = (e) => {
-        e.preventDefault();
-        const url = this.refs.shareUrl.value;
-        this.refs.shareUrl.value = "Copied!";
-        setTimeout(() => {
-            this.refs.shareUrl.value = url;
-        }, 1000);
-    };
-
-    onChangeOption = (key) => {
-        let options = this.state.options;
-        options[key] = !options[key];
-        this.setState({ options: options });
-        if (this.props.settings.token !== undefined) {
-            this.share();
-        }
-    };
+    share = (options) => this.props.shareActions.share(options);
+    deleteShare = (id) => this.props.shareActions.deleteShare(id);
 
     render() {
-        const { token } = this.props.settings;
-        const { options } = this.state;
-        const generated = token !== undefined;
+        const shares = this.props.user.get("user").get("shares");
 
-        const buttonText = generated ? "Copy" : "Generate";
-        const formAction = generated ? this.copy : this.share;
-        const inputText = generated ? `https://cryptotrackr.com/share/${token}` : "Generate your unique share link!";
+        let shareContainers = shares.map((share) => {
+            const permissions = Object.keys(share).filter((key) => typeof share[key] === "boolean" && share[key]);
+            return (
+                <ShareItem
+                    key={share.id}
+                    id={share.id}
+                    permissions={permissions}
+                    token={share.token}
+                    onDelete={this.deleteShare}
+                    onCopy={this.copyShare}
+                />
+            );
+        });
+
+        console.log(this.props.share.latestShare);
 
         return (
-            <form className={formStyles.form} onSubmit={formAction}>
-                <div className={cx(formStyles.group, formStyles.inline, styles.share)}>
-                    <button type="submit" className={formStyles.button} ref="copyButton">
-                        {buttonText}
-                    </button>
-                    <input type="url" value={inputText} disabled ref="shareUrl" />
-                </div>
-                <div className={cx(formStyles.group, formStyles.inline)}>
-                    {/* <ShareOption text="Price" enabled={options.price} onToggle={(_) => this.onChangeOption("price")} />
-                    <ShareOption
-                        text="Purchase date"
-                        enabled={options.boughtAt}
-                        onToggle={(_) => this.onChangeOption("boughtAt")}
-                    />
-                    <ShareOption
-                        text="Source"
-                        enabled={options.source}
-                        onToggle={(_) => this.onChangeOption("source")}
-                    /> */}
-                    <ShareOption
-                        text="Amount"
-                        enabled={options.amount}
-                        onToggle={(_) => this.onChangeOption("amount")}
-                    />
-                </div>
-            </form>
+            <div>
+                <ShareForm onSave={this.share} latestShare={this.props.share.latestShare} />
+
+                <h3>Your active share links</h3>
+                <ul className={styles.shares}>{shareContainers}</ul>
+            </div>
         );
     }
 }
 
-SharePortfolio.propTypes = {
-    settings: PropTypes.object.isRequired,
-    onGenerate: PropTypes.func.isRequired
+const mapStateToProps = (state) => ({
+    user: state.user,
+    share: state.share
+});
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        shareActions: bindActionCreators(ShareActions, dispatch),
+        userActions: bindActionCreators(UserActions, dispatch)
+    };
 };
 
-export default SharePortfolio;
+export default connect(mapStateToProps, mapDispatchToProps)(SharePortfolio);

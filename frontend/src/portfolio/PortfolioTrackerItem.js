@@ -20,7 +20,9 @@ class PortfolioTrackerItem extends Component {
             amount,
             currency,
             showStatistics,
-            id
+            id,
+            showChange,
+            showPrice
         } = this.props;
 
         const loader = this.props.isUpdating ? <Loader className={styles.loader} color="#848484" /> : null;
@@ -31,27 +33,28 @@ class PortfolioTrackerItem extends Component {
         const classChangeTotal =
             changeTotal >= 0 ? cx(styles.changeTotal, styles.positive) : cx(styles.changeTotal, styles.negative);
 
-        const statistics = showStatistics ? (
-            <ul className={styles.change}>
-                <li>
-                    <span className={styles.changeType}>H</span>
-                    <span className={classChangeHour}>{changeHour}%</span>
-                </li>
-                <li>
-                    <span className={styles.changeType}>D</span>
-                    <span className={classChangeDay}>{changeDay}%</span>
-                </li>
-                <li>
-                    <span className={styles.changeType}>W</span>
-                    <span className={classChangeWeek}>{changeWeek}%</span>
-                </li>
-            </ul>
-        ) : (
-            undefined
-        );
+        const statistics =
+            showStatistics && showChange ? (
+                <ul className={styles.change}>
+                    <li>
+                        <span className={styles.changeType}>H</span>
+                        <span className={classChangeHour}>{changeHour}%</span>
+                    </li>
+                    <li>
+                        <span className={styles.changeType}>D</span>
+                        <span className={classChangeDay}>{changeDay}%</span>
+                    </li>
+                    <li>
+                        <span className={styles.changeType}>W</span>
+                        <span className={classChangeWeek}>{changeWeek}%</span>
+                    </li>
+                </ul>
+            ) : (
+                undefined
+            );
 
         const prices =
-            showStatistics && amount ? (
+            showStatistics && amount && showPrice ? (
                 <div className={styles.price}>
                     <span className={styles.calculations}>
                         Current: {currency} {round(price, 6)} * {amount} ={" "}
@@ -61,6 +64,10 @@ class PortfolioTrackerItem extends Component {
             ) : (
                 undefined
             );
+
+        const changeTotalContainer = showChange ? (
+            <div className={classChangeTotal}>{round(changeTotal, 2)}%</div>
+        ) : null;
 
         return (
             <div className={styles.portfolioItem}>
@@ -72,7 +79,7 @@ class PortfolioTrackerItem extends Component {
                     {statistics}
                     {prices}
                 </div>
-                <div className={classChangeTotal}>{round(changeTotal, 2)}%</div>
+                {changeTotalContainer}
             </div>
         );
     }
@@ -90,7 +97,9 @@ PortfolioTrackerItem.propTypes = {
     amount: PropTypes.number.isRequired,
     currency: PropTypes.string,
     isUpdating: PropTypes.bool.isRequired,
-    showStatistics: PropTypes.bool.isRequired
+    showStatistics: PropTypes.bool.isRequired,
+    showChange: PropTypes.bool.isRequired,
+    showPrice: PropTypes.bool.isRequired
 };
 
 PortfolioTrackerItem.defaultProps = {
@@ -101,7 +110,9 @@ PortfolioTrackerItem.defaultProps = {
     price: 0,
     amount: 0,
     isUpdating: false,
-    showStatistics: true
+    showStatistics: true,
+    showChange: true,
+    showPrice: true
 };
 
 export default PortfolioTrackerItem;

@@ -11,6 +11,3 @@ export const UPDATE_FAILURE = "user/update/failure";
 export const UPDATE_SUCCESS = "user/update/success";
 
 export const REQUEST_PASSWORD_REQUEST = "user/password/request";
-
-export const SHARE_REQUEST = "share/request";
-export const SHARE_SUCCESS = "share/success";

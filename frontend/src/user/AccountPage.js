@@ -16,12 +16,8 @@ class AccountPage extends Component {
         if (!this.props.user.isLoaded) this.props.userActions.me();
     }
 
-    onSavePreferences = preferences => {
+    onSavePreferences = (preferences) => {
         this.props.userActions.updatePreferences(preferences);
-    };
-
-    share = settings => {
-        this.props.userActions.share(settings);
     };
 
     render() {
@@ -42,7 +38,7 @@ class AccountPage extends Component {
                 </div>
 
                 <h2>Share</h2>
-                <SharePortfolio settings={user.shareSettings} onGenerate={this.share} />
+                <SharePortfolio />
 
                 <h2>Preferences</h2>
                 <UserPreferences
@@ -61,11 +57,11 @@ class AccountPage extends Component {
     }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     user: state.user
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
     return {
         userActions: bindActionCreators(UserActions, dispatch)
     };

@@ -5,6 +5,90 @@
     }
 }
 
+.shares {
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+
+    li {
+        position: relative;
+        width: 100%;
+        list-style: none;
+        background: rgba(104, 146, 151, 0.27);
+        padding: 10px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        color: rgb(68, 92, 95);
+        justify-content: space-between;
+        box-sizing: border-box;
+        margin: 10px;
+        flex: 1;
+
+        .permissions {
+            font-style: italic;
+            font-size: 9pt;
+            color: #6f6f6f;
+        }
+
+        .shareActions {
+            button {
+                padding: 0;
+                padding: 5px 10px;
+                height: 100%;
+
+                & + button {
+                    margin-left: 5px;
+                }
+            }
+        }
+
+        p {
+            margin: 0;
+            &:hover {
+                cursor: pointer;
+                text-decoration: underline;
+            }
+        }
+
+        & + li {
+            margin-top: 10px;
+        }
+    }
+}
+.itemCopied {
+    position: absolute;
+    text-align: center;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.25);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 250ms all ease-in-out;
+    display: none;
+
+    &.show {
+        display: inline-flex;
+    }
+}
+
+@media only screen and (min-width: 1280px) {
+    .shares {
+        li {
+            width: auto;
+            p {
+                width: 325px;
+            }
+        }
+    }
+}
+
 .shareOption {
     position: relative;
     display: inline-block;

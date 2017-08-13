@@ -47,7 +47,15 @@ class ShareController {
                         portfolio[coinDetail.id].details = coinDetail;
                     }
 
-                    reply(portfolio);
+                    reply({
+                        settings: {
+                            amount: share.amount,
+                            graph: share.graph,
+                            change: share.change,
+                            price: share.price
+                        },
+                        portfolio
+                    });
                 })
                 .catch((err) => {
                     console.log(err);

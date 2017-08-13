@@ -1,20 +1,14 @@
 import * as types from "./UserActionTypes";
 import { LOGOUT } from "../authentication/AuthenticationActionTypes";
-import { Record, Map } from "immutable";
+import * as shareTypes from "../share/ShareActionTypes";
+import { Record, Map, List } from "immutable";
 import * as errorTypes from "../helpers/ErrorHelper";
 
 export const USER = "auth_user";
 
 var InitialState = new Record({
     user: new Map({
-        email: null,
-        shareSettings: {
-            token: undefined,
-            price: false,
-            source: false,
-            boughtAt: false,
-            amount: false
-        }
+        email: null
     }),
     isLoaded: false,
     form: Map({
@@ -51,8 +45,16 @@ const UserReducer = (state = initialState, action) => {
         case LOGOUT:
             localStorage.removeItem(USER);
             return state.set("user", new Map(null)).set("isLoaded", false);
-        case types.SHARE_SUCCESS:
-            return state.setIn([ "user", "shareSettings" ], action.body);
+
+        case shareTypes.SHARE_SUCCESS:
+            let shares = state.get("user").toObject().shares;
+            return state.setIn([ "user", "shares" ], [ action.body ].concat(shares));
+
+        case shareTypes.SHARE_DELETE_SUCCESS:
+            shares = state.get("user").toObject().shares;
+            shares = shares.filter((share) => share.id !== action.body);
+            return state.setIn([ "user", "shares" ], shares);
+
         default:
             return state;
     }
