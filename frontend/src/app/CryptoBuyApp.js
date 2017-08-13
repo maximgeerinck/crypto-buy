@@ -25,7 +25,7 @@ class ImageRotatorApp extends Component {
 
         if (
             localStorage.getItem(VERSION_KEY) === null ||
-            parseInt(localStorage.getItem(VERSION_KEY)) !== window.cryptotrackr.version
+            parseInt(localStorage.getItem(VERSION_KEY), 10) !== window.cryptotrackr.version
         ) {
             localStorage.clear();
             localStorage.setItem(VERSION_KEY, window.cryptotrackr.version);
