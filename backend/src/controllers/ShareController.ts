@@ -21,30 +21,19 @@ class ShareController {
                 }
             }
 
-            //             public getSharedPortfolio(token: string): Promise<any> {
-            //     return UserRepository.getUserSharedPortfolio(token).then((user) => {
-            //         // const portfolio: any = [];
-            //         // const settings: UserShareSettings[] = user.shares;
-            //         // for (const coin of user.portfolio) {
-            //         //     portfolio.push(
-            //         //         Object.assign(
-            //         //             { coinId: coin.coinId },
-            //         //             settings.amount && { amount: coin.amount },
-            //         //             settings.boughtAt && { boughtAt: coin.boughtAt },
-            //         //             settings.price && { boughtPrice: coin.boughtPrice },
-            //         //             settings.source && { source: coin.source }
-            //         //         )
-            //         //     );
-            //         // }
-            //         // return portfolio;
-            //     });
-            // }
-
             // // link them to current value
             CoinRepository.findCoinsByIds(Object.keys(portfolio))
                 .then((details) => {
                     for (const coinDetail of details) {
                         portfolio[coinDetail.id].details = coinDetail;
+
+                        if (!share.price) {
+                            delete portfolio[coinDetail.id].boughtAt;
+                        }
+
+                        if (!share.amount) {
+                            delete portfolio[coinDetail.id].amount;
+                        }
                     }
 
                     reply({

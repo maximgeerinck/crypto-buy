@@ -26,7 +26,6 @@ export const me = () => {
         return api
             .get("user/me", getState().auth.token)
             .then((user) => {
-                console.log(user);
                 dispatch(userSuccess(user));
             })
             .catch(() => dispatch(userFailed()));

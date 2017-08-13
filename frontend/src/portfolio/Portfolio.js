@@ -13,7 +13,7 @@ class Portfolio extends Component {
         this.props.coinActions.retrieve();
     }
 
-    onDelete = id => {
+    onDelete = (id) => {
         this.props.portfolioActions.removeCoin(id);
     };
 
@@ -30,7 +30,7 @@ class Portfolio extends Component {
                     key={i.id}
                     coin={i}
                     details={this.props.coins.coins.toObject()[i.coinId]}
-                    onEdit={coin => this.props.portfolioActions.updateCoin(key, coin)}
+                    onEdit={(coin) => this.props.portfolioActions.updateCoin(key, coin)}
                     onDelete={() => this.onDelete(i.id)}
                     validationErrors={validationErrors}
                     editMode={false}
@@ -38,20 +38,16 @@ class Portfolio extends Component {
             );
         });
 
-        return (
-            <div className={styles.portfolio}>
-                {coinContainers}
-            </div>
-        );
+        return <div className={styles.portfolio}>{coinContainers}</div>;
     }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     portfolio: state.portfolio,
     coins: state.coins
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
     return {
         portfolioActions: bindActionCreators(PortfolioActions, dispatch),
         coinActions: bindActionCreators(CoinActions, dispatch)

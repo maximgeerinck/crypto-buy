@@ -8,7 +8,7 @@ var InitialState = new Record({
     }),
     settings: new Map(),
     latestShare: {
-        token: null
+        token: undefined
     },
     notFound: false
 });

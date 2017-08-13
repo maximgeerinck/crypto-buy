@@ -14,15 +14,15 @@ class PortfolioItem extends Component {
         };
     }
 
-    onEdit = item => {
-        this.props.onEdit(item).then(success => {
+    onEdit = (item) => {
+        this.props.onEdit(item).then((success) => {
             if (success) {
                 this.setState({ editMode: false });
             }
         });
     };
 
-    onChange = coin => {
+    onChange = (coin) => {
         this.setState({ coin: coin });
     };
 
@@ -36,16 +36,16 @@ class PortfolioItem extends Component {
 
         const image = coin.coinId ? <img src={getCoinImage(coin.coinId)} alt="Coin" className={styles.image} /> : null;
 
-        const editForm = this.state.editMode
-            ? <CoinForm
-                  coin={coin}
-                  editMode={editMode}
-                  onSubmit={this.onEdit}
-                  onChange={this.onChange}
-                  onCancel={() => this.setState({ editMode: false })}
-                  validationErrors={validationErrors}
-              />
-            : null;
+        const editForm = this.state.editMode ? (
+            <CoinForm
+                coin={coin}
+                editMode={editMode}
+                onSubmit={this.onEdit}
+                onChange={this.onChange}
+                onCancel={() => this.setState({ editMode: false })}
+                validationErrors={validationErrors}
+            />
+        ) : null;
 
         return (
             <div className={styles.item}>

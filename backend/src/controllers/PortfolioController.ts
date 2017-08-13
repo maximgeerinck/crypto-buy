@@ -67,10 +67,6 @@ class PortfolioController {
         UserService.update(user).then((user) => {
             // refactor request object
             const coins = user.portfolio;
-            coins.forEach((coin: any) => {
-                coin.id = coin.id;
-                delete coin.id;
-            });
             reply(coins);
         });
     }

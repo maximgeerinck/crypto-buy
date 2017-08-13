@@ -35,7 +35,7 @@ class ShareForm extends Component {
         const { options } = this.state;
         const { latestShare } = this.props;
 
-        const inputText = latestShare ? latestShare.token : "Generate your unique share link!";
+        const inputText = latestShare.token ? latestShare.token : "Generate your unique share link!";
 
         return (
             <form className={formStyles.form} onSubmit={this.onSave}>

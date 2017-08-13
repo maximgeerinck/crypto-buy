@@ -1,7 +1,7 @@
 import * as types from "./UserActionTypes";
 import { LOGOUT } from "../authentication/AuthenticationActionTypes";
 import * as shareTypes from "../share/ShareActionTypes";
-import { Record, Map, List } from "immutable";
+import { Record, Map } from "immutable";
 import * as errorTypes from "../helpers/ErrorHelper";
 
 export const USER = "auth_user";

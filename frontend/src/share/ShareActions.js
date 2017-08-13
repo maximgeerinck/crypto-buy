@@ -2,7 +2,7 @@ import * as types from "./ShareActionTypes";
 import api from "../app/api";
 
 const loadShareSuccess = (share) => ({ type: types.SHARE_LOAD_SUCCESS, body: share });
-const loadShareRequest = () => ({ type: types.SHARE_LOAD_REQUEST });
+// const loadShareRequest = () => ({ type: types.SHARE_LOAD_REQUEST });
 const loadShareFailure = (errors) => ({ type: types.SHARE_LOAD_FAILURE, body: errors });
 
 const deleteShareSuccess = (id) => ({ type: types.SHARE_DELETE_SUCCESS, body: id });

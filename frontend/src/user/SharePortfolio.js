@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as ShareActions from "../share/ShareActions";
@@ -29,8 +28,6 @@ class SharePortfolio extends Component {
                 />
             );
         });
-
-        console.log(this.props.share.latestShare);
 
         return (
             <div>
