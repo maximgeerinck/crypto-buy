@@ -146,7 +146,7 @@ class PortfolioTrackerPage extends Component {
                 {" "}
                 {/* investment statistics*/}{" "}
                 <div className={styles.portfolioStats}>
-                    <h3>
+                    <h3 className={styles.portfolioTotal}>
                         {" "}
                         {userCurrency} {round(totalPrice, 2)}{" "}
                     </h3>

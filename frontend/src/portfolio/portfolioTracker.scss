@@ -6,6 +6,12 @@
     flex-wrap: wrap;
 }
 
+.portfolioTotal {
+    border-bottom: 0 !important;
+    padding-bottom: 0 !important;
+    font-family: 'Open Sans', sans-serif !important;
+}
+
 .portfolioItem {
     position: relative;
     background: rgba(41, 41, 41, 0.70); // padding: 10px 15px;
