@@ -5,7 +5,7 @@ import { getCoinImage } from "../helpers/CoinHelper";
 
 class CustomTooltip extends Component {
     render() {
-        const { payload, label } = this.props;
+        const { payload } = this.props;
 
         if (payload.length > 0) {
             return (

@@ -1,6 +1,7 @@
 import mongoose from "../db";
 import AbstractModel from "../models/AbstractModel";
 import ModelFactory from "../models/ModelFactory";
+import NotFoundException from "./NotFoundException";
 
 export interface IRepositoryAdapter<Model, DAO> {
     modelToDao(model: Model): DAO;
@@ -57,7 +58,7 @@ export class MongoRepository<Model extends AbstractModel> {
     public findOne(cond?: object): Promise<Model> {
         return this._model.findOne(cond).then((item) => {
             if (!item) {
-                throw new Error("E_NOT_FOUND");
+                throw new NotFoundException(JSON.stringify(cond));
             }
             return this.parse(item);
         });

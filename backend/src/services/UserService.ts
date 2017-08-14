@@ -5,6 +5,7 @@ import UserCredential from "../models/UserCredential";
 import ShareModel, { IUserShareSettings, UserShareSettings } from "../models/UserShareSettings";
 import { comparePassword, genSalt, hashPassword } from "../utils/cypher-util";
 import * as CypherUtil from "../utils/cypher-util";
+import NotFoundException from "./NotFoundException";
 import ShareRepository from "./ShareRepository";
 import UserRepository from "./UserRepository";
 
@@ -31,7 +32,7 @@ class UserService {
             })
             .then((res) => {
                 if (!res) {
-                    throw new Error("E_NOT_FOUND");
+                    throw new NotFoundException(`Could not find user by email ${email}`);
                 }
                 return verifiedUser;
             });
