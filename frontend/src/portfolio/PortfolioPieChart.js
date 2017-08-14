@@ -3,10 +3,15 @@ import PropTypes from "prop-types";
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 import styles from "./portfolio.scss";
 import "../recharts.css";
+import PortfolioCustomTooltip from "./PortfolioCustomTooltip";
 
 class PortfolioPieChart extends Component {
+    renderTooltip(data) {
+        console.log(data);
+    }
+
     render() {
-        const data = this.props.data;
+        const { data, customTooltip } = this.props;
 
         const COLORS = [
             "#8dd3c7",
@@ -28,6 +33,8 @@ class PortfolioPieChart extends Component {
             "#882255"
         ];
 
+        const tooltip = customTooltip ? <Tooltip content={<PortfolioCustomTooltip />} /> : <Tooltip />;
+
         return (
             <div className={styles.portfolioChart}>
                 <PieChart width={300} height={300}>
@@ -45,7 +52,7 @@ class PortfolioPieChart extends Component {
                         {data.map((entry, index) => <Cell key={index} fill={COLORS[index % COLORS.length]} />)}
                     </Pie>
                     <Legend />
-                    <Tooltip />
+                    {tooltip}
                 </PieChart>
             </div>
         );
@@ -53,7 +60,12 @@ class PortfolioPieChart extends Component {
 }
 
 PortfolioPieChart.propTypes = {
-    data: PropTypes.array
+    data: PropTypes.array,
+    customTooltip: PropTypes.bool.isRequired
+};
+
+PortfolioPieChart.defaultProps = {
+    customTooltip: false
 };
 
 export default PortfolioPieChart;

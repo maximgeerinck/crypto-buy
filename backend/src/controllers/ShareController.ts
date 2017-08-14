@@ -11,11 +11,16 @@ class ShareController {
     public retrieve(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         ShareRepository.findOneByToken(req.params.token).then((share) => {
             const portfolio: any = {};
-
+            let totalAmount = 0;
             // unique values
             for (const coin of share.user.portfolio) {
                 if (portfolio[coin.coinId]) {
                     portfolio[coin.coinId].amount += coin.amount;
+                    // weighted average of price
+                    portfolio[coin.coinId].boughtPrice =
+                        (portfolio[coin.coinId].boughtPrice * portfolio[coin.coinId].amount +
+                            coin.boughtPrice * coin.amount) /
+                        (portfolio[coin.coinId].boughtPrice + coin.boughtPrice);
                 } else {
                     portfolio[coin.coinId] = coin;
                 }
@@ -24,6 +29,14 @@ class ShareController {
             // // link them to current value
             CoinRepository.findCoinsByIds(Object.keys(portfolio))
                 .then((details) => {
+                    if (!share.user.preferences.initialInvestment || share.user.preferences.initialInvestment === 0) {
+                        totalAmount = details.reduce((sum, value) => {
+                            return sum + portfolio[value.id].amount * portfolio[value.id].boughtPrice;
+                        }, 0);
+                    } else {
+                        totalAmount = share.user.preferences.initialInvestment;
+                    }
+
                     for (const coinDetail of details) {
                         portfolio[coinDetail.id].details = coinDetail;
 
@@ -31,8 +44,14 @@ class ShareController {
                             delete portfolio[coinDetail.id].boughtAt;
                         }
 
-                        if (!share.amount) {
+                        if (!share.graph && !share.amount) {
                             delete portfolio[coinDetail.id].amount;
+                        }
+
+                        // if show graph but not amount, feed it percentages 0-1
+                        if (share.graph && !share.amount) {
+                            portfolio[coinDetail.id].amount =
+                                portfolio[coinDetail.id].amount * portfolio[coinDetail.id].boughtPrice / totalAmount;
                         }
                     }
 

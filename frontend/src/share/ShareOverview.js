@@ -13,6 +13,7 @@ import PortfolioTrackerItem from "../portfolio/PortfolioTrackerItem";
 import PortfolioPieChart from "../portfolio/PortfolioPieChart";
 import Loader from "../components/Loader";
 import NotFoundPage from "../components/NotFoundPage";
+import { round } from "../helpers/MathHelper";
 
 class ShareOverview extends Component {
     componentDidMount() {
@@ -49,9 +50,15 @@ class ShareOverview extends Component {
             }
 
             if (val.amount) {
+                let total = settings.amount
+                    ? parseFloat(val.amount ? round(val.amount * val.details.price.usd, 2) : undefined)
+                    : parseFloat(round(val.amount * 100, 2));
+
                 chartData.push({
+                    id: val.coinId,
                     symbol: val.details.symbol,
-                    total: parseFloat(val.amount ? val.amount * val.details.price.usd : undefined)
+                    name: val.details.symbol,
+                    total: total
                 });
             }
 
@@ -69,7 +76,7 @@ class ShareOverview extends Component {
                     key={val.details.id}
                     id={val.details.id}
                     name={val.details.name}
-                    symbol={val.details.name}
+                    symbol={val.details.symbol}
                     price={val.details.price.usd}
                     amount={val.amount ? val.amount : undefined}
                     currency="USD"
@@ -81,7 +88,8 @@ class ShareOverview extends Component {
             );
         });
 
-        const chart = chartData.length > 0 && settings.graph ? <PortfolioPieChart data={chartData} /> : undefined;
+        const chart =
+            chartData.length > 0 && settings.graph ? <PortfolioPieChart data={chartData} customTooltip /> : undefined;
 
         return (
             <Page custom className={cx(pageStyles.focused, homeStyles.main)}>

@@ -16,6 +16,7 @@
     align-items: center;
     padding: 10px;
     box-sizing: border-box;
+
     .details {
         flex: 3;
         h2 {
@@ -23,6 +24,7 @@
             margin: 0;
             color: white;
             display: flex;
+            padding-bottom: 0;
             align-items: center;
             & > img {
                 width: 16px;

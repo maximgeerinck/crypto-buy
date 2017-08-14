@@ -5,6 +5,7 @@ import ShareOption from "./ShareOption";
 import formStyles from "../forms.scss";
 import cx from "classnames";
 import styles from "./share.scss";
+import pageStyles from "../components/page.scss";
 
 class ShareForm extends Component {
     constructor(props) {
@@ -39,7 +40,9 @@ class ShareForm extends Component {
 
         return (
             <form className={formStyles.form} onSubmit={this.onSave}>
-                <p>Select your options you want to show and press generate to create a shared link</p>
+                <p className={pageStyles.explanation}>
+                    Select your options you want to show and press generate to create a shared link
+                </p>
                 <div className={cx(formStyles.group, formStyles.inline, styles.share)}>
                     <button type="submit" className={formStyles.button} ref="copyButton">
                         Generate & Copy
