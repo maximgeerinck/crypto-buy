@@ -40,10 +40,6 @@ class ShareController {
                     for (const coinDetail of details) {
                         portfolio[coinDetail.id].details = coinDetail;
 
-                        if (!share.price) {
-                            delete portfolio[coinDetail.id].boughtAt;
-                        }
-
                         if (!share.graph && !share.amount) {
                             delete portfolio[coinDetail.id].amount;
                         }
@@ -52,6 +48,11 @@ class ShareController {
                         if (share.graph && !share.amount) {
                             portfolio[coinDetail.id].amount =
                                 portfolio[coinDetail.id].amount * portfolio[coinDetail.id].boughtPrice / totalAmount;
+                        }
+
+                        if (!share.price) {
+                            delete portfolio[coinDetail.id].boughtPrice;
+                            delete portfolio[coinDetail.id].boughtAt;
                         }
                     }
 
