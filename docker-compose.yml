@@ -16,6 +16,10 @@ services:
     environment:
       - NODE_ENV=production     
 
+  redis:
+    image: redis
+    ports: ["6379:6379"]
+
   # frontend:
   #   build:
   #     context: ./frontend

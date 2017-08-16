@@ -10,6 +10,7 @@ var InitialState = new Record({
     user: new Map({
         email: null
     }),
+    retrievedOn: null,
     isLoaded: false,
     form: Map({
         validationErrors: null,
@@ -21,8 +22,8 @@ var InitialState = new Record({
 
 let initialState = new InitialState();
 
-// if (localStorage.getItem(USER))
-//     initialState = initialState.set("user", new Map(JSON.parse(localStorage.getItem(USER)))).set("isLoaded", true);
+if (localStorage.getItem(USER))
+    initialState = initialState.set("user", new Map(JSON.parse(localStorage.getItem(USER)))).set("isLoaded", true);
 
 const UserReducer = (state = initialState, action) => {
     state = state.setIn([ "form", "isSubmitting" ], false);
@@ -34,7 +35,7 @@ const UserReducer = (state = initialState, action) => {
             return state.setIn([ "form", "isSubmitting" ], false).setIn([ "form", "succeeded" ], true);
         case types.USER_SUCCESS:
             localStorage.setItem(USER, JSON.stringify(action.body));
-            return state.set("user", new Map(action.body)).set("isLoaded", true);
+            return state.set("user", new Map(action.body)).set("isLoaded", true).set("retrievedOn", Date.now());
         case types.CREATION_FAILED_VALIDATION:
             return state.setIn([ "form", "validationErrors" ], action.body);
         case types.UPDATE_SUCCESS:

@@ -101,7 +101,10 @@ class PortfolioController {
         coins.forEach((coin: any) => {
             coin.id = coin.id;
         });
-        return reply(coins);
+
+        setTimeout(() => {
+            return reply(coins);
+        }, 10000);
     }
 }
 

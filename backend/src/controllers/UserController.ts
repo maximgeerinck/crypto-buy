@@ -51,6 +51,7 @@ class UserController {
     public me(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         const user: User = req.auth.credentials;
         delete user.credentials;
+
         reply(user);
     }
 

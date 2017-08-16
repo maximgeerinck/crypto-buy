@@ -28,15 +28,17 @@ export class PortfolioTracker extends Component {
 
 class PortfolioTrackerPage extends Component {
     componentWillMount() {
-        // load currencies
-        this.props.currencyActions.index();
+        const { currencyActions, userActions, user, portfolioActions } = this.props;
 
-        if (!this.props.user.isLoaded) this.props.userActions.me();
+        // load currencies
+        currencyActions.index();
+
+        if (!user.isLoaded || user.retrievedOn < Date.now() + 3600) userActions.me();
 
         // load portfolio
-        this.props.portfolioActions.retrieve().then(() => {
+        portfolioActions.retrieve().then(() => {
             // load portfolio stats
-            this.props.portfolioActions.details();
+            portfolioActions.details();
         });
     }
 

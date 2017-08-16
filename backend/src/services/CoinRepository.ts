@@ -1,7 +1,14 @@
+import * as bluebird from "bluebird";
+import * as flatten from "flat";
+import * as redis from "redis";
 import mongoose from "../db";
 import CoinModel, { Coin } from "../models/Coin";
 import { IUserCredential, IUserCredentialDAO } from "../models/UserCredential";
 import { IRepositoryAdapter, MongoRepository } from "./repository";
+
+bluebird.promisifyAll(redis.RedisClient.prototype);
+bluebird.promisifyAll(redis.Multi.prototype);
+const client = redis.createClient({ host: "redis", port: 6379 }) as any;
 
 interface ICoinStatistic {
     [key: string]: {
@@ -33,6 +40,23 @@ class CoinRepository extends MongoRepository<Coin> implements ICoinRepository {
                 }
 
                 return result.map(Coin.parse);
+
+                // return client
+                //     .getAsync("COINS")
+                //     .then((result: any) => {
+                //         if (!result) {
+                //             client.set("COINS", JSON.stringify(result.map(Coin.parse)));
+                //             return result.map(Coin.parse);
+                //         }
+
+                //         return JSON.parse(result).map(Coin.parse);
+                //         // return JSON.parse(client.get("COINS"));
+                //     })
+                //     .catch((err: any) => {
+                //         console.log(err);
+                //         // console.log(JSON.stringify(details.coins));
+                //         client.set("COINS", JSON.stringify(result.map(Coin.parse)));
+                //     });
             });
     }
 

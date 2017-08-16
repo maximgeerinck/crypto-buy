@@ -28,7 +28,13 @@ export const me = () => {
             .then((user) => {
                 dispatch(userSuccess(user));
             })
-            .catch(() => dispatch(userFailed()));
+            .catch((err) => {
+                if (err.timeout) {
+                    console.log("TIMEOUT!");
+                }
+                dispatch(ErrorHelper.timeout("Could not fetch users"));
+                dispatch(userFailed());
+            });
     };
 };
 
