@@ -1,19 +1,19 @@
-import * as request from 'superagent';
-import * as schedule from 'node-schedule';
-import * as moment from 'moment';
-import Coin from '../models/Coin';
+import * as moment from "moment";
+import * as schedule from "node-schedule";
+import * as request from "superagent";
+import Coin from "../models/Coin";
 
 // get data
 // const API = "https://coinmarketcap-nexuist.rhcloud.com/api";
-const API = 'https://api.coinmarketcap.com/v1/';
-const ETH_ENDPOINT = API + '/ticker';
+const API = "https://api.coinmarketcap.com/v1/";
+const ETH_ENDPOINT = API + "/ticker";
 
 export const fetchPrice = async () => {
     const data = await request.get(ETH_ENDPOINT);
 
-    //save response
+    // save response
     let coins = [];
-    for (let key in data.body) {
+    for (const key in data.body) {
         coins.push({
             id: data.body[key].id,
             name: data.body[key].name,
@@ -38,15 +38,15 @@ export const fetchPrice = async () => {
             timestamp: data.body[key].timestamp
         });
     }
-    var coin = new Coin({ coins: coins });
+    const coin = new Coin({ coins });
     coin.save();
 };
 
 class PriceTask {
-    start() {
+    public start() {
         // execute every 1min
-        schedule.scheduleJob('*/1 * * * *', () => {
-            console.log(`${moment.now()}: fetching...`);
+        schedule.scheduleJob("*/1 * * * *", () => {
+            // console.log(`${moment.now()}: fetching...`);
             fetchPrice();
         });
     }

@@ -57,10 +57,11 @@ class PortfolioController {
 
         const user: DomainUser = req.auth.credentials;
 
-        for (const key in user.portfolio) {
-            const coin = user.portfolio[key];
-            if (coin.id === id) {
-                user.portfolio[key] = new UserCoin(coinId, amount, source, boughtPrice, boughtAt);
+        for (let i = 0; i < user.portfolio.length; i++) {
+            const coin = user.portfolio[i];
+
+            if (String(coin.id) === String(id)) {
+                user.portfolio[i] = new UserCoin(coinId, amount, source, boughtPrice, boughtAt);
             }
         }
 

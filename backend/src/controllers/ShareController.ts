@@ -17,11 +17,12 @@ class ShareController {
                 for (const coin of share.user.portfolio) {
                     if (portfolio[coin.coinId]) {
                         portfolio[coin.coinId].amount += coin.amount;
+
                         // weighted average of price
                         portfolio[coin.coinId].boughtPrice =
                             (portfolio[coin.coinId].boughtPrice * portfolio[coin.coinId].amount +
                                 coin.boughtPrice * coin.amount) /
-                            (portfolio[coin.coinId].boughtPrice + coin.boughtPrice);
+                            (portfolio[coin.coinId].amount + coin.amount);
                     } else {
                         portfolio[coin.coinId] = coin;
                     }
