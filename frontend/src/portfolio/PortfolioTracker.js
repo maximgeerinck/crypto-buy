@@ -16,7 +16,7 @@ import cx from "classnames";
 import pageStyles from "../components/page.scss";
 import PortfolioPieChart from "./PortfolioPieChart";
 
-import { round } from "../helpers/MathHelper";
+import { round, gained } from "../helpers/MathHelper";
 
 export class PortfolioTracker extends Component {
     render() {
@@ -90,10 +90,7 @@ class PortfolioTrackerPage extends Component {
 
             if (i.boughtPrice) {
                 invested += i.boughtPrice * i.amount;
-
-                let oldNumber = i.boughtPrice * i.amount;
-                let newNumber = i.amount * c.price.usd;
-                changeTotal = oldNumber === 0 ? 0 : (newNumber - oldNumber) / oldNumber * 100;
+                changeTotal = gained(i.boughtPrice, c.price.usd * rate);
             }
 
             return (
@@ -118,7 +115,7 @@ class PortfolioTrackerPage extends Component {
             invested = userInitialInvestment;
         }
 
-        const investedGainedPercentage = round(totalPrice / invested * 100 - 100, 2);
+        const investedGainedPercentage = round(gained(invested, totalPrice), 2);
         const investedGainedAmount = round(totalPrice - invested, 2);
         const investedChange =
             investedGainedPercentage > 0

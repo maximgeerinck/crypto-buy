@@ -33,8 +33,20 @@ class PortfolioTrackerItem extends Component {
         const classChangeTotal =
             changeTotal >= 0 ? cx(styles.changeTotal, styles.positive) : cx(styles.changeTotal, styles.negative);
 
-        const statistics =
-            showStatistics && showChange ? (
+        const calculations = `${currency} ${round(price, 2)} * ${amount} = ${currency} ${round(price * amount, 2)}`;
+
+        let prices, changeTotalContainer, statistics;
+
+        if (showStatistics && amount && showPrice) {
+            prices = (
+                <div className={styles.price}>
+                    <span className={styles.calculations}>{calculations}</span>
+                </div>
+            );
+        }
+
+        if (showStatistics && showChange) {
+            statistics = (
                 <ul className={styles.change}>
                     <li>
                         <span className={styles.changeType}>H</span>
@@ -49,25 +61,12 @@ class PortfolioTrackerItem extends Component {
                         <span className={classChangeWeek}>{changeWeek}%</span>
                     </li>
                 </ul>
-            ) : (
-                undefined
             );
+        }
 
-        const prices =
-            showStatistics && amount && showPrice ? (
-                <div className={styles.price}>
-                    <span className={styles.calculations}>
-                        Current: {currency} {round(price, 6)} * {amount} ={" "}
-                    </span>
-                    {currency} {round(price * amount, 6)}
-                </div>
-            ) : (
-                undefined
-            );
-
-        const changeTotalContainer = showChange ? (
-            <div className={classChangeTotal}>{round(changeTotal, 2)}%</div>
-        ) : null;
+        if (showChange) {
+            changeTotalContainer = <div className={classChangeTotal}>{round(changeTotal, 2)}%</div>;
+        }
 
         return (
             <div className={styles.portfolioItem}>
