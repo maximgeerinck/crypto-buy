@@ -9,37 +9,40 @@ const API = "https://api.coinmarketcap.com/v1/";
 const ETH_ENDPOINT = API + "/ticker";
 
 export const fetchPrice = async () => {
-    const data = await request.get(ETH_ENDPOINT);
+    request
+        .get(ETH_ENDPOINT)
+        .then((data: any) => {
+            // save response
+            const coins = data.body.map((coin: any) => ({
+                id: coin.id,
+                name: coin.name,
+                symbol: coin.symbol,
+                rank: coin.rank,
+                price: {
+                    usd: coin.price_usd,
+                    btc: coin.price_btc
+                },
+                market_cap: {
+                    usd: coin.market_cap_usd
+                },
+                supply: {
+                    available: coin.available_supply,
+                    total: coin.total_supply
+                },
+                change: {
+                    percent_1h: coin.percent_change_1h,
+                    percent_24h: coin.percent_change_24h,
+                    percent_7d: coin.percent_change_7d
+                },
+                timestamp: coin.timestamp
+            }));
 
-    // save response
-    let coins = [];
-    for (const key in data.body) {
-        coins.push({
-            id: data.body[key].id,
-            name: data.body[key].name,
-            symbol: data.body[key].symbol,
-            rank: data.body[key].rank,
-            price: {
-                usd: data.body[key].price_usd,
-                btc: data.body[key].price_btc
-            },
-            market_cap: {
-                usd: data.body[key].market_cap_usd
-            },
-            supply: {
-                available: data.body[key].available_supply,
-                total: data.body[key].total_supply
-            },
-            change: {
-                percent_1h: data.body[key].percent_change_1h,
-                percent_24h: data.body[key].percent_change_24h,
-                percent_7d: data.body[key].percent_change_7d
-            },
-            timestamp: data.body[key].timestamp
+            const coin = new Coin({ coins });
+            coin.save();
+        })
+        .catch((err: any) => {
+            console.log(err);
         });
-    }
-    const coin = new Coin({ coins });
-    coin.save();
 };
 
 class PriceTask {

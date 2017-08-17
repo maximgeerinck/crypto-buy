@@ -1,7 +1,11 @@
 .share {
     input {
+        margin: 10px 0 0 0;
         flex: 1;
-        margin-left: 10px;
+    }
+
+    button {
+        width: 100%;
     }
 }
 
@@ -34,6 +38,10 @@
         }
 
         .shareActions {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+
             button {
                 padding: 0;
                 padding: 5px 10px;
@@ -85,6 +93,15 @@
             p {
                 width: 325px;
             }
+        }
+    }
+
+    .share {
+        button {
+            width: initial;
+        }
+        input {
+            margin: 0 0 0 10px;
         }
     }
 }

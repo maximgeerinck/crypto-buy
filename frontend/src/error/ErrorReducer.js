@@ -6,7 +6,6 @@ var InitialState = new Record({
 });
 
 let initialState = new InitialState();
-initialState = initialState.set("errors", new List([ "test" ]));
 
 const ErrorReducer = (state = initialState, action) => {
     switch (action.type) {

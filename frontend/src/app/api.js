@@ -16,16 +16,14 @@ class Request {
     }
 
     createRequest() {
-        this.request = superagent.get(this.path).timeout({
-            response: 1000,
-            deadline: 60000
-        });
+        this.request = superagent.get(this.path).timeout(this.settings);
         if (this.token) this.request = this.request.set("Authorization", this.token);
         return this.request;
     }
 
-    onTimeout(func) {
+    onTimeout(func, timeout = 1000) {
         this._onTimeout = func;
+        this.settings.response = timeout;
         return this;
     }
 
@@ -44,10 +42,10 @@ export class GetRequest extends Request {
         return new Promise((resolve, reject) => {
             this.createRequest();
             this.request.end((err, res) => {
-                if (err.timeout) {
-                    return this.retry();
-                }
                 if (err) {
+                    if (err.timeout) {
+                        return this.retry();
+                    }
                     reject(err);
                 }
                 resolve(res.body);

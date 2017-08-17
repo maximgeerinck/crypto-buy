@@ -3,6 +3,7 @@ import api, { GetRequest } from "../app/api";
 import { reduceItems } from "./PortfolioHelper";
 import moment from "moment";
 import * as ErrorHelper from "../helpers/ErrorHelper";
+import * as ErrorActions from "../error/ErrorActions";
 
 const retrieveItemsSuccess = (items) => ({ type: types.RETRIEVE_ITEMS_SUCCESS, body: items });
 const retrieveItemsRequest = () => ({ type: types.RETRIEVE_ITEMS_REQUEST });
@@ -30,8 +31,8 @@ export const retrieve = () => {
 
         return new GetRequest("portfolio/load", getState().auth.token)
             .onTimeout(() => {
-                dispatch(ErrorHelper.timeout("Could not fetch portfolio"));
-            })
+                dispatch(ErrorActions.timeout("Could not fetch portfolio"));
+            }, 60 * 1000)
             .send()
             .then((items) => {
                 dispatch(retrieveItemsSuccess(items));

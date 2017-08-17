@@ -2,9 +2,10 @@ import * as types from "./UserActionTypes";
 import { LOGOUT } from "../authentication/AuthenticationActionTypes";
 import * as shareTypes from "../share/ShareActionTypes";
 import { Record, Map } from "immutable";
-import * as errorTypes from "../helpers/ErrorHelper";
+import * as errorTypes from "../error/ErrorActionTypes";
 
 export const USER = "auth_user";
+export const USER_CACHE = "auth_user_createdOn";
 
 var InitialState = new Record({
     user: new Map({
@@ -22,8 +23,10 @@ var InitialState = new Record({
 
 let initialState = new InitialState();
 
-if (localStorage.getItem(USER))
+// restore user
+if (localStorage.getItem(USER) && parseInt(localStorage.getItem(USER_CACHE), 10) > Date.now() - 3600 * 1000) {
     initialState = initialState.set("user", new Map(JSON.parse(localStorage.getItem(USER)))).set("isLoaded", true);
+}
 
 const UserReducer = (state = initialState, action) => {
     state = state.setIn([ "form", "isSubmitting" ], false);
@@ -35,6 +38,7 @@ const UserReducer = (state = initialState, action) => {
             return state.setIn([ "form", "isSubmitting" ], false).setIn([ "form", "succeeded" ], true);
         case types.USER_SUCCESS:
             localStorage.setItem(USER, JSON.stringify(action.body));
+            localStorage.setItem(USER_CACHE, Date.now());
             return state.set("user", new Map(action.body)).set("isLoaded", true).set("retrievedOn", Date.now());
         case types.CREATION_FAILED_VALIDATION:
             return state.setIn([ "form", "validationErrors" ], action.body);

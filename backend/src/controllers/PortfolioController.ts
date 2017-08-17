@@ -85,7 +85,7 @@ class PortfolioController {
         const user: DomainUser = req.auth.credentials;
 
         UserService.removeCoin(id, user).then(() => {
-            reply(user.portfolio.filter((uc) => uc.id !== id));
+            reply(user.portfolio.filter((uc) => String(uc.id) !== String(id)));
         });
     }
 
@@ -102,9 +102,7 @@ class PortfolioController {
             coin.id = coin.id;
         });
 
-        setTimeout(() => {
-            return reply(coins);
-        }, 10000);
+        return reply(coins);
     }
 }
 

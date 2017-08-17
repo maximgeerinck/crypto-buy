@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import * as UserActions from "../user/UserActions";
 import ErrorContainer from "../error/ErrorContainer";
 import page from "./page.scss";
+import SponsorEnjin from "./SponsorEnjin";
 
 class Page extends Component {
     componentDidMount() {
@@ -16,7 +17,7 @@ class Page extends Component {
     }
 
     render() {
-        const { dispatch, app } = this.props;
+        const { dispatch } = this.props;
         const isAuthenticated = this.props.auth.isAuthenticated;
 
         const className = this.props.className || null;
@@ -39,6 +40,7 @@ class Page extends Component {
                     <p className={page.copyright}>
                         <a href="https://cryptotrackr.com">&copy; Cryptotrackr 2017</a>
                     </p>
+                    <SponsorEnjin />
                     <p className={page.donation}>
                         Donation address:{" "}
                         <span className={page.address}>0x82C3CE03a9ed41DD047B7DD833751E031C451017</span>

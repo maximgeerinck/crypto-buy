@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import PropTypes from "prop-types";
 import errorStyles from "./error.scss";
 import Error from "./Error";
 
@@ -12,7 +10,7 @@ class ErrorContainer extends Component {
     }
 
     render() {
-        const { app, onClick } = this.props;
+        const { app } = this.props;
         const errors = app.get("errors").toArray().map((error, key) => (
             <Error key={key} onClick={this.dismiss(key)}>
                 {error}

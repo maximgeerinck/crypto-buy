@@ -1,10 +1,18 @@
 import * as types from "./CoinActionTypes";
-import api from "../app/api";
+import { GetRequest } from "../app/api";
+import * as ErrorActions from "../error/ErrorActions";
 
-const retrieveCoinsSuccess = coins => ({ type: types.COINS_SUCCESS, body: coins });
+const retrieveCoinsSuccess = (coins) => ({ type: types.COINS_SUCCESS, body: coins });
 
 export const retrieve = () => {
     return (dispatch, getState) => {
-        api.get("coins/1", getState().auth.token).then(coins => dispatch(retrieveCoinsSuccess(coins[0])));
+        return new GetRequest("coins/1", getState().auth.token)
+            .onTimeout(() => {
+                dispatch(ErrorActions.timeout("Could not fetch coins"));
+            }, 60 * 1000)
+            .send()
+            .then((coins) => {
+                dispatch(retrieveCoinsSuccess(coins[0]));
+            });
     };
 };

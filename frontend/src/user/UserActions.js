@@ -1,6 +1,7 @@
 import * as types from "./UserActionTypes";
-import api from "../app/api";
+import api, { GetRequest } from "../app/api";
 import * as ErrorHelper from "../helpers/ErrorHelper";
+import * as ErrorActions from "../error/ErrorActions";
 import { LOGOUT } from "../authentication/AuthenticationActionTypes";
 
 const userSuccess = (user) => ({ type: types.USER_SUCCESS, body: user });
@@ -23,16 +24,15 @@ export const me = () => {
     return (dispatch, getState) => {
         dispatch(userRequest());
 
-        return api
-            .get("user/me", getState().auth.token)
+        return new GetRequest("user/me", getState().auth.token)
+            .onTimeout(() => {
+                dispatch(ErrorActions.timeout("Could not load user"));
+            }, 60 * 1000)
+            .send()
             .then((user) => {
                 dispatch(userSuccess(user));
             })
             .catch((err) => {
-                if (err.timeout) {
-                    console.log("TIMEOUT!");
-                }
-                dispatch(ErrorHelper.timeout("Could not fetch users"));
                 dispatch(userFailed());
             });
     };
