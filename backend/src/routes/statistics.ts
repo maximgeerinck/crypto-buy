@@ -4,7 +4,7 @@ module.exports = [
     {
         method: "POST",
         path: "/statistics",
-        handler: StatisticController.index,
-        config: { auth: false }
+        handler: StatisticController.index
+        // config: { auth: false }
     }
 ];

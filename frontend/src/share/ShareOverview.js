@@ -58,31 +58,30 @@ class ShareOverview extends Component {
                     id: val.coinId,
                     symbol: val.details.symbol,
                     name: val.details.symbol,
-                    total: total
+                    total: total,
+                    label: settings.change ? `USD ${total}` : `${total}%`
                 });
             }
 
             const changes = settings.change
                 ? {
-                      changeHour: val.details.change.percentHour,
-                      changeDay: val.details.change.percentDay,
-                      changeWeek: val.details.change.percentWeek,
-                      changeTotal: val.details.change.percentDay
+                      changeHour: val.details.change.percent_1h,
+                      changeDay: val.details.change.percent_24h,
+                      changeWeek: val.details.change.percent_7d,
+                      changeTotal: val.details.change.percent_24h
                   }
                 : null;
 
             return (
                 <PortfolioTrackerItem
-                    key={val.details.id}
-                    id={val.details.id}
+                    key={val.details.coin_id}
+                    id={val.details.coin_id}
                     name={val.details.name}
                     symbol={val.details.symbol}
                     price={val.details.price.usd}
                     amount={val.amount ? val.amount : undefined}
                     currency="USD"
-                    showStatistics={true}
-                    showChange={settings.change}
-                    showPrice={settings.price}
+                    settings={settings}
                     {...changes}
                 />
             );

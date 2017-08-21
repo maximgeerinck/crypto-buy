@@ -1,9 +1,9 @@
 import * as Boom from "boom";
 import * as Hapi from "hapi";
 import * as moment from "moment";
+import CoinRepository from "../coin/CoinCollectionRepository";
 import User, { User as DomainUser } from "../models/user";
 import UserShareSettings, { IUserShareSettings } from "../models/UserShareSettings";
-import CoinRepository from "../services/CoinRepository";
 import ShareRepository from "../services/ShareRepository";
 import UserService from "../services/UserService";
 
@@ -29,31 +29,39 @@ class ShareController {
                 }
 
                 // // link them to current value
-                return CoinRepository.findCoinsByIds(Object.keys(portfolio)).then((details) => {
+
+                return CoinRepository.findAllWithHistory().then((results: any) => {
+                    const details = [];
+                    for (const coin of Object.keys(portfolio)) {
+                        details.push(results[coin]);
+                    }
+
                     if (!share.user.preferences.initialInvestment || share.user.preferences.initialInvestment === 0) {
                         totalAmount = details.reduce((sum, value) => {
-                            return sum + portfolio[value.id].amount * portfolio[value.id].boughtPrice;
+                            return sum + portfolio[value.coinId].amount * portfolio[value.coinId].boughtPrice;
                         }, 0);
                     } else {
                         totalAmount = share.user.preferences.initialInvestment;
                     }
 
                     for (const coinDetail of details) {
-                        portfolio[coinDetail.id].details = coinDetail;
+                        portfolio[coinDetail.coin_id].details = coinDetail;
 
                         if (!share.graph && !share.amount) {
-                            delete portfolio[coinDetail.id].amount;
+                            delete portfolio[coinDetail.coin_id].amount;
                         }
 
                         // if show graph but not amount, feed it percentages 0-1
                         if (share.graph && !share.amount) {
-                            portfolio[coinDetail.id].amount =
-                                portfolio[coinDetail.id].amount * portfolio[coinDetail.id].boughtPrice / totalAmount;
+                            portfolio[coinDetail.coin_id].amount =
+                                portfolio[coinDetail.coin_id].amount *
+                                portfolio[coinDetail.coin_id].boughtPrice /
+                                totalAmount;
                         }
 
                         if (!share.price) {
-                            delete portfolio[coinDetail.id].boughtPrice;
-                            delete portfolio[coinDetail.id].boughtAt;
+                            delete portfolio[coinDetail.coin_id].boughtPrice;
+                            delete portfolio[coinDetail.coin_id].boughtAt;
                         }
                     }
 

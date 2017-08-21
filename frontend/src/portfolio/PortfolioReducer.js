@@ -1,4 +1,5 @@
 import * as types from "./PortfolioActionTypes";
+import { LOGOUT } from "../authentication/AuthenticationActionTypes";
 import { Record, Map, List } from "immutable";
 
 const COINS = "portfolio_coins";
@@ -86,6 +87,11 @@ const PortfolioReducer = (state = initialState, action) => {
             var changedErrors = [].concat(state.coins.get("validationErrors"));
             changedErrors[action.key] = action.body;
             return state.setIn([ "coins", "validationErrors" ], changedErrors);
+
+        case LOGOUT:
+            localStorage.removeItem(COINS);
+            localStorage.removeItem(DETAILS);
+            return new InitialState();
 
         default:
             return state;

@@ -1,7 +1,7 @@
 import * as Boom from "boom";
 import * as Hapi from "hapi";
 import * as moment from "moment";
-import CoinRepository from "../services/CoinRepository";
+import CoinCollectionRepository from "../coin/CoinCollectionRepository";
 
 class StatisticController {
     /**
@@ -14,7 +14,7 @@ class StatisticController {
     public index(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         const { coins } = req.payload;
 
-        CoinRepository.sparklineWeek(coins).then((data: any) => {
+        CoinCollectionRepository.sparklineWeek(coins).then((data: any) => {
             return reply(data);
         });
     }

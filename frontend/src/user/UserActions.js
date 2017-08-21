@@ -48,8 +48,8 @@ export const create = (user) => {
                 .then((user) => {
                     dispatch(creationSucceeded(user));
                 })
-                .catch((err, obj) => {
-                    if (err && err.body.message && err.body.message === "E_VALIDATION") {
+                .catch((err) => {
+                    if ((err && err.error === "E_VALIDATION") || (err && err.validation)) {
                         dispatch(creationFailedValidation(err.validation));
                     } else {
                         dispatch(ErrorHelper.handle(err));

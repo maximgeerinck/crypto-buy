@@ -78,8 +78,8 @@ export const addCoins = (coins) => {
                 return Promise.resolve(true);
             })
             .catch((err) => {
-                if (err && err.body.error === "E_VALIDATION") {
-                    dispatch(coinsAddFailure(err.body.validation));
+                if (err && err.error === "E_VALIDATION") {
+                    dispatch(coinsAddFailure(err.validation));
                 } else {
                     dispatch(ErrorHelper.handle(err));
                 }
@@ -100,8 +100,8 @@ export const updateCoin = (key, coin) => {
                 return Promise.resolve(true);
             })
             .catch((err) => {
-                if (err && err.body.error === "E_VALIDATION") {
-                    dispatch(coinUpdateFailure(key, err.body.validation));
+                if (err && err.error === "E_VALIDATION") {
+                    dispatch(coinUpdateFailure(key, err.validation));
                 } else {
                     dispatch(ErrorHelper.handle(err));
                 }

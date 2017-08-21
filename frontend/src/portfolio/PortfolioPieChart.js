@@ -6,10 +6,6 @@ import "../recharts.css";
 import PortfolioCustomTooltip from "./PortfolioCustomTooltip";
 
 class PortfolioPieChart extends Component {
-    renderTooltip(data) {
-        console.log(data);
-    }
-
     render() {
         const { data, customTooltip } = this.props;
 

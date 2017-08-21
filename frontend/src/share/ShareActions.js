@@ -1,8 +1,9 @@
 import * as types from "./ShareActionTypes";
-import api from "../app/api";
+import api, { GetRequest } from "../app/api";
+import * as ErrorActions from "../error/ErrorActions";
 
 const loadShareSuccess = (share) => ({ type: types.SHARE_LOAD_SUCCESS, body: share });
-// const loadShareRequest = () => ({ type: types.SHARE_LOAD_REQUEST });
+const loadShareRequest = () => ({ type: types.SHARE_LOAD_REQUEST });
 const loadShareFailure = (errors) => ({ type: types.SHARE_LOAD_FAILURE, body: errors });
 
 const deleteShareSuccess = (id) => ({ type: types.SHARE_DELETE_SUCCESS, body: id });
@@ -12,8 +13,13 @@ const shareLinkSuccess = (share) => ({ type: types.SHARE_SUCCESS, body: share })
 
 export const loadShare = (token) => {
     return (dispatch, getState) => {
-        api
-            .get(`share/${token}`)
+        dispatch(loadShareRequest());
+
+        return new GetRequest(`share/${token}`, getState().auth.token)
+            .onTimeout(() => {
+                dispatch(ErrorActions.timeout("Could not fetch share"));
+            }, 60 * 1000)
+            .send()
             .then((share) => {
                 dispatch(loadShareSuccess(share));
             })

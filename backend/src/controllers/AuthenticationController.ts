@@ -47,11 +47,13 @@ class AuthenticationController {
         UserService.requestToken(email)
             .then((token) => {
                 // send mail with token
-                sendMail(
+                return sendMail(
                     [ email ],
                     "Forgot password",
-                    `Please visit <a href="http://cryptotrackr.com/reset/${email}/${token}">http://cryptotrackr.com/reset/${email}/${token}</a> to reset your password!`,
+                    `Please visit <a href="https://cryptotrackr.com/reset/${email}/${token}">http://cryptotrackr.com/reset/${email}/${token}</a> to reset your password!`
                 );
+            })
+            .then(() => {
                 reply({ success: true });
             })
             .catch((err) => {

@@ -4,6 +4,7 @@ import { genSalt, hashPassword } from "../utils/cypher-util";
 import AbstractModel from "./AbstractModel";
 import UserCoin, { IUserCoin, IUserCoinDAO } from "./UserCoin";
 import UserCredential, { IUserCredential, IUserCredentialDAO } from "./UserCredential";
+import UserPortfolioHistory, { IUserPortfolioHistoryItem, IUserPortfolioHistoryItemDAO } from "./UserPortfolioHistory";
 import UserPreferences, { IUserPreferences, IUserPreferencesDAO } from "./UserPreferences";
 import { IUserShareSettings, IUserShareSettingsDAO, UserShareSettings } from "./UserShareSettings";
 
@@ -20,6 +21,7 @@ export interface IUser {
     token: string;
     preferences: IUserPreferences;
     shares: IUserShareSettings[];
+    history: UserPortfolioHistory;
 }
 export interface IUserDAO extends Document {
     _id: any;
@@ -34,6 +36,7 @@ export interface IUserDAO extends Document {
     token: string;
     preferences: IUserPreferencesDAO;
     shares?: IUserShareSettingsDAO[];
+    history: IUserPortfolioHistoryItemDAO[];
 }
 
 export class User extends AbstractModel implements IUser {
@@ -56,6 +59,7 @@ export class User extends AbstractModel implements IUser {
         userObj.token = user.token;
         userObj.updatedOn = user.updated_on;
         userObj.preferences = UserPreferences.parse(user.preferences);
+        userObj.history = UserPortfolioHistory.parse(user.history);
 
         return userObj;
     }
@@ -73,6 +77,7 @@ export class User extends AbstractModel implements IUser {
         userObj.token = user.token;
         userObj.updatedOn = user.updatedOn;
         userObj.preferences = UserPreferences.parseDomain(user.preferences);
+        userObj.history = user.history;
 
         return userObj;
     }
@@ -86,6 +91,7 @@ export class User extends AbstractModel implements IUser {
     public preferences: UserPreferences = new UserPreferences("USD");
     public credentials: UserCredential[] = [];
     public shares: UserShareSettings[] = [];
+    public history: UserPortfolioHistory = new UserPortfolioHistory([]);
 
     constructor(
         readonly email: string,
@@ -127,6 +133,7 @@ export class User extends AbstractModel implements IUser {
             email: this.email,
             enabled: this.enabled,
             expired: this.expired,
+            history: this.history.toDAO(),
             credentials,
             activated_on: this.activatedOn,
             created_on: this.createdOn,
@@ -167,6 +174,12 @@ export const UserSchema = new mongoose.Schema(
                 source: { type: String, required: true },
                 bought_price: { type: Number, required: false },
                 bought_at: { type: Date, required: true, default: Date.now }
+            }
+        ],
+        history: [
+            {
+                date: { type: Date, required: true, default: Date.now },
+                value: { type: Number, required: true }
             }
         ],
         activated_on: { type: String },

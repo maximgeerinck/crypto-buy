@@ -4,8 +4,9 @@ import cx from "classnames";
 import Loader from "../components/Loader";
 import { getCoinImage } from "../helpers/CoinHelper";
 import styles from "./portfolioTracker.scss";
+import { FaCaretUp, FaCaretDown, FaMinus } from "react-icons/lib/fa";
 
-import { round } from "../helpers/MathHelper";
+import { round, gained } from "../helpers/MathHelper";
 
 class PortfolioTrackerItem extends Component {
     render() {
@@ -15,14 +16,14 @@ class PortfolioTrackerItem extends Component {
             changeHour,
             changeDay,
             changeWeek,
-            changeTotal,
             price,
             amount,
             currency,
-            showStatistics,
             id,
-            showChange,
-            showPrice
+            history,
+            boughtPrice,
+            rate,
+            settings
         } = this.props;
 
         const loader = this.props.isUpdating ? <Loader className={styles.loader} color="#848484" /> : null;
@@ -30,14 +31,12 @@ class PortfolioTrackerItem extends Component {
         const classChangeHour = changeHour >= 0 ? styles.positive : styles.negative;
         const classChangeDay = changeDay >= 0 ? styles.positive : styles.negative;
         const classChangeWeek = changeWeek >= 0 ? styles.positive : styles.negative;
-        const classChangeTotal =
-            changeTotal >= 0 ? cx(styles.changeTotal, styles.positive) : cx(styles.changeTotal, styles.negative);
 
-        const calculations = `${currency} ${round(price, 2)} * ${amount} = ${currency} ${round(price * amount, 2)}`;
+        const calculations = `${currency} ${round(price, 6)} * ${amount} = ${currency} ${round(price * amount, 6)}`;
 
         let prices, changeTotalContainer, statistics;
 
-        if (showStatistics && amount && showPrice) {
+        if (settings.amount && settings.price) {
             prices = (
                 <div className={styles.price}>
                     <span className={styles.calculations}>{calculations}</span>
@@ -45,7 +44,7 @@ class PortfolioTrackerItem extends Component {
             );
         }
 
-        if (showStatistics && showChange) {
+        if (settings.change) {
             statistics = (
                 <ul className={styles.change}>
                     <li>
@@ -64,8 +63,34 @@ class PortfolioTrackerItem extends Component {
             );
         }
 
-        if (showChange) {
-            changeTotalContainer = <div className={classChangeTotal}>{round(changeTotal, 2)}%</div>;
+        if (settings.change) {
+            let priceChangeIndicator = null;
+            for (let i = history.length - 1; i >= 0; i--) {
+                if (price < history[i].price) {
+                    priceChangeIndicator = <FaCaretDown className={styles.negative} />;
+                } else if (price > history[i].price) {
+                    priceChangeIndicator = <FaCaretUp className={styles.positive} />;
+                }
+            }
+
+            const changeTotal = boughtPrice ? gained(boughtPrice, price * rate) : changeDay;
+            const classChangeTotal =
+                changeTotal >= 0 ? cx(styles.changeTotal, styles.positive) : cx(styles.changeTotal, styles.negative);
+
+            const coinProfit = round(price * amount * rate - boughtPrice * amount, 6);
+            const coinProfitClass =
+                coinProfit > 0 ? cx(styles.value, styles.positive) : cx(styles.value, styles.negative);
+            const coinProfitDisplay = settings.price ? <div className={coinProfitClass}>{coinProfit}</div> : null;
+
+            changeTotalContainer = (
+                <div className={classChangeTotal}>
+                    <div className={styles.percentage}>
+                        {round(changeTotal, 2)}%
+                        <span className={styles.caret}>{priceChangeIndicator}</span>
+                    </div>
+                    {coinProfitDisplay}
+                </div>
+            );
         }
 
         return (
@@ -91,27 +116,32 @@ PortfolioTrackerItem.propTypes = {
     changeHour: PropTypes.number.isRequired,
     changeDay: PropTypes.number.isRequired,
     changeWeek: PropTypes.number.isRequired,
-    changeTotal: PropTypes.number.isRequired,
+    boughtPrice: PropTypes.number.isRequired,
     price: PropTypes.number.isRequired,
     amount: PropTypes.number.isRequired,
     currency: PropTypes.string,
     isUpdating: PropTypes.bool.isRequired,
-    showStatistics: PropTypes.bool.isRequired,
-    showChange: PropTypes.bool.isRequired,
-    showPrice: PropTypes.bool.isRequired
+    history: PropTypes.array.isRequired,
+    rate: PropTypes.number.isRequired,
+    settings: PropTypes.object.isRequired
 };
 
 PortfolioTrackerItem.defaultProps = {
     changeHour: 0,
     changeDay: 0,
     changeWeek: 0,
-    changeTotal: 0,
+    boughtPrice: 0,
     price: 0,
     amount: 0,
     isUpdating: false,
-    showStatistics: true,
-    showChange: true,
-    showPrice: true
+    history: [],
+    rate: 1,
+    settings: {
+        price: true,
+        change: true,
+        statistics: true,
+        amount: true
+    }
 };
 
 export default PortfolioTrackerItem;

@@ -9,7 +9,7 @@ class Request {
         this.path = BASE_PATH + path;
         this.token = token;
         this.settings = {
-            response: 1000,
+            response: 10000,
             deadline: 60000
         };
         this.retries = 0;
@@ -75,6 +75,7 @@ export default {
             });
             if (token) request = request.set("Authorization", token);
             request.end((err, res) => {
+                if (err && res.body) return reject(res.body);
                 if (err) return reject(err);
                 return resolve(res.body);
             });

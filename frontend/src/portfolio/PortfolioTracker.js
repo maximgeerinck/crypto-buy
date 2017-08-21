@@ -47,121 +47,139 @@ class PortfolioTrackerPage extends Component {
         setInterval(this.props.portfolioActions.details, 10000);
     }
 
+    hasCoins() {
+        return this.props.portfolio.stats.get("coins").length > 0;
+    }
+
+    isLoading() {
+        return (
+            this.props.portfolio.coins.get("loading") ||
+            this.props.portfolio.stats.get("loading") ||
+            this.props.currency.loading ||
+            !this.props.user.isLoaded
+        );
+    }
+
+    renderNoCoins() {
+        return (
+            <div style={{ "text-align": "center", "margin-top": "20px" }}>
+                <a href="/account" className={formStyles.button}>
+                    You have not added coins yet, add them here{" "}
+                </a>{" "}
+            </div>
+        );
+    }
+
+    getInvestmentStats(invested, portfolioWorth) {
+        const investedGainedPercentage = round(gained(invested, portfolioWorth), 2);
+        const investedGainedAmount = round(portfolioWorth - invested, 2);
+        const investedChange =
+            investedGainedPercentage > 0
+                ? cx(styles.investedChange, styles.positive)
+                : cx(styles.investedChange, styles.negative);
+
+        return {
+            percentage: investedGainedPercentage,
+            amount: investedGainedAmount,
+            style: investedChange
+        };
+    }
+
     render() {
         const { portfolio, currency } = this.props;
         const user = this.props.user.get("user").toObject();
 
-        if (
-            portfolio.coins.get("loading") ||
-            portfolio.stats.get("loading") ||
-            currency.loading ||
-            !this.props.user.isLoaded
-        )
+        if (this.isLoading())
             return (
                 <Page custom className={homeStyles.main}>
                     <Loader />
                 </Page>
             );
 
-        const noCoins =
-            portfolio.stats.get("coins").length === 0 ? (
-                <div style={{ "text-align": "center", "margin-top": "20px" }}>
-                    <a href="/account" className={formStyles.button}>
-                        You have not added coins yet, add them here{" "}
-                    </a>{" "}
-                </div>
-            ) : null;
-
-        const userCurrency = user.preferences.currency || "USD",
-            userInitialInvestment = user.preferences.initialInvestment || 0;
-
-        let totalPrice = 0,
-            invested = 0,
-            rate = currency.rates[userCurrency];
-
+        const noCoins = !this.hasCoins() ? this.renderNoCoins() : null;
+        const userCurrency = user.preferences.currency || "USD";
+        const userInitialInvestment = user.preferences.initialInvestment || 0;
         const isFetching = portfolio.stats.get("loading");
 
-        const itemContainers = portfolio.stats.get("coins").map((c, key) => {
-            const items = reduceItems(portfolio.coins.get("items"));
+        let totalPrice = 0,
+            invested = userInitialInvestment > 0 ? userInitialInvestment : 0,
+            rate = currency.rates[userCurrency],
+            coins = portfolio.stats.get("coins"),
+            items = reduceItems(portfolio.coins.get("items"));
 
-            const i = items[c.id];
+        let data = {
+            graph: [],
+            itemContainers: []
+        };
 
-            // total increase since you bought
-            let changeTotal = c.change.percent_1h;
-            totalPrice += i.amount * (c.price.usd * rate);
+        for (const coin of coins) {
+            const item = items[coin.coin_id];
+            const price = round(coin.price.usd * rate * item.amount, 2);
 
-            if (i.boughtPrice) {
-                invested += i.boughtPrice * i.amount;
-                changeTotal = gained(i.boughtPrice, c.price.usd * rate);
+            totalPrice += item.amount * (coin.price.usd * rate);
+
+            if (item.boughtPrice) {
+                if (invested === 0) {
+                    invested += item.boughtPrice * item.amount;
+                }
             }
 
-            return (
+            data.itemContainers.push(
                 <PortfolioTrackerItem
-                    key={key}
-                    id={c.id}
-                    name={c.name}
-                    symbol={c.symbol}
-                    changeHour={c.change.percent_1h}
-                    changeDay={c.change.percent_24h}
-                    changeWeek={c.change.percent_7d}
-                    changeTotal={changeTotal}
-                    price={c.price.usd * rate}
+                    key={coin.id}
+                    id={coin.coin_id}
+                    name={coin.name}
+                    symbol={coin.symbol}
+                    changeHour={coin.change.percent_1h}
+                    changeDay={coin.change.percent_24h}
+                    changeWeek={coin.change.percent_7d}
+                    boughtPrice={item.boughtPrice}
+                    price={coin.price.usd}
                     currency={userCurrency}
-                    amount={i.amount}
+                    amount={item.amount}
                     isUpdating={isFetching}
+                    history={coin.history}
+                    rate={rate}
                 />
             );
-        });
 
-        if (userInitialInvestment > 0) {
-            invested = userInitialInvestment;
+            data.graph.push({
+                id: coin.coin_id,
+                name: coin.symbol,
+                symbol: coin.symbol,
+                label: `${userCurrency} ${parseFloat(price)}`,
+                total: parseFloat(price)
+            });
         }
 
-        const investedGainedPercentage = round(gained(invested, totalPrice), 2);
-        const investedGainedAmount = round(totalPrice - invested, 2);
-        const investedChange =
-            investedGainedPercentage > 0
-                ? cx(styles.investedChange, styles.positive)
-                : cx(styles.investedChange, styles.negative);
+        const investment = this.getInvestmentStats(invested, totalPrice);
+        const chart = this.hasCoins() ? (
+            <PortfolioPieChart data={data.graph} customTooltip inPercent={false} />
+        ) : (
+            undefined
+        );
 
-        document.title = `${round(totalPrice, 2)} ${userCurrency} (${investedGainedPercentage}%)`;
+        // set document title
+        document.title = `${round(totalPrice, 2)} ${userCurrency} (${investment.percentage}%)`;
 
-        // PIE CHART DATA
-        const chartData = portfolio.stats.get("coins").map((coin) => {
-            const items = reduceItems(portfolio.coins.get("items"));
-            const i = items[coin.id];
-            let price = round(coin.price.usd * rate * i.amount, 2);
-
-            return {
-                symbol: coin.symbol,
-                total: parseFloat(price)
-            };
-        });
-
-        const chart = portfolio.stats.get("coins").length === 0 ? null : <PortfolioPieChart data={chartData} />;
+        const view = {
+            worth: `${userCurrency} ${round(totalPrice, 2)}`,
+            gained: `${userCurrency} ${investment.amount}(${investment.percentage}%)`,
+            investment: `(based on investment of ${userCurrency} ${round(invested, 6)})`
+        };
 
         return (
             <Page custom className={cx(pageStyles.focused, homeStyles.main)}>
-                {" "}
-                {/* investment statistics*/}{" "}
                 <div className={styles.portfolioStats}>
-                    <h3 className={styles.portfolioTotal}>
-                        {" "}
-                        {userCurrency} {round(totalPrice, 2)}{" "}
-                    </h3>
+                    <h3 className={styles.portfolioTotal}>{view.worth}</h3>
                     <div className={styles.invested}>
-                        <p className={investedChange}>
-                            {" "}
-                            {userCurrency} {investedGainedAmount}({investedGainedPercentage} % ){" "}
-                        </p>{" "}
-                        <p className={styles.investmentNotes}>
-                            (based on investment of {userCurrency} {round(invested, 2)}){" "}
-                        </p>{" "}
-                    </div>{" "}
+                        <p className={investment.style}>{view.gained}</p>
+                        <p className={styles.investmentNotes}>{view.investment}</p>
+                    </div>
                     {chart}
                 </div>
-                {/* Portfolio */} <PortfolioTracker> {itemContainers} </PortfolioTracker>
-                {noCoins}{" "}
+                <PortfolioTracker> {data.itemContainers} </PortfolioTracker>
+                {noCoins}
             </Page>
         );
     }

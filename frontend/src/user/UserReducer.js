@@ -3,6 +3,7 @@ import { LOGOUT } from "../authentication/AuthenticationActionTypes";
 import * as shareTypes from "../share/ShareActionTypes";
 import { Record, Map } from "immutable";
 import * as errorTypes from "../error/ErrorActionTypes";
+import { LOCATION_CHANGE } from "react-router-redux";
 
 export const USER = "auth_user";
 export const USER_CACHE = "auth_user_createdOn";
@@ -48,7 +49,7 @@ const UserReducer = (state = initialState, action) => {
         case errorTypes.ERROR_KNOWN:
             return state.setIn([ "form", "errors" ], action.body);
         case LOGOUT:
-            localStorage.removeItem(USER);
+            localStorage.clear();
             return state.set("user", new Map(null)).set("isLoaded", false);
 
         case shareTypes.SHARE_SUCCESS:
@@ -59,6 +60,13 @@ const UserReducer = (state = initialState, action) => {
             shares = state.get("user").toObject().shares;
             shares = shares.filter((share) => share.id !== action.body);
             return state.setIn([ "user", "shares" ], shares);
+
+        case LOCATION_CHANGE:
+            return state
+                .setIn([ "form", "errors" ], {})
+                .setIn([ "form", "isSubmitting" ], false)
+                .setIn([ "form", "validationErrors" ], null)
+                .setIn([ "form", "succeeded" ], false);
 
         default:
             return state;

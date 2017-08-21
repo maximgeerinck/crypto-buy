@@ -31,7 +31,7 @@ class Page extends Component {
             <div className={cx(page.page, className)}>
                 {navbar}
                 <div className={page.body}>
-                    <ErrorContainer />
+                    {/* <ErrorContainer /> */}
                     {titleContainer}
                     {childrenWrapper}
                 </div>

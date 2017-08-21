@@ -64,7 +64,7 @@
     background: rgba(0, 0, 0, 0.3);
     box-sizing: border-box;
     .body {
-        padding: 0 25px;
+        padding: 0 5px;
     }
     .container {
         background: rgba(0, 0, 0, 0.24);
@@ -103,11 +103,20 @@ footer {
     }
 }
 
+@media only screen and (min-width: 321px) {
+    .focused {
+        .body {
+            padding: 0 25px;
+        }
+    }
+}
+
 @media only screen and (min-width: 1024px) {
     .focused {
         .body {
             width: 1024px;
             margin: 0 auto;
+            padding: 0 25px;
         }
     }
     .content {
