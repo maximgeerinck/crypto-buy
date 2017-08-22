@@ -25,28 +25,38 @@ class PortfolioTrackerItem extends Component {
         const { history, price } = this.props;
 
         let indicator = 0;
-        let priceChangeIndicator = null;
+        let priceChangeIndicator = <span className={styles.caret} />;
+        if (!history || history.length === 0) return priceChangeIndicator;
 
-        indicator = history[history.length - 1].price < price ? 1 : -1;
+        let previous = history.pop();
+        let hItem;
 
-        for (let i = history.length - 2; i >= 0; i--) {
-            if (price < history[i].price && history[i].price !== history[i + 1].price) {
-                if (indicator < 0) {
-                    indicator = 0;
+        while (history.length) {
+            hItem = history.pop();
+            if (hItem.price !== previous.price && hItem.price !== price) {
+                // current coin is dropping
+                if (hItem.price > price) {
+                    if (indicator > 0) {
+                        indicator = -1;
+                    } else if (hItem.price > previous.price) {
+                        indicator--;
+                    }
+                } else {
+                    if (indicator < 0) {
+                        indicator = 1;
+                    } else if (hItem.price < previous.price) {
+                        indicator++;
+                    }
                 }
-                indicator++;
-            } else if (price > history[i].price && history[i].price !== history[i + 1].price) {
-                if (indicator > 0) {
-                    indicator = 0;
-                }
-                indicator--;
             }
+
+            previous = hItem;
         }
 
         switch (true) {
             case indicator >= 3:
                 priceChangeIndicator = (
-                    <span className={cx(styles.caret, styles.positive)}>
+                    <span className={cx(styles.caret, styles.positive)} style={{ marginBottom: "-20px" }}>
                         <FaCaretUp />
                         <FaCaretUp />
                         <FaCaretUp />
@@ -55,7 +65,7 @@ class PortfolioTrackerItem extends Component {
                 break;
             case indicator === 2:
                 priceChangeIndicator = (
-                    <span className={cx(styles.caret, styles.positive)}>
+                    <span className={cx(styles.caret, styles.positive)} style={{ marginBottom: "-10px" }}>
                         <FaCaretUp />
                         <FaCaretUp />
                     </span>
@@ -77,7 +87,7 @@ class PortfolioTrackerItem extends Component {
                 break;
             case indicator === -2:
                 priceChangeIndicator = (
-                    <span className={cx(styles.caret, styles.negative)}>
+                    <span className={cx(styles.caret, styles.negative)} style={{ marginBottom: "-10px" }}>
                         <FaCaretDown />
                         <FaCaretDown />
                     </span>
@@ -85,7 +95,7 @@ class PortfolioTrackerItem extends Component {
                 break;
             case indicator <= -3:
                 priceChangeIndicator = (
-                    <span className={cx(styles.caret, styles.negative)}>
+                    <span className={cx(styles.caret, styles.negative)} style={{ marginBottom: "-20px" }}>
                         <FaCaretDown />
                         <FaCaretDown />
                         <FaCaretDown />

@@ -100,7 +100,6 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding-top: 10px;
             & > svg {
                 position: relative;
                 top: -10px;
@@ -136,6 +135,9 @@
             .value,
             .caret {
                 font-size: 6pt;
+                & > svg {
+                    width: 10px;
+                }
             }
         }
     }

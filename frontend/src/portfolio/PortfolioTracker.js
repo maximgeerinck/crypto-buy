@@ -116,12 +116,10 @@ class PortfolioTrackerPage extends Component {
             const item = items[coin.coin_id];
             const price = round(coin.price.usd * rate * item.amount, 2);
 
-            totalPrice += item.amount * (coin.price.usd * rate);
+            totalPrice += parseFloat(price);
 
-            if (item.boughtPrice) {
-                if (invested === 0) {
-                    invested += item.boughtPrice * item.amount;
-                }
+            if (item.boughtPrice && invested === 0) {
+                invested += item.boughtPrice * item.amount;
             }
 
             data.itemContainers.push(
