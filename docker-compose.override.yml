@@ -8,15 +8,22 @@ services:
       - ./backend/package.json:/usr/crypto_buy/package.json:ro          
     ports: ["56745:56745"]
     environment:      
-      - NODE_ENV=dev
+      - NODE_ENV=development
 
-  # frontend:
-  #   command: npm run dev
-  #   volumes:
-  #     - ./frontend/config:/usr/crypto_buy/frontend/config
-  #     - ./frontend/public:/usr/crypto_buy/frontend/public
-  #     - ./frontend/scripts:/usr/crypto_buy/frontend/scripts
-  #     - ./frontend/src:/usr/crypto_buy/frontend/src
-  #     - ./frontend/package.json:/usr/crypto_buy/frontend/package.json
-  #     - ./frontend/webpack.config.json:/usr/crypto_buy/frontend/webpack.config.json
-  #     - ./frontend/frontend.json:/usr/crypto_buy/frontend/frontend.json
+  frontend:
+    volumes:
+      - ./frontend/client/src:/usr/crypto_buy/frontend/client/src
+      - ./frontend/client/public:/usr/crypto_buy/frontend/client/public
+      - ./frontend/client/scripts:/usr/crypto_buy/frontend/client/scripts
+      - ./frontend/client/config:/usr/crypto_buy/frontend/client/config
+      - ./frontend/client/package.json:/usr/crypto_buy/frontend/client/package.json
+      - ./frontend/client/.eslintrc:/usr/crypto_buy/frontend/client/.eslintrc
+      - ./frontend/client/.babelrc:/usr/crypto_buy/frontend/client/.babelrc
+      - ./frontend/client/.eslintignore:/usr/crypto_buy/frontend/client/.eslintignore
+      - ./frontend/service/src:/usr/crypto_buy/frontend/service/src
+      - ./frontend/service/package.json:/usr/crypto_buy/frontend/service/package.json
+      - ./frontend/service/tsconfig.json:/usr/crypto_buy/frontend/service/tsconfig.json
+      - ./frontend/service/tslint.json:/usr/crypto_buy/frontend/service/tslint.json
+    ports: ["3001:3001", "3002:3002"]
+    environment:
+      - NODE_ENV=development

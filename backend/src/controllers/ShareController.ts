@@ -77,6 +77,7 @@ class ShareController {
                 });
             })
             .catch((err) => {
+                console.log(`ERROR IN ${req.params.token}`);
                 console.log(err);
                 reply(Boom.badRequest("E_NOT_FOUND"));
             });

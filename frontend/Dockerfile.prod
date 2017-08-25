@@ -3,21 +3,38 @@ FROM node:latest
 MAINTAINER Maxim Geerinck <geerinck.maxim@gmail.com>
 
 # Install yarn, apt-get update not necessary as its already done in previous image
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-  && echo "deb http://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && apt-get update \
-  && apt-get install yarn graphicsmagick -y && apt-get clean
+# RUN apt-get install graphicsmagick -y && apt-get clean
 
-COPY package.json /usr/image_rotator/frontend/
-WORKDIR /usr/image_rotator/frontend/
+RUN npm install -g concurrently nodemon typescript pm2 --silent
+RUN mkdir -p /usr/crypto_buy/frontend/client && mkdir -p /usr/crypto_buy/frontend/service
 
-RUN npm install --production && npm install --global pushstate-server
+# CLIENT
+WORKDIR /usr/crypto_buy/frontend/client
+COPY client/*.json ./
+RUN npm install --silent
 
-COPY build /usr/image_rotator/frontend/build
-COPY public /usr/image_rotator/frontend/public
+# SERVICE
+WORKDIR /usr/crypto_buy/frontend/service
+COPY service/*.json ./
+RUN npm install --silent
 
-# create env file with the port
-RUN NODE_ENV=production
-ENV PORT 3000
-EXPOSE $PORT
+# Install sources
+COPY client/src /usr/crypto_buy/frontend/client/src
+COPY client/public /usr/crypto_buy/frontend/client/public
+COPY client/scripts /usr/crypto_buy/frontend/client/scripts
+COPY client/config /usr/crypto_buy/frontend/client/config
+COPY client/.babelrc client/.eslintignore client/.eslintrc /usr/crypto_buy/frontend/client/
+COPY service/src /usr/crypto_buy/frontend/service/src
+COPY service/tsconfig.json service/tslint.json /usr/crypto_buy/frontend/service/
 
-CMD ["npm", "run", "run-server"]
+RUN npm run build
+
+WORKDIR /usr/crypto_buy/frontend/client
+RUN npm run build
+
+WORKDIR /usr/crypto_buy/frontend/service
+
+ENV NODE_ENV production
+
+CMD ["pm2-docker", "process.json", "--env", "production"]
+

@@ -1,0 +1,27 @@
+.tooltip {
+    margin: 0px;
+    padding: 10px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(204, 204, 204);
+    color: black;
+    white-space: nowrap;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .heading {
+        display: flex;
+        align-items: center;
+    }
+
+    .value {
+        font-size: 10pt;
+        margin: 5px;
+    }
+
+    .symbol {
+        height: 20px;
+        margin-right: 5px;
+    }
+}

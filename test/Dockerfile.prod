@@ -1,0 +1,36 @@
+# image built on official nodejs v6
+FROM node:latest
+MAINTAINER Maxim Geerinck <geerinck.maxim@gmail.com>
+
+# Install yarn, apt-get update not necessary as its already done in previous image
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+  && echo "deb http://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && apt-get update \
+  && apt-get install yarn graphicsmagick -y && apt-get clean
+
+RUN mkdir -p /usr/crypto_buy/frontend/client && mkdir -p /usr/crypto_buy/frontend/service
+
+# CLIENT
+COPY client/package.json /usr/crypto_buy/frontend/client
+WORKDIR /usr/crypto_buy/frontend/client
+RUN npm install --loglevel=silent
+
+# SERVICE
+COPY service/*.json /usr/crypto_buy/frontend/service
+WORKDIR /usr/crypto_buy/frontend/service
+RUN npm install --loglevel=silent
+
+# Install sources
+COPY src /usr/crypto_buy/frontend/client/src
+COPY public /usr/crypto_buy/frontend/client/public
+
+COPY src /usr/crypto_buy/frontend/service/src
+
+# BUILD CLIENT
+WORKDIR /usr/crypto_buy/frontend/client
+RUN npm run build
+
+# create env file with the port
+ENV PORT 3000
+EXPOSE $PORT
+
+CMD ["npm", "start"]

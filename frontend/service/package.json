@@ -1,0 +1,22 @@
+{
+    "name": "cryptotrackr-frontend-service",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "dependencies": {
+        "express": "^4.15.4"
+    },
+    "devDependencies": {
+        "@types/express": "^4.0.37",
+        "@types/node": "^8.0.25",
+        "webpack": "^3.5.5"
+    },
+    "scripts": {
+        "dev": "nodemon --watch src -L -e ts,json --exec \"npm run compile\"",
+        "compile": "tsc && node build/index.js",
+        "build": "tsc",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Maxim Geerinck",
+    "license": "UNLICENSED"
+}

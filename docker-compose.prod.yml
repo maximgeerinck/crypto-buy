@@ -20,11 +20,12 @@ services:
       context: ./frontend
       dockerfile: Dockerfile.prod
     restart: always
-    environment:
+    environment:      
       - VIRTUAL_HOST=cryptotrackr.com
       - VIRTUAL_PORT=3000
       - LETSENCRYPT_HOST=cryptotrackr.com
       - LETSENCRYPT_EMAIL=admin@cryptotrackr.com
+      - NODE_ENV=production
 
   # nginx-proxy: split up in nginx and docker-gen to prevent docker socket bound to publicly exposed container
   nginx:
