@@ -36,14 +36,18 @@ class ShareController {
                         details.push(results[coin]);
                     }
 
+                    // get total amount
                     if (!share.user.preferences.initialInvestment || share.user.preferences.initialInvestment === 0) {
                         totalAmount = details.reduce((sum, value) => {
-                            return sum + portfolio[value.coinId].amount * portfolio[value.coinId].boughtPrice;
+                            if (portfolio[value.coinId]) {
+                                return sum + portfolio[value.coinId].amount * portfolio[value.coinId].boughtPrice;
+                            }
                         }, 0);
                     } else {
                         totalAmount = share.user.preferences.initialInvestment;
                     }
 
+                    // coin details
                     for (const coinDetail of details) {
                         portfolio[coinDetail.coin_id].details = coinDetail;
 
@@ -59,6 +63,7 @@ class ShareController {
                                 totalAmount;
                         }
 
+                        // if you don't want to share price, delete them
                         if (!share.price) {
                             delete portfolio[coinDetail.coin_id].boughtPrice;
                             delete portfolio[coinDetail.coin_id].boughtAt;
