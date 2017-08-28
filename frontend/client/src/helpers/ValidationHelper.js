@@ -38,6 +38,10 @@ const validationRules = {
     date: {
         rule: new RegExp("date.base"),
         message: "%s should be a valid date and is required"
+    },
+    password_incorrect: {
+        rule: new RegExp("string.password_incorrect"),
+        message: "%s is incorrect"
     }
 };
 
@@ -48,6 +52,7 @@ export default class ValidationHelper {
             return ValidationMessage[key].replace("%s", parameters[i]);
         }
     }
+
     /**   
    * 
    * @static
@@ -61,8 +66,10 @@ export default class ValidationHelper {
    * @returns 
    * @memberof ValidationHelper
    */
-    static parse(validationObject, parameters = []) {
-        if (!validationObject) return;
+    static parse(validation, validationKey, parameters = []) {
+        if (!validation || !validation[validationKey]) return;
+
+        const validationObject = validation[validationKey];
 
         // start matching regex
         for (let key in validationRules) {

@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import * as PortfolioActions from "./PortfolioActions";
 import * as CurrencyActions from "../currency/CurrencyActions";
 import * as UserActions from "../user/UserActions";
+import * as AppActions from "../app/AppActions";
 
 import styles from "./portfolioTracker.scss";
 import homeStyles from "../app/home.scss";
@@ -62,7 +63,7 @@ class PortfolioTrackerPage extends Component {
 
     renderNoCoins() {
         return (
-            <div style={{ "text-align": "center", "margin-top": "20px" }}>
+            <div style={{ textAlign: "center", marginTop: "20px" }}>
                 <a href="/account" className={formStyles.button}>
                     You have not added coins yet, add them here{" "}
                 </a>{" "}
@@ -113,6 +114,7 @@ class PortfolioTrackerPage extends Component {
         };
 
         for (const coin of coins) {
+            if (!coin) continue;
             const item = items[coin.coin_id];
             const price = round(coin.price.usd * rate * item.amount, 2);
 
@@ -158,7 +160,7 @@ class PortfolioTrackerPage extends Component {
         );
 
         // set document title
-        document.title = `${round(totalPrice, 2)} ${userCurrency} (${investment.percentage}%)`;
+        AppActions.setDocumentTitle(`${round(totalPrice, 2)} ${userCurrency} (${investment.percentage}%)`);
 
         const view = {
             worth: `${userCurrency} ${round(totalPrice, 2)}`,

@@ -4,7 +4,7 @@ import cx from "classnames";
 import Loader from "../components/Loader";
 import { getCoinImage } from "../helpers/CoinHelper";
 import styles from "./portfolioTracker.scss";
-import { FaCaretUp, FaCaretDown } from "react-icons/lib/fa";
+import FontAwesome from "react-fontawesome";
 
 import { round, gained } from "../helpers/MathHelper";
 
@@ -57,48 +57,48 @@ class PortfolioTrackerItem extends Component {
             case indicator >= 3:
                 priceChangeIndicator = (
                     <span className={cx(styles.caret, styles.positive)} style={{ marginBottom: "-20px" }}>
-                        <FaCaretUp />
-                        <FaCaretUp />
-                        <FaCaretUp />
+                        <FontAwesome name="caret-up" />
+                        <FontAwesome name="caret-up" />
+                        <FontAwesome name="caret-up" />
                     </span>
                 );
                 break;
             case indicator === 2:
                 priceChangeIndicator = (
                     <span className={cx(styles.caret, styles.positive)} style={{ marginBottom: "-10px" }}>
-                        <FaCaretUp />
-                        <FaCaretUp />
+                        <FontAwesome name="caret-up" />
+                        <FontAwesome name="caret-up" />
                     </span>
                 );
                 break;
             case indicator === 1:
                 priceChangeIndicator = (
                     <span className={cx(styles.caret, styles.positive)}>
-                        <FaCaretUp />
+                        <FontAwesome name="caret-up" />
                     </span>
                 );
                 break;
             case indicator === -1:
                 priceChangeIndicator = (
                     <span className={cx(styles.caret, styles.negative)}>
-                        <FaCaretDown />
+                        <FontAwesome name="caret-down" />
                     </span>
                 );
                 break;
             case indicator === -2:
                 priceChangeIndicator = (
                     <span className={cx(styles.caret, styles.negative)} style={{ marginBottom: "-10px" }}>
-                        <FaCaretDown />
-                        <FaCaretDown />
+                        <FontAwesome name="caret-down" />
+                        <FontAwesome name="caret-down" />
                     </span>
                 );
                 break;
             case indicator <= -3:
                 priceChangeIndicator = (
                     <span className={cx(styles.caret, styles.negative)} style={{ marginBottom: "-20px" }}>
-                        <FaCaretDown />
-                        <FaCaretDown />
-                        <FaCaretDown />
+                        <FontAwesome name="caret-down" />
+                        <FontAwesome name="caret-down" />
+                        <FontAwesome name="caret-down" />
                     </span>
                 );
                 break;

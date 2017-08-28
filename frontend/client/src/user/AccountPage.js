@@ -8,6 +8,7 @@ import Portfolio from "../portfolio/Portfolio";
 import PortfolioAddItemForm from "../portfolio/PortfolioAddItemForm";
 import UserPreferences from "./UserPreferences";
 import SharePortfolio from "./SharePortfolio";
+import AccountNavigation from "./AccountNavigation";
 
 import styles from "./account.scss";
 
@@ -36,6 +37,8 @@ class AccountPage extends Component {
                 <div className={styles.welcome}>
                     Welcome back <span className={styles.strong}>{user.email}</span>
                 </div>
+
+                <AccountNavigation active="account" />
 
                 <h2>Share</h2>
                 <SharePortfolio />

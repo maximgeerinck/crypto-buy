@@ -11,6 +11,7 @@ const getClientEnvironment = require("./env");
 const paths = require("./paths");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const BrowserSyncPlugin = require("browser-sync-webpack-plugin");
+const CompressionPlugin = require("compression-webpack-plugin");
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -21,6 +22,10 @@ const publicPath = "/";
 const publicUrl = "";
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
+
+// Note: defined here because it will be used more than once.
+// const cssFilename = "static/css/[name].[contenthash:8].css";
+const cssFilename = "static/css/main.css";
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
@@ -43,7 +48,7 @@ module.exports = {
         // the line below with these two lines if you prefer the stock client:
         // require.resolve('webpack-dev-server/client') + '?/',
         // require.resolve('webpack/hot/dev-server'),
-        require.resolve("react-dev-utils/webpackHotDevClient"),
+        // require.resolve("react-dev-utils/webpackHotDevClient"),
         // We ship a few polyfills by default:
         require.resolve("./polyfills"),
         // Errors should be considered fatal in development
@@ -215,7 +220,9 @@ module.exports = {
         // Makes some environment variables available to the JS code, for example:
         // if (process.env.NODE_ENV === 'development') { ... }. See `./env.js`.
         // new webpack.DefinePlugin(env.stringified),
-        new ExtractTextPlugin("assets/styles.css"),
+        new ExtractTextPlugin({
+            filename: cssFilename
+        }),
         // This is necessary to emit hot updates (currently CSS only):
         new webpack.HotModuleReplacementPlugin(),
         // Watcher doesn't work well if you mistype casing in a path so we use
@@ -235,7 +242,11 @@ module.exports = {
                 ui: {
                     port: 3002
                 },
-                proxy: "http://localhost:3000",
+                proxy: {
+                    target: "http://localhost:3000",
+                    ws: true
+                },
+                serverStatic: [ "/static", "/public" ],
                 logConnections: true
             },
             {
@@ -244,7 +255,14 @@ module.exports = {
                 reload: true,
                 open: false
             }
-        )
+        ),
+        new CompressionPlugin({
+            asset: "[path].gz[query]",
+            algorithm: "gzip",
+            test: /\.js$|\.css$|\.html$/,
+            threshold: 10240,
+            minRatio: 0.8
+        })
     ],
     // Some libraries import Node modules but don't use them in the browser.
     // Tell Webpack to provide empty mocks for them so importing them works.

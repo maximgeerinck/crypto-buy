@@ -10,7 +10,8 @@ const TRACKING_ID = "UA-101986081-1";
 
 ReactGA.initialize(TRACKING_ID);
 window.cryptotrackr = {
-    version: 6
+    version: 7,
+    originalDocumentTitle: "Crypto Portfolio tracker"
 };
 const VERSION_KEY = "cryptotrackr_version";
 

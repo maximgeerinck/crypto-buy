@@ -11,3 +11,7 @@ export const UPDATE_FAILURE = "user/update/failure";
 export const UPDATE_SUCCESS = "user/update/success";
 
 export const REQUEST_PASSWORD_REQUEST = "user/password/request";
+
+export const USER_CHANGE_PASSWORD_SUCCESS = "user/password/change/success";
+export const USER_CHANGE_PASSWORD_FAILURE = "user/password/change/failure";
+export const USER_CHANGE_PASSWORD_REQUEST = "user/password/change/request";

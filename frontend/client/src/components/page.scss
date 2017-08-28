@@ -45,6 +45,13 @@
         justify-content: center;
         flex: 1;
     }
+
+    .container {
+        background: rgba(0, 0, 0, 0.10);
+        color: white;
+        padding: 20px;
+        text-align: center;
+    }
 }
 
 .shareNotFoundPage {

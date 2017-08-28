@@ -5,6 +5,7 @@ import { Error as MongooseError } from "mongoose";
 import { IUser, User } from "../models/user";
 import UserRepository from "../services/UserRepository";
 import UserService from "../services/UserService";
+import { comparePassword } from "../utils/cypher-util";
 import Validator, { ValidationError } from "../validation/Validator";
 
 // interface ICreateValidationErrors {
@@ -62,6 +63,30 @@ class UserController {
         Object.assign(user.preferences, preferences);
 
         UserService.update(user).then((user) => reply(user)).catch((err) => reply(Boom.badRequest()));
+    }
+
+    public changePassword(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
+        const { currentPassword, newPassword } = req.payload;
+
+        // verify if user his password is correct
+        const user = req.auth.credentials;
+        const validator = new Validator();
+
+        comparePassword(currentPassword, user.credentials[user.credentials.length - 1].password)
+            .then((correct) => {
+                if (!correct) {
+                    // not correct
+                    validator.addError(new ValidationError("currentPassword", "string.password_incorrect"));
+                    throw new Error("E_VALIDATION");
+                }
+                return UserService.addCredentials(req.auth.credentials, newPassword);
+            })
+            .then(() => {
+                return reply({ success: true });
+            })
+            .catch((err) => {
+                return reply(validator.generateBadRequest());
+            });
     }
 }
 

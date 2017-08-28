@@ -1,0 +1,31 @@
+.navigation {
+    margin: 25px 0;
+    background: rgba(0, 0, 0, 0.03);
+    ul {
+        display: flex;
+        flex-direction: row;
+        margin: 0;
+        padding: 0;
+        li {
+            display: inline-flex;
+            list-style: none;
+            &.active {
+                border-bottom: 1px solid #68999c;
+            }
+            a {
+                padding: 15px 20px;
+                color: #68999c;
+                transition: 150ms all ease-in-out;
+
+                &:hover {
+                    background-color: #68999c;
+                    color: white;
+                }
+            }
+
+            & + li {
+                margin-left: 15px;
+            }
+        }
+    }
+}

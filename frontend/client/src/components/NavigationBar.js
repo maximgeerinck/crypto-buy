@@ -1,27 +1,24 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Link, browserHistory } from "react-router";
-import { FaEnvelope, FaUser, FaPlus, FaHome } from "react-icons/lib/fa";
-
-import { TiKey } from "react-icons/lib/ti";
-import * as AuthActions from "../authentication/AuthenticationActions";
+import { Link } from "react-router";
+import FontAwesome from "react-fontawesome";
 
 import styles from "./navigation.scss";
 
 class NavigationBar extends Component {
     render() {
-        const { dispatch, isAuthenticated } = this.props;
+        const { isAuthenticated } = this.props;
 
         const loginBlock = isAuthenticated ? (
             <li>
                 <Link to="/account">
-                    <FaUser />Account
+                    <FontAwesome name="user" />Account
                 </Link>
             </li>
         ) : (
             <li>
                 <Link to="/login">
-                    <TiKey />Login
+                    <FontAwesome name="key" />Login
                 </Link>
             </li>
         );
@@ -29,9 +26,9 @@ class NavigationBar extends Component {
         const getStartedBlock = isAuthenticated ? (
             <li>
                 <Link
-                    onClick={() => {
-                        dispatch(AuthActions.logout());
-                        browserHistory.replace("/");
+                    onClick={(e) => {
+                        e.preventDefault();
+                        this.props.onLogout();
                     }}
                 >
                     Logout
@@ -40,7 +37,7 @@ class NavigationBar extends Component {
         ) : (
             <li className={styles.getStarted}>
                 <Link to="/register">
-                    <FaPlus />Get started
+                    <FontAwesome name="plus" />Get started
                 </Link>
             </li>
         );
@@ -50,12 +47,12 @@ class NavigationBar extends Component {
                 <ul>
                     <li>
                         <Link to="/">
-                            <FaHome />Home
+                            <FontAwesome name="home" />Home
                         </Link>
                     </li>
                     <li>
                         <a href="mailto:hi@cryptotrackr.com">
-                            <FaEnvelope />Mail us!
+                            <FontAwesome name="envelope" /> Mail us!
                         </a>
                     </li>
                     {loginBlock}
@@ -67,8 +64,8 @@ class NavigationBar extends Component {
 }
 
 NavigationBar.PropTypes = {
-    dispatch: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.bool.isRequired
+    isAuthenticated: PropTypes.bool.isRequired,
+    onLogout: PropTypes.func.isRequired
 };
 
 export default NavigationBar;

@@ -1,9 +1,9 @@
-import routes from "./routes";
 import config from "./config";
+import routes from "./routes";
 
+import * as Boom from "boom";
 import * as Hapi from "hapi";
 import * as Path from "path";
-import * as Boom from "boom";
 import { IUser, User } from "./models/user";
 import UserService from "./services/UserService";
 import JoiValidationErrorAdapter from "./utils/JoiValidation";
@@ -48,7 +48,10 @@ const server = new Hapi.Server({
 
 interface decodedUser {
     iat: Number;
-    user: IUser;
+    user: {
+        id: any;
+        email: string;
+    };
 }
 const validate = (decoded: decodedUser, request: any, callback: any) => {
     // here we can check if its a valid token

@@ -8,6 +8,7 @@ import ForgotPasswordPage from "./authentication/ForgotPasswordPage";
 import ResetPasswordPage from "./authentication/ResetPasswordPage";
 import EnsureLoggedIn from "./authentication/EnsureLoggedIn";
 import HomePage from "./app/HomePage";
+import ChangePasswordPage from "./user/ChangePasswordPage";
 
 import ShareOverview from "./share/ShareOverview";
 
@@ -22,6 +23,7 @@ const routes = (
 
         <Route component={EnsureLoggedIn}>
             <Route path="account" component={AccountPage} />
+            <Route path="password" component={ChangePasswordPage} />
         </Route>
 
         <Route path="*" component={NotFoundPage} />

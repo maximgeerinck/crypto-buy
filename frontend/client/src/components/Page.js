@@ -5,9 +5,12 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
 import * as UserActions from "../user/UserActions";
+import * as AuthActions from "../authentication/AuthenticationActions";
+
 import ErrorContainer from "../error/ErrorContainer";
 import page from "./page.scss";
 import SponsorEnjin from "./SponsorEnjin";
+import { browserHistory } from "react-router";
 
 class Page extends Component {
     componentDidMount() {
@@ -16,13 +19,19 @@ class Page extends Component {
         }
     }
 
+    logout = () => {
+        this.props.authActions.logout();
+        browserHistory.replace("/");
+    };
+
     render() {
-        const { dispatch } = this.props;
         const isAuthenticated = this.props.auth.isAuthenticated;
 
         const className = this.props.className || null;
         const { navigationBar, children, title, custom } = this.props;
-        const navbar = navigationBar ? <NavigationBar dispatch={dispatch} isAuthenticated={isAuthenticated} /> : null;
+        const navbar = navigationBar ? (
+            <NavigationBar isAuthenticated={isAuthenticated} onLogout={this.logout} />
+        ) : null;
         const titleContainer = title ? <h1>{title}</h1> : null;
 
         const childrenWrapper = !custom ? <div className={page.content}>{children}</div> : children;
@@ -70,8 +79,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        dispatch: dispatch,
-        userActions: bindActionCreators(UserActions, dispatch)
+        userActions: bindActionCreators(UserActions, dispatch),
+        authActions: bindActionCreators(AuthActions, dispatch)
     };
 };
 

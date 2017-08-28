@@ -34,18 +34,18 @@ class CoinForm extends Component {
         clearInterval(this.timer);
     }
 
-    onSubmit = e => {
+    onSubmit = (e) => {
         e.preventDefault();
         this.props.onSubmit(this.state.coin);
     };
 
-    onCoinSelect = val => {
+    onCoinSelect = (val) => {
         let coin = this.state.coin;
         coin.coinId = val;
         this.props.onChange(coin);
     };
 
-    onChange = e => {
+    onChange = (e) => {
         e.preventDefault();
         if (e.target.name === "boughtAt") {
             clearInterval(this.timer);
@@ -75,13 +75,13 @@ class CoinForm extends Component {
         const showPricePerCoin = this.props.initialInvestment > 0 ? { display: "none" } : null;
         const validation = this.props.validationErrors || {};
 
-        const cancel = this.props.onCancel
-            ? <div className={formStyles.group}>
-                  <button onClick={this.props.onCancel} className={cx(formStyles.button, formStyles.danger)}>
-                      Cancel
-                  </button>
-              </div>
-            : null;
+        const cancel = this.props.onCancel ? (
+            <div className={formStyles.group}>
+                <button onClick={this.props.onCancel} className={cx(formStyles.button, formStyles.danger)}>
+                    Cancel
+                </button>
+            </div>
+        ) : null;
 
         return (
             <form className={formStyles.form} onSubmit={this.onSubmit}>
@@ -94,7 +94,7 @@ class CoinForm extends Component {
                         className={formStyles.input}
                     />
                     <span className={formStyles.validationError}>
-                        {ValidationHelper.parse(validation.coinId, ["Coin"])}
+                        {ValidationHelper.parse(validation, "coinId", [ "Coin" ])}
                     </span>
                 </div>
                 <div className={formStyles.group}>
@@ -109,7 +109,7 @@ class CoinForm extends Component {
                         onChange={this.onChange}
                     />
                     <span className={formStyles.validationError}>
-                        {ValidationHelper.parse(validation.amount, ["Amount"])}
+                        {ValidationHelper.parse(validation, "amount", [ "Amount" ])}
                     </span>
                 </div>
                 <div className={formStyles.group} style={showPricePerCoin}>
@@ -124,7 +124,7 @@ class CoinForm extends Component {
                         onChange={this.onChange}
                     />
                     <span className={formStyles.validationError}>
-                        {ValidationHelper.parse(validation.boughtPrice, ["Purchase price"])}
+                        {ValidationHelper.parse(validation, "boughtPrice", [ "Purchase price" ])}
                     </span>
                 </div>
                 <div className={formStyles.group}>
@@ -138,7 +138,7 @@ class CoinForm extends Component {
                         onChange={this.onChange}
                     />
                     <span className={formStyles.validationError}>
-                        {ValidationHelper.parse(validation.source, ["Source"])}
+                        {ValidationHelper.parse(validation, "source", [ "Source" ])}
                     </span>
                 </div>
                 <div className={formStyles.group}>
@@ -152,7 +152,7 @@ class CoinForm extends Component {
                         onChange={this.onChange}
                     />
                     <span className={formStyles.validationError}>
-                        {ValidationHelper.parse(validation.boughtAt, ["Purchase date"])}
+                        {ValidationHelper.parse(validation, "boughtAt", [ "Purchase date" ])}
                     </span>
                 </div>
                 <div className={formStyles.group}>

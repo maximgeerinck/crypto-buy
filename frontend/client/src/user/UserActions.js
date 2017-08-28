@@ -1,8 +1,7 @@
 import * as types from "./UserActionTypes";
-import api, { GetRequest } from "../app/api";
+import api, { GetRequest, PostRequest } from "../app/api";
 import * as ErrorHelper from "../helpers/ErrorHelper";
 import * as ErrorActions from "../error/ErrorActions";
-import { LOGOUT } from "../authentication/AuthenticationActionTypes";
 
 const userSuccess = (user) => ({ type: types.USER_SUCCESS, body: user });
 const userRequest = () => ({ type: types.USER_REQUEST });
@@ -18,7 +17,23 @@ const updateSucceeded = (user) => ({ type: types.UPDATE_SUCCESS, body: user });
 
 const requestPasswordRequest = () => ({ type: types.REQUEST_PASSWORD_REQUEST });
 
-export const logout = () => ({ type: LOGOUT });
+const changePasswordSuccess = () => ({ type: types.USER_CHANGE_PASSWORD_SUCCESS });
+const changePasswordFailure = (err) => ({ type: types.USER_CHANGE_PASSWORD_FAILURE, body: err });
+const changePasswordRequest = () => ({ type: types.USER_CHANGE_PASSWORD_REQUEST });
+
+export const changePassword = (currentPassword, newPassword) => {
+    return (dispatch, getState) => {
+        dispatch(changePasswordRequest());
+        return new PostRequest("user/password", getState().auth.token)
+            .send({ currentPassword, newPassword })
+            .then((response) => {
+                dispatch(changePasswordSuccess());
+            })
+            .catch((err) => {
+                dispatch(changePasswordFailure(err));
+            });
+    };
+};
 
 export const me = () => {
     return (dispatch, getState) => {

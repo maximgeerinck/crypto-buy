@@ -3,12 +3,21 @@ import api from "../app/api";
 import { browserHistory } from "react-router";
 import { AUTH_TOKEN } from "./AuthenticationConstants";
 import * as ErrorHelper from "../helpers/ErrorHelper";
+import * as AppActions from "../app/AppActions";
 
 const authenticationSucceeded = (user) => ({ type: types.AUTHENTICATE_SUCCESS, body: user });
 const authenticationRequest = () => ({ type: types.AUTHENTICATE_REQUEST });
 const authenticationFailed = () => ({ type: types.AUTHENTICATE_FAILURE });
 
-export const logout = () => ({ type: types.LOGOUT });
+const logoutRequest = () => ({ type: types.LOGOUT });
+
+export const logout = () => {
+    return (dispatch) => {
+        console.log("logout...");
+        AppActions.resetDocumentTitle();
+        dispatch(logoutRequest());
+    };
+};
 
 export const authenticate = (email, password) => {
     return (dispatch) => {

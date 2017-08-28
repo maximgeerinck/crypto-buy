@@ -34,9 +34,13 @@ const UserReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case types.CREATION_REQUEST:
+        case types.USER_CHANGE_PASSWORD_REQUEST:
             return state.setIn([ "form", "isSubmitting" ], true);
+
         case types.CREATION_SUCCESS:
+        case types.USER_CHANGE_PASSWORD_SUCCESS:
             return state.setIn([ "form", "isSubmitting" ], false).setIn([ "form", "succeeded" ], true);
+
         case types.USER_SUCCESS:
             localStorage.setItem(USER, JSON.stringify(action.body));
             localStorage.setItem(USER_CACHE, Date.now());
@@ -46,6 +50,10 @@ const UserReducer = (state = initialState, action) => {
         case types.UPDATE_SUCCESS:
             localStorage.setItem(USER, JSON.stringify(action.body));
             return state.set("user", new Map(action.body));
+
+        case types.USER_CHANGE_PASSWORD_FAILURE:
+            return state.setIn([ "form", "validationErrors" ], action.body);
+
         case errorTypes.ERROR_KNOWN:
             return state.setIn([ "form", "errors" ], action.body);
         case LOGOUT:

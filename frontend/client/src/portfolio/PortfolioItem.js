@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styles from "./portfolio.scss";
-import { MdEdit, MdDelete } from "react-icons/lib/md";
+import FontAwesome from "react-fontawesome";
+
 import PropTypes from "prop-types";
 import CoinForm from "./CoinForm";
 import { getCoinImage } from "../helpers/CoinHelper";
@@ -62,12 +63,12 @@ class PortfolioItem extends Component {
                     <ul className={styles.actions}>
                         <li key="edit">
                             <button onClick={() => this.setState({ editMode: true })}>
-                                <MdEdit />
+                                <FontAwesome name="edit" />
                             </button>
                         </li>
                         <li key="delete">
                             <button className={styles.deleteButton} onClick={() => onDelete()}>
-                                <MdDelete />
+                                <FontAwesome name="remove" />
                             </button>
                         </li>
                     </ul>

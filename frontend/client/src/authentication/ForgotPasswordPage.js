@@ -8,6 +8,7 @@ import { Link } from "react-router";
 
 import formStyles from "../forms.scss";
 import pageStyle from "../components/page.scss";
+import ChangePasswordForm from "../user/ChangePasswordForm";
 
 export class ForgotPasswordForm extends Component {
     constructor(props) {

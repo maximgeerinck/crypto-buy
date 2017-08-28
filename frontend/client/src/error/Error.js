@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { MdCancel } from "react-icons/lib/md";
+import FontAwesome from "react-fontawesome";
 import styles from "./error.scss";
 
 class Error extends Component {
@@ -9,7 +9,7 @@ class Error extends Component {
         return (
             <li key={key}>
                 <button onClick={onClick} className={styles.icon}>
-                    <MdCancel />
+                    <FontAwesome name="cancel" />
                 </button>
                 {this.props.children}
             </li>

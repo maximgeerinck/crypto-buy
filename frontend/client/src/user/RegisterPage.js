@@ -52,7 +52,7 @@ class RegisterForm extends Component {
                         className={validation.email ? formStyles.invalid : null}
                     />
                     <span className={formStyles.validationError}>
-                        {ValidationHelper.parse(validation.email, [ "email" ])}
+                        {ValidationHelper.parse(validation, "email", [ "email" ])}
                     </span>
                 </div>
                 <div className={formStyles.group}>
@@ -65,7 +65,7 @@ class RegisterForm extends Component {
                         className={validation.password ? formStyles.invalid : null}
                     />
                     <span className={formStyles.validationError}>
-                        {ValidationHelper.parse(validation.password, [ "password", 6 ])}
+                        {ValidationHelper.parse(validation, "password", [ "password", 6 ])}
                     </span>
                 </div>
                 <div className={formStyles.group}>

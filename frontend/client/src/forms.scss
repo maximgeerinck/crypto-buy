@@ -4,7 +4,7 @@
     .group {
         display: flex;
         flex-direction: column;
-        flex-wrap: wrap;
+        // flex-wrap: wrap;
         & + .group {
             margin-top: 10px;
         }
@@ -22,7 +22,7 @@
                 background: rgba(0, 0, 0, 0.05);
                 color: #585858;
             }
-
+            flex: 1;
             background: #fefefe;
             display: block;
             padding: 15px 20px;
@@ -65,6 +65,7 @@
         color: #d45959;
         display: block;
         padding: 5px;
+        flex-basis: 0%;
     }
 }
 

@@ -33,7 +33,7 @@ class AuthenticationController {
                 if (!user) {
                     return reply(Boom.unauthorized("E_INVALID_CREDENTIALS"));
                 }
-                const token = JWT.sign(obj, config.authentication.jwt.secret);
+                const token = JWT.sign({ user: { id: user.id, email: user.email } }, config.authentication.jwt.secret);
                 return reply({ token });
             })
             .catch((err) => {

@@ -5,6 +5,7 @@ services:
     volumes:
       - ./backend/src:/usr/crypto_buy/src
       - ./backend/config/app_dev.json:/usr/crypto_buy/build/config/app_dev.json:ro
+      - ./backend/config:/usr/crypto_buy/config:ro
       - ./backend/package.json:/usr/crypto_buy/package.json:ro          
     ports: ["56745:56745"]
     environment:      

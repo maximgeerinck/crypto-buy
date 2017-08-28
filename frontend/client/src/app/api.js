@@ -15,12 +15,6 @@ class Request {
         this.retries = 0;
     }
 
-    createRequest() {
-        this.request = superagent.get(this.path).timeout(this.settings);
-        if (this.token) this.request = this.request.set("Authorization", this.token);
-        return this.request;
-    }
-
     onTimeout(func, timeout = 1000) {
         this._onTimeout = func;
         this.settings.response = timeout;
@@ -38,6 +32,12 @@ class Request {
 }
 
 export class GetRequest extends Request {
+    createRequest() {
+        this.request = superagent.get(this.path).timeout(this.settings);
+        if (this.token) this.request = this.request.set("Authorization", this.token);
+        return this.request;
+    }
+
     send() {
         return new Promise((resolve, reject) => {
             this.createRequest();
@@ -46,9 +46,41 @@ export class GetRequest extends Request {
                     if (err.timeout) {
                         return this.retry();
                     }
-                    reject(err);
+                    return reject(err);
                 }
-                resolve(res.body);
+                if (!res.body) return reject(res);
+                return resolve(res.body);
+            });
+        });
+    }
+}
+
+export class PostRequest extends Request {
+    createRequest() {
+        this.request = superagent.post(this.path).timeout(this.settings);
+        if (this.token) this.request = this.request.set("Authorization", this.token);
+        return this.request;
+    }
+
+    send(data) {
+        return new Promise((resolve, reject) => {
+            this.createRequest().send(data).end((err, res) => {
+                // check if validation error
+                if (
+                    res.body &&
+                    res.body.error &&
+                    (res.body.error === "E_VALIDATION" || res.body.validation !== undefined)
+                ) {
+                    return reject(res.body.validation);
+                }
+
+                // check general error
+                if (err) {
+                    return reject(err);
+                }
+
+                if (!res.body) return reject(res);
+                return resolve(res.body);
             });
         });
     }
@@ -63,7 +95,8 @@ export default {
             });
             if (token) request = request.set("Authorization", token);
             request.end((err, res) => {
-                if (err) reject(err);
+                if (err) return reject(err);
+                if (!res.body) return reject(res);
                 resolve(res.body);
             });
         }),
@@ -77,6 +110,7 @@ export default {
             request.end((err, res) => {
                 if (err && res.body) return reject(res.body);
                 if (err) return reject(err);
+                if (!res.body) return reject(res);
                 return resolve(res.body);
             });
         }),
@@ -88,7 +122,8 @@ export default {
             });
             if (token) request = request.set("Authorization", token);
             request.end((err, res) => {
-                if (err) reject(err);
+                if (err) return reject(err);
+                if (!res.body) return reject(res);
                 resolve(res.body);
             });
         }),
