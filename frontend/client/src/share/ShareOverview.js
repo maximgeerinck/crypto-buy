@@ -3,6 +3,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import Page from "../components/Page";
 import * as ShareActions from "./ShareActions";
+import * as CurrencyActions from "../currency/CurrencyActions";
 
 import cx from "classnames";
 import pageStyles from "../components/page.scss";
@@ -16,12 +17,21 @@ import NotFoundPage from "../components/NotFoundPage";
 import { round, gained } from "../helpers/MathHelper";
 
 class ShareOverview extends Component {
+    componentWillMount() {
+        const { currencyActions, shareActions } = this.props;
+
+        // load currencies
+        currencyActions.index();
+    }
+
     componentDidMount() {
         this.props.shareActions.loadShare(this.props.routeParams.shareLink);
     }
 
     render() {
-        if (this.props.share.notFound) {
+        const { currencies, share } = this.props;
+
+        if (share.notFound) {
             return (
                 <NotFoundPage
                     title="Portfolio not found"
@@ -31,7 +41,7 @@ class ShareOverview extends Component {
             );
         }
 
-        if (this.props.share.coins.get("isLoading")) {
+        if (share.coins.get("isLoading") || currencies.loading) {
             return (
                 <Page custom className={cx(pageStyles.focused, homeStyles.main)}>
                     <Loader />
@@ -39,8 +49,10 @@ class ShareOverview extends Component {
             );
         }
 
-        const coins = this.props.share.coins.get("items").toObject();
-        const settings = this.props.share.settings;
+        const coins = share.coins.get("items").toObject();
+        const settings = share.settings;
+        const currency = share.currency;
+        const rate = currencies.rates[currency];
 
         let chartData = [];
 
@@ -50,9 +62,10 @@ class ShareOverview extends Component {
             }
 
             if (val.amount) {
-                let total = settings.amount
-                    ? parseFloat(val.amount ? round(val.amount * val.details.price.usd, 2) : undefined)
-                    : parseFloat(round(val.amount * 100, 2));
+                let total =
+                    settings.amount && settings.price
+                        ? parseFloat(val.amount ? round(val.amount * val.details.price.usd, 2) : undefined)
+                        : parseFloat(round(val.amount * 100, 2));
 
                 chartData.push({
                     id: val.coinId,
@@ -79,9 +92,10 @@ class ShareOverview extends Component {
                     symbol={val.details.symbol}
                     price={val.details.price.usd}
                     amount={val.amount ? val.amount : undefined}
-                    currency="USD"
+                    currency={currency}
                     settings={settings}
                     boughtPrice={val.boughtPrice}
+                    rate={rate}
                     {...changes}
                 />
             );
@@ -100,12 +114,14 @@ class ShareOverview extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    share: state.share
+    share: state.share,
+    currencies: state.currency
 });
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        shareActions: bindActionCreators(ShareActions, dispatch)
+        shareActions: bindActionCreators(ShareActions, dispatch),
+        currencyActions: bindActionCreators(CurrencyActions, dispatch)
     };
 };
 

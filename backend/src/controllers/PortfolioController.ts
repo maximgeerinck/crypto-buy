@@ -98,10 +98,6 @@ class PortfolioController {
      */
     public index(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         const coins = req.auth.credentials.portfolio;
-        coins.forEach((coin: any) => {
-            coin.id = coin.id;
-        });
-
         return reply(coins);
     }
 }

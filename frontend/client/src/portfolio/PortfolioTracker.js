@@ -45,7 +45,7 @@ class PortfolioTrackerPage extends Component {
 
     componentDidMount() {
         // load portfolio stats
-        setInterval(this.props.portfolioActions.details, 10000);
+        // setInterval(this.props.portfolioActions.details, 10000);
     }
 
     hasCoins() {
@@ -105,17 +105,18 @@ class PortfolioTrackerPage extends Component {
         let totalPrice = 0,
             invested = userInitialInvestment > 0 ? userInitialInvestment : 0,
             rate = currency.rates[userCurrency],
-            coins = portfolio.stats.get("coins"),
-            items = reduceItems(portfolio.coins.get("items"));
+            coinDetails = portfolio.stats.get("coins"),
+            reducedPortfolio = reduceItems(portfolio.coins.get("items"));
 
         let data = {
             graph: [],
             itemContainers: []
         };
 
-        for (const coin of coins) {
+        for (const coin of coinDetails) {
             if (!coin) continue;
-            const item = items[coin.coin_id];
+
+            const item = reducedPortfolio[coin.coin_id];
             const price = round(coin.price.usd * rate * item.amount, 2);
 
             totalPrice += parseFloat(price);

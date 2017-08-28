@@ -98,11 +98,12 @@ class UserService {
         amount: boolean = false,
         graph: boolean = false,
         change: boolean = false,
-        price: boolean = false
+        price: boolean = false,
+        currency: string = "USD"
     ): Promise<UserShareSettings> {
         const token = uuid.v4();
 
-        const settings = new UserShareSettings(token, amount, graph, change, price);
+        const settings = new UserShareSettings(token, amount, graph, change, price, currency);
         settings.setUser(user);
 
         return ShareRepository.create(settings)

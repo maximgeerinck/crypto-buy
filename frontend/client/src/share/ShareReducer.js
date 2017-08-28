@@ -7,6 +7,7 @@ var InitialState = new Record({
         items: new Map([])
     }),
     settings: new Map(),
+    currency: undefined,
     latestShare: {
         token: undefined
     },
@@ -21,6 +22,7 @@ const ShareReducer = (state = initialState, action) => {
             return state
                 .setIn([ "coins", "items" ], new Map(action.body.portfolio))
                 .set("settings", action.body.settings)
+                .set("currency", action.body.currency)
                 .setIn([ "coins", "isLoading" ], false);
         case types.SHARE_LOAD_FAILURE:
             return state.set("notFound", true);

@@ -11,6 +11,7 @@ export interface IUserShareSettings {
     graph: boolean;
     change: boolean;
     price: boolean;
+    currency: string;
 }
 
 export interface IUserShareSettingsDAO extends Document {
@@ -21,6 +22,7 @@ export interface IUserShareSettingsDAO extends Document {
     graph: boolean;
     change: boolean;
     price: boolean;
+    currency: string;
 }
 
 export class UserShareSettings extends AbstractModel implements IUserShareSettings {
@@ -31,6 +33,7 @@ export class UserShareSettings extends AbstractModel implements IUserShareSettin
             settings.graph,
             settings.change,
             settings.price,
+            settings.currency,
             settings._id
         );
 
@@ -46,6 +49,7 @@ export class UserShareSettings extends AbstractModel implements IUserShareSettin
             settings.graph,
             settings.change,
             settings.price,
+            settings.currency,
             settings.id
         );
     }
@@ -58,6 +62,7 @@ export class UserShareSettings extends AbstractModel implements IUserShareSettin
         readonly graph: boolean = false,
         readonly change: boolean = false,
         readonly price: boolean = false,
+        readonly currency: string = "USD",
         readonly id: mongoose.Types.ObjectId = new mongoose.Types.ObjectId()
     ) {
         super();
@@ -75,7 +80,8 @@ export class UserShareSettings extends AbstractModel implements IUserShareSettin
             amount: this.amount,
             graph: this.graph,
             change: this.change,
-            price: this.price
+            price: this.price,
+            currency: this.currency
         } as IUserShareSettingsDAO;
     }
 }
@@ -89,7 +95,8 @@ export const ShareSchema = new mongoose.Schema(
         amount: { type: Boolean, required: true, default: false },
         graph: { type: Boolean, required: true, default: false },
         change: { type: Boolean, required: true, default: false },
-        price: { type: Boolean, required: true, default: false }
+        price: { type: Boolean, required: true, default: false },
+        currency: { type: String, required: true, default: "USD" }
     },
     { timestamps: { createdAt: "created_on" } }
 );

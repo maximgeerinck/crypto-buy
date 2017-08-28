@@ -56,7 +56,7 @@ class ShareController {
                         }
 
                         // if show graph but not amount, feed it percentages 0-1
-                        if (share.graph && !share.amount) {
+                        if (share.graph && (!share.amount || !share.price)) {
                             portfolio[coinDetail.coin_id].amount =
                                 portfolio[coinDetail.coin_id].amount *
                                 portfolio[coinDetail.coin_id].boughtPrice /
@@ -77,6 +77,7 @@ class ShareController {
                             change: share.change,
                             price: share.price
                         },
+                        currency: share.currency,
                         portfolio
                     });
                 });
@@ -96,8 +97,9 @@ class ShareController {
     public share(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         const user: DomainUser = req.auth.credentials;
         const settings: any = req.payload.settings;
+        const currency: any = req.payload.currency;
 
-        UserService.sharePortfolio(user, settings.amount, settings.graph, settings.change, settings.price)
+        UserService.sharePortfolio(user, settings.amount, settings.graph, settings.change, settings.price, currency)
             .then((shareSettings) => {
                 reply(shareSettings);
             })

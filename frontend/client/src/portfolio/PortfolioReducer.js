@@ -69,8 +69,6 @@ const PortfolioReducer = (state = initialState, action) => {
 
         case types.COINS_ADD_SUCCESS:
         case types.COIN_UPDATE_SUCCESS:
-            return state.setIn([ "coins", "items" ], action.body).setIn([ "form", "isSubmitting" ], false);
-
         case types.COIN_DELETE_SUCCESS:
             return state.setIn([ "coins", "items" ], action.body).setIn([ "form", "isSubmitting" ], false);
 

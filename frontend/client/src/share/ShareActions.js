@@ -37,10 +37,10 @@ export const deleteShare = (id) => {
     };
 };
 
-export const share = (settings) => {
+export const share = (settings, currency) => {
     return (dispatch, getState) => {
         dispatch(shareLinkRequest());
-        return api.post("share", { settings }, getState().auth.token).then((createdShare) => {
+        return api.post("share", { settings, currency }, getState().auth.token).then((createdShare) => {
             dispatch(shareLinkSuccess(createdShare));
         });
     };

@@ -9,7 +9,11 @@ import ShareItem from "./ShareItem";
 import ShareForm from "./ShareForm";
 
 class SharePortfolio extends Component {
-    share = (options) => this.props.shareActions.share(options);
+    share = (options) => {
+        const user = this.props.user.get("user").toObject();
+        this.props.shareActions.share(options, user.preferences.currency);
+    };
+
     deleteShare = (id) => this.props.shareActions.deleteShare(id);
 
     render() {

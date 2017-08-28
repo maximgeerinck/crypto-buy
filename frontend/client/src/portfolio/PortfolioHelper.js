@@ -1,18 +1,12 @@
-export const reduceItems = items => {
+export const reduceItems = (items) => {
     var reducer = (allCoins, coin) => {
         if (coin.coinId in allCoins) {
-            // allCoins[coin.symbol].amount
-            allCoins[coin.coinId].cost =
-                (allCoins[coin.coinId].amount * allCoins[coin.coinId].cost + coin.amount * coin.boughtPrice) /
-                (allCoins[coin.coinId].amount + coin.amount);
             allCoins[coin.coinId].amount += coin.amount;
+            allCoins[coin.coinId].boughtPrice =
+                (allCoins[coin.coinId].amount * allCoins[coin.coinId].boughtPrice + coin.amount * coin.boughtPrice) /
+                (allCoins[coin.coinId].amount + coin.amount);
         } else {
-            allCoins[coin.coinId] = {
-                amount: coin.amount,
-                boughtPrice: coin.boughtPrice,
-                symbol: coin.symbol,
-                coinId: coin.coinId
-            };
+            allCoins[coin.coinId] = Object.assign({}, coin);
         }
         delete allCoins["undefined"];
         return allCoins;

@@ -26,7 +26,8 @@ module.exports = [
         config: {
             validate: {
                 payload: {
-                    settings: JoiSettings
+                    settings: JoiSettings,
+                    currency: Joi.string()
                 }
             }
         }
