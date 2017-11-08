@@ -28,6 +28,7 @@ class PortfolioController {
                     coin.amount,
                     coin.source,
                     coin.boughtPrice,
+                    coin.currency,
                     moment(coin.boughtAt, BOUGHT_AT_FORMAT).toDate()
                 )
         );
@@ -53,7 +54,7 @@ class PortfolioController {
      * @memberof PortfolioController
      */
     public updateCoin(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
-        const { id, coinId, boughtPrice, amount, boughtAt, source } = req.payload;
+        const { id, coinId, boughtPrice, amount, currency, boughtAt, source } = req.payload;
 
         const user: DomainUser = req.auth.credentials;
 
@@ -61,7 +62,7 @@ class PortfolioController {
             const coin = user.portfolio[i];
 
             if (String(coin.id) === String(id)) {
-                user.portfolio[i] = new UserCoin(coinId, amount, source, boughtPrice, boughtAt);
+                user.portfolio[i] = new UserCoin(coinId, amount, source, boughtPrice, currency, boughtAt);
             }
         }
 

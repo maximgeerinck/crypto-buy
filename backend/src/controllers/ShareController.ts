@@ -49,6 +49,10 @@ class ShareController {
 
                     // coin details
                     for (const coinDetail of details) {
+                        if (!coinDetail) {
+                            continue;
+                        }
+
                         portfolio[coinDetail.coin_id].details = coinDetail;
 
                         if (!share.graph && !share.amount) {

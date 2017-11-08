@@ -6,7 +6,8 @@ export interface IUserCoin {
     coinId: string;
     amount: number;
     source: string;
-    boughtPrice: number;
+    boughtPrice: number; // per coin
+    currency: string;
     boughtAt?: Date;
 }
 export interface IUserCoinDAO {
@@ -14,7 +15,8 @@ export interface IUserCoinDAO {
     coin_id: string;
     amount: number;
     source: string;
-    bought_price: number;
+    bought_price: number; // per coin
+    currency: string;
     bought_at?: Date;
 }
 export default class UserCoin extends AbstractModel implements IUserCoin {
@@ -24,6 +26,7 @@ export default class UserCoin extends AbstractModel implements IUserCoin {
             userCoin.amount,
             userCoin.source,
             userCoin.bought_price,
+            userCoin.currency,
             userCoin.bought_at,
             userCoin._id
         );
@@ -36,6 +39,7 @@ export default class UserCoin extends AbstractModel implements IUserCoin {
             userCoin.amount,
             userCoin.source,
             userCoin.boughtPrice,
+            userCoin.currency,
             userCoin.boughtAt,
             userCoin.id
         );
@@ -45,6 +49,7 @@ export default class UserCoin extends AbstractModel implements IUserCoin {
     public coinId: string;
     public amount: number;
     public source: string;
+    public currency: string;
     public boughtPrice: number;
     public boughtAt: Date = null;
 
@@ -53,6 +58,7 @@ export default class UserCoin extends AbstractModel implements IUserCoin {
         amount: number,
         source: string,
         boughtPrice: number,
+        currency: string,
         boughtAt: Date = null,
         readonly id: mongoose.Types.ObjectId = new mongoose.Types.ObjectId()
     ) {
@@ -60,20 +66,24 @@ export default class UserCoin extends AbstractModel implements IUserCoin {
         this.coinId = coinId;
         this.amount = amount;
         this.source = source;
+        this.currency = currency;
         this.boughtPrice = boughtPrice;
         this.boughtAt = boughtAt;
     }
 
-    toDAO() {
+    public toDAO() {
         const userCoinDAO: IUserCoinDAO = {
             _id: this.id,
             coin_id: this.coinId,
             amount: this.amount,
             source: this.source,
+            currency: this.currency,
             bought_price: this.boughtPrice
         };
 
-        if (this.boughtAt) userCoinDAO.bought_at = this.boughtAt;
+        if (this.boughtAt) {
+            userCoinDAO.bought_at = this.boughtAt;
+        }
 
         return userCoinDAO;
     }

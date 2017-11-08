@@ -6,6 +6,7 @@ const coin = Joi.object().keys({
     amount: Joi.number().required(),
     source: Joi.string(),
     boughtPrice: Joi.number(),
+    currency: Joi.string(),
     boughtAt: Joi.date()
 });
 
@@ -36,6 +37,7 @@ module.exports = [
                     coinId: Joi.string().required(),
                     amount: Joi.number().required(),
                     boughtPrice: Joi.number().default(0),
+                    currency: Joi.string(),
                     source: Joi.string(),
                     boughtAt: Joi.date()
                 }

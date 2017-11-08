@@ -24,22 +24,27 @@ class UserController {
 
         // TODO: Extract different validation methods
         const validator = new Validator();
-        UserService.createUser(email, password).then(reply).catch((err) => {
-            const validationErrors: any = {};
+        UserService.createUser(email, password)
+            .then((user: any) => {
+                console.log(`[Registration] ${user.email} registered`);
+                return reply(user);
+            })
+            .catch((err) => {
+                const validationErrors: any = {};
 
-            if (err instanceof MongoError) {
-                if (err.message.indexOf("duplicate key") > -1)
-                    validator.addError(new ValidationError("email", "email.inUse"));
-            } else if (err.name === "ValidationError") {
-                for (const field in err.errors) {
-                    const f = field.split("."); // for array validation
-                    validator.addError(new ValidationError(f[0], err.errors[field].message));
+                if (err instanceof MongoError) {
+                    if (err.message.indexOf("duplicate key") > -1)
+                        validator.addError(new ValidationError("email", "email.inUse"));
+                } else if (err.name === "ValidationError") {
+                    for (const field in err.errors) {
+                        const f = field.split("."); // for array validation
+                        validator.addError(new ValidationError(f[0], err.errors[field].message));
+                    }
+                } else {
+                    console.log(err);
                 }
-            } else {
-                console.log(err);
-            }
-            return validator.isValid() ? reply(Boom.badRequest()) : reply(validator.generateBadRequest());
-        });
+                return validator.isValid() ? reply(Boom.badRequest()) : reply(validator.generateBadRequest());
+            });
     }
 
     public update(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {

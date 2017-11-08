@@ -48,7 +48,7 @@ class AuthenticationController {
             .then((token) => {
                 // send mail with token
                 return sendMail(
-                    [ email ],
+                    [email],
                     "Forgot password",
                     `Please visit <a href="https://cryptotrackr.com/reset/${email}/${token}">http://cryptotrackr.com/reset/${email}/${token}</a> to reset your password!`
                 );

@@ -173,6 +173,7 @@ export const UserSchema = new mongoose.Schema(
                 amount: { type: Number, required: true, default: 0.0 },
                 source: { type: String, required: true },
                 bought_price: { type: Number, required: false },
+                currency: { type: String, required: false },
                 bought_at: { type: Date, required: true, default: Date.now }
             }
         ],

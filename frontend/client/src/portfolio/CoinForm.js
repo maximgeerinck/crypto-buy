@@ -6,92 +6,103 @@ import ValidationHelper from "../helpers/ValidationHelper";
 import cx from "classnames";
 import moment from "moment";
 import CoinSelectorContainer from "../coin/CoinSelectorContainer";
+import CurrencyChooser from "../currency/CurrencyChooser";
+import { round } from "../helpers/MathHelper";
 
 class CoinForm extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            editMode: this.props.editMode,
-            coin: this.props.coin
-        };
-
-        this.timer = undefined;
-    }
-
-    componentDidMount() {
-        const { editMode } = this.state;
-        if (!editMode) {
-            this.timer = setInterval(() => {
-                let coin = this.state.coin;
-                coin.boughtAt = moment();
-                this.setState({ coin: coin });
-            }, 1000);
-        }
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.timer);
-    }
-
-    onSubmit = (e) => {
-        e.preventDefault();
-        this.props.onSubmit(this.state.coin);
+    this.state = {
+      editMode: this.props.editMode,
+      coin: this.props.coin
     };
 
-    onCoinSelect = (val) => {
+    this.timer = undefined;
+  }
+
+  componentDidMount() {
+    const { editMode } = this.state;
+    if (!editMode) {
+      this.timer = setInterval(() => {
         let coin = this.state.coin;
-        coin.coinId = val;
-        this.props.onChange(coin);
-    };
+        coin.boughtAt = moment();
+        coin.currency = coin.currency || this.props.defaultCurrency;
+        this.setState({ coin: coin });
+      }, 1000);
+    }
+  }
 
-    onChange = (e) => {
-        e.preventDefault();
-        if (e.target.name === "boughtAt") {
-            clearInterval(this.timer);
-        }
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
 
-        let coin = this.state.coin;
+  onSubmit = (e) => {
+    e.preventDefault();
+    this.props.onSubmit(this.state.coin);
+  };
 
-        if (e.target.name === "symbol") {
-            coin.symbol = e.target.value.toUpperCase();
-        } else {
-            coin[e.target.name] = e.target.value;
-        }
-        this.props.onChange(this.state.coin);
-    };
+  onCoinSelect = (val) => {
+    let coin = this.state.coin;
+    coin.coinId = val;
+    this.props.onChange(coin);
+  };
 
-    render() {
-        const { coinId, amount, boughtPrice, source } = this.state.coin;
-        const boughtAt = moment(this.state.coin.boughtAt).format("YYYY-MM-DDTHH:mm:ss");
+  onChangeCurrency = (currency) => {
+    let coin = this.state.coin;
+    coin.currency = currency;
+    this.props.onChange(this.state.coin);
+  };
 
-        const { isSubmitting } = this.props;
-        const { editMode } = this.state;
+  onChange = (e) => {
+    e.preventDefault();
+    clearInterval(this.timer);
 
-        const text = editMode ? "Save changes" : "Add coin";
+    let coin = this.state.coin;
 
-        const buttonText = isSubmitting ? <Loader style={{ transform: "scale(0.9)" }} /> : text;
+    if (e.target.name === "symbol") {
+      coin.symbol = e.target.value.toUpperCase();
+    } else {
+      coin[e.target.name] = e.target.value;
+    }
+    this.props.onChange(this.state.coin);
+  };
 
-        const showPricePerCoin = this.props.initialInvestment > 0 ? { display: "none" } : null;
-        const validation = this.props.validationErrors || {};
+  render() {
+    const { coinId, amount, boughtPrice, source, currency } = this.state.coin;
+    const boughtAt = moment(this.state.coin.boughtAt).format("YYYY-MM-DDTHH:mm:ss");
 
-        const cancel = this.props.onCancel ? (
-            <div className={formStyles.group}>
+    const { isSubmitting } = this.props;
+    const { editMode } = this.state;
+
+    const text = editMode ? "Save changes" : "Add coin";
+
+    const buttonText = isSubmitting ? <Loader style={{ transform: "scale(0.9)" }} /> : text;
+
+    const showPricePerCoin = this.props.initialInvestment > 0 ? { display: "none" } : null;
+    const validation = this.props.validationErrors || {};
+
+    const coinPurchaseDetails =
+      amount && boughtPrice ?
+      `Bought ${amount} ${coinId} for ${round(boughtPrice * amount, 7)} ${currency}` :
+      undefined;
+
+    const cancel = this.props.onCancel ? (
+      <div className={formStyles.group}>
                 <button onClick={this.props.onCancel} className={cx(formStyles.button, formStyles.danger)}>
                     Cancel
                 </button>
             </div>
-        ) : null;
+    ) : null;
 
-        return (
-            <form className={formStyles.form} onSubmit={this.onSubmit}>
+    return (
+      <form className={formStyles.form} onSubmit={this.onSubmit}>
                 <div className={formStyles.group}>
                     <label htmlFor="symbol">Coin:</label>
                     <CoinSelectorContainer
                         name="coinId"
                         value={coinId}
-                        onSelect={this.onCoinSelect}
-                        className={formStyles.input}
+                        onSelect={this.onCoinSelect}                        
                     />
                     <span className={formStyles.validationError}>
                         {ValidationHelper.parse(validation, "coinId", [ "Coin" ])}
@@ -112,21 +123,34 @@ class CoinForm extends Component {
                         {ValidationHelper.parse(validation, "amount", [ "Amount" ])}
                     </span>
                 </div>
-                <div className={formStyles.group} style={showPricePerCoin}>
-                    <label htmlFor="price">Price you bought 1 coin for:</label>
-                    <input
-                        type="number"
-                        step="any"
-                        id="price"
-                        name="boughtPrice"
-                        placeholder="0.00"
-                        value={boughtPrice}
-                        onChange={this.onChange}
-                    />
-                    <span className={formStyles.validationError}>
-                        {ValidationHelper.parse(validation, "boughtPrice", [ "Purchase price" ])}
-                    </span>
+                <div className={formStyles.row} style={showPricePerCoin}>
+                    <div className={formStyles.group} style={{ flex: 1, flexBasis: "100px" }}>
+                        <label htmlFor="currency">Price currency:</label>
+                        <CurrencyChooser
+                            currency={currency}
+                            id="currency"
+                            name="currency"
+                            className={formStyles.input}
+                            onSave={this.onChangeCurrency}
+                        />
+                    </div>
+                    <div className={formStyles.group} style={{ flex: 8 }}>
+                        <label htmlFor="price">Price for 1 coin:</label>
+                        <input
+                            type="number"
+                            step="any"
+                            id="price"
+                            name="boughtPrice"
+                            placeholder="0.00"
+                            value={boughtPrice}
+                            onChange={this.onChange}
+                        />
+                        <span className={formStyles.validationError}>
+                            {ValidationHelper.parse(validation, "boughtPrice", [ "Purchase price" ])}
+                        </span>
+                    </div>
                 </div>
+
                 <div className={formStyles.group}>
                     <label htmlFor="source">Source:</label>
                     <input
@@ -156,26 +180,31 @@ class CoinForm extends Component {
                     </span>
                 </div>
                 <div className={formStyles.group}>
+                    <p className={formStyles.descriptor}>{coinPurchaseDetails}</p>
+                </div>
+                <div className={formStyles.group}>
                     <button type="submit" className={formStyles.button}>
                         {buttonText}
                     </button>
                 </div>
                 {cancel}
             </form>
-        );
-    }
+    );
+  }
 }
 
 CoinForm.propTypes = {
-    coin: PropTypes.object.isRequired,
-    editMode: PropTypes.bool.isRequired,
-    onChange: PropTypes.func.isRequired,
-    onSubmit: PropTypes.func.isRequired,
-    onCancel: PropTypes.func
+  coin: PropTypes.object.isRequired,
+  editMode: PropTypes.bool.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  onCancel: PropTypes.func,
+  defaultCurrency: PropTypes.string.isRequired
 };
 
 CoinForm.defaultProps = {
-    editMode: false
+  editMode: false,
+  defaultCurrency: "USD"
 };
 
 export default CoinForm;

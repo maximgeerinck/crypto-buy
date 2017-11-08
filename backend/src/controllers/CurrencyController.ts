@@ -3,28 +3,22 @@ import * as Hapi from "hapi";
 import Currency from "../models/Currency";
 import NotFoundException from "../services/NotFoundException";
 
+import CurrencyRepository from "../currency/CurrencyRepository";
+
 class CurrencyController {
-    public latest(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
-        Currency.findOne()
-            .sort({ _id: -1 })
-            .then((currency: any) => {
-                if (!currency) {
-                    throw new NotFoundException(`Could not find currency`);
-                }
+    public async latest(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
 
-                const output: any = {};
-                output.createdOn = currency.created_on;
-                output.base = currency.base;
-                output.rates = currency.rates;
+        try {
 
-                reply(output);
-            })
-            .catch((err) => {
-                if (err instanceof NotFoundException) {
-                    reply(Boom.badRequest(err.message));
-                }
-                reply(Boom.badRequest());
-            });
+            const currencies = await CurrencyRepository.findLatest();
+            return reply(currencies);
+
+        } catch (err) {
+            if (err instanceof NotFoundException) {
+                return reply(Boom.badRequest(err.message));
+            }
+            return reply(Boom.badRequest());
+        }
     }
 }
 

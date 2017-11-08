@@ -12,32 +12,29 @@ const authenticationFailed = () => ({ type: types.AUTHENTICATE_FAILURE });
 const logoutRequest = () => ({ type: types.LOGOUT });
 
 export const logout = () => {
-    return (dispatch) => {
-        console.log("logout...");
-        AppActions.resetDocumentTitle();
-        dispatch(logoutRequest());
-    };
+  return (dispatch) => {
+    AppActions.resetDocumentTitle();
+    dispatch(logoutRequest());
+  };
 };
 
 export const authenticate = (email, password) => {
-    return (dispatch) => {
-        dispatch(authenticationRequest());
+  return (dispatch) => {
+    dispatch(authenticationRequest());
 
-        setTimeout(() => {
-            return api
-                .post("authenticate", { email: email, password: password })
-                .then((user) => {
-                    dispatch(authenticationSucceeded(user));
-                    localStorage.setItem(AUTH_TOKEN, user.token);
-                    browserHistory.push("/");
-                })
-                .catch((err, res) => {
-                    if (err && err.message === "E_INVALID_CREDENTIALS") {
-                        dispatch(authenticationFailed());
-                    } else {
-                        dispatch(ErrorHelper.handle(err));
-                    }
-                });
-        }, 500);
-    };
+    return api
+      .post("authenticate", { email: email, password: password })
+      .then((user) => {
+        dispatch(authenticationSucceeded(user));
+        localStorage.setItem(AUTH_TOKEN, user.token);
+        browserHistory.push("/");
+      })
+      .catch((err, res) => {
+        if (err && err.message === "E_INVALID_CREDENTIALS") {
+          dispatch(authenticationFailed());
+        } else {
+          dispatch(ErrorHelper.handle(err));
+        }
+      });
+  };
 };

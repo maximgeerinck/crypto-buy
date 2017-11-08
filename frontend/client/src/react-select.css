@@ -19,29 +19,44 @@
   border-color: #ababab;
 }
 
-.Select-placeholder, .Select--single>.Select-control .Select-value {
-  top: 5px;
+.Select-placeholder,
+.Select--single>.Select-control .Select-value {
   font-size: 9pt;
   color: gray;
   padding: 0;
   line-height: inherit;
 }
 
-.Select-input {
-  height: auto;
-  padding: 0;
+.Select-placeholder:focus,
+.Select--single>.Select-control .Select-value:focus {
+  outline: none;
 }
 
+.Select-input {
+  height: auto;
+  width: 100%;
+}
+.Select.is-pseudo-focused,
+.Select.is-focused {
+  outline: 0 !important;
+}
+.is-focused:not(.is-open)>.Select-control {
+  border: none;
+  box-shadow: none;
+}
 .Select-input>input {
   background: none !important;
   border: none !important;
   box-shadow: none !important;
   width: 5px;
-  padding: 1px 0px !important;
-  height: 100%;
   margin-left: 0 !important;
   font-size: 10pt !important;
   box-sizing: content-box;
+  padding: initial !important;
+  outline: 0 !important;
+}
+.Select-input>input:focus {
+  outline: 0 !important;
 }
 .Select--multi .Select-value {
   margin-left: -11px;
@@ -52,4 +67,21 @@
 }
 .Select--multi .Select-value+.Select-value {
   margin-left: 5px;
+}
+.Select {
+  position: relative;
+  background: #fefefe;
+  display: block;
+  border-radius: 3px;
+  border: 1px solid #c5c5c5;
+  color: #999999;
+  padding: 15px 20px;
+}
+.Select:focused {
+  outline: 0;
+  color: #333333;
+  -webkit-box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.21);
+  box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.21);
+  border-color: #ababab;
+  border: 1px solid #c5c5c5;
 }

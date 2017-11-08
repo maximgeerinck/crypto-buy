@@ -1,6 +1,3 @@
-import * as types from "../error/ErrorActionTypes";
+import * as ErrorHelper from "../helpers/ErrorHelper";
 
-// const timeoutError = (error) => ({ type: types.ERROR_TIMEOUT, body: error });
-// const knownError = (errors) => ({ type: types.ERROR_KNOWN, body: errors });
-
-export const timeout = (err) => ({ type: types.ERROR_TIMEOUT, body: err });
+export const timeout = (err) => ErrorHelper.timeout(err);

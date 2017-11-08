@@ -8,7 +8,7 @@ import CoinCollectionRepository from "../coin/CoinCollectionRepository";
 // get data
 // const API = "https://coinmarketcap-nexuist.rhcloud.com/api";
 const API = "https://api.coinmarketcap.com/v1/";
-const ETH_ENDPOINT = API + "/ticker";
+const ETH_ENDPOINT = API + "/ticker?limit=10000";
 
 export const fetchPrice = async () => {
     request

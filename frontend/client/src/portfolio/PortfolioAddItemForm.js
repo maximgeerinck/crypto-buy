@@ -2,9 +2,12 @@ import React, { Component } from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as PortfolioActions from "./PortfolioActions";
+import * as CurrencyActions from "../currency/CurrencyActions";
 import CoinForm from "./CoinForm";
 import moment from "moment";
 import formStyles from "../forms.scss";
+import pageStyle from "../components/page.scss";
+import Loader from "../components/Loader";
 
 class AddPortfolio extends Component {
     constructor(props) {
@@ -12,13 +15,23 @@ class AddPortfolio extends Component {
         this.state = this.getInitialState();
     }
 
-    onSubmit = coin => {
-        this.props.portfolioActions.addCoins([coin]).then(success => {
+    onSubmit = (coin) => {
+        this.props.portfolioActions.addCoins([ coin ]).then((success) => {
             if (success) {
-                this.setState(this.getInitialState());
+                setTimeout(() => {
+                    this.setState(this.getInitialState());
+                }, 1500);
+                this.setState({ success: true });
             }
         });
     };
+
+    componentWillMount() {
+        if (!this.props.currency) {
+            // load currencies
+            this.props.currencyActions.index();
+        }
+    }
 
     getInitialState() {
         const initialState = {
@@ -26,15 +39,17 @@ class AddPortfolio extends Component {
                 coinId: undefined,
                 amount: undefined,
                 boughtPrice: undefined,
+                currency: undefined,
                 source: undefined,
                 boughtAt: moment()
             },
-            showForm: false
+            showForm: true,
+            success: false
         };
         return initialState;
     }
 
-    onChange = coin => {
+    onChange = (coin) => {
         this.setState({ coin: coin });
     };
 
@@ -42,8 +57,26 @@ class AddPortfolio extends Component {
         this.setState({ showForm: true });
     };
 
+    renderSuccess() {
+        return (
+            <div className={pageStyle.container}>
+                <p>Your coin has been added to your portfolio!</p>
+            </div>
+        );
+    }
+
     render() {
-        const { showForm, coin } = this.state;
+        const { showForm, coin, success } = this.state;
+
+        if (this.props.currency.loading) {
+            return <Loader />;
+        }
+
+        const user = this.props.user.get("user").toObject();
+
+        if (success) {
+            return this.renderSuccess();
+        }
 
         if (!showForm) {
             return (
@@ -60,20 +93,23 @@ class AddPortfolio extends Component {
                 coin={coin}
                 onChange={this.onChange}
                 onSubmit={this.onSubmit}
+                defaultCurrency={user.preferences.currency}
                 validationErrors={this.props.portfolio.form.get("errors")}
             />
         );
     }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     portfolio: state.portfolio,
-    user: state.user
+    user: state.user,
+    currency: state.currency
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        portfolioActions: bindActionCreators(PortfolioActions, dispatch)
+        portfolioActions: bindActionCreators(PortfolioActions, dispatch),
+        currencyActions: bindActionCreators(CurrencyActions, dispatch)
     };
 };
 

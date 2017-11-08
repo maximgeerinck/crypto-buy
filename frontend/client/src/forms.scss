@@ -1,6 +1,22 @@
 @mixin form() {
     width: 100%;
 
+    .row {
+        display: flex;
+        justify-content: space-between;
+        input,
+        textarea {
+            width: 100%;
+        }
+
+        & > .group {
+            & + .group {
+                padding-left: 10px;
+                margin-top: 0;
+            }
+        }
+    }
+
     .group {
         display: flex;
         flex-direction: column;
@@ -8,13 +24,7 @@
         & + .group {
             margin-top: 10px;
         }
-        &.row {
-            display: block;
-            input,
-            textarea {
-                width: 100%;
-            }
-        }
+
         input,
         textarea,
         .input {
@@ -22,7 +32,6 @@
                 background: rgba(0, 0, 0, 0.05);
                 color: #585858;
             }
-            flex: 1;
             background: #fefefe;
             display: block;
             padding: 15px 20px;
@@ -48,7 +57,7 @@
             font-size: 9pt;
             color: #313131;
         }
-        & > span.descriptor {
+        & > .descriptor {
             font-style: italic;
             color: gray;
             margin: 5px;
