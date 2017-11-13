@@ -20,6 +20,12 @@ module.exports = [
         handler: ShareController.delete
     },
     {
+        method: "GET",
+        path: "/banner/{token}",
+        handler: ShareController.banner,
+        config: { auth: false }
+    },
+    {
         method: "POST",
         path: "/share",
         handler: ShareController.share,

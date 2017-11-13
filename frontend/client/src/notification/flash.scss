@@ -1,0 +1,44 @@
+.flash {
+  width: 1020px;
+  margin: 0 auto;
+  padding: 15px;
+  position: relative;
+
+  &.positive {
+    background: rgba(112, 204, 57, 0.28);
+  }
+
+  &.info {
+    background: rgba(57, 176, 204, 0.28);
+  }
+
+  &.error {
+    background: rgba(204, 57, 57, 0.28);
+  }
+
+  &.warning {
+    background: rgba(204, 201, 57, 0.28);
+  }
+
+  p {
+    margin: 0;
+    color: gainsboro;
+  }
+
+  .close {
+    background: none;
+    border: none;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: gainsboro;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

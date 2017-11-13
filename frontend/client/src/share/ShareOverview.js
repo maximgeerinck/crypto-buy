@@ -15,12 +15,12 @@ import PortfolioTrackerItem from "../portfolio/PortfolioTrackerItem";
 import PortfolioPieChart from "../portfolio/PortfolioPieChart";
 import Loader from "../components/Loader";
 import NotFoundPage from "../components/NotFoundPage";
-import { round, gained } from "../helpers/MathHelper";
+import { round } from "../helpers/MathHelper";
 import * as CurrencyHelper from "../helpers/CurrencyHelper";
 
 class ShareOverview extends Component {
   componentWillMount() {
-    const { currencyActions, shareActions } = this.props;
+    const { currencyActions } = this.props;
 
     // load currencies
     currencyActions.index();
@@ -43,11 +43,11 @@ class ShareOverview extends Component {
       );
     }
 
-    if (share.coins.get("isLoading") || currencies.loading) {
+    if (share.coins.get("loaded") || !currencies.loaded) {
       return (
         <Page custom className={cx(pageStyles.focused, homeStyles.main)}>
-                    <Loader />
-                </Page>
+            <Loader />
+        </Page>
       );
     }
 

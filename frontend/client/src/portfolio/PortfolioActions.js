@@ -26,100 +26,101 @@ const coinDeleteRequest = () => ({ type: types.COIN_DELETE_REQUEST });
 const coinDeleteFailure = (errors) => ({ type: types.COIN_DELETE_FAILURE, body: errors });
 
 export const retrieve = () => {
-    return (dispatch, getState) => {
-        dispatch(retrieveItemsRequest());
+  return (dispatch, getState) => {
+    dispatch(retrieveItemsRequest());
 
-        return new GetRequest("portfolio/load", getState().auth.token)
-            .onTimeout(() => {
-                dispatch(ErrorActions.timeout("Could not fetch portfolio"));
-            }, 60 * 1000)
-            .send()
-            .then((items) => {
-                dispatch(retrieveItemsSuccess(items));
-            })
-            .catch((err) => {
-                dispatch(retrieveItemsFailure(err.data));
-            });
-    };
+    return new GetRequest("portfolio/load", getState().auth.token)
+      .onTimeout(() => {
+        dispatch(ErrorActions.timeout("Could not fetch portfolio"));
+      }, 60 * 1000)
+      .send()
+      .then((items) => {
+        dispatch(retrieveItemsSuccess(items));
+      })
+      .catch((err) => {
+        dispatch(retrieveItemsFailure(err.data));
+      });
+  };
 };
 
 export const details = () => {
-    return (dispatch, getState) => {
-        dispatch(coinDetailsRequest());
+  return (dispatch, getState) => {
+    dispatch(coinDetailsRequest());
 
-        return api
-            .post(
-                "coin/details",
-                { coins: Object.keys(reduceItems(getState().portfolio.coins.get("items"))) },
-                getState().auth.token
-            )
-            .then((coins) => {
-                dispatch(coinDetailsSuccess(coins));
-            })
-            .catch((err) => {
-                dispatch(coinDetailsFailure(err.data));
-            });
-    };
+    return api
+      .post(
+        "coin/details", { coins: Object.keys(reduceItems(getState().portfolio.coins.get("items"))) },
+        getState().auth.token
+      )
+      .then((coins) => {
+        dispatch(coinDetailsSuccess(coins));
+      })
+      .catch((err) => {
+        dispatch(coinDetailsFailure(err.data));
+      });
+  };
 };
 
 export const addCoins = (coins) => {
-    return (dispatch, getState) => {
-        dispatch(coinsAddRequest());
+  return (dispatch, getState) => {
+    dispatch(coinsAddRequest());
 
-        let c = [].concat(coins);
-        c.forEach((coin) => {
-            coin.boughtAt = moment(coin.boughtAt).toISOString(); // send timezone as UTC to backend
-        });
+    let c = [].concat(coins);
+    c.forEach((coin) => {
+      coin.boughtAt = moment(coin.boughtAt).toISOString(); // send timezone as UTC to backend
+    });
 
-        return api
-            .post("portfolio/coins/add", c, getState().auth.token)
-            .then((portfolio) => {
-                dispatch(coinsAddSuccess(portfolio));
-                return Promise.resolve(true);
-            })
-            .catch((err) => {
-                if (err && err.error === "E_VALIDATION") {
-                    dispatch(coinsAddFailure(err.validation));
-                } else {
-                    dispatch(ErrorHelper.handle(err));
-                }
-            });
-    };
+    return api
+      .post("portfolio/coins/add", c, getState().auth.token)
+      .then((portfolio) => {
+        dispatch(coinsAddSuccess(portfolio));
+        return Promise.resolve(true);
+      })
+      .catch((err) => {
+        if (err && err.error === "E_VALIDATION") {
+          dispatch(coinsAddFailure(err.validation));
+        } else {
+          dispatch(ErrorHelper.handle(err));
+        }
+      });
+  };
 };
 
 export const updateCoin = (key, coin) => {
-    return (dispatch, getState) => {
-        dispatch(coinUpdateRequest());
+  return (dispatch, getState) => {
+    dispatch(coinUpdateRequest());
 
-        coin.boughtAt = moment(coin.boughtAt).toISOString();
+    if (coin.boughtAt) {
+      coin.boughtAt = moment(coin.boughtAt).toISOString();
+    }
 
-        return api
-            .post("portfolio/coin/update", coin, getState().auth.token)
-            .then((portfolio) => {
-                dispatch(coinUpdateSuccess(portfolio));
-                return Promise.resolve(true);
-            })
-            .catch((err) => {
-                if (err && err.error === "E_VALIDATION") {
-                    dispatch(coinUpdateFailure(key, err.validation));
-                } else {
-                    dispatch(ErrorHelper.handle(err));
-                }
-            });
-    };
+    return api
+      .post("portfolio/coin/update", coin, getState().auth.token)
+      .then((portfolio) => {
+        dispatch(coinUpdateSuccess(portfolio));
+        return Promise.resolve(true);
+      })
+      .catch((err) => {
+        if (err && err.error === "E_VALIDATION") {
+          dispatch(coinUpdateFailure(key, err.validation));
+        } else {
+          dispatch(ErrorHelper.handle(err));
+        }
+      });
+  };
 };
 
 export const removeCoin = (id) => {
-    return (dispatch, getState) => {
-        dispatch(coinDeleteRequest());
+  return (dispatch, getState) => {
+    dispatch(coinDeleteRequest());
 
-        return api
-            .post("portfolio/coin/remove", { id: id }, getState().auth.token)
-            .then((portfolio) => {
-                dispatch(coinDeleteSuccess(portfolio));
-            })
-            .catch((err) => {
-                dispatch(coinDeleteFailure(err.data));
-            });
-    };
+    return api
+      .post("portfolio/coin/remove", { id: id }, getState().auth.token)
+      .then((portfolio) => {
+        dispatch(coinDeleteSuccess(portfolio));
+      })
+      .catch((err) => {
+        dispatch(coinDeleteFailure(err.data));
+      });
+  };
 };

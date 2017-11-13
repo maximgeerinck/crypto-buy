@@ -8,25 +8,24 @@ import { Link } from "react-router";
 
 import formStyles from "../forms.scss";
 import pageStyle from "../components/page.scss";
-import ChangePasswordForm from "../user/ChangePasswordForm";
 
 export class ForgotPasswordForm extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: ""
-        };
-    }
-
-    _onForgot = (e) => {
-        e.preventDefault();
-        this.props.onSubmit(this.state.email);
-        return 0;
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: ""
     };
+  }
 
-    render() {
-        return (
-            <form className={formStyles.formFullPage} onSubmit={this._onForgot}>
+  _onForgot = (e) => {
+    e.preventDefault();
+    this.props.onSubmit(this.state.email);
+    return 0;
+  };
+
+  render() {
+    return (
+      <form className={formStyles.formFullPage} onSubmit={this._onForgot}>
                 <div className={formStyles.group}>
                     <label htmlFor="Email">Email</label>
                     <input
@@ -46,48 +45,48 @@ export class ForgotPasswordForm extends Component {
                     <Link to="/register">No account yet? Register here</Link>
                 </div>
             </form>
-        );
-    }
+    );
+  }
 }
 
 ForgotPasswordForm.PropTypes = {
-    onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired
 };
 
 class ForgotPasswordPage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            submitted: false
-        };
-    }
-
-    _onForgot = (email, password) => {
-        this.props.userActions.requestPassword(email);
-        this.setState({ submitted: true });
+  constructor(props) {
+    super(props);
+    this.state = {
+      submitted: false
     };
+  }
 
-    render() {
-        const details = !this.state.submitted ? (
-            <ForgotPasswordForm onSubmit={this._onForgot} />
-        ) : (
-            <div className={pageStyle.container}>
+  _onForgot = (email, password) => {
+    this.props.userActions.requestPassword(email);
+    this.setState({ submitted: true });
+  };
+
+  render() {
+    const details = !this.state.submitted ? (
+      <ForgotPasswordForm onSubmit={this._onForgot} />
+    ) : (
+      <div className={pageStyle.container}>
                 <p>Please check your inbox with a link to reset your email</p>
             </div>
-        );
+    );
 
-        return (
-            <Page title="Forgot Password" custom className={pageStyle.focused}>
+    return (
+      <Page title="Forgot Password" custom className={pageStyle.focused}>
                 {details}
             </Page>
-        );
-    }
+    );
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        userActions: bindActionCreators(UserActions, dispatch)
-    };
+  return {
+    userActions: bindActionCreators(UserActions, dispatch)
+  };
 };
 
 export default connect(null, mapDispatchToProps)(ForgotPasswordPage);

@@ -71,7 +71,7 @@ function getClientEnvironment(publicUrl) {
     // This should only be used as an escape hatch. Normally you would put
     // images into the `src` and `import` them in code to get their paths.
     PUBLIC_URL: publicUrl,
-    SERVICE_URL: DEVELOPMENT ? "http://192.168.1.10:5000/" : "https://api.cryptotrackr.com/"
+    SERVICE_URL: DEVELOPMENT ? "http://192.168.1.30:5000/" : "https://api.cryptotrackr.com/"
   });
   // Stringify all values so we can feed into Webpack DefinePlugin
   const stringified = {

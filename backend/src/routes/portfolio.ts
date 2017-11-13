@@ -33,13 +33,14 @@ module.exports = [
         config: {
             validate: {
                 payload: {
-                    id: Joi.string(),
+                    id: Joi.string().required(),
                     coinId: Joi.string().required(),
                     amount: Joi.number().required(),
                     boughtPrice: Joi.number().default(0),
                     currency: Joi.string(),
                     source: Joi.string(),
-                    boughtAt: Joi.date()
+                    boughtAt: Joi.date(),
+                    automatic: Joi.bool()
                 }
             }
         }

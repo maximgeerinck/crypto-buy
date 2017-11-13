@@ -1,10 +1,11 @@
+import CoinRepository from "../coin/CoinCollectionRepository";
 import mongoose from "../db";
 import { User } from "../models/user";
 import ShareModel, { UserShareSettings } from "../models/UserShareSettings";
 import NotFoundException from "./NotFoundException";
 import { IRepositoryAdapter, MongoRepository } from "./repository";
 
-interface IShareRepository {}
+interface IShareRepository { }
 
 class ShareRepository extends MongoRepository<UserShareSettings> implements IShareRepository {
     constructor() {
@@ -22,6 +23,10 @@ class ShareRepository extends MongoRepository<UserShareSettings> implements ISha
             obj.setUser(User.parse(dao.user));
             return obj;
         });
+    }
+
+    public async findShare(token: string): Promise<UserShareSettings> {
+        return this.findOneByToken(token);
     }
 }
 

@@ -39,7 +39,7 @@ class CoinRepository extends MongoRepository<CoinCollection> {
                     return CoinCollectionModel.find({})
                         .lean() // make sure we work with JS objects
                         .select(
-                            "coins.coin_id coins.name coins.symbol coins.rank coins._id coins.change coins.price.usd"
+                        "coins.coin_id coins.name coins.symbol coins.rank coins._id coins.change coins.price.usd"
                         )
                         .sort({ _id: -1 })
                         .limit(5)
@@ -66,6 +66,17 @@ class CoinRepository extends MongoRepository<CoinCollection> {
                 }
             });
         });
+    }
+
+    public async findDistinctMappedBySymbol(): Promise<any> {
+        const map = await this.findAllWithHistory();
+        const newMap: any = {};
+        Object.keys(map).forEach((key: string) => {
+            const coin: any = map[key];
+            newMap[coin.symbol] = coin;
+        });
+
+        return newMap;
     }
 
     public sparklineWeek(ids: string[]): Promise<ICoinStatistic> {

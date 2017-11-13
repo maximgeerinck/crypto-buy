@@ -103,6 +103,7 @@ class PortfolioTrackerItem extends Component {
                     </span>
       );
       break;
+      //no default
     }
 
     return priceChangeIndicator;
@@ -133,14 +134,14 @@ class PortfolioTrackerItem extends Component {
   }
 
   renderChangeTotal() {
-    const { boughtCurrency, boughtPrice, rate, amount, price, changeDay, settings } = this.props;
+    const { boughtCurrency, boughtPrice, amount, price, changeDay, settings } = this.props;
 
     // in USD    
     const boughtAllCoinsPrice = boughtPrice / boughtCurrency.rate * amount;
     const currentAllCoinsPrice = price * amount;
 
     const changeTotal = boughtPrice ? gained(boughtAllCoinsPrice, currentAllCoinsPrice) : changeDay;
-    const coinProfit = round((currentAllCoinsPrice - boughtAllCoinsPrice) * rate, 7);
+    const coinProfit = round((currentAllCoinsPrice - boughtAllCoinsPrice), 7);
 
     const classChangeTotal =
       changeTotal >= 0 ? cx(styles.changeTotal, styles.positive) : cx(styles.changeTotal, styles.negative);

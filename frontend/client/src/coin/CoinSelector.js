@@ -34,7 +34,7 @@ class CoinOption extends Component {
             onMouseEnter={this.handleMouseEnter}
             onMouseMove={this.handleMouseMove}
             title={this.props.option.title}>
-            <img src={`https://files.coinmarketcap.com/static/img/coins/32x32/${this.props.option.coin_id}.png`} className={styles.icon} />
+            <img src={`https://files.coinmarketcap.com/static/img/coins/32x32/${this.props.option.coin_id}.png`} alt={this.props.option.coin_id} className={styles.icon} />
             {this.props.children}
         </div>
     );
@@ -52,7 +52,7 @@ class CoinValue extends Component {
     return (
       <div className="Select-value" title={this.props.value.title}>
             <span className={cx("Select-value-label", styles.label)}>
-                <img src={`https://files.coinmarketcap.com/static/img/coins/32x32/${this.props.value.coin_id}.png`} className={styles.icon} />
+                <img src={`https://files.coinmarketcap.com/static/img/coins/32x32/${this.props.value.coin_id}.png`} alt={this.props.value.coin_id} className={styles.icon} />
                 {this.props.children}
             </span>
         </div>

@@ -1,11 +1,18 @@
 import * as Boom from "boom";
 import * as Hapi from "hapi";
 import * as moment from "moment";
+import * as path from "path";
 import CoinRepository from "../coin/CoinCollectionRepository";
 import User, { User as DomainUser } from "../models/user";
 import UserShareSettings, { IUserShareSettings } from "../models/UserShareSettings";
+import PortfolioService from "../portfolio/PortfolioService";
 import ShareRepository from "../services/ShareRepository";
 import UserService from "../services/UserService";
+import * as PortfolioHelper from "../utils/PortfolioHelper";
+
+const { createCanvas, loadImage } = require("canvas");
+
+import * as fs from "fs";
 
 class ShareController {
     public retrieve(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
@@ -91,6 +98,44 @@ class ShareController {
                 console.log(err);
                 reply(Boom.badRequest("E_NOT_FOUND"));
             });
+    }
+
+    public async banner(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
+
+        // get coins and their images from your portfolio
+        const share = await ShareRepository.findShare(req.params.token);
+        const coins = await CoinRepository.findAllWithHistory();
+        const p = await PortfolioService.aggregatePortfolio(share.user);
+
+        // bind
+        const portfolio = PortfolioHelper.bindPortfolioToCoin(p, coins);
+
+        const coinAmount = Object.keys(portfolio).length;
+        const iconSize = 32;
+        const padding = 10;
+        const height = iconSize + padding * 2;
+        const width = iconSize * coinAmount + padding * (coinAmount + 1);
+
+        const canvas = createCanvas(width, height);
+        const ctx = canvas.getContext("2d");
+        const stream = canvas.pngStream();
+
+        try {
+            for (let i = 0; i < coinAmount; i++) {
+
+                const x = i * iconSize + (i + 1) * padding;
+                const y = padding;
+
+                const image = await loadImage(
+                    path.join(__dirname, "../../public/coins", `${Object.keys(portfolio)[i]}.png`));
+
+                ctx.drawImage(image, x, y, iconSize, iconSize);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+
+        reply(stream).header("Content-Type", "image/png");
     }
 
     /**

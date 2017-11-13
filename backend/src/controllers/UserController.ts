@@ -61,13 +61,20 @@ class UserController {
         reply(user);
     }
 
-    public updatePreferences(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
+    public async updatePreferences(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         const preferences = req.payload;
 
         const user = req.auth.credentials;
         Object.assign(user.preferences, preferences);
 
-        UserService.update(user).then((user) => reply(user)).catch((err) => reply(Boom.badRequest()));
+        try {
+            const newUser = await UserService.update(user);
+            return reply(user);
+        } catch (err) {
+            console.log("bad request");
+            console.log(err);
+            return reply(Boom.badRequest());
+        }
     }
 
     public changePassword(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {

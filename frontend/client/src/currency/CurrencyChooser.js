@@ -16,7 +16,7 @@ class CurrencyChooser extends Component {
   render() {
     const { currencies, currency, className } = this.props;
 
-    if (currencies.loading) return <Loader />;
+    if (!currencies.loaded) return <Loader />;
 
     const rates = Object.keys(currencies.items).map((currency) => {
       const c = currencies.items[currency];

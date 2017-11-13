@@ -9,17 +9,19 @@ import currency from "../currency/CurrencyReducer";
 import share from "../share/ShareReducer";
 import coins from "../coin/CoinReducer";
 import app from "../error/ErrorReducer";
+import notification from "../notification/NotificationReducer";
 
 const rootReducer = combineReducers({
-    form,
-    auth,
-    user,
-    portfolio,
-    currency,
-    share,
-    coins,
-    app,
-    routing: routerReducer
+  form,
+  auth,
+  user,
+  portfolio,
+  currency,
+  share,
+  coins,
+  app,
+  notification,
+  routing: routerReducer
 });
 
 export default rootReducer;

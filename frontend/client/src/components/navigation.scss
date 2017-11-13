@@ -1,96 +1,111 @@
+@import "../media";
+
 $navigation-background-color: rgb(152, 223, 67);
 @media only screen and (min-width: 1024px) {
-    .actionbar {
-        padding: 25px 20%;
-    }
+  .actionbar {
+    padding: 25px 20%;
+  }
 }
 
 .actionbar {
-    position: relative;
+  position: relative;
+  margin: 0;
+  top: 0;
+  width: 100%;
+  min-height: 75px;
+  box-sizing: border-box;
+  z-index: 999;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  ul {
+    padding: 0;
     margin: 0;
-    top: 0;
-    width: 100%;
-    min-height: 75px;
-    box-sizing: border-box;
-    z-index: 999;
-    padding: 20px;
     display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    ul {
-        padding: 0;
-        margin: 0;
-        display: flex;
-        flex-wrap: wrap;
-        li {
-            list-style: none;
-            a {
-                display: inline-flex;
-                svg {
-                    position: relative;
-                    top: -2px;
-                    right: 5px;
-                    display: none;
-                }
+    flex-wrap: wrap;
+    width: 100%;
 
-                padding: 10px 15px;
-                color: white;
-                text-decoration: none;
-                font-weight: bold;
-                text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.85);
-                cursor: pointer;
-                transition: 150ms all ease-in-out;
-                height: 100%;
-                display: inline-block;
-                box-sizing: border-box;
-                border-radius: 5px;
-                &:hover {
-                    background: transparentize($navigation-background-color, 0.4);
-                }
-            }
-            & + li {
-                margin-left: 20px;
-            }
-        }
+    @include desktop {
+      justify-content: flex-end;
     }
+    justify-content: space-between;
+
+
+    li {
+      list-style: none;
+      a {
+        display: inline-flex;
+
+        span:first-child {
+          margin-right: 4px;
+        }
+
+        svg {
+          position: relative;
+          top: -2px;
+          right: 5px;
+          display: none;
+        }
+
+        padding: 10px 15px;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.85);
+        cursor: pointer;
+        transition: 150ms all ease-in-out;
+        height: 100%;
+        display: inline-block;
+        box-sizing: border-box;
+        border-radius: 5px;
+        &:hover {
+          background: transparentize($navigation-background-color, 0.4);
+        }
+      }
+      &+li {
+        margin-left: 10px;
+      }
+    }
+  }
 }
 
 .getStarted {
-    a {
-        border: 2px solid white;
-        white-space: nowrap;
-        text-align: center;
-        &:hover {
-            color: $navigation-background-color;
-            background: white;
-        }
+  a {
+    border: 2px solid white;
+    white-space: nowrap;
+    text-align: center;
+    &:hover {
+      color: $navigation-background-color;
+      background: white;
     }
+  }
 }
 
 @media only screen and (max-width: 320px) {
-    .getStarted {
-        width: 100%;
-        a {
-            width: 100%;
-        }
-        margin-left: 0 !important;
+  .getStarted {
+    width: 100%;
+    a {
+      width: 100%;
     }
+    margin-left: 0 !important;
+  }
 }
 
 @media only screen and (min-width: 1024px) {
-    .actionbar {
-        width: 1024px;
-        margin: 0 auto;
+  .actionbar {
+    width: 1024px;
+    margin: 0 auto;
 
-        ul {
-            li {
-                a {
-                    span {
-                        right: 3px;
-                        position: relative;
-                    }
-                }
-            }
+    ul {
+      li {
+        a {
+          span {
+            right: 3px;
+            position: relative;
+          }
         }
+      }
     }
+  }
 }

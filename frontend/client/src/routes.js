@@ -9,11 +9,12 @@ import ResetPasswordPage from "./authentication/ResetPasswordPage";
 import EnsureLoggedIn from "./authentication/EnsureLoggedIn";
 import HomePage from "./app/HomePage";
 import ChangePasswordPage from "./user/ChangePasswordPage";
+import UserPreferencesPage from "./user/UserPreferencesPage";
 
 import ShareOverview from "./share/ShareOverview";
 
 const routes = (
-    <Route>
+  <Route>
         <Route path="/" component={HomePage} />
         <Route path="share/:shareLink" component={ShareOverview} />
         <Route path="login" component={LoginPage} />
@@ -23,6 +24,7 @@ const routes = (
 
         <Route component={EnsureLoggedIn}>
             <Route path="account" component={AccountPage} />
+            <Route path="settings" component={UserPreferencesPage} />
             <Route path="password" component={ChangePasswordPage} />
         </Route>
 

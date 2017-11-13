@@ -35,7 +35,7 @@ class PortfolioTrackerPage extends Component {
     // load currencies
     currencyActions.index();
 
-    if (!user.isLoaded || user.retrievedOn < Date.now() + 3600) userActions.me();
+    if (!user.loaded || user.retrievedOn < Date.now() + 3600) userActions.me();
 
     // load portfolio
     portfolioActions.retrieve().then(() => {
@@ -54,11 +54,10 @@ class PortfolioTrackerPage extends Component {
   }
 
   isLoading() {
-    return (
-      this.props.portfolio.coins.get("loading") ||
-      this.props.portfolio.stats.get("loading") ||
-      this.props.currency.loading ||
-      !this.props.user.isLoaded
+    return (!this.props.portfolio.coins.get("loaded") ||
+      !this.props.portfolio.stats.get("loaded") ||
+      !this.props.currency.loaded ||
+      !this.props.user.loaded
     );
   }
 
@@ -101,7 +100,7 @@ class PortfolioTrackerPage extends Component {
     const noCoins = !this.hasCoins() ? this.renderNoCoins() : null;
     const userCurrency = user.preferences.currency || "USD";
     const userInitialInvestment = user.preferences.initialInvestment || 0;
-    const isFetching = portfolio.stats.get("loading");
+    const isFetching = !portfolio.stats.get("loaded");
 
 
     let totalPrice = 0,
@@ -130,7 +129,7 @@ class PortfolioTrackerPage extends Component {
 
       data.itemContainers.push(
         <PortfolioTrackerItem
-            key={coin.id}
+            key={coin._id}
             id={coin.coin_id}
             name={coin.name}
             symbol={coin.symbol}

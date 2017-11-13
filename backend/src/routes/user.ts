@@ -4,6 +4,15 @@ import EmailInUseConstraint from "../validation/EmailInUseConstraint";
 
 const Joi = BaseJoi.extend(EmailInUseConstraint);
 
+const bittrexExchange = Joi.object().keys({
+    apiKey: Joi.string(),
+    apiSecret: Joi.string()
+});
+
+const exchanges = Joi.object().keys({
+    bittrex: bittrexExchange
+});
+
 module.exports = [
     {
         method: "POST",
@@ -37,7 +46,8 @@ module.exports = [
             validate: {
                 payload: {
                     currency: Joi.string(),
-                    initialInvestment: Joi.number()
+                    initialInvestment: Joi.number(),
+                    exchanges
                 }
             }
         }

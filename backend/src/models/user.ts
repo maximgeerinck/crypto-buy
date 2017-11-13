@@ -145,7 +145,7 @@ export class User extends AbstractModel implements IUser {
     }
 }
 
-export interface IUserModel extends IUserDAO {}
+export interface IUserModel extends IUserDAO { }
 
 export const UserSchema = new mongoose.Schema(
     {
@@ -187,9 +187,15 @@ export const UserSchema = new mongoose.Schema(
         token: { type: String, required: false },
         preferences: {
             currency: { type: String, required: true, default: "USD" },
-            initial_investment: { type: Number, required: true, default: 0 }
+            initial_investment: { type: Number, required: true, default: 0 },
+            exchanges: {
+                bittrex: {
+                    apiKey: { type: String, required: false },
+                    apiSecret: { type: String, required: false }
+                }
+            }
         },
-        shares: [ { type: Schema.Types.ObjectId, ref: "Share" } ]
+        shares: [{ type: Schema.Types.ObjectId, ref: "Share" }]
     },
     { timestamps: { createdAt: "created_on", updatedAt: "updated_on" } }
 );

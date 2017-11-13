@@ -9,6 +9,7 @@ export interface IUserCoin {
     boughtPrice: number; // per coin
     currency: string;
     boughtAt?: Date;
+    automatic?: boolean;
 }
 export interface IUserCoinDAO {
     _id: any;
@@ -28,6 +29,7 @@ export default class UserCoin extends AbstractModel implements IUserCoin {
             userCoin.bought_price,
             userCoin.currency,
             userCoin.bought_at,
+            false,
             userCoin._id
         );
         return userCoinObj;
@@ -41,6 +43,7 @@ export default class UserCoin extends AbstractModel implements IUserCoin {
             userCoin.boughtPrice,
             userCoin.currency,
             userCoin.boughtAt,
+            userCoin.automatic || false,
             userCoin.id
         );
         return userCoinObj;
@@ -60,6 +63,7 @@ export default class UserCoin extends AbstractModel implements IUserCoin {
         boughtPrice: number,
         currency: string,
         boughtAt: Date = null,
+        readonly automatic: boolean = false,
         readonly id: mongoose.Types.ObjectId = new mongoose.Types.ObjectId()
     ) {
         super();

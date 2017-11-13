@@ -6,8 +6,11 @@ import CoinCollectionRepository from "../coin/CoinCollectionRepository";
 import User, { User as DomainUser } from "../models/user";
 import UserCoin, { IUserCoin } from "../models/UserCoin";
 import UserShareSettings, { IUserShareSettings } from "../models/UserShareSettings";
+import BittrexExchange from "../portfolio/exchange/bittrex";
+import PortfolioService from "../portfolio/PortfolioService";
 import UserService from "../services/UserService";
 import ResetDemoTask from "../tasks/ResetDemoTask";
+import * as CacheHelper from "../utils/CacheHelper";
 
 export const BOUGHT_AT_FORMAT = "YYYY-MM-DDTHH:mm:ssZ";
 
@@ -20,7 +23,7 @@ class PortfolioController {
      * @returns
      * @memberof PortfolioController
      */
-    public addCoins(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
+    public async addCoins(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         const coins = req.payload.map(
             (coin: IUserCoin) =>
                 new UserCoin(
@@ -35,14 +38,20 @@ class PortfolioController {
 
         Array.prototype.push.apply(req.auth.credentials.portfolio, coins);
 
-        return UserService.update(req.auth.credentials).then((user) => {
+        return UserService.update(req.auth.credentials).then(async (user) => {
+
+            await CacheHelper.invalidate(`portfolio/aggregate/${user.id}`);
+
             // refactor request object
-            const coins = user.portfolio;
-            coins.forEach((coin: any) => {
+            const c = user.portfolio;
+            c.forEach((coin: any) => {
                 coin.id = coin._id;
                 delete coin._id;
             });
-            reply(coins);
+
+            const portfolio = await PortfolioService.aggregatePortfolio(user);
+
+            reply(portfolio);
         });
     }
 
@@ -53,7 +62,7 @@ class PortfolioController {
      * @param {Hapi.ReplyNoContinue} reply
      * @memberof PortfolioController
      */
-    public updateCoin(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
+    public async updateCoin(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         const { id, coinId, boughtPrice, amount, currency, boughtAt, source } = req.payload;
 
         const user: DomainUser = req.auth.credentials;
@@ -66,11 +75,16 @@ class PortfolioController {
             }
         }
 
-        UserService.update(user).then((user) => {
-            // refactor request object
-            const coins = user.portfolio;
-            reply(coins);
-        });
+        try {
+            const newUser = await UserService.update(user);
+            await CacheHelper.invalidate(`portfolio/aggregate/${user.id}`);
+            const portfolio = await PortfolioService.aggregatePortfolio(newUser);
+            reply(portfolio);
+        } catch (ex) {
+            console.log(ex);
+            reply(Boom.badRequest());
+        }
+
     }
 
     /**
@@ -80,14 +94,17 @@ class PortfolioController {
      * @param {Hapi.ReplyNoContinue} reply
      * @memberof PortfolioController
      */
-    public removeCoin(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
+    public async removeCoin(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         const { id } = req.payload;
-
         const user: DomainUser = req.auth.credentials;
 
-        UserService.removeCoin(id, user).then(() => {
-            reply(user.portfolio.filter((uc) => String(uc.id) !== String(id)));
-        });
+        await UserService.removeCoin(id, user);
+        await CacheHelper.invalidate(`portfolio/aggregate/${user.id}`);
+
+        user.portfolio = user.portfolio.filter((uc) => String(uc.id) !== String(id));
+        const portfolio = await PortfolioService.aggregatePortfolio(user);
+
+        reply(portfolio);
     }
 
     /**
@@ -97,9 +114,11 @@ class PortfolioController {
      * @param {Hapi.ReplyNoContinue} reply
      * @memberof PortfolioController
      */
-    public index(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
-        const coins = req.auth.credentials.portfolio;
+    public async index(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
+        const user: DomainUser = req.auth.credentials;
+        const coins = await PortfolioService.aggregatePortfolio(user);
         return reply(coins);
+
     }
 }
 

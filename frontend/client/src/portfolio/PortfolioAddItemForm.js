@@ -10,107 +10,107 @@ import pageStyle from "../components/page.scss";
 import Loader from "../components/Loader";
 
 class AddPortfolio extends Component {
-    constructor(props) {
-        super(props);
-        this.state = this.getInitialState();
+  constructor(props) {
+    super(props);
+    this.state = this.getInitialState();
+  }
+
+  onSubmit = (coin) => {
+    this.props.portfolioActions.addCoins([coin]).then((success) => {
+      if (success) {
+        setTimeout(() => {
+          this.setState(this.getInitialState());
+        }, 1500);
+        this.setState({ success: true });
+      }
+    });
+  };
+
+  componentWillMount() {
+    if (!this.props.currency.get("loaded")) {
+      // load currencies
+      this.props.currencyActions.index();
     }
+  }
 
-    onSubmit = (coin) => {
-        this.props.portfolioActions.addCoins([ coin ]).then((success) => {
-            if (success) {
-                setTimeout(() => {
-                    this.setState(this.getInitialState());
-                }, 1500);
-                this.setState({ success: true });
-            }
-        });
+  getInitialState() {
+    const initialState = {
+      coin: {
+        coinId: undefined,
+        amount: undefined,
+        boughtPrice: undefined,
+        currency: undefined,
+        source: undefined,
+        boughtAt: moment()
+      },
+      showForm: true,
+      success: false
     };
+    return initialState;
+  }
 
-    componentWillMount() {
-        if (!this.props.currency) {
-            // load currencies
-            this.props.currencyActions.index();
-        }
-    }
+  onChange = (coin) => {
+    this.setState({ coin: coin });
+  };
 
-    getInitialState() {
-        const initialState = {
-            coin: {
-                coinId: undefined,
-                amount: undefined,
-                boughtPrice: undefined,
-                currency: undefined,
-                source: undefined,
-                boughtAt: moment()
-            },
-            showForm: true,
-            success: false
-        };
-        return initialState;
-    }
+  showForm = () => {
+    this.setState({ showForm: true });
+  };
 
-    onChange = (coin) => {
-        this.setState({ coin: coin });
-    };
-
-    showForm = () => {
-        this.setState({ showForm: true });
-    };
-
-    renderSuccess() {
-        return (
-            <div className={pageStyle.container}>
+  renderSuccess() {
+    return (
+      <div className={pageStyle.container}>
                 <p>Your coin has been added to your portfolio!</p>
             </div>
-        );
+    );
+  }
+
+  render() {
+    const { showForm, coin, success } = this.state;
+
+    if (!this.props.currency.loaded) {
+      return <Loader />;
     }
 
-    render() {
-        const { showForm, coin, success } = this.state;
+    const user = this.props.user.get("user").toObject();
 
-        if (this.props.currency.loading) {
-            return <Loader />;
-        }
+    if (success) {
+      return this.renderSuccess();
+    }
 
-        const user = this.props.user.get("user").toObject();
-
-        if (success) {
-            return this.renderSuccess();
-        }
-
-        if (!showForm) {
-            return (
-                <div>
+    if (!showForm) {
+      return (
+        <div>
                     <button onClick={this.showForm} className={formStyles.button}>
                         Add a new coin
                     </button>
                 </div>
-            );
-        }
+      );
+    }
 
-        return (
-            <CoinForm
+    return (
+      <CoinForm
                 coin={coin}
                 onChange={this.onChange}
                 onSubmit={this.onSubmit}
                 defaultCurrency={user.preferences.currency}
                 validationErrors={this.props.portfolio.form.get("errors")}
             />
-        );
-    }
+    );
+  }
 }
 
 const mapStateToProps = (state) => ({
-    portfolio: state.portfolio,
-    user: state.user,
-    currency: state.currency
+  portfolio: state.portfolio,
+  user: state.user,
+  currency: state.currency
 });
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        portfolioActions: bindActionCreators(PortfolioActions, dispatch),
-        currencyActions: bindActionCreators(CurrencyActions, dispatch)
-    };
+  return {
+    portfolioActions: bindActionCreators(PortfolioActions, dispatch),
+    currencyActions: bindActionCreators(CurrencyActions, dispatch)
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddPortfolio);

@@ -1,33 +1,32 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import formStyles from "../forms.scss";
-import { Link } from "react-router";
 import ValidationHelper from "../helpers/ValidationHelper";
 
 class PasswordForm extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            currentPassword: undefined,
-            password: undefined,
-            confirmPassword: undefined
-        };
-    }
-
-    _onChange = (e) => {
-        e.preventDefault();
-        this.props.onChange(this.state.currentPassword, this.state.password, this.state.confirmPassword);
-        return 0;
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentPassword: undefined,
+      password: undefined,
+      confirmPassword: undefined
     };
+  }
 
-    render() {
-        const validation = this.props.validationErrors;
-        const passwordsMismatchMessage = this.props.passwordsMismatch
-            ? "Confirmed password does not match new password"
-            : undefined;
+  _onChange = (e) => {
+    e.preventDefault();
+    this.props.onChange(this.state.currentPassword, this.state.password, this.state.confirmPassword);
+    return 0;
+  };
 
-        return (
-            <form className={formStyles.form} onSubmit={this._onChange}>
+  render() {
+    const validation = this.props.validationErrors;
+    const passwordsMismatchMessage = this.props.passwordsMismatch ?
+      "Confirmed password does not match new password" :
+      undefined;
+
+    return (
+      <form className={formStyles.form} onSubmit={this._onChange}>
                 <div className={formStyles.group}>
                     <label htmlFor="password">Current Password</label>
                     <input
@@ -71,15 +70,15 @@ class PasswordForm extends Component {
                     </button>
                 </div>
             </form>
-        );
-    }
+    );
+  }
 }
 
 PasswordForm.propTypes = {
-    passwordsMismatch: PropTypes.bool.isRequired
+  passwordsMismatch: PropTypes.bool.isRequired
 };
 PasswordForm.defaultProps = {
-    passwordsMismatch: false
+  passwordsMismatch: false
 };
 
 export default PasswordForm;

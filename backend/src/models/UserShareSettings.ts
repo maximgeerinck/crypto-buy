@@ -86,7 +86,7 @@ export class UserShareSettings extends AbstractModel implements IUserShareSettin
     }
 }
 
-export interface IShareModel extends IUserShareSettingsDAO {}
+export interface IShareModel extends IUserShareSettingsDAO { }
 
 export const ShareSchema = new mongoose.Schema(
     {
