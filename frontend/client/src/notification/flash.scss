@@ -1,8 +1,15 @@
+@import "../media.scss";
+
 .flash {
-  width: 1020px;
+  width: 100%;
   margin: 0 auto;
   padding: 15px;
   position: relative;
+  box-sizing: border-box;
+
+  @include desktop {
+    width: 1020px;
+  }
 
   &.positive {
     background: rgba(112, 204, 57, 0.28);

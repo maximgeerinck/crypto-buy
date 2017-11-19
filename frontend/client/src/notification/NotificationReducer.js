@@ -12,17 +12,16 @@ var InitialState = new Record({
 let initialState = new InitialState();
 
 if (CacheHelper.getCache(KEY_FLASH)) {
-  initialState.set("flashMessages", CacheHelper.getCache(KEY_FLASH)).set("loaded", true);
+  initialState = initialState.set("flashMessages", CacheHelper.getCache(KEY_FLASH)).set("loaded", true);
 }
 
 const NotificationReducer = (state = initialState, action) => {
   switch (action.type) {
-  case types.NOTIFICATION_LOAD_SUCCESS:
-    CacheHelper.cache(KEY_FLASH, action.body, CacheHelper.SHORT)
-    return state.set("flashMessages", action.body)
-      .set("loaded", true);
-  default:
-    return state;
+    case types.NOTIFICATION_LOAD_SUCCESS:
+      CacheHelper.cache(KEY_FLASH, action.body, CacheHelper.SHORT);
+      return state.set("flashMessages", action.body).set("loaded", true);
+    default:
+      return state;
   }
 };
 

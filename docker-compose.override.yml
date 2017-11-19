@@ -7,7 +7,9 @@ services:
       - ./backend/config/app_dev.json:/usr/crypto_buy/build/config/app_dev.json:ro
       - ./backend/config:/usr/crypto_buy/config:ro
       - ./backend/public:/usr/crypto_buy/public
-      - ./backend/package.json:/usr/crypto_buy/package.json:ro          
+      - ./backend/package.json:/usr/crypto_buy/package.json:ro       
+      - ./backend/tests:/usr/crypto_buy/tests:ro   
+      - ./backend/tests/jest.json:/usr/crypto_buy/tests/jest.json:ro   
     ports: ["56745:56745"]
     environment:      
       - NODE_ENV=development

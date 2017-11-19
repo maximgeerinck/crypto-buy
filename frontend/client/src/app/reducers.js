@@ -10,6 +10,7 @@ import share from "../share/ShareReducer";
 import coins from "../coin/CoinReducer";
 import app from "../error/ErrorReducer";
 import notification from "../notification/NotificationReducer";
+import feedback from "../feedback/FeedbackReducer";
 
 const rootReducer = combineReducers({
   form,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   coins,
   app,
   notification,
+  feedback,
   routing: routerReducer
 });
 

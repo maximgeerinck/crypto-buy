@@ -15,8 +15,8 @@ class AddPortfolio extends Component {
     this.state = this.getInitialState();
   }
 
-  onSubmit = (coin) => {
-    this.props.portfolioActions.addCoins([coin]).then((success) => {
+  onSubmit = coin => {
+    this.props.portfolioActions.addCoins([coin]).then(success => {
       if (success) {
         setTimeout(() => {
           this.setState(this.getInitialState());
@@ -49,7 +49,7 @@ class AddPortfolio extends Component {
     return initialState;
   }
 
-  onChange = (coin) => {
+  onChange = coin => {
     this.setState({ coin: coin });
   };
 
@@ -60,8 +60,8 @@ class AddPortfolio extends Component {
   renderSuccess() {
     return (
       <div className={pageStyle.container}>
-                <p>Your coin has been added to your portfolio!</p>
-            </div>
+        <p>Your coin has been added to your portfolio!</p>
+      </div>
     );
   }
 
@@ -81,32 +81,32 @@ class AddPortfolio extends Component {
     if (!showForm) {
       return (
         <div>
-                    <button onClick={this.showForm} className={formStyles.button}>
-                        Add a new coin
-                    </button>
-                </div>
+          <button onClick={this.showForm} className={formStyles.button}>
+            Add a new coin
+          </button>
+        </div>
       );
     }
 
     return (
       <CoinForm
-                coin={coin}
-                onChange={this.onChange}
-                onSubmit={this.onSubmit}
-                defaultCurrency={user.preferences.currency}
-                validationErrors={this.props.portfolio.form.get("errors")}
-            />
+        coin={coin}
+        onChange={this.onChange}
+        onSubmit={this.onSubmit}
+        defaultCurrency={user.preferences.currency}
+        validationErrors={this.props.portfolio.form.get("errors")}
+      />
     );
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   portfolio: state.portfolio,
   user: state.user,
   currency: state.currency
 });
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     portfolioActions: bindActionCreators(PortfolioActions, dispatch),
     currencyActions: bindActionCreators(CurrencyActions, dispatch)

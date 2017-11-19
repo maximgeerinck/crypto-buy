@@ -1,3 +1,4 @@
+import * as math from "mathjs";
 import CoinCollectionRepository from "../coin/CoinCollectionRepository";
 import User, { User as DomainUser } from "../models/user";
 import UserCoin from "../models/UserCoin";

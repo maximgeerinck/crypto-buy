@@ -111,11 +111,12 @@ class ShareOverview extends Component {
       chartData.length > 0 && settings.graph ? <PortfolioPieChart data={chartData} customTooltip /> : undefined;
 
     const total = CurrencyHelper.format(currencyObj.symbolFormat, round(totalPrice, 2));
+    const totalComponent = settings.price && settings.amount ? <h3 className={styles.portfolioTotal} dangerouslySetInnerHTML={{ __html: total}}></h3> : undefined;
 
     return (
       <Page custom className={cx(pageStyles.focused, homeStyles.main)}>
         <div className={styles.portfolioStats}>
-            <h3 className={styles.portfolioTotal} dangerouslySetInnerHTML={{ __html: total}}></h3>
+            {totalComponent}
             {chart}
         </div>                
         <PortfolioTracker>{items}</PortfolioTracker>

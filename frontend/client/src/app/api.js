@@ -4,6 +4,10 @@ import { BASE_PATH } from "./constants";
 
 superagentJsonapify(superagent);
 
+export const buildPostRequest = path => {
+  return new PostRequest(path);
+};
+
 class Request {
   constructor(path, token) {
     this.path = BASE_PATH + path;
@@ -64,24 +68,22 @@ export class PostRequest extends Request {
 
   send(data) {
     return new Promise((resolve, reject) => {
-      this.createRequest().send(data).end((err, res) => {
-        // check if validation error
-        if (
-          res.body &&
-          res.body.error &&
-          (res.body.error === "E_VALIDATION" || res.body.validation !== undefined)
-        ) {
-          return reject(res.body.validation);
-        }
+      this.createRequest()
+        .send(data)
+        .end((err, res) => {
+          // check if validation error
+          if (res.body && res.body.error && (res.body.error === "E_VALIDATION" || res.body.validation !== undefined)) {
+            return reject(res.body.validation);
+          }
 
-        // check general error
-        if (err) {
-          return reject(err);
-        }
+          // check general error
+          if (err) {
+            return reject(err);
+          }
 
-        if (!res.body) return reject(res);
-        return resolve(res.body);
-      });
+          if (!res.body) return reject(res);
+          return resolve(res.body);
+        });
     });
   }
 }
@@ -102,10 +104,13 @@ export default {
     }),
   post: (path, data, token) =>
     new Promise((resolve, reject) => {
-      let request = superagent.post(BASE_PATH + path).send(data).timeout({
-        response: 5000,
-        deadline: 60000
-      });
+      let request = superagent
+        .post(BASE_PATH + path)
+        .send(data)
+        .timeout({
+          response: 5000,
+          deadline: 60000
+        });
       if (token) request = request.set("Authorization", token);
       request.end((err, res) => {
         if (err && res && res.body) return reject(res.body);

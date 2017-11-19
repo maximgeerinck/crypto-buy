@@ -12,6 +12,7 @@ import page from "./page.scss";
 import SponsorEnjin from "./SponsorEnjin";
 import { browserHistory } from "react-router";
 import FlashContainer from "../notification/FlashContainer";
+import Feedback from "../feedback/Feedback";
 
 class Page extends Component {
   componentDidMount() {
@@ -47,6 +48,8 @@ class Page extends Component {
             {childrenWrapper}
         </div>
 
+        <Feedback/>
+        
         <footer>
             <p className={page.copyright}>
                 <a href="https://cryptotrackr.com">&copy; Cryptotrackr 2017</a>

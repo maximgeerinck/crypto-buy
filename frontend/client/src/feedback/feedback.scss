@@ -1,0 +1,121 @@
+.feedback {
+  position: fixed;
+  z-index: 999;
+  bottom: 50px;
+  right: 50px;
+  background: transparentize(black, 0.8);
+  padding: 15px;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  box-sizing: border-box;
+
+  .thanks {
+    color: white;
+    margin: 0;
+    font-size: 10pt;
+    .thanksIcon {
+      color: #6ec639;
+      margin-right: 5px;
+    }
+  }
+
+  &.active {
+    background: linear-gradient(white, lighten(#00c7ff, 45));
+    min-width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 0 0 2px white, 0 0 14px 1px black;
+  }
+
+  &.collapsed {
+    padding: 0;
+    margin: 0;
+
+    & > *:not(.icon) {
+      display: none;
+    }
+
+    .toggleCollapse {
+      background: none;
+      display: block;
+    }
+  }
+
+  .toggleCollapse {
+    display: none;
+    color: #969696;
+    border: none;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 30px;
+
+    &:hover {
+      transition: 150ms all linear;
+      box-shadow: inset 0 0 0 3px #969696;
+    }
+  }
+
+  .sent {
+    color: white;
+    text-align: center;
+    font-size: 10pt;
+
+    p {
+      margin: 0;
+    }
+
+    button {
+      background: none;
+      border: none;
+      color: #b3de6994;
+      text-decoration: underline;
+      cursor: pointer;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}
+
+.rating {
+  display: flex;
+  margin: 0;
+  padding: 0;
+
+  li {
+    list-style: none;
+    color: gray;
+    padding: 5px;
+    font-size: 24pt;
+    position: relative;
+
+    .message {
+      position: absolute;
+      font-size: 10pt;
+      text-transform: uppercase;
+      top: -25px;
+      left: 0;
+    }
+
+    &.highlighted {
+      color: gold;
+      text-shadow: 0 0 1px black;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.form {
+  width: 100%;
+  padding: 10px 20px;
+  textarea {
+    width: 100%;
+  }
+}
