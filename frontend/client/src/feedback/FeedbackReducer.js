@@ -14,7 +14,6 @@ var InitialState = new Record({
 let initialState = new InitialState();
 
 if (CookieHelper.getCookie(KEY_COLLAPSED)) {
-    console.log(CookieHelper.getCookie(KEY_COLLAPSED));
     initialState = initialState.set("collapsed", CookieHelper.getCookie(KEY_COLLAPSED));
 }
 
