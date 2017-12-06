@@ -4,6 +4,7 @@ import routes from "./routes";
 import * as Boom from "boom";
 import * as Hapi from "hapi";
 import * as Path from "path";
+import { DEVELOPMENT } from "./constants";
 import { IUser, User } from "./models/user";
 import UserService from "./services/UserService";
 import JoiValidationErrorAdapter from "./utils/JoiValidation";
@@ -71,11 +72,7 @@ export let createServer = (port: number, host: string = "0.0.0.0"): Promise<Hapi
 
         // inert is file server
         server.register([ require("hapi-auth-jwt2") ], (err) => {
-            // load routes
-            console.log("registered routes");
-            routes.map((route) => console.log(`${route.method}: ${route.path}`));
-            server.route(routes);
-
+            
             // load auth strategy (true => auth on all routes!)
             // ex. header: Authorization eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9....
             server.auth.strategy("jwt", "jwt", true, {
@@ -83,6 +80,17 @@ export let createServer = (port: number, host: string = "0.0.0.0"): Promise<Hapi
                 validateFunc: validate,
                 verifyOptions: { algorithms: [ "HS256" ] }
             });
+
+            
+            // load routes
+            console.log(`registered ${routes.length} routes`);
+
+            if (DEVELOPMENT) {
+                routes.map((route) => console.log(`${route.method}: ${route.path}`));
+            }
+
+            server.route(routes);
+            
 
             return resolve(server);
         });

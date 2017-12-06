@@ -15,89 +15,122 @@ const { createCanvas, loadImage } = require("canvas");
 import * as fs from "fs";
 
 class ShareController {
-    public retrieve(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
-        ShareRepository.findOneByToken(req.params.token)
-            .then((share) => {
-                const portfolio: any = {};
-                let totalAmount = 0;
-                // unique values
-                for (const coin of share.user.portfolio) {
-                    if (portfolio[coin.coinId]) {
-                        portfolio[coin.coinId].amount += coin.amount;
+    public async retrieve(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
 
-                        // weighted average of price
-                        portfolio[coin.coinId].boughtPrice =
-                            (portfolio[coin.coinId].boughtPrice * portfolio[coin.coinId].amount +
-                                coin.boughtPrice * coin.amount) /
-                            (portfolio[coin.coinId].amount + coin.amount);
-                    } else {
-                        portfolio[coin.coinId] = coin;
-                    }
-                }
+        // await PortfolioService.aggregatePortfolio(newUser);
+        const share = await ShareRepository.findOneByToken(req.params.token);
+        const coins = await CoinRepository.findAllWithHistory();
+        const p = await PortfolioService.aggregatePortfolio(share.user);
 
-                // // link them to current value
+        // bind
+        const portfolio = PortfolioHelper.bindPortfolioToCoin(p, coins);
 
-                return CoinRepository.findAllWithHistory().then((results: any) => {
-                    const details = [];
-                    for (const coin of Object.keys(portfolio)) {
-                        details.push(results[coin]);
-                    }
+        // apply share rules
+        Object.keys(portfolio).forEach((item: any) => {
+            if (!share.amount) {
+                delete portfolio[item].amount;
+            }
+            if (!share.price) {
+                delete portfolio[item].boughtPrice;
+                delete portfolio[item].boughtAt;
+            }
+        });
 
-                    // get total amount
-                    if (!share.user.preferences.initialInvestment || share.user.preferences.initialInvestment === 0) {
-                        totalAmount = details.reduce((sum, value) => {
-                            if (portfolio[value.coinId]) {
-                                return sum + portfolio[value.coinId].amount * portfolio[value.coinId].boughtPrice;
-                            }
-                        }, 0);
-                    } else {
-                        totalAmount = share.user.preferences.initialInvestment;
-                    }
+        const settings = {
+            amount: share.amount,
+            graph: share.graph,
+            change: share.change,
+            price: share.price
+        };
 
-                    // coin details
-                    for (const coinDetail of details) {
-                        if (!coinDetail) {
-                            continue;
-                        }
+        reply({
+            settings,
+            currency: share.currency,
+            portfolio
+        });
 
-                        portfolio[coinDetail.coin_id].details = coinDetail;
+        // ShareRepository.findOneByToken(req.params.token)
+        //     .then((share) => {
+        //         const portfolio: any = {};
+        //         let totalAmount = 0;
+        //         // unique values
+        //         for (const coin of share.user.portfolio) {
+        //             if (portfolio[coin.coinId]) {
+        //                 portfolio[coin.coinId].amount += coin.amount;
 
-                        if (!share.graph && !share.amount) {
-                            delete portfolio[coinDetail.coin_id].amount;
-                        }
+        //                 // weighted average of price
+        //                 portfolio[coin.coinId].boughtPrice =
+        //                     (portfolio[coin.coinId].boughtPrice * portfolio[coin.coinId].amount +
+        //                         coin.boughtPrice * coin.amount) /
+        //                     (portfolio[coin.coinId].amount + coin.amount);
+        //             } else {
+        //                 portfolio[coin.coinId] = coin;
+        //             }
+        //         }
 
-                        // if show graph but not amount, feed it percentages 0-1
-                        if (share.graph && (!share.amount || !share.price)) {
-                            portfolio[coinDetail.coin_id].amount =
-                                portfolio[coinDetail.coin_id].amount *
-                                portfolio[coinDetail.coin_id].boughtPrice /
-                                totalAmount;
-                        }
+        //         // // link them to current value
 
-                        // if you don't want to share price, delete them
-                        if (!share.price) {
-                            delete portfolio[coinDetail.coin_id].boughtPrice;
-                            delete portfolio[coinDetail.coin_id].boughtAt;
-                        }
-                    }
+        //         return CoinRepository.findAllWithHistory().then((results: any) => {
+        //             const details = [];
+        //             for (const coin of Object.keys(portfolio)) {
+        //                 details.push(results[coin]);
+        //             }
 
-                    reply({
-                        settings: {
-                            amount: share.amount,
-                            graph: share.graph,
-                            change: share.change,
-                            price: share.price
-                        },
-                        currency: share.currency,
-                        portfolio
-                    });
-                });
-            })
-            .catch((err) => {
-                console.log(`ERROR IN ${req.params.token}`);
-                console.log(err);
-                reply(Boom.badRequest("E_NOT_FOUND"));
-            });
+        //             // get total amount
+        //             if (!share.user.preferences.initialInvestment || share.user.preferences.initialInvestment === 0) {
+        //                 totalAmount = details.reduce((sum, value) => {
+        //                     if (portfolio[value.coinId]) {
+        //                         return sum + portfolio[value.coinId].amount * portfolio[value.coinId].boughtPrice;
+        //                     }
+        //                 }, 0);
+        //             } else {
+        //                 totalAmount = share.user.preferences.initialInvestment;
+        //             }
+
+        //             // coin details
+        //             for (const coinDetail of details) {
+        //                 if (!coinDetail) {
+        //                     continue;
+        //                 }
+
+        //                 portfolio[coinDetail.coin_id].details = coinDetail;
+
+        //                 if (!share.graph && !share.amount) {
+        //                     delete portfolio[coinDetail.coin_id].amount;
+        //                 }
+
+        //                 // if show graph but not amount, feed it percentages 0-1
+        //                 if (share.graph && (!share.amount || !share.price)) {
+        //                     portfolio[coinDetail.coin_id].amount =
+        //                         portfolio[coinDetail.coin_id].amount *
+        //                         portfolio[coinDetail.coin_id].boughtPrice /
+        //                         totalAmount;
+        //                 }
+
+        //                 // if you don't want to share price, delete them
+        //                 if (!share.price) {
+        //                     delete portfolio[coinDetail.coin_id].boughtPrice;
+        //                     delete portfolio[coinDetail.coin_id].boughtAt;
+        //                 }
+        //             }
+
+        //             reply({
+        //                 settings: {
+        //                     amount: share.amount,
+        //                     graph: share.graph,
+        //                     change: share.change,
+        //                     price: share.price
+        //                 },
+        //                 currency: share.currency,
+        //                 portfolio
+        //             });
+        //         });
+        //     })
+        //     .catch((err) => {
+        //         console.log(`ERROR IN ${req.params.token}`);
+        //         console.log(err);
+        //         reply(Boom.badRequest("E_NOT_FOUND"));
+        //     });
     }
 
     public async banner(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {

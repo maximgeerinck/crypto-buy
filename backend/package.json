@@ -33,6 +33,7 @@
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
     "superagent": "^3.5.2",
+    "useragent": "^2.2.1",
     "uuid": "^3.1.0"
   },
   "devDependencies": {
@@ -51,6 +52,7 @@
     "@types/request": "^2.0.3",
     "@types/request-promise": "^4.1.39",
     "@types/superagent": "^2.0.36",
+    "@types/useragent": "^2.1.1",
     "@types/uuid": "^3.4.0",
     "jest": "^21.2.1",
     "jest-junit": "^3.3.0",

@@ -7,12 +7,15 @@ module.exports = [
     path: "/feedback",
     handler: FeedbackController.submit,
     config: {
-      auth: false,
+      auth: {
+        strategy: "jwt",
+        mode: "optional",
+        payload: false
+      },
       validate: {
         payload: {
           message: Joi.string(),
           rating: Joi.number().min(1).max(5).required(),
-          userId: Joi.string(),
           data: Joi.object()
         }
       }

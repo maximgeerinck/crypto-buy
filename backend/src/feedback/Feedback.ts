@@ -47,6 +47,16 @@ export class Feedback extends AbstractModel implements IFeedback {
             this.data = data;
         }
     }
+
+    public toModel() {
+        const model: any = this;
+        model._id = model.id;
+        if (this.createdBy) {
+            model.createdBy = this.createdBy.id;
+        }
+        delete model.id;
+        return model;
+    }
 }
 
 export const FeedbackSchema = new mongoose.Schema({

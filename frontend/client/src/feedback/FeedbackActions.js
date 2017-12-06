@@ -9,39 +9,54 @@ const updateFeedbackSuccess = feedback => ({ type: types.FEEDBACK_UPDATE_SUCCESS
 const updateFeedbackRequest = () => ({ type: types.FEEDBACK_UPDATE_REQUEST });
 const updateFeedbackFailure = err => ({ type: types.FEEDBACK_UPDATE_FAILURE, body: err });
 
-const collapseType = () => ({ type: types.FEEDBACK_COLLAPSE });
+const collapseType = collapsed => ({ type: types.FEEDBACK_COLLAPSE, body: collapsed });
 
 export const submit = (rating, message) => {
-  return dispatch => {
-    dispatch(sendFeedbackRequest());
+    return (dispatch, getState) => {
+        dispatch(sendFeedbackRequest());
 
-    const obj = {
-      rating
+        const obj = {
+            rating,
+            data: {
+                language: navigator.language
+            }
+        };
+        if (message) {
+            obj.message = message;
+        }
+
+        let request = buildPostRequest("feedback");
+
+        if (getState().auth.isAuthenticated) {
+            request = request.auth(getState().auth.token);
+        }
+
+        return request
+            .send(obj)
+            .then(feedback => dispatch(sendFeedbackSuccess(feedback)))
+            .catch(err => sendFeedbackFailure(err));
     };
-    if (message) {
-      obj.message = message;
-    }
-
-    return buildPostRequest("feedback")
-      .send(obj)
-      .then(feedback => dispatch(sendFeedbackSuccess(feedback)))
-      .catch(err => sendFeedbackFailure(err));
-  };
 };
 
 export const update = feedback => {
-  return dispatch => {
-    dispatch(updateFeedbackRequest());
+    return dispatch => {
+        dispatch(updateFeedbackRequest());
 
-    return buildPostRequest("feedback/update")
-      .send(feedback)
-      .then(feedback => dispatch(updateFeedbackSuccess(feedback)))
-      .catch(err => sendFeedbackFailure(err));
-  };
+        return buildPostRequest("feedback/update")
+            .send(feedback)
+            .then(feedback => dispatch(updateFeedbackSuccess(feedback)))
+            .catch(err => sendFeedbackFailure(err));
+    };
 };
 
+export function toggle(collapsed) {
+    return dispatch => {
+        dispatch(collapseType(collapsed));
+    };
+}
+
 export function collapse() {
-  return dispatch => {
-    dispatch(collapseType());
-  };
+    return dispatch => {
+        dispatch(collapseType(true));
+    };
 }

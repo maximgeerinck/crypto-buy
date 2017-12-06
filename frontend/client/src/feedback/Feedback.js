@@ -3,96 +3,106 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
 import styles from "./feedback.scss";
-import FeedbackComponent from "./FeedbackComponent";
 import FeedbackForm from "./FeedbackForm";
 import * as FeedbackActions from "./FeedbackActions";
 import cx from "classnames";
 import FontAwesome from "react-fontawesome";
 import * as FeedbackHelper from "./FeedbackHelper";
+import Rating from "./Rating";
+import CollapsedRating from "./CollapsedRating";
+import ThankYou from "./ThankYou";
 
 class Feedback extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      rating: 0,
-      showForm: false,
-      collapsed: props.feedback.collapsed,
-      submitted: false
+    constructor(props) {
+        super(props);
+        this.state = {
+            rating: 0,
+            showForm: false,
+            submitted: false
+        };
+        this.timer = undefined;
+    }
+
+    toggleCollapse = () => {
+        const collapsed = !this.props.feedback.collapsed;
+        this.props.feedbackActions.toggle(collapsed);
     };
-  }
 
-  change = (oldRating, newRating) => {
-    this.setState({ rating: newRating });
-    this.props.feedbackActions.submit(newRating);
-    setTimeout(this.props.feedbackActions.collapse, 5000);
-  };
+    attachMessage = () => this.state.showForm;
+    showForm = () => {
+        clearInterval(this.timer);
+        this.setState({ showForm: !this.state.showForm });
+    };
+    submitted = () => this.state.submitted;
+    isRatingToLow = rating => rating <= 2;
 
-  toggleCollapse = () => {
-    const collapsed = !this.props.feedback.collapsed;
-    this.setState({ collapsed });
-  };
+    submitForm = data => {
+        let feedback = this.props.feedback.lastFeedback;
+        feedback = { ...feedback, ...data };
+        this.props.feedbackActions.update(feedback);
+        this.timer = setTimeout(this.props.feedbackActions.collapse, 3000);
+        this.setState({ submitted: true, showForm: false });
+    };
 
-  showForm = () => this.setState({ showForm: !this.state.showForm });
+    onRate = rating => {
+        const obj = { rating };
+        if (this.isRatingToLow(rating)) {
+            obj.showForm = true;
+        } else {
+            this.props.feedbackActions.submit(rating);
+            obj.submitted = true;
+            obj.showForm = false;
+            this.timer = setTimeout(this.props.feedbackActions.collapse, 3000);
+        }
 
-  isFormShown = () => {
-    return FeedbackHelper.ratingIsToLow(this.state.rating) || this.state.showForm;
-  };
+        this.setState(obj);
+    };
 
-  submitForm = data => {
-    let feedback = this.props.feedback.lastFeedback;
-    feedback = { ...feedback, ...data };
-    this.props.feedbackActions.update(feedback);
-    setTimeout(this.props.feedbackActions.collapse, 5000);
-    this.setState({ submitted: true });
-  };
+    hidden() {
+        return this.props.feedback.collapsed;
+    }
 
-  renderThankYou = () => {
-    return (
-      <p className={styles.thanks}>
-        <FontAwesome name="check" className={styles.thanksIcon} />Thank you!
-      </p>
-    );
-  };
+    renderWrapper(content) {
+        const { rating, submitted } = this.state;
+        const { collapsed } = this.props.feedback;
 
-  render() {
-    const { rating, collapsed, submitted } = this.state;
-    const headerMessage = rating != 0 && FeedbackHelper.ratingIsToLow(rating) ? "What could we improve?" : undefined;
-    const form =
-      this.isFormShown() && !submitted ? (
-        <FeedbackForm onSubmit={this.submitForm} headerMessage={headerMessage} />
-      ) : (
-        undefined
-      );
-    const submittedMessage = submitted ? this.renderThankYou() : undefined;
-    const activeStyle = form ? styles.active : undefined;
-    const collapsedStyle = collapsed ? styles.collapsed : undefined;
-    const feedbackComponent = !this.isFormShown() ? (
-      <FeedbackComponent onRatingChange={this.change} sent={this.props.feedback.sent} onAttachMessage={this.showForm} />
-    ) : (
-      undefined
-    );
+        const form = this.attachMessage();
+        const activeStyle = form ? styles.active : undefined;
+        const collapsedStyle = collapsed ? styles.collapsed : undefined;
+        return <div className={cx(styles.feedback, activeStyle, collapsedStyle)}>{content}</div>;
+    }
 
-    return (
-      <div className={cx(styles.feedback, activeStyle, collapsedStyle)}>
-        {feedbackComponent}
-        {form}
-        {submittedMessage}
-        <button className={styles.toggleCollapse} onClick={this.toggleCollapse}>
-          <FontAwesome name="comments-o" />
-        </button>
-      </div>
-    );
-  }
+    //TODO: Rewrite to state pattern
+    render() {
+        const { rating, collapsed, submitted } = this.state;
+
+        // did you already submit a form? don't show
+        if (this.hidden()) {
+            return this.renderWrapper(<CollapsedRating toggle={this.toggleCollapse} />);
+        }
+
+        if (this.attachMessage()) {
+            return this.renderWrapper(
+                <FeedbackForm onSubmit={this.submitForm} headerMessage={"What could we improve?"} />
+            );
+        }
+
+        if (this.submitted()) {
+            return this.renderWrapper(<ThankYou onAttachMessage={this.showForm} />);
+        }
+
+        return this.renderWrapper(<Rating onRate={this.onRate} />);
+    }
 }
 
 const mapStateToProps = state => ({
-  feedback: state.feedback
+    feedback: state.feedback
 });
 
 const mapDispatchToProps = dispatch => {
-  return {
-    feedbackActions: bindActionCreators(FeedbackActions, dispatch)
-  };
+    return {
+        feedbackActions: bindActionCreators(FeedbackActions, dispatch)
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feedback);

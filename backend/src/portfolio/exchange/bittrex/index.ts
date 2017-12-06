@@ -91,7 +91,6 @@ class BittrexExchange {
     public async orderHistory() {
         const response = await this.withCredentials("account/getorderhistory");
         const result = JSON.parse(response).result;
-        console.log(result);
         return result;
     }
 }
