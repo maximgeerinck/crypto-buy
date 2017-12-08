@@ -134,29 +134,34 @@ class PortfolioTrackerItem extends Component {
     }
 
     renderChangeTotal() {
-        const { boughtCurrency, boughtPrice, amount, price, changeDay, settings } = this.props;
+        const changeTotal = this.props.profitInPercent;
+        const profit = this.props.profit;
+        const paid = this.props.paid;
 
-        // in USD
-        const boughtAllCoinsPrice = boughtPrice / boughtCurrency.rate * amount;
-        const currentAllCoinsPrice = price * amount;
+        const { settings } = this.props;
 
-        const changeTotal = boughtPrice ? gained(boughtAllCoinsPrice, currentAllCoinsPrice) : changeDay;
-        const coinProfit = round(currentAllCoinsPrice - boughtAllCoinsPrice, 7);
-
+        // // in USD
         const classChangeTotal =
-            changeTotal >= 0 ? cx(styles.changeTotal, styles.positive) : cx(styles.changeTotal, styles.negative);
+            parseFloat(changeTotal) >= 0
+                ? cx(styles.changeTotal, styles.positive)
+                : cx(styles.changeTotal, styles.negative);
 
-        const coinProfitClass = coinProfit > 0 ? cx(styles.value, styles.positive) : cx(styles.value, styles.negative);
-        const coinProfitDisplay = settings.price ? (
-            <div className={coinProfitClass}>{isNaN(coinProfit) ? undefined : coinProfit}</div>
-        ) : null;
+        const coinProfitClass =
+            parseFloat(changeTotal) > 0 ? cx(styles.value, styles.positive) : cx(styles.value, styles.negative);
+
+        const coinProfitDisplay =
+            settings.price && paid != 0 ? (
+                <div className={coinProfitClass}>
+                    <span dangerouslySetInnerHTML={{ __html: profit }} />
+                </div>
+            ) : null;
 
         const priceChangeIndicator = this.renderIndicator();
 
         return (
             <div className={classChangeTotal}>
                 <div className={styles.percentage}>
-                    {round(changeTotal, 2)}%
+                    {changeTotal}%
                     {priceChangeIndicator}
                 </div>
                 {coinProfitDisplay}
@@ -167,8 +172,8 @@ class PortfolioTrackerItem extends Component {
     renderCalculations() {
         const { currency, price, amount } = this.props;
 
-        const priceFormated = CurrencyHelper.format(currency.symbolFormat, round(price * currency.rate, 6));
-        const total = CurrencyHelper.format(currency.symbolFormat, round(price * currency.rate * amount, 6));
+        const priceFormated = CurrencyHelper.format(currency.symbolFormat, round(price, 6));
+        const total = CurrencyHelper.format(currency.symbolFormat, round(price * amount, 6));
 
         const calculations = `${priceFormated} * ${amount} = ${total}`;
 
@@ -180,11 +185,11 @@ class PortfolioTrackerItem extends Component {
     }
 
     render() {
-        const { name, symbol, id, settings } = this.props;
+        const { name, symbol, id, settings, price, amount } = this.props;
 
         const loader = this.props.isUpdating ? <Loader className={styles.loader} color="#848484" /> : null;
 
-        let prices, changeTotalContainer, statistics;
+        let statistics, prices, changeTotalContainer;
 
         if (settings.amount && settings.price) {
             prices = this.renderCalculations();
@@ -218,8 +223,7 @@ PortfolioTrackerItem.propTypes = {
     changeHour: PropTypes.number.isRequired,
     changeDay: PropTypes.number.isRequired,
     changeWeek: PropTypes.number.isRequired,
-    boughtPrice: PropTypes.number.isRequired,
-    boughtCurrency: PropTypes.object.isRequired,
+    boughtPrice: PropTypes.number,
     price: PropTypes.number.isRequired,
     amount: PropTypes.number.isRequired,
     isUpdating: PropTypes.bool.isRequired,

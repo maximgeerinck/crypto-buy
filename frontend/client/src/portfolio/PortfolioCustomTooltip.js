@@ -14,7 +14,10 @@ class CustomTooltip extends Component {
                         <img src={getCoinImage(payload[0].payload.id)} alt="Coin" className={pieStyles.symbol} />
                         {payload[0].payload.symbol}
                     </div>
-                    <div className={pieStyles.value}>{payload[0].payload.label}</div>
+
+                    <div className={pieStyles.value}>
+                        <span dangerouslySetInnerHTML={{ __html: payload[0].payload.label }} />
+                    </div>
                 </div>
             );
         }

@@ -1,21 +1,22 @@
 {
-  "extends": ["eslint:recommended", "plugin:react/recommended"],
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
+    "extends": ["eslint:recommended", "plugin:react/recommended"],
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true,
+            "modules": true
+        }
+    },
+    "rules": {
+        "jsx-a11y/href-no-hash": "off",
+        "quotes": [1, "double"],
+        "no-console": ["warn"],
+        "indent": [2, 4],
+        "sort-imports": [
+            "warn",
+            {
+                "memberSyntaxSortOrder": ["all", "multiple", "single", "none"]
+            }
+        ],
+        "operator-linebreak": ["error", "after"]
     }
-  },
-  "rules": {
-    "jsx-a11y/href-no-hash": "off",
-    "quotes": [1, "double"],
-    "no-console": ["warn"],
-    "indent": [2, 4],
-    "sort-imports": [
-      "warn",
-      {
-        "memberSyntaxSortOrder": ["all", "multiple", "single", "none"]
-      }
-    ],
-    "operator-linebreak": ["error", "after"]
-  }
 }
