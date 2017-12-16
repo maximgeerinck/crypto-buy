@@ -51,7 +51,7 @@ class PortfolioTrackerPage extends Component {
         if (!user.loaded || user.retrievedOn < Date.now() + 3600) userActions.me();
 
         // load portfolio
-        portfolioActions.retrieve().then(() => {
+        portfolioActions.retrieve(() => {
             // load portfolio stats
             console.log("getting details");
             portfolioActions.details();
