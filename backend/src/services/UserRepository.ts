@@ -2,6 +2,7 @@ import mongoose from "../db";
 import User, { IUser, IUserDAO, User as UserDomain } from "../models/user";
 import UserCoin from "../models/UserCoin";
 import { IUserCredential, IUserCredentialDAO } from "../models/UserCredential";
+import NotFoundException from "./NotFoundException";
 import { IRepositoryAdapter, MongoRepository } from "./repository";
 
 interface IUserRepository {
@@ -51,6 +52,15 @@ class UserRepository extends MongoRepository<UserDomain> implements IUserReposit
         return this.findOne({
             email,
             credentials: { $elemMatch: { expired: false } }
+        });
+    }
+
+    public findOne(cond?: object): Promise<UserDomain> {
+        return this._model.findOne(cond).populate("shares").then((item) => {
+            if (!item) {
+                throw new NotFoundException(JSON.stringify(cond));
+            }
+            return this.parse(item);
         });
     }
 

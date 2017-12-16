@@ -8,7 +8,8 @@ export const reduceItems = items => {
         if (coin.coinId in allCoins) {
             allCoins[coin.coinId].amount += coin.amount;
             allCoins[coin.coinId].boughtPrice =
-                (allCoins[coin.coinId].amount * allCoins[coin.coinId].boughtPrice + coin.amount * coin.boughtPrice) /
+                (allCoins[coin.coinId].amount * allCoins[coin.coinId].boughtPrice +
+                    coin.amount * coin.boughtPrice) /
                 (allCoins[coin.coinId].amount + coin.amount);
         } else {
             allCoins[coin.coinId] = Object.assign({}, coin);
@@ -41,8 +42,11 @@ export const portfolioView = (portfolio, initialInvestment, currency, currencies
     let view = {
         netWorth: 0,
         profit: 0,
-        initialInvestment: CurrencyHelper.format(currency.symbolFormat, Math.round(initialInvestment, 2)),
-        items: []
+        initialInvestment: CurrencyHelper.format(
+            currency.symbolFormat,
+            Math.round(initialInvestment, 2),
+        ),
+        items: [],
     };
 
     for (const key of Object.keys(portfolio)) {
@@ -54,10 +58,13 @@ export const portfolioView = (portfolio, initialInvestment, currency, currencies
 
     const profit = view.netWorth - initialInvestment;
     const netWorth = view.netWorth;
-    view.netWorth = CurrencyHelper.format(currency.symbolFormat, MathHelper.round(view.netWorth, 2));
+    view.netWorth = CurrencyHelper.format(
+        currency.symbolFormat,
+        MathHelper.round(view.netWorth, 2),
+    );
     view.profit = CurrencyHelper.format(currency.symbolFormat, MathHelper.round(profit, 2));
     view.profitStyle = cx(styles.investedChange, profit > 0 ? styles.positive : styles.negative);
-    view.profitInPercent = MathHelper.round(MathHelper.gained(netWorth, netWorth + profit), 2);
+    view.profitInPercent = MathHelper.round(MathHelper.gained(initialInvestment, netWorth), 2);
 
     return view;
 };
@@ -73,8 +80,12 @@ export const portfolioItemView = (portfolioItem, currency, currencies) => {
         history: portfolioItem.market.history,
         symbol: portfolioItem.market.symbol,
         boughtCurrency: currencies[portfolioItem.currency || "USD"],
-        _id: portfolioItem._id
+        _id: portfolioItem._id,
     };
+
+    if (isNaN(view.paid)) {
+        view.paid = 0;
+    }
 
     const netWorth = view.price * view.amount;
     const profit =

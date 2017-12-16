@@ -146,8 +146,14 @@ class ShareController {
         const coinAmount = Object.keys(portfolio).length;
         const iconSize = 32;
         const padding = 10;
-        const height = iconSize + padding * 2;
-        const width = iconSize * coinAmount + padding * (coinAmount + 1);
+
+        const PROMOTION_TEXT_HEIGHT = 10;
+        const height = iconSize + padding * 2 + PROMOTION_TEXT_HEIGHT;
+        let width = iconSize * coinAmount + padding * (coinAmount + 1) + PROMOTION_TEXT_HEIGHT;
+
+        if (width <= 50) {
+            width = 50;
+        }
 
         const canvas = createCanvas(width, height);
         const ctx = canvas.getContext("2d");
@@ -164,6 +170,10 @@ class ShareController {
 
                 ctx.drawImage(image, x, y, iconSize, iconSize);
             }
+
+            ctx.font = "10px Impact";
+            ctx.fillText("My portfolio at cryptotrackr.com", 10, height - 5);
+
         } catch (err) {
             console.log(err);
         }

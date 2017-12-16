@@ -31,14 +31,14 @@ export class PortfolioTracker extends Component {
 const SORT = {
     NAME: "name",
     PERCENTAGE: "percentage",
-    PRICE: "price"
+    PRICE: "price",
 };
 
 class PortfolioTrackerPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sort: SORT.PRICE
+            sort: SORT.PRICE,
         };
     }
 
@@ -53,6 +53,7 @@ class PortfolioTrackerPage extends Component {
         // load portfolio
         portfolioActions.retrieve().then(() => {
             // load portfolio stats
+            console.log("getting details");
             portfolioActions.details();
         });
     }
@@ -90,16 +91,18 @@ class PortfolioTrackerPage extends Component {
     }
 
     sortItems(items) {
-        console.log(items);
         switch (this.state.sort) {
             case SORT.NAME:
                 return items.sort((coinA, coinB) => coinA.name.localeCompare(coinB.name));
             case SORT.PERCENTAGE:
                 return items.sort(
-                    (coinA, coinB) => parseFloat(coinB.profitInPercent) - parseFloat(coinA.profitInPercent)
+                    (coinA, coinB) =>
+                        parseFloat(coinB.profitInPercent) - parseFloat(coinA.profitInPercent),
                 );
             case SORT.PRICE:
-                return items.sort((coinA, coinB) => coinB.amount * coinB.price - coinA.amount * coinA.price);
+                return items.sort(
+                    (coinA, coinB) => coinB.amount * coinB.price - coinA.amount * coinA.price,
+                );
             default:
                 return items.sort((coinA, coinB) => coinA.name.localeCompare(coinB.name));
         }
@@ -130,13 +133,16 @@ class PortfolioTrackerPage extends Component {
         const portfolio = PortfolioHelper.reduceItems(initialState.coins.get("items"));
 
         // link the current market value to it
-        const linkedPortfolio = PortfolioHelper.linkPortfolioToMarket(portfolio, initialState.stats.get("coins"));
+        const linkedPortfolio = PortfolioHelper.linkPortfolioToMarket(
+            portfolio,
+            initialState.stats.get("coins"),
+        );
 
         return PortfolioHelper.portfolioView(
             linkedPortfolio,
             this.getInitialInvestment(),
             this.getUserCurrency(),
-            this.props.currency.items
+            this.props.currency.items,
         );
     };
 
@@ -177,11 +183,15 @@ class PortfolioTrackerPage extends Component {
                 name: items[key].symbol,
                 symbol: items[key].symbol,
                 label: items[key].netWorth,
-                total: parseFloat(items[key].amount * items[key].price)
+                total: parseFloat(items[key].amount * items[key].price),
             });
         }
 
-        const chart = this.hasCoins() ? <PortfolioPieChart data={data} customTooltip inPercent={false} /> : undefined;
+        const chart = this.hasCoins() ? (
+            <PortfolioPieChart data={data} customTooltip inPercent={false} />
+        ) : (
+            undefined
+        );
 
         return chart;
     }
@@ -203,15 +213,22 @@ class PortfolioTrackerPage extends Component {
         return (
             <Page custom className={cx(pageStyles.focused, homeStyles.main)}>
                 <div className={styles.portfolioStats}>
-                    <h3 className={styles.portfolioTotal} dangerouslySetInnerHTML={{ __html: view.netWorth }} />
+                    <h3
+                        className={styles.portfolioTotal}
+                        dangerouslySetInnerHTML={{ __html: view.netWorth }}
+                    />
                     <div className={styles.invested}>
                         <p
                             className={view.profitStyle}
-                            dangerouslySetInnerHTML={{ __html: `${view.profit} (${view.profitInPercent}%)` }}
+                            dangerouslySetInnerHTML={{
+                                __html: `${view.profit} (${view.profitInPercent}%)`,
+                            }}
                         />
                         <p
                             className={styles.investmentNotes}
-                            dangerouslySetInnerHTML={{ __html: `(based on investment of ${view.initialInvestment})` }}
+                            dangerouslySetInnerHTML={{
+                                __html: `(based on investment of ${view.initialInvestment})`,
+                            }}
                         />
                     </div>
                     {chart}
@@ -325,14 +342,14 @@ const mapStateToProps = state => ({
     portfolio: state.portfolio,
     auth: state.auth,
     currency: state.currency,
-    user: state.user
+    user: state.user,
 });
 
 const mapDispatchToProps = dispatch => {
     return {
         portfolioActions: bindActionCreators(PortfolioActions, dispatch),
         currencyActions: bindActionCreators(CurrencyActions, dispatch),
-        userActions: bindActionCreators(UserActions, dispatch)
+        userActions: bindActionCreators(UserActions, dispatch),
     };
 };
 

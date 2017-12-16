@@ -46,6 +46,7 @@ class BittrexExchange {
 
     public async balance() {
         const response = await this.withCredentials(`account/getbalances`);
+        console.log(response);
         const result = JSON.parse(response).result;
         return result;
     }

@@ -1,13 +1,13 @@
+import { DEVELOPMENT } from "./constants";
 import mongoose from "./db";
 import { createServer } from "./server";
 import CurrencyTask from "./tasks/CurrencyTask";
 import MarketTask from "./tasks/MarketTask";
 import PriceTask from "./tasks/PriceTask";
 import ResetDemoTask from "./tasks/ResetDemoTask";
-import { DEVELOPMENT } from "./constants";
 
-import TaskRepository from "./tasks/TaskRepository";
 import CoinImageTask from "./tasks/CoinImageTask";
+import TaskRepository from "./tasks/TaskRepository";
 
 // connect mongodb
 const URI = "mongodb://mongo/crypto_buy";
@@ -21,6 +21,8 @@ mongoose.connect(URI);
 
 const taskRepository = TaskRepository.getInstance();
 taskRepository.addTask(new CoinImageTask());
+// taskRepository.execute("coin-image-task");
+
 if (!DEVELOPMENT) {
   taskRepository.scheduleAll();
   taskRepository.execute("coin-image-task");

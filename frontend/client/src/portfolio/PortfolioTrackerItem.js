@@ -140,8 +140,9 @@ class PortfolioTrackerItem extends Component {
         const boughtAllCoinsPrice = boughtPrice / boughtCurrency.rate * amount;
         const currentAllCoinsPrice = price * amount;
 
-        const changeTotal = boughtPrice ? gained(boughtAllCoinsPrice, currentAllCoinsPrice) : changeDay;
-        const coinProfit = round(currentAllCoinsPrice - boughtAllCoinsPrice, 7);
+        // const changeTotal = boughtPrice ? gained(boughtAllCoinsPrice, currentAllCoinsPrice) : changeDay;
+        const changeTotal = changeDay;
+        // const coinProfit = round(currentAllCoinsPrice - boughtAllCoinsPrice, 7);
 
         const classChangeTotal =
             changeTotal >= 0 ? cx(styles.changeTotal, styles.positive) : cx(styles.changeTotal, styles.negative);
