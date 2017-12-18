@@ -8,11 +8,11 @@ const DETAILS = "portfolio_details"; // the coin statistics
 var InitialState = new Record({
     page: Map({
         loaded: false,
-        isFetching: false
+        isFetching: false,
     }),
     form: Map({
         isSubmitting: false,
-        error: undefined
+        error: undefined,
     }),
 
     // the coins the user owns
@@ -20,13 +20,13 @@ var InitialState = new Record({
         loaded: false,
         items: [],
         view: {}, // the coins in a view
-        validationErrors: List([])
+        validationErrors: List([]),
     }),
     // the coin details (aka stats)
     stats: Map({
         coins: {},
-        loaded: false
-    })
+        loaded: false,
+    }),
 });
 
 let initialState = new InitialState();
@@ -45,7 +45,9 @@ if (localStorage.getItem(DETAILS)) {
 
 const PortfolioReducer = (state = initialState, action) => {
     // reset actions
-    state = state.setIn(["coins", "validationErrors"], List([])).setIn(["form", "errors"], List([]));
+    state = state
+        .setIn(["coins", "validationErrors"], List([]))
+        .setIn(["form", "errors"], List([]));
 
     switch (action.type) {
         case types.RETRIEVE_ITEMS_SUCCESS:
@@ -71,7 +73,9 @@ const PortfolioReducer = (state = initialState, action) => {
         case types.COINS_ADD_SUCCESS:
         case types.COIN_UPDATE_SUCCESS:
         case types.COIN_DELETE_SUCCESS:
-            return state.setIn(["coins", "items"], action.body).setIn(["form", "isSubmitting"], false);
+            return state
+                .setIn(["coins", "items"], action.body)
+                .setIn(["form", "isSubmitting"], false);
 
         case types.COINS_ADD_FAILURE:
             // filter out the index if exists

@@ -5,12 +5,12 @@ import UserCoin from "../models/UserCoin";
 import BittrexExchange from "../portfolio/exchange/bittrex";
 import * as CacheHelper from "../utils/CacheHelper";
 
+export const key = (userId: any) => `portfolio/aggregate/${userId}`;
+
 class PortfolioService {
     public async aggregatePortfolio(user: DomainUser): Promise<UserCoin[]> {
 
-        const key = `portfolio/aggregate/${user.id}`;
-
-        const cacheResult = await CacheHelper.get(key);
+        const cacheResult = await CacheHelper.get(key(user.id));
         if (cacheResult) {
             return cacheResult;
         }
@@ -52,7 +52,7 @@ class PortfolioService {
             console.log(ex);
         }
 
-        CacheHelper.cache(key, portfolio, CacheHelper.TEN_MIN);
+        CacheHelper.cache(key(user.id), portfolio, CacheHelper.TEN_MIN);
         return portfolio;
     }
 }

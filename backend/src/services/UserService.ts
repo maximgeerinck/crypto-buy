@@ -3,6 +3,8 @@ import { IUser, User } from "../models/user";
 import UserCoin from "../models/UserCoin";
 import UserCredential from "../models/UserCredential";
 import ShareModel, { IUserShareSettings, UserShareSettings } from "../models/UserShareSettings";
+import { key } from "../portfolio/PortfolioService";
+import * as CacheHelper from "../utils/CacheHelper";
 import { comparePassword, genSalt, hashPassword } from "../utils/cypher-util";
 import * as CypherUtil from "../utils/cypher-util";
 import NotFoundException from "./NotFoundException";
@@ -75,6 +77,8 @@ class UserService {
     }
 
     public update(user: User): Promise<User> {
+        // invalidate caches
+        CacheHelper.invalidate(key(user.id));
         return UserRepository.update(user.id, user);
     }
 

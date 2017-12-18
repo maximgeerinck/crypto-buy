@@ -2,7 +2,7 @@ import * as types from "./CoinActionTypes";
 import { GetRequest } from "../app/api";
 import * as ErrorActions from "../error/ErrorActions";
 
-const retrieveCoinsSuccess = (coins) => ({ type: types.COINS_SUCCESS, body: coins });
+const retrieveCoinsSuccess = coins => ({ type: types.COINS_SUCCESS, body: coins });
 
 export const retrieve = () => {
     return (dispatch, getState) => {
@@ -11,7 +11,7 @@ export const retrieve = () => {
                 dispatch(ErrorActions.timeout("Could not fetch coins"));
             }, 60 * 1000)
             .send()
-            .then((coins) => {
+            .then(coins => {
                 dispatch(retrieveCoinsSuccess(coins[0]));
             });
     };

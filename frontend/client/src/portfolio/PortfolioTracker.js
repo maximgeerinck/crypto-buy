@@ -53,7 +53,6 @@ class PortfolioTrackerPage extends Component {
         // load portfolio
         portfolioActions.retrieve(() => {
             // load portfolio stats
-            console.log("getting details");
             portfolioActions.details();
         });
     }

@@ -23,14 +23,14 @@ import * as CurrencyHelper from "../helpers/CurrencyHelper";
 const SORT = {
     NAME: "name",
     PERCENTAGE: "percentage",
-    PRICE: "price"
+    PRICE: "price",
 };
 
 class ShareOverview extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sort: SORT.PRICE
+            sort: SORT.PRICE,
         };
     }
 
@@ -40,8 +40,7 @@ class ShareOverview extends Component {
         // load currencies
         currencyActions.index();
 
-        // load coin details
-        portfolioActions.details();
+        this.props.shareActions.loadShare(this.props.routeParams.shareLink);
     }
 
     componentDidMount() {
@@ -68,10 +67,13 @@ class ShareOverview extends Component {
                 return items.sort((coinA, coinB) => coinA.name.localeCompare(coinB.name));
             case SORT.PERCENTAGE:
                 return items.sort(
-                    (coinA, coinB) => parseFloat(coinB.profitInPercent) - parseFloat(coinA.profitInPercent)
+                    (coinA, coinB) =>
+                        parseFloat(coinB.profitInPercent) - parseFloat(coinA.profitInPercent),
                 );
             case SORT.PRICE:
-                return items.sort((coinA, coinB) => coinB.amount * coinB.price - coinA.amount * coinA.price);
+                return items.sort(
+                    (coinA, coinB) => coinB.amount * coinB.price - coinA.amount * coinA.price,
+                );
             default:
                 return items.sort((coinA, coinB) => coinA.name.localeCompare(coinB.name));
         }
@@ -132,8 +134,15 @@ class ShareOverview extends Component {
 
         // // link the current market value to it
         const currencyObj = this.props.currencies.items["EUR"];
-        const linkedPortfolio = PortfolioHelper.linkPortfolioToMarket(portfolio, initialState.stats.get("coins"));
-        return PortfolioHelper.portfolioView(linkedPortfolio, 0, currencyObj, this.props.currencies.items);
+        Object.keys(portfolio).forEach(key => {
+            portfolio[key].market = portfolio[key].details;
+        });
+        return PortfolioHelper.portfolioView(
+            portfolio,
+            0,
+            currencyObj,
+            this.props.currencies.items,
+        );
     };
 
     renderChart(items) {
@@ -147,7 +156,7 @@ class ShareOverview extends Component {
                 name: items[key].symbol,
                 symbol: items[key].symbol,
                 label: items[key].netWorth,
-                total: parseFloat(items[key].amount * items[key].price)
+                total: parseFloat(items[key].amount * items[key].price),
             });
         }
 
@@ -172,7 +181,10 @@ class ShareOverview extends Component {
         const chart = this.renderChart(view.items);
         const total =
             this.props.share.settings.price && this.props.share.settings.amount ? (
-                <h3 className={styles.portfolioTotal} dangerouslySetInnerHTML={{ __html: view.netWorth }} />
+                <h3
+                    className={styles.portfolioTotal}
+                    dangerouslySetInnerHTML={{ __html: view.netWorth }}
+                />
             ) : (
                 undefined
             );
@@ -202,14 +214,14 @@ class ShareOverview extends Component {
 const mapStateToProps = state => ({
     share: state.share,
     currencies: state.currency,
-    portfolio: state.portfolio
+    portfolio: state.portfolio,
 });
 
 const mapDispatchToProps = dispatch => {
     return {
         shareActions: bindActionCreators(ShareActions, dispatch),
         currencyActions: bindActionCreators(CurrencyActions, dispatch),
-        portfolioActions: bindActionCreators(PortfolioActions, dispatch)
+        portfolioActions: bindActionCreators(PortfolioActions, dispatch),
     };
 };
 
