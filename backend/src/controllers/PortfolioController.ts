@@ -40,8 +40,6 @@ class PortfolioController {
 
         return UserService.update(req.auth.credentials).then(async (user) => {
 
-            await CacheHelper.invalidate(`portfolio/aggregate/${user.id}`);
-
             // refactor request object
             const c = user.portfolio;
             c.forEach((coin: any) => {
@@ -77,7 +75,6 @@ class PortfolioController {
 
         try {
             const newUser = await UserService.update(user);
-            await CacheHelper.invalidate(`portfolio/aggregate/${user.id}`);
             const portfolio = await PortfolioService.aggregatePortfolio(newUser);
             reply(portfolio);
         } catch (ex) {
@@ -99,7 +96,6 @@ class PortfolioController {
         const user: DomainUser = req.auth.credentials;
 
         await UserService.removeCoin(id, user);
-        await CacheHelper.invalidate(`portfolio/aggregate/${user.id}`);
 
         user.portfolio = user.portfolio.filter((uc) => String(uc.id) !== String(id));
         const portfolio = await PortfolioService.aggregatePortfolio(user);

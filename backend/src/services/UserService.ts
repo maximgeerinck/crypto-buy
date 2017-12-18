@@ -76,9 +76,9 @@ class UserService {
             });
     }
 
-    public update(user: User): Promise<User> {
+    public async update(user: User): Promise<User> {
         // invalidate caches
-        CacheHelper.invalidate(key(user.id));
+        await CacheHelper.invalidate(key(user.id));
         return UserRepository.update(user.id, user);
     }
 
@@ -93,7 +93,8 @@ class UserService {
         });
     }
 
-    public removeCoin(coinId: string, user: User): Promise<boolean> {
+    public async removeCoin(coinId: string, user: User): Promise<boolean> {
+        await CacheHelper.invalidate(key(user.id));
         return UserRepository.removeItem(coinId, user.id);
     }
 
