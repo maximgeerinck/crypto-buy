@@ -26,10 +26,14 @@ class PortfolioPieChart extends Component {
             "#ddcc77",
             "#661100",
             "#cc6677",
-            "#882255"
+            "#882255",
         ];
 
-        const tooltip = customTooltip ? <Tooltip content={<PortfolioCustomTooltip />} /> : <Tooltip />;
+        const tooltip = customTooltip ? (
+            <Tooltip content={<PortfolioCustomTooltip viewLabel={this.props.viewLabel} />} />
+        ) : (
+            <Tooltip />
+        );
 
         return (
             <div className={styles.portfolioChart}>
@@ -45,7 +49,9 @@ class PortfolioPieChart extends Component {
                         outerRadius={120}
                         fill="#8884d8"
                     >
-                        {data.map((entry, index) => <Cell key={index} fill={COLORS[index % COLORS.length]} />)}
+                        {data.map((entry, index) => (
+                            <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                        ))}
                     </Pie>
                     <Legend />
                     {tooltip}
@@ -57,11 +63,13 @@ class PortfolioPieChart extends Component {
 
 PortfolioPieChart.propTypes = {
     data: PropTypes.array,
-    customTooltip: PropTypes.bool.isRequired
+    customTooltip: PropTypes.bool.isRequired,
+    viewLabel: PropTypes.bool.isRequired,
 };
 
 PortfolioPieChart.defaultProps = {
-    customTooltip: false
+    customTooltip: false,
+    viewLabel: true,
 };
 
 export default PortfolioPieChart;

@@ -131,6 +131,7 @@ class ShareOverview extends Component {
     portfolioView = () => {
         const initialState = this.props.portfolio;
         const portfolio = this.props.share.coins.get("items").toObject();
+        console.log(portfolio);
 
         // // link the current market value to it
         const currencyObj = this.getUserCurrency();
@@ -146,7 +147,8 @@ class ShareOverview extends Component {
     };
 
     renderChart(items) {
-        if (!this.props.share.settings.graph) {
+        const { share } = this.props;
+        if (!share.settings.graph) {
             return undefined;
         }
         const data = [];
@@ -156,11 +158,20 @@ class ShareOverview extends Component {
                 name: items[key].symbol,
                 symbol: items[key].symbol,
                 label: items[key].netWorth,
-                total: parseFloat(items[key].amount * items[key].price),
+                total:
+                    share.settings.amount && share.settings.price
+                        ? parseFloat(items[key].amount * items[key].price)
+                        : items[key].amount,
             });
         }
 
-        const chart = <PortfolioPieChart data={data} customTooltip inPercent={false} />;
+        const chart = (
+            <PortfolioPieChart
+                data={data}
+                customTooltip
+                viewLabel={share.settings.amount && share.settings.price}
+            />
+        );
 
         return chart;
     }

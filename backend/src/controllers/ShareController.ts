@@ -25,10 +25,22 @@ class ShareController {
         // bind
         const portfolio = PortfolioHelper.bindPortfolioToCoin(p, coins);
 
+        const totalAmount = Object.keys(portfolio).reduce((sum, value) => {
+            if (portfolio[value]) {
+                return sum + portfolio[value].amount * portfolio[value].details.price.usd;
+            }
+        }, 0);
+
         // apply share rules
         Object.keys(portfolio).forEach((item: any) => {
             if (!share.amount) {
-                delete portfolio[item].amount;
+                // amount in percents to make graph work
+                // delete portfolio[item].amount;
+                if (share.graph) {
+                    portfolio[item].amount = portfolio[item].amount * portfolio[item].details.price.usd / totalAmount;
+                } else {
+                    delete portfolio[item].amount;
+                }
             }
             if (!share.price) {
                 delete portfolio[item].boughtPrice;
