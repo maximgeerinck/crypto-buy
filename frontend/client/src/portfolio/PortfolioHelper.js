@@ -58,6 +58,7 @@ export const portfolioView = (portfolio, initialInvestment, currency, currencies
 
     const profit = view.netWorth - initialInvestment;
     const netWorth = view.netWorth;
+    view.netWorthRaw = MathHelper.round(view.netWorth, 2);
     view.netWorth = CurrencyHelper.format(
         currency.symbolFormat,
         MathHelper.round(view.netWorth, 2),

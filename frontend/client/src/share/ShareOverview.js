@@ -49,7 +49,7 @@ class ShareOverview extends Component {
 
     isLoading() {
         const { currencies, share } = this.props;
-        return share.coins.get("loaded") || !currencies.loaded;
+        return share.coins.get("loaded") || !currencies.loaded || !this.getUserCurrency();
     }
 
     getCurrency(currency) {
@@ -58,7 +58,7 @@ class ShareOverview extends Component {
     }
 
     getUserCurrency() {
-        this.getCurrency(this.props.share.currency);
+        return this.getCurrency(this.props.share.currency);
     }
 
     sortItems(items) {
@@ -83,11 +83,11 @@ class ShareOverview extends Component {
     renderPortfolioItems(items) {
         const isFetching = !this.props.portfolio.stats.get("loaded");
 
-        return items.map(item => {
-            const boughtCurrency = this.getCurrency(item.boughtCurrency || "USD");
+        return items.map((item, i) => {
+            const boughtCurrency = item.boughtCurrency || this.getCurrency("USD");
             return (
                 <PortfolioTrackerItem
-                    key={item._id}
+                    key={i}
                     id={item.id}
                     name={item.name}
                     symbol={item.symbol}
@@ -133,7 +133,7 @@ class ShareOverview extends Component {
         const portfolio = this.props.share.coins.get("items").toObject();
 
         // // link the current market value to it
-        const currencyObj = this.props.currencies.items["EUR"];
+        const currencyObj = this.getUserCurrency();
         Object.keys(portfolio).forEach(key => {
             portfolio[key].market = portfolio[key].details;
         });

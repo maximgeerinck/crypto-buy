@@ -209,6 +209,10 @@ class PortfolioTrackerPage extends Component {
         const portfolioItemContainers = this.renderPortfolioItems(this.sortItems(view.items));
         const chart = this.renderChart(view.items);
 
+        // set document title
+        console.log(view);
+        AppActions.setDocumentTitle(`${view.netWorthRaw} (${view.profitInPercent}%)`);
+
         return (
             <Page custom className={cx(pageStyles.focused, homeStyles.main)}>
                 <div className={styles.portfolioStats}>

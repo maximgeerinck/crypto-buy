@@ -11,14 +11,14 @@ import * as CurrencyHelper from "../helpers/CurrencyHelper";
 
 class PortfolioTrackerItem extends Component {
     static childContextTypes = {
-        reactIconBase: PropTypes.object
+        reactIconBase: PropTypes.object,
     };
 
     getChildContext() {
         return {
             reactIconBase: {
-                size: "100%"
-            }
+                size: "100%",
+            },
         };
     }
 
@@ -57,7 +57,10 @@ class PortfolioTrackerItem extends Component {
         switch (true) {
             case indicator >= 3:
                 priceChangeIndicator = (
-                    <span className={cx(styles.caret, styles.positive)} style={{ marginBottom: "-20px" }}>
+                    <span
+                        className={cx(styles.caret, styles.positive)}
+                        style={{ marginBottom: "-20px" }}
+                    >
                         <FontAwesome name="caret-up" />
                         <FontAwesome name="caret-up" />
                         <FontAwesome name="caret-up" />
@@ -66,7 +69,10 @@ class PortfolioTrackerItem extends Component {
                 break;
             case indicator === 2:
                 priceChangeIndicator = (
-                    <span className={cx(styles.caret, styles.positive)} style={{ marginBottom: "-10px" }}>
+                    <span
+                        className={cx(styles.caret, styles.positive)}
+                        style={{ marginBottom: "-10px" }}
+                    >
                         <FontAwesome name="caret-up" />
                         <FontAwesome name="caret-up" />
                     </span>
@@ -88,7 +94,10 @@ class PortfolioTrackerItem extends Component {
                 break;
             case indicator === -2:
                 priceChangeIndicator = (
-                    <span className={cx(styles.caret, styles.negative)} style={{ marginBottom: "-10px" }}>
+                    <span
+                        className={cx(styles.caret, styles.negative)}
+                        style={{ marginBottom: "-10px" }}
+                    >
                         <FontAwesome name="caret-down" />
                         <FontAwesome name="caret-down" />
                     </span>
@@ -96,7 +105,10 @@ class PortfolioTrackerItem extends Component {
                 break;
             case indicator <= -3:
                 priceChangeIndicator = (
-                    <span className={cx(styles.caret, styles.negative)} style={{ marginBottom: "-20px" }}>
+                    <span
+                        className={cx(styles.caret, styles.negative)}
+                        style={{ marginBottom: "-20px" }}
+                    >
                         <FontAwesome name="caret-down" />
                         <FontAwesome name="caret-down" />
                         <FontAwesome name="caret-down" />
@@ -147,7 +159,9 @@ class PortfolioTrackerItem extends Component {
                 : cx(styles.changeTotal, styles.negative);
 
         const coinProfitClass =
-            parseFloat(changeTotal) > 0 ? cx(styles.value, styles.positive) : cx(styles.value, styles.negative);
+            parseFloat(changeTotal) > 0
+                ? cx(styles.value, styles.positive)
+                : cx(styles.value, styles.negative);
 
         const coinProfitDisplay =
             settings.price && paid != 0 ? (
@@ -179,7 +193,10 @@ class PortfolioTrackerItem extends Component {
 
         return (
             <div className={styles.price}>
-                <span className={styles.calculations} dangerouslySetInnerHTML={{ __html: calculations }} />
+                <span
+                    className={styles.calculations}
+                    dangerouslySetInnerHTML={{ __html: calculations }}
+                />
             </div>
         );
     }
@@ -187,7 +204,9 @@ class PortfolioTrackerItem extends Component {
     render() {
         const { name, symbol, id, settings, price, amount } = this.props;
 
-        const loader = this.props.isUpdating ? <Loader className={styles.loader} color="#848484" /> : null;
+        const loader = this.props.isUpdating ? (
+            <Loader className={styles.loader} color="#848484" />
+        ) : null;
 
         let statistics, prices, changeTotalContainer;
 
@@ -228,7 +247,7 @@ PortfolioTrackerItem.propTypes = {
     amount: PropTypes.number.isRequired,
     isUpdating: PropTypes.bool.isRequired,
     history: PropTypes.array.isRequired,
-    settings: PropTypes.object.isRequired
+    settings: PropTypes.object.isRequired,
 };
 
 PortfolioTrackerItem.defaultProps = {
@@ -244,8 +263,8 @@ PortfolioTrackerItem.defaultProps = {
         price: true,
         change: true,
         statistics: true,
-        amount: true
-    }
+        amount: true,
+    },
 };
 
 export default PortfolioTrackerItem;

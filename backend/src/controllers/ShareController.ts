@@ -45,7 +45,7 @@ class ShareController {
 
         reply({
             settings,
-            currency: share.currency,
+            currency: share.user.preferences.currency,
             portfolio
         });
 
