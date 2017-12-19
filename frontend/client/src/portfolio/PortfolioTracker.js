@@ -210,7 +210,6 @@ class PortfolioTrackerPage extends Component {
         const chart = this.renderChart(view.items);
 
         // set document title
-        console.log(view);
         AppActions.setDocumentTitle(`${view.netWorthRaw} (${view.profitInPercent}%)`);
 
         return (

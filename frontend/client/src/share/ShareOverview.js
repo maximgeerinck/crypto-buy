@@ -146,7 +146,7 @@ class ShareOverview extends Component {
     };
 
     renderChart(items) {
-        if (!this.props.share.settings.chart) {
+        if (!this.props.share.settings.graph) {
             return undefined;
         }
         const data = [];
