@@ -131,7 +131,6 @@ class ShareOverview extends Component {
     portfolioView = () => {
         const initialState = this.props.portfolio;
         const portfolio = this.props.share.coins.get("items").toObject();
-        console.log(portfolio);
 
         // // link the current market value to it
         const currencyObj = this.getUserCurrency();
