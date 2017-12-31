@@ -4,14 +4,15 @@ import routes from "../routes";
 import ReactGA from "react-ga";
 import { browserHistory } from "react-router";
 import "./index.scss";
+import * as Constants from "./constants";
 import { USER } from "../user/UserReducer";
 
-const TRACKING_ID = "UA-101986081-1";
+const TRACKING_ID = Constants.TRACKING_ID;
 
 ReactGA.initialize(TRACKING_ID);
 window.cryptotrackr = {
-    version: 8,
-    originalDocumentTitle: "Crypto Portfolio tracker"
+    version: Constants.APP_VERSION,
+    originalDocumentTitle: Constants.TITLE
 };
 const VERSION_KEY = "cryptotrackr_version";
 

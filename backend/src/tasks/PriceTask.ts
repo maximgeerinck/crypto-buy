@@ -41,13 +41,17 @@ export const fetchPrice = async () => {
             return CoinCollectionRepository.create(collection);
         })
         .catch((err: any) => {
-            console.log(err);
+            if(err.status && err.status === 503) {
+                console.log(`[Price task] Service Unavailable`);
+            } else {
+                console.log(err);
+            }            
         });
 };
 
 class PriceTask {
     public start() {
-        // start up fetch
+        // start up fetch        
         fetchPrice();
         // execute every 5min
         schedule.scheduleJob("*/5 * * * *", () => {
