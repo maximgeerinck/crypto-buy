@@ -58,6 +58,7 @@ class Page extends Component {
                     <ul className={page.donation}>
                         Support us by using one of the following currencies
                         <li>
+                            Donate
                             <img
                                 src={
                                     "https://files.coinmarketcap.com/static/img/coins/16x16/ethereum.png"
@@ -69,6 +70,7 @@ class Page extends Component {
                             </span>
                         </li>
                         <li>
+                            Donate
                             <img
                                 src={
                                     "https://files.coinmarketcap.com/static/img/coins/16x16/bitcoin.png"
@@ -78,6 +80,7 @@ class Page extends Component {
                             <span className={page.address}>14FG4SPBZAECiogAB3a2KZqCQmBG2zh69Z</span>
                         </li>
                         <li>
+                            Donate
                             <img
                                 src={
                                     "https://files.coinmarketcap.com/static/img/coins/16x16/litecoin.png"

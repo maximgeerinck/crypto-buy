@@ -71,7 +71,8 @@
             }
         }
         .calculations {
-            display: none;
+            display: inline-block;
+            margin: 10px 10px 0 0;
         }
         .price {
             color: #c3c3c3;
@@ -161,10 +162,6 @@
                 & > li {
                     padding: 0 5px;
                 }
-            }
-            .calculations {
-                display: inline-block;
-                margin: 10px 10px 0 0;
             }
         }
         .changeTotal {

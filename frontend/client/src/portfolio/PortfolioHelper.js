@@ -96,7 +96,7 @@ export const portfolioItemView = (portfolioItem, currency, currencies) => {
 
     view.netWorth = CurrencyHelper.format(currency.symbolFormat, MathHelper.round(netWorth, 2));
     view.profit = CurrencyHelper.format(currency.symbolFormat, MathHelper.round(profit, 2));
-    view.profitInPercent = MathHelper.round(MathHelper.gained(netWorth, netWorth + profit), 2);
+    view.profitInPercent = MathHelper.round(MathHelper.gained(netWorth - profit, netWorth), 2);
     if (view.paid === 0) {
         view.profitInPercent = MathHelper.round(view.changes.percent_24h, 2);
     }
