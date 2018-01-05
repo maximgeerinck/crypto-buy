@@ -10,11 +10,11 @@ class NotFoundPage extends React.Component {
         const { text, title, className } = this.props;
         return (
           <Page title={title} className={className}>
-            <p>{text}</p>
-            <div>
-              <Link to="/" className={cx(formStyles.button, formStyles.info)}>Home</Link>
-            </div>
-          </Page>
+              <p>{text}</p>
+              <div>
+                  <Link to="/" className={cx(formStyles.button, formStyles.info)}>Home</Link>
+                </div>
+            </Page>
         );
     }
 }

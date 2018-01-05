@@ -8,7 +8,7 @@ class CollapsedRating extends Component {
         return (
             <button className={styles.toggleCollapse} onClick={this.props.toggle}>
                 <FontAwesome name="comments-o" />
-            </button>
+          </button>
         );
     }
 }

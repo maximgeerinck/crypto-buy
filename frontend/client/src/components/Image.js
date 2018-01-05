@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component} from "react";
 
 export default class Image extends Component {
 
@@ -7,7 +7,7 @@ export default class Image extends Component {
         const { src, alt } = this.props;
 
         return (
-            <img src={ "//staging.api.wallstilldawn.com/assets/" + src } alt={alt}/>
+            <img src={"//staging.api.wallstilldawn.com/assets/" + src} alt={alt} />
         )
     }
 

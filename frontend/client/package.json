@@ -11,6 +11,7 @@
         "babel-plugin-react-css-modules": "^3.0.0",
         "babel-plugin-recharts": "^1.1.0",
         "babel-preset-es2015": "^6.24.0",
+        "babel-preset-es2017": "^6.24.0",
         "babel-preset-react": "^6.23.0",
         "babel-preset-react-app": "^3.0.1",
         "babel-preset-stage-2": "^6.22.0",
@@ -93,12 +94,8 @@
         "run-server": "pushstate-server build/"
     },
     "jest": {
-        "collectCoverageFrom": [
-            "src/**/*.{js,jsx}"
-        ],
-        "setupFiles": [
-            "<rootDir>/config/polyfills.js"
-        ],
+        "collectCoverageFrom": ["src/**/*.{js,jsx}"],
+        "setupFiles": ["<rootDir>/config/polyfills.js"],
         "testMatch": [
             "<rootDir>/src/**/__tests__/**/*.js?(x)",
             "<rootDir>/src/**/?(*.)(spec|test).js?(x)"
@@ -110,24 +107,14 @@
             "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
             "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
         },
-        "transformIgnorePatterns": [
-            "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
-        ],
+        "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"],
         "moduleNameMapper": {
             "^react-native$": "react-native-web"
         },
-        "moduleFileExtensions": [
-            "web.js",
-            "js",
-            "json",
-            "web.jsx",
-            "jsx"
-        ]
+        "moduleFileExtensions": ["web.js", "js", "json", "web.jsx", "jsx"]
     },
     "babel": {
-        "presets": [
-            "react-app"
-        ]
+        "presets": ["react-app"]
     },
     "eslintConfig": {
         "extends": "react-app"

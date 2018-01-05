@@ -1,24 +1,24 @@
-import { Component } from 'react';
-import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
+import { Component } from "react";
+import { connect } from "react-redux";
+import { browserHistory } from "react-router";
 
 class EnsureLoggedInContainer extends Component {
-  componentDidMount() {
-    const { isAuthenticated } = this.props
+    componentDidMount() {
+        const { isAuthenticated } = this.props
 
-    if (!isAuthenticated) {      
-      browserHistory.replace("/login")
+        if (!isAuthenticated) {      
+            browserHistory.replace("/login")
+        }
     }
-  }
 
-  render() {
-    const { isAuthenticated } = this.props
-    if (isAuthenticated) {
-      return this.props.children
-    } else {
-      return null
+    render() {
+        const { isAuthenticated } = this.props
+        if (isAuthenticated) {
+            return this.props.children
+        } else {
+            return null
+        }
     }
-  }
 }
 
 // Grab a reference to the current URL. If this is a web app and you are
@@ -26,10 +26,10 @@ class EnsureLoggedInContainer extends Component {
 // platforms (Native) or routing libraries have similar ways to find
 // the current position in the app.
 function mapStateToProps(state, ownProps) {
-  return {
-    isAuthenticated: state.auth.isAuthenticated,
-    currentURL: ownProps.location.pathname
-  }
+    return {
+        isAuthenticated: state.auth.isAuthenticated,
+        currentURL: ownProps.location.pathname
+    }
 }
 
 export default connect(mapStateToProps)(EnsureLoggedInContainer)

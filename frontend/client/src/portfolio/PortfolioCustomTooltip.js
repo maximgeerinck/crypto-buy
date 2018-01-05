@@ -10,7 +10,7 @@ class CustomTooltip extends Component {
             return (
                 <div className={pieStyles.value}>
                     <span dangerouslySetInnerHTML={{ __html: payload[0].payload.label }} />
-                </div>
+              </div>
             );
         }
     }
@@ -28,11 +28,11 @@ class CustomTooltip extends Component {
                             src={getCoinImage(payload[0].payload.id)}
                             alt="Coin"
                             className={pieStyles.symbol}
-                        />
+                      />
                         {payload[0].payload.symbol}
-                    </div>
+                  </div>
                     {label}
-                </div>
+              </div>
             );
         }
 

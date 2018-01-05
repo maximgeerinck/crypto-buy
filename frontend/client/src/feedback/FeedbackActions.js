@@ -18,8 +18,8 @@ export const submit = (rating, message) => {
         const obj = {
             rating,
             data: {
-                language: navigator.language
-            }
+                language: navigator.language,
+            },
         };
         if (message) {
             obj.message = message;

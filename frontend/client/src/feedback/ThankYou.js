@@ -14,9 +14,9 @@ class ThankYou extends Component {
             <div className={styles.thanks}>
                 <p>
                     <FontAwesome name="check" className={styles.thanksIcon} />Thank you!
-                </p>
+              </p>
                 {message}
-            </div>
+          </div>
         );
     }
 }

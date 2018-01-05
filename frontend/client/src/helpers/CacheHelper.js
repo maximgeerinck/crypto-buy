@@ -1,9 +1,12 @@
-import * as moment from "moment";
+import moment from "moment";
 
 export const cache = (key, item, duration = 60 * 10) => {
     const now = moment();
 
-    localStorage.setItem(key, JSON.stringify({ item: item, expiresOn: now.add(duration, "seconds").toDate() }));
+    localStorage.setItem(
+        key,
+        JSON.stringify({ item: item, expiresOn: now.add(duration, "seconds").toDate() }),
+    );
 };
 
 export const getCache = key => {

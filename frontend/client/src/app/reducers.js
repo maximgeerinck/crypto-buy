@@ -13,17 +13,17 @@ import notification from "../notification/NotificationReducer";
 import feedback from "../feedback/FeedbackReducer";
 
 const rootReducer = combineReducers({
-  form,
-  auth,
-  user,
-  portfolio,
-  currency,
-  share,
-  coins,
-  app,
-  notification,
-  feedback,
-  routing: routerReducer
+    form,
+    auth,
+    user,
+    portfolio,
+    currency,
+    share,
+    coins,
+    app,
+    notification,
+    feedback,
+    routing: routerReducer
 });
 
 export default rootReducer;

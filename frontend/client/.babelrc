@@ -1,13 +1,4 @@
 {
-    "plugins": [ "recharts" ],
-    "presets": [
-        "react",
-        [
-            "es2015",
-            {
-                "modules": false
-            }
-        ],
-        "stage-2"
-    ]
+    "plugins": ["recharts"],
+    "presets": ["es2017", "react", "stage-2"]
 }

@@ -27,35 +27,35 @@ export class ResetPasswordForm extends Component {
         return (
             <form className={formStyles.formFullPage} onSubmit={this._onReset}>
                 <div className={formStyles.group}>
-                    <label htmlFor="password">Password</label>
+                <label htmlFor="password">Password</label>
                     <input
-                        type="password"
-                        placeholder="password"
+                    type="password"
+                    placeholder="password"
                         value={this.state.password}
-                        onChange={(e) => this.setState({ password: e.target.value })}
-                    />
-                </div>
+                    onChange={(e) => this.setState({ password: e.target.value })}
+                  />
+              </div>
 
-                <div className={formStyles.group}>
-                    <label htmlFor="confirmPassword">Confirm password</label>
-                    <input
-                        type="password"
+            <div className={formStyles.group}>
+                <label htmlFor="confirmPassword">Confirm password</label>
+                <input
+                type="password"
                         placeholder="confirm password"
                         value={this.state.confirmPassword}
                         onChange={(e) => this.setState({ confirmPassword: e.target.value })}
-                    />
-                </div>
+              />
+              </div>
 
                 <div className={formStyles.group}>
-                    <button type="submit" className={formStyles.button}>
+                <button type="submit" className={formStyles.button}>
                         Reset password
                     </button>
-                </div>
+              </div>
 
                 <div className={formStyles.noAccount}>
                     <Link to="/register">No account yet? Register here</Link>
-                </div>
-            </form>
+              </div>
+          </form>
         );
     }
 }
@@ -83,17 +83,17 @@ class ForgotPasswordPage extends Component {
                 onSubmit={this._onReset}
                 token={this.props.params.token}
                 email={this.props.params.email}
-            />
+          />
         ) : (
             <div className={pageStyle.container}>
                 <p>Your password has been reset succesfully!</p>
-            </div>
+          </div>
         );
 
         return (
             <Page title="Reset Password" custom className={pageStyle.focused}>
                 {details}
-            </Page>
+          </Page>
         );
     }
 }

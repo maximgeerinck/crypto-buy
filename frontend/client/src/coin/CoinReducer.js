@@ -1,5 +1,5 @@
 import * as types from "./CoinActionTypes";
-import { Record, Map } from "immutable";
+import { Map, Record } from "immutable";
 import * as CacheHelper from "../helpers/CacheHelper";
 
 const KEY_COINS = "coins/index";
@@ -17,11 +17,11 @@ if (CacheHelper.getCache(KEY_COINS)) {
 
 const CoinReducer = (state = initialState, action) => {
     switch (action.type) {
-        case types.COINS_SUCCESS:
-            CacheHelper.cache(KEY_COINS, action.body, CacheHelper.SHORT);
-            return state.set("coins", new Map(action.body)).set("loaded", true);
-        default:
-            return state;
+    case types.COINS_SUCCESS:
+        CacheHelper.cache(KEY_COINS, action.body, CacheHelper.SHORT);
+        return state.set("coins", new Map(action.body)).set("loaded", true);
+    default:
+        return state;
     }
 };
 

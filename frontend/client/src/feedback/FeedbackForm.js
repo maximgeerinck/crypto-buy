@@ -42,13 +42,13 @@ class FeedbackForm extends Component {
                 {header}
                 <div className={formStyles.group}>
                     <textarea value={message} onChange={e => this.changeForm("message", e.target.value)} />
-                </div>
+              </div>
                 <div className={formStyles.group}>
                     <button type="submit" className={formStyles.button}>
                         Submit feedback
-                    </button>
-                </div>
-            </form>
+                  </button>
+              </div>
+          </form>
         );
     }
 }

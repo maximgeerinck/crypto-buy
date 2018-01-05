@@ -8,11 +8,11 @@ class Error extends Component {
         const { key, onClick } = this.props;
         return (
             <li key={key}>
-                <button onClick={onClick} className={styles.icon}>
+            <button onClick={onClick} className={styles.icon}>
                     <FontAwesome name="cancel" />
-                </button>
+              </button>
                 {this.props.children}
-            </li>
+          </li>
         );
     }
 }

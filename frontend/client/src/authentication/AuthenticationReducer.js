@@ -18,21 +18,21 @@ var InitialState = new Immutable.Record({
 const AuthenticationReducer = (state = new InitialState(), action) => {
     state = state.setIn([ "form", "isSubmitting" ], false).set("error", undefined);
     switch (action.type) {
-        case types.AUTHENTICATE_SUCCESS:
-            return state.set("isAuthenticated", true).set("token", action.body.token);
-        case types.AUTHENTICATE_FAILURE:
-            return state.setIn([ "form", "isInvalid" ], true);
-        case types.AUTHENTICATE_REQUEST:
-            return state.setIn([ "form", "isSubmitting" ], true);
-        case LOCATION_CHANGE:
-            return state.setIn([ "form", "isInvalid" ], false);
-        case types.LOGOUT:
-            localStorage.removeItem(AUTH_TOKEN);
-            return state.set("isAuthenticated", false);
-        case errorTypes.ERROR_KNOWN:
-            return state.setIn([ "form", "errors" ], action.body);
-        default:
-            return state;
+    case types.AUTHENTICATE_SUCCESS:
+        return state.set("isAuthenticated", true).set("token", action.body.token);
+    case types.AUTHENTICATE_FAILURE:
+        return state.setIn([ "form", "isInvalid" ], true);
+    case types.AUTHENTICATE_REQUEST:
+        return state.setIn([ "form", "isSubmitting" ], true);
+    case LOCATION_CHANGE:
+        return state.setIn([ "form", "isInvalid" ], false);
+    case types.LOGOUT:
+        localStorage.removeItem(AUTH_TOKEN);
+        return state.set("isAuthenticated", false);
+    case errorTypes.ERROR_KNOWN:
+        return state.setIn([ "form", "errors" ], action.body);
+    default:
+        return state;
     }
 };
 

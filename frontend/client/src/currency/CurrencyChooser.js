@@ -8,41 +8,41 @@ import "react-select/dist/react-select.css";
 import "../react-select.css";
 
 class CurrencyChooser extends Component {
-  componentWillMount() {
-    // load currencies
-    this.props.currencyActions.index();
-  }
+    componentWillMount() {
+        // load currencies
+        this.props.currencyActions.index();
+    }
 
-  render() {
-    const { currencies, currency, className } = this.props;
+    render() {
+        const { currencies, currency, className } = this.props;
 
-    if (!currencies.loaded) return <Loader />;
+        if (!currencies.loaded) return <Loader />;
 
-    const rates = Object.keys(currencies.items).map((currency) => {
-      const c = currencies.items[currency];
-      return { value: currency, label: c.name };
-    });
+        const rates = Object.keys(currencies.items).map(currency => {
+            const c = currencies.items[currency];
+            return { value: currency, label: c.name };
+        });
 
-    return (
-      <Select
+        return (
+            <Select
                 name="currency"
                 className={className}
                 value={currency}
                 options={rates}
-                onChange={(val) => this.props.onSave(val.value)}
+                onChange={val => this.props.onSave(val.value)}
             />
-    );
-  }
+        );
+    }
 }
 
-const mapStateToProps = (state) => ({
-  currencies: state.currency
+const mapStateToProps = state => ({
+    currencies: state.currency,
 });
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    currencyActions: bindActionCreators(CurrencyActions, dispatch)
-  };
+const mapDispatchToProps = dispatch => {
+    return {
+        currencyActions: bindActionCreators(CurrencyActions, dispatch),
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CurrencyChooser);

@@ -1,10 +1,14 @@
 {
     "extends": ["eslint:recommended", "plugin:react/recommended"],
+    "plugins": ["react"],
+    "parser": "babel-eslint",
     "parserOptions": {
+        "ecmaVersion": 8,
         "ecmaFeatures": {
-            "jsx": true,
-            "modules": true
-        }
+            "experimentalObjectRestSpread": true,
+            "jsx": true
+        },
+        "sourceType": "module"
     },
     "rules": {
         "jsx-a11y/href-no-hash": "off",

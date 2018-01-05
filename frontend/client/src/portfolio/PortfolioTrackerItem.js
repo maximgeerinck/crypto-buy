@@ -6,7 +6,7 @@ import { getCoinImage } from "../helpers/CoinHelper";
 import styles from "./portfolioTracker.scss";
 import FontAwesome from "react-fontawesome";
 
-import { round, gained } from "../helpers/MathHelper";
+import { gained, round } from "../helpers/MathHelper";
 import * as CurrencyHelper from "../helpers/CurrencyHelper";
 
 class PortfolioTrackerItem extends Component {
@@ -55,54 +55,54 @@ class PortfolioTrackerItem extends Component {
         }
 
         switch (true) {
-            case indicator >= 3:
-                priceChangeIndicator = (
-                    <span className={cx(styles.caret, styles.positive)} style={{ marginBottom: "-20px" }}>
-                        <FontAwesome name="caret-up" />
-                        <FontAwesome name="caret-up" />
-                        <FontAwesome name="caret-up" />
-                    </span>
-                );
-                break;
-            case indicator === 2:
-                priceChangeIndicator = (
-                    <span className={cx(styles.caret, styles.positive)} style={{ marginBottom: "-10px" }}>
-                        <FontAwesome name="caret-up" />
-                        <FontAwesome name="caret-up" />
-                    </span>
-                );
-                break;
-            case indicator === 1:
-                priceChangeIndicator = (
-                    <span className={cx(styles.caret, styles.positive)}>
-                        <FontAwesome name="caret-up" />
-                    </span>
-                );
-                break;
-            case indicator === -1:
-                priceChangeIndicator = (
-                    <span className={cx(styles.caret, styles.negative)}>
-                        <FontAwesome name="caret-down" />
-                    </span>
-                );
-                break;
-            case indicator === -2:
-                priceChangeIndicator = (
-                    <span className={cx(styles.caret, styles.negative)} style={{ marginBottom: "-10px" }}>
-                        <FontAwesome name="caret-down" />
-                        <FontAwesome name="caret-down" />
-                    </span>
-                );
-                break;
-            case indicator <= -3:
-                priceChangeIndicator = (
-                    <span className={cx(styles.caret, styles.negative)} style={{ marginBottom: "-20px" }}>
-                        <FontAwesome name="caret-down" />
-                        <FontAwesome name="caret-down" />
-                        <FontAwesome name="caret-down" />
-                    </span>
-                );
-                break;
+        case indicator >= 3:
+            priceChangeIndicator = (
+              <span className={cx(styles.caret, styles.positive)} style={{ marginBottom: "-20px" }}>
+                  <FontAwesome name="caret-up" />
+                  <FontAwesome name="caret-up" />
+                  <FontAwesome name="caret-up" />
+                </span>
+            );
+            break;
+        case indicator === 2:
+            priceChangeIndicator = (
+                <span className={cx(styles.caret, styles.positive)} style={{ marginBottom: "-10px" }}>
+                    <FontAwesome name="caret-up" />
+                    <FontAwesome name="caret-up" />
+              </span>
+            );
+            break;
+        case indicator === 1:
+            priceChangeIndicator = (
+              <span className={cx(styles.caret, styles.positive)}>
+                  <FontAwesome name="caret-up" />
+                </span>
+            );
+            break;
+        case indicator === -1:
+            priceChangeIndicator = (
+                <span className={cx(styles.caret, styles.negative)}>
+                    <FontAwesome name="caret-down" />
+              </span>
+            );
+            break;
+        case indicator === -2:
+            priceChangeIndicator = (
+              <span className={cx(styles.caret, styles.negative)} style={{ marginBottom: "-10px" }}>
+                  <FontAwesome name="caret-down" />
+                  <FontAwesome name="caret-down" />
+                </span>
+            );
+            break;
+        case indicator <= -3:
+            priceChangeIndicator = (
+              <span className={cx(styles.caret, styles.negative)} style={{ marginBottom: "-20px" }}>
+                    <FontAwesome name="caret-down" />
+                  <FontAwesome name="caret-down" />
+                  <FontAwesome name="caret-down" />
+                </span>
+            );
+            break;
             //no default
         }
 
@@ -118,18 +118,18 @@ class PortfolioTrackerItem extends Component {
         return (
             <ul className={styles.change}>
                 <li>
-                    <span className={styles.changeType}>H</span>
+                <span className={styles.changeType}>H</span>
                     <span className={classChangeHour}>{changeHour}%</span>
+              </li>
+            <li>
+                  <span className={styles.changeType}>D</span>
+                  <span className={classChangeDay}>{changeDay}%</span>
                 </li>
-                <li>
-                    <span className={styles.changeType}>D</span>
-                    <span className={classChangeDay}>{changeDay}%</span>
-                </li>
-                <li>
-                    <span className={styles.changeType}>W</span>
+            <li>
+                <span className={styles.changeType}>W</span>
                     <span className={classChangeWeek}>{changeWeek}%</span>
-                </li>
-            </ul>
+              </li>
+          </ul>
         );
     }
 
@@ -156,12 +156,12 @@ class PortfolioTrackerItem extends Component {
 
         return (
             <div className={classChangeTotal}>
-                <div className={styles.percentage}>
-                    {round(changeTotal, 2)}%
+            <div className={styles.percentage}>
+                  {round(changeTotal, 2)}%
                     {priceChangeIndicator}
                 </div>
                 {coinProfitDisplay}
-            </div>
+          </div>
         );
     }
 
@@ -176,7 +176,7 @@ class PortfolioTrackerItem extends Component {
         return (
             <div className={styles.price}>
                 <span className={styles.calculations} dangerouslySetInnerHTML={{ __html: calculations }} />
-            </div>
+          </div>
         );
     }
 
@@ -202,12 +202,12 @@ class PortfolioTrackerItem extends Component {
                 <div className={styles.details}>
                     <h2>
                         <img src={getCoinImage(id)} alt="Coin" /> {name} ({symbol})
-                    </h2>
-                    {statistics}
+                  </h2>
+                {statistics}
                     {prices}
-                </div>
+              </div>
                 {changeTotalContainer}
-            </div>
+          </div>
         );
     }
 }

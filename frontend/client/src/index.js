@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "react-dom";
-import { createStore, applyMiddleware, compose } from "redux";
+import { applyMiddleware, compose, createStore } from "redux";
 import { Provider } from "react-redux";
 import CryptoBuyApp from "./app/CryptoBuyApp";
 import rootReducer from "./app/reducers";
@@ -38,7 +38,7 @@ unregister();
 render(
     <Provider store={store}>
         <CryptoBuyApp history={history} />
-    </Provider>,
+  </Provider>,
     document.getElementById("root")
 );
 

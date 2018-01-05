@@ -15,18 +15,18 @@ class ShareForm extends Component {
                 graph: false,
                 price: false,
                 change: false,
-                amount: false
-            }
+                amount: false,
+            },
         };
     }
 
-    onChangeOption = (key) => {
+    onChangeOption = key => {
         let options = this.state.options;
         options[key] = !options[key];
         this.setState({ options: options });
     };
 
-    onSave = (e) => {
+    onSave = e => {
         e.preventDefault();
         this.props.onSave(this.state.options);
         return 0;
@@ -36,7 +36,9 @@ class ShareForm extends Component {
         const { options } = this.state;
         const { latestShare } = this.props;
 
-        const inputText = latestShare.token ? latestShare.token : "Generate your unique share link!";
+        const inputText = latestShare.token
+            ? latestShare.token
+            : "Generate your unique share link!";
 
         return (
             <form className={formStyles.form} onSubmit={this.onSave}>
@@ -50,17 +52,25 @@ class ShareForm extends Component {
                     <input type="url" value={inputText} disabled ref="shareUrl" />
                 </div>
                 <div className={cx(formStyles.group, formStyles.inline)}>
-                    <ShareOption text="Graph" enabled={options.graph} onToggle={(_) => this.onChangeOption("graph")} />
-                    <ShareOption text="Price" enabled={options.price} onToggle={(_) => this.onChangeOption("price")} />
+                    <ShareOption
+                        text="Graph"
+                        enabled={options.graph}
+                        onToggle={_ => this.onChangeOption("graph")}
+                    />
+                    <ShareOption
+                        text="Price"
+                        enabled={options.price}
+                        onToggle={_ => this.onChangeOption("price")}
+                    />
                     <ShareOption
                         text="Change"
                         enabled={options.change}
-                        onToggle={(_) => this.onChangeOption("change")}
+                        onToggle={_ => this.onChangeOption("change")}
                     />
                     <ShareOption
                         text="Amount"
                         enabled={options.amount}
-                        onToggle={(_) => this.onChangeOption("amount")}
+                        onToggle={_ => this.onChangeOption("amount")}
                     />
                 </div>
             </form>
@@ -70,7 +80,7 @@ class ShareForm extends Component {
 
 ShareForm.propTypes = {
     onSave: PropTypes.func,
-    latestShare: PropTypes.object
+    latestShare: PropTypes.object,
 };
 
 export default ShareForm;

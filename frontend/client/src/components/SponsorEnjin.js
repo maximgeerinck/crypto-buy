@@ -9,8 +9,8 @@ class SponsorEnjin extends Component {
                 <img src={enjinImage} alt="enjin" />
                 <p>
                     Sponsored by Enjin Coin <br /> "Smart Cryptocurrency for Gaming"
-                </p>
-            </a>
+              </p>
+          </a>
         );
     }
 }

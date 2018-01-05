@@ -17,7 +17,7 @@ import cx from "classnames";
 import pageStyles from "../components/page.scss";
 import PortfolioPieChart from "./PortfolioPieChart";
 
-import { round, gained } from "../helpers/MathHelper";
+import { gained, round } from "../helpers/MathHelper";
 import * as CurrencyHelper from "../helpers/CurrencyHelper";
 
 export class PortfolioTracker extends Component {
@@ -84,26 +84,26 @@ class PortfolioTrackerPage extends Component {
             <div style={{ textAlign: "center", marginTop: "20px" }}>
                 <a href="/account" className={formStyles.button}>
                     You have not added coins yet, add them here{" "}
-                </a>{" "}
-            </div>
+              </a>{" "}
+          </div>
         );
     }
 
     sortItems(items) {
         switch (this.state.sort) {
-            case SORT.NAME:
-                return items.sort((coinA, coinB) => coinA.name.localeCompare(coinB.name));
-            case SORT.PERCENTAGE:
-                return items.sort(
-                    (coinA, coinB) =>
-                        parseFloat(coinB.profitInPercent) - parseFloat(coinA.profitInPercent),
-                );
-            case SORT.PRICE:
-                return items.sort(
-                    (coinA, coinB) => coinB.amount * coinB.price - coinA.amount * coinA.price,
-                );
-            default:
-                return items.sort((coinA, coinB) => coinA.name.localeCompare(coinB.name));
+        case SORT.NAME:
+            return items.sort((coinA, coinB) => coinA.name.localeCompare(coinB.name));
+        case SORT.PERCENTAGE:
+            return items.sort(
+                (coinA, coinB) =>
+                    parseFloat(coinB.profitInPercent) - parseFloat(coinA.profitInPercent),
+            );
+        case SORT.PRICE:
+            return items.sort(
+                (coinA, coinB) => coinB.amount * coinB.price - coinA.amount * coinA.price,
+            );
+        default:
+            return items.sort((coinA, coinB) => coinA.name.localeCompare(coinB.name));
         }
         return items;
     }
@@ -152,24 +152,24 @@ class PortfolioTrackerPage extends Component {
             const boughtCurrency = this.getCurrency(item.boughtCurrency || "USD");
             return (
                 <PortfolioTrackerItem
-                    key={item._id}
-                    id={item.id}
-                    name={item.name}
+                key={item._id}
+                id={item.id}
+                name={item.name}
                     symbol={item.symbol}
                     changeHour={item.changes.percent_1h}
-                    changeDay={item.changes.percent_24h}
+                changeDay={item.changes.percent_24h}
                     changeWeek={item.changes.percent_7d}
-                    boughtPrice={item.price}
+                boughtPrice={item.price}
                     currency={this.getUserCurrency()}
                     boughtCurrency={boughtCurrency}
-                    price={item.price}
-                    amount={item.amount}
-                    isUpdating={isFetching}
-                    history={item.history}
-                    profit={item.profit}
+                price={item.price}
+                amount={item.amount}
+                isUpdating={isFetching}
+                history={item.history}
+                profit={item.profit}
                     profitInPercent={item.profitInPercent}
-                    paid={item.paid}
-                />
+                paid={item.paid}
+              />
             );
         });
     }
@@ -195,12 +195,27 @@ class PortfolioTrackerPage extends Component {
         return chart;
     }
 
+    renderSort() {
+        if (!this.hasCoins()) return undefined;
+
+        return (
+            <div className={styles.sort}>
+            <span>Sort by</span>
+                <select onChange={this.sort}>
+                    <option value={SORT.PRICE}>Price</option>
+                    <option value={SORT.PERCENTAGE}>Percentage</option>
+                    <option value={SORT.NAME}>name</option>
+              </select>
+          </div>
+        );
+    }
+
     render() {
         if (this.isLoading())
             return (
                 <Page custom className={homeStyles.main}>
                     <Loader />
-                </Page>
+              </Page>
             );
 
         // GET USER PORTFOLIO
@@ -208,6 +223,7 @@ class PortfolioTrackerPage extends Component {
         const view = this.portfolioView();
         const portfolioItemContainers = this.renderPortfolioItems(this.sortItems(view.items));
         const chart = this.renderChart(view.items);
+        const sort = this.renderSort();
 
         // set document title
         AppActions.setDocumentTitle(`${view.netWorthRaw} (${view.profitInPercent}%)`);
@@ -216,38 +232,29 @@ class PortfolioTrackerPage extends Component {
             <Page custom className={cx(pageStyles.focused, homeStyles.main)}>
                 <div className={styles.portfolioStats}>
                     <h3
-                        className={styles.portfolioTotal}
-                        dangerouslySetInnerHTML={{ __html: view.netWorth }}
-                    />
+                    className={styles.portfolioTotal}
+                    dangerouslySetInnerHTML={{ __html: view.netWorth }}
+                  />
                     <div className={styles.invested}>
                         <p
                             className={view.profitStyle}
-                            dangerouslySetInnerHTML={{
+                        dangerouslySetInnerHTML={{
                                 __html: `${view.profit} (${view.profitInPercent}%)`,
                             }}
-                        />
+                      />
                         <p
-                            className={styles.investmentNotes}
-                            dangerouslySetInnerHTML={{
+                        className={styles.investmentNotes}
+                        dangerouslySetInnerHTML={{
                                 __html: `(based on investment of ${view.initialInvestment})`,
                             }}
-                        />
-                    </div>
+                      />
+                  </div>
                     {chart}
-                </div>
-                <div className={styles.settings}>
-                    <div className={styles.sort}>
-                        <span>Sort by</span>
-                        <select onChange={this.sort}>
-                            <option value={SORT.PRICE}>Price</option>
-                            <option value={SORT.PERCENTAGE}>Percentage</option>
-                            <option value={SORT.NAME}>name</option>
-                        </select>
-                    </div>
-                </div>
+              </div>
+                <div className={styles.settings}>{sort}</div>
                 <PortfolioTracker> {portfolioItemContainers} </PortfolioTracker>
                 {noCoins}
-            </Page>
+          </Page>
         );
 
         // const { portfolio, currency } = this.props;

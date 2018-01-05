@@ -9,59 +9,59 @@ import AccountNavigation from "./AccountNavigation";
 import UserPreferences from "./UserPreferences";
 
 class ChangePasswordPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      password_mismatch: false
-    };
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            password_mismatch: false
+        };
+    }
 
-  componentWillMount() {
-    if (!this.props.user.loaded) this.props.userActions.me();
-  }
+    componentWillMount() {
+        if (!this.props.user.loaded) this.props.userActions.me();
+    }
 
   onSavePreferences = (preferences) => {
-    this.props.userActions.updatePreferences(preferences);
+      this.props.userActions.updatePreferences(preferences);
   };
 
   render() {
-    //TODO: Add loading page
-    if (!this.props.user.loaded) {
-      return <Page title="Account"><Loader /></Page>
-    }
+      //TODO: Add loading page
+      if (!this.props.user.loaded) {
+          return <Page title="Account"><Loader /></Page>
+      }
 
-    const user = this.props.user.get("user").toObject();
+      const user = this.props.user.get("user").toObject();
 
-    const bittrex = user.preferences.exchanges ? user.preferences.exchanges.bittrex : {};
+      const bittrex = user.preferences.exchanges ? user.preferences.exchanges.bittrex : {};
 
-    return (
-      <Page title="Settings">
-        <div className={styles.welcome}>
+      return (
+        <Page title="Settings">
+            <div className={styles.welcome}>
             Welcome back <span className={styles.strong}>{user.email}</span>
-        </div>
+              </div>
 
-        <AccountNavigation active="settings" />
+            <AccountNavigation active="settings" />
 
-        <h2>Preferences</h2>
-        <UserPreferences
-            currency={user.preferences.currency}
-            initialInvestment={user.preferences.initialInvestment}
-            bittrex={bittrex}
-            onSave={this.onSavePreferences}
-        />
-    </Page>
-    );
+            <h2>Preferences</h2>
+            <UserPreferences
+                currency={user.preferences.currency}
+                initialInvestment={user.preferences.initialInvestment}
+                bittrex={bittrex}
+                onSave={this.onSavePreferences}
+              />
+          </Page>
+      );
   }
 }
 
 const mapStateToProps = (state) => ({
-  user: state.user
+    user: state.user
 });
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    userActions: bindActionCreators(UserActions, dispatch)
-  };
+    return {
+        userActions: bindActionCreators(UserActions, dispatch)
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChangePasswordPage);

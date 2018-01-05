@@ -43,40 +43,40 @@ class RegisterForm extends Component {
         return (
             <form className={formStyles.formFullPage} onSubmit={this.onCreate}>
                 <div className={formStyles.group}>
-                    <label htmlFor="Email">Email</label>
+                <label htmlFor="Email">Email</label>
                     <input
-                        type="email"
+                    type="email"
                         value={email}
                         placeholder="name@provider.com"
                         onChange={this.onEmailChange}
                         className={validation.email ? formStyles.invalid : null}
-                    />
+                  />
                     <span className={formStyles.validationError}>
                         {ValidationHelper.parse(validation, "email", [ "email" ])}
-                    </span>
-                </div>
-                <div className={formStyles.group}>
+                  </span>
+              </div>
+            <div className={formStyles.group}>
                     <label htmlFor="password">Password</label>
                     <input
                         type="password"
-                        value={password}
+                value={password}
                         placeholder="Password"
                         onChange={this.onPasswordChange}
                         className={validation.password ? formStyles.invalid : null}
-                    />
+              />
                     <span className={formStyles.validationError}>
                         {ValidationHelper.parse(validation, "password", [ "password", 6 ])}
-                    </span>
+              </span>
                 </div>
                 <div className={formStyles.group}>
                     <button type="submit" className={formStyles.button}>
                         Create your account
-                    </button>
-                </div>
-                <div className={formStyles.noAccount}>
+                  </button>
+              </div>
+            <div className={formStyles.noAccount}>
                     <Link to="/login">Already have an account? Login here</Link>
-                </div>
-            </form>
+              </div>
+          </form>
         );
     }
 }
@@ -115,7 +115,7 @@ class RegisterPage extends Component {
                 <div className={pageStyle.container}>
                     <Loader />
                     <div>Registering...</div>
-                </div>
+              </div>
             );
         }
 
@@ -123,7 +123,7 @@ class RegisterPage extends Component {
             successfulMessage = (
                 <div className={pageStyle.container}>
                     <p>Registration successful! You may login now.</p>
-                </div>
+              </div>
             );
             setTimeout(() => {
                 browserHistory.push("/login");
@@ -139,7 +139,7 @@ class RegisterPage extends Component {
                 {submitting}
                 {successfulMessage}
                 {form}
-            </Page>
+          </Page>
         );
     }
 }

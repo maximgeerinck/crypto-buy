@@ -83,7 +83,7 @@ class Feedback extends Component {
 
         if (this.attachMessage()) {
             return this.renderWrapper(
-                <FeedbackForm onSubmit={this.submitForm} headerMessage={"What could we improve?"} />
+                <FeedbackForm onSubmit={this.submitForm} headerMessage="What could we improve?" />
             );
         }
 

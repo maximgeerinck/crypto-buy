@@ -14,7 +14,7 @@ class ErrorContainer extends Component {
         const errors = app.get("errors").toArray().map((error, key) => (
             <Error key={key} onClick={this.dismiss(key)}>
                 {error}
-            </Error>
+          </Error>
         ));
         return <ul className={errorStyles.errors}>{errors}</ul>;
     }

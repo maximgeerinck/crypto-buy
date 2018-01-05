@@ -1,6 +1,6 @@
 import * as types from "./PortfolioActionTypes";
 import { LOGOUT } from "../authentication/AuthenticationActionTypes";
-import { Record, Map, List } from "immutable";
+import { List, Map, Record } from "immutable";
 
 const COINS = "portfolio_coins";
 const DETAILS = "portfolio_details"; // the coin statistics
@@ -50,54 +50,54 @@ const PortfolioReducer = (state = initialState, action) => {
         .setIn(["form", "errors"], List([]));
 
     switch (action.type) {
-        case types.RETRIEVE_ITEMS_SUCCESS:
-            localStorage.setItem(COINS, JSON.stringify(action.body));
-            return state
-                .setIn(["coins", "items"], action.body)
-                .setIn(["coins", "validationErrors"], action.body.map(coin => null))
-                .setIn(["coins", "loaded"], true);
+    case types.RETRIEVE_ITEMS_SUCCESS:
+        localStorage.setItem(COINS, JSON.stringify(action.body));
+        return state
+            .setIn(["coins", "items"], action.body)
+            .setIn(["coins", "validationErrors"], action.body.map(coin => null))
+            .setIn(["coins", "loaded"], true);
 
-        case types.COIN_DETAILS_REQUEST:
-            return state.setIn(["page", "isFetching"], true);
+    case types.COIN_DETAILS_REQUEST:
+        return state.setIn(["page", "isFetching"], true);
 
-        case types.COIN_DETAILS_SUCCESS:
-            localStorage.setItem(DETAILS, JSON.stringify(action.body));
-            return state.setIn(["stats", "coins"], action.body).setIn(["stats", "loaded"], true);
+    case types.COIN_DETAILS_SUCCESS:
+        localStorage.setItem(DETAILS, JSON.stringify(action.body));
+        return state.setIn(["stats", "coins"], action.body).setIn(["stats", "loaded"], true);
 
-        case types.COIN_DETAILS_FAILURE:
-            return state.setIn(["page", "isFetching"], false);
+    case types.COIN_DETAILS_FAILURE:
+        return state.setIn(["page", "isFetching"], false);
 
-        case types.COINS_ADD_REQUEST:
-            return state.setIn(["form", "isSubmitting"], true);
+    case types.COINS_ADD_REQUEST:
+        return state.setIn(["form", "isSubmitting"], true);
 
-        case types.COINS_ADD_SUCCESS:
-        case types.COIN_UPDATE_SUCCESS:
-        case types.COIN_DELETE_SUCCESS:
-            return state
-                .setIn(["coins", "items"], action.body)
-                .setIn(["form", "isSubmitting"], false);
+    case types.COINS_ADD_SUCCESS:
+    case types.COIN_UPDATE_SUCCESS:
+    case types.COIN_DELETE_SUCCESS:
+        return state
+            .setIn(["coins", "items"], action.body)
+            .setIn(["form", "isSubmitting"], false);
 
-        case types.COINS_ADD_FAILURE:
-            // filter out the index if exists
-            let errors = {};
-            for (let key in action.body) {
-                errors[key.replace("0.", "")] = action.body[key];
-            }
+    case types.COINS_ADD_FAILURE:
+        // filter out the index if exists
+        let errors = {};
+        for (let key in action.body) {
+            errors[key.replace("0.", "")] = action.body[key];
+        }
 
-            return state.setIn(["form", "errors"], errors).setIn(["form", "isSubmitting"], false);
+        return state.setIn(["form", "errors"], errors).setIn(["form", "isSubmitting"], false);
 
-        case types.COIN_UPDATE_FAILURE:
-            var changedErrors = [].concat(state.coins.get("validationErrors"));
-            changedErrors[action.key] = action.body;
-            return state.setIn(["coins", "validationErrors"], changedErrors);
+    case types.COIN_UPDATE_FAILURE:
+        var changedErrors = [].concat(state.coins.get("validationErrors"));
+        changedErrors[action.key] = action.body;
+        return state.setIn(["coins", "validationErrors"], changedErrors);
 
-        case LOGOUT:
-            localStorage.removeItem(COINS);
-            localStorage.removeItem(DETAILS);
-            return new InitialState();
+    case LOGOUT:
+        localStorage.removeItem(COINS);
+        localStorage.removeItem(DETAILS);
+        return new InitialState();
 
-        default:
-            return state;
+    default:
+        return state;
     }
 };
 

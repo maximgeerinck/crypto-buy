@@ -6,55 +6,55 @@ import FontAwesome from "react-fontawesome";
 import styles from "./navigation.scss";
 
 class NavigationBar extends Component {
-  render() {
-    const { isAuthenticated } = this.props;
+    render() {
+        const { isAuthenticated } = this.props;
 
-    const loginBlock = isAuthenticated ? (
-      <li>
+        const loginBlock = isAuthenticated ? (
+          <li>
                 <Link to="/account">
-                    <FontAwesome name="user" />Account
-                </Link>
+              <FontAwesome name="user" />Account
+            </Link>
             </li>
-    ) : (
-      <li>
+        ) : (
+          <li>
                 <Link to="/login">
-                    <FontAwesome name="key" />Login
-                </Link>
+              <FontAwesome name="key" />Login
+            </Link>
             </li>
-    );
+        );
 
-    const getStartedBlock = isAuthenticated ? undefined : (
-      <li className={styles.getStarted}>
-                <Link to="/register">
+        const getStartedBlock = isAuthenticated ? undefined : (
+          <li className={styles.getStarted}>
+              <Link to="/register">
                     <FontAwesome name="plus" />Get started
                 </Link>
             </li>
-    );
+        );
 
-    return (
-      <nav className={styles.actionbar}>
+        return (
+          <nav className={styles.actionbar}>
                 <ul>
-                    <li>
-                        <Link to="/">
+              <li>
+                    <Link to="/">
                             <FontAwesome name="home" />Home
                         </Link>
-                    </li>
+                  </li>
                     <li>
                         <a href="mailto:hi@cryptotrackr.com">
                             <FontAwesome name="envelope" />Mail us!
-                        </a>
-                    </li>
+                      </a>
+                  </li>
                     {loginBlock}
                     {getStartedBlock}
-                </ul>
+            </ul>
             </nav>
-    );
-  }
+        );
+    }
 }
 
 NavigationBar.PropTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
-  onLogout: PropTypes.func.isRequired
+    isAuthenticated: PropTypes.bool.isRequired,
+    onLogout: PropTypes.func.isRequired
 };
 
 export default NavigationBar;

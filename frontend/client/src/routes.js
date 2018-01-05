@@ -16,17 +16,17 @@ import ShareOverview from "./share/ShareOverview";
 const routes = (
   <Route>
         <Route path="/" component={HomePage} />
-        <Route path="share/:shareLink" component={ShareOverview} />
+      <Route path="share/:shareLink" component={ShareOverview} />
         <Route path="login" component={LoginPage} />
-        <Route path="register" component={RegisterPage} />
-        <Route path="forgot" component={ForgotPasswordPage} />
+      <Route path="register" component={RegisterPage} />
+      <Route path="forgot" component={ForgotPasswordPage} />
         <Route path="reset/:email/:token" component={ResetPasswordPage} />
 
         <Route component={EnsureLoggedIn}>
             <Route path="account" component={AccountPage} />
             <Route path="settings" component={UserPreferencesPage} />
             <Route path="password" component={ChangePasswordPage} />
-        </Route>
+    </Route>
 
         <Route path="*" component={NotFoundPage} />
     </Route>

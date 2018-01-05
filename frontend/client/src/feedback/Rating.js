@@ -9,7 +9,7 @@ class Rating extends Component {
         this.state = {
             ratingMessages: ["Terrible", "Bad", "Okay", "Good", "Great"],
             highlighting: false,
-            highlightingRating: 0
+            highlightingRating: 0,
         };
     }
 
@@ -38,7 +38,11 @@ class Rating extends Component {
                     onMouseEnter={() => this.highlight(i)}
                 >
                     <FontAwesome name="star" />
-                    {highlightingRating === i ? <span className={styles.message}>{message}</span> : undefined}
+                    {highlightingRating === i ? (
+                        <span className={styles.message}>{message}</span>
+                    ) : (
+                        undefined
+                    )}
                 </li>
             );
         });
@@ -50,7 +54,7 @@ class Rating extends Component {
 }
 
 Rating.propTypes = {
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
 };
 
 export default Rating;

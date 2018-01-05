@@ -8,11 +8,11 @@ class ShareOption extends Component {
 
         return (
             <label className={shareStyles.shareOption}>
-                <input type="checkbox" onClick={onToggle} checked={enabled} />
+            <input type="checkbox" onClick={onToggle} checked={enabled} />
                 <span className={shareStyles.slider}>
                     <span className={shareStyles.text}>{text}</span>
-                </span>
-            </label>
+              </span>
+          </label>
         );
     }
 }

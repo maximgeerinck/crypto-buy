@@ -39,16 +39,7 @@ class PortfolioController {
         Array.prototype.push.apply(req.auth.credentials.portfolio, coins);
 
         return UserService.update(req.auth.credentials).then(async (user) => {
-
-            // refactor request object
-            const c = user.portfolio;
-            c.forEach((coin: any) => {
-                coin.id = coin._id;
-                delete coin._id;
-            });
-
             const portfolio = await PortfolioService.aggregatePortfolio(user);
-
             reply(portfolio);
         });
     }

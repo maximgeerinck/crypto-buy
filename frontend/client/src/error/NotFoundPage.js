@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import Page from '../components/Page';
+import React, { Component } from "react";
+import Page from "../components/Page";
 
 
 class NotFoundPage extends Component {
