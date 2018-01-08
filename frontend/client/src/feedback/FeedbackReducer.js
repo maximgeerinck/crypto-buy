@@ -1,5 +1,5 @@
 import * as types from "./FeedbackActionTypes";
-import { List, Record } from "immutable";
+import { Record } from "immutable";
 import * as CacheHelper from "../helpers/CacheHelper";
 import * as CookieHelper from "../helpers/CookieHelper";
 

@@ -55,66 +55,66 @@ class PortfolioTrackerItem extends Component {
         }
 
         switch (true) {
-            case indicator >= 3:
-                priceChangeIndicator = (
-                    <span
-                        className={cx(styles.caret, styles.positive)}
-                        style={{ marginBottom: "-20px" }}
-                    >
-                        <FontAwesome name="caret-up" />
-                        <FontAwesome name="caret-up" />
-                        <FontAwesome name="caret-up" />
-                    </span>
-                );
-                break;
-            case indicator === 2:
-                priceChangeIndicator = (
-                    <span
-                        className={cx(styles.caret, styles.positive)}
-                        style={{ marginBottom: "-10px" }}
-                    >
-                        <FontAwesome name="caret-up" />
-                        <FontAwesome name="caret-up" />
-                    </span>
-                );
-                break;
-            case indicator === 1:
-                priceChangeIndicator = (
-                    <span className={cx(styles.caret, styles.positive)}>
-                        <FontAwesome name="caret-up" />
-                    </span>
-                );
-                break;
-            case indicator === -1:
-                priceChangeIndicator = (
-                    <span className={cx(styles.caret, styles.negative)}>
-                        <FontAwesome name="caret-down" />
-                    </span>
-                );
-                break;
-            case indicator === -2:
-                priceChangeIndicator = (
-                    <span
-                        className={cx(styles.caret, styles.negative)}
-                        style={{ marginBottom: "-10px" }}
-                    >
-                        <FontAwesome name="caret-down" />
-                        <FontAwesome name="caret-down" />
-                    </span>
-                );
-                break;
-            case indicator <= -3:
-                priceChangeIndicator = (
-                    <span
-                        className={cx(styles.caret, styles.negative)}
-                        style={{ marginBottom: "-20px" }}
-                    >
-                        <FontAwesome name="caret-down" />
-                        <FontAwesome name="caret-down" />
-                        <FontAwesome name="caret-down" />
-                    </span>
-                );
-                break;
+        case indicator >= 3:
+            priceChangeIndicator = (
+              <span
+                    className={cx(styles.caret, styles.positive)}
+                  style={{ marginBottom: "-20px" }}
+                >
+                    <FontAwesome name="caret-up" />
+                  <FontAwesome name="caret-up" />
+                    <FontAwesome name="caret-up" />
+                </span>
+            );
+            break;
+        case indicator === 2:
+            priceChangeIndicator = (
+              <span
+                  className={cx(styles.caret, styles.positive)}
+                    style={{ marginBottom: "-10px" }}
+                >
+                  <FontAwesome name="caret-up" />
+                  <FontAwesome name="caret-up" />
+                </span>
+            );
+            break;
+        case indicator === 1:
+            priceChangeIndicator = (
+                <span className={cx(styles.caret, styles.positive)}>
+                <FontAwesome name="caret-up" />
+              </span>
+            );
+            break;
+        case indicator === -1:
+            priceChangeIndicator = (
+              <span className={cx(styles.caret, styles.negative)}>
+                  <FontAwesome name="caret-down" />
+                </span>
+            );
+            break;
+        case indicator === -2:
+            priceChangeIndicator = (
+              <span
+                  className={cx(styles.caret, styles.negative)}
+                    style={{ marginBottom: "-10px" }}
+                >
+                    <FontAwesome name="caret-down" />
+                    <FontAwesome name="caret-down" />
+                </span>
+            );
+            break;
+        case indicator <= -3:
+            priceChangeIndicator = (
+                <span
+                    className={cx(styles.caret, styles.negative)}
+                style={{ marginBottom: "-20px" }}
+              >
+                    <FontAwesome name="caret-down" />
+                    <FontAwesome name="caret-down" />
+                <FontAwesome name="caret-down" />
+              </span>
+            );
+            break;
             //no default
         }
 
@@ -131,66 +131,63 @@ class PortfolioTrackerItem extends Component {
             <ul className={styles.change}>
                 <li>
                     <span className={styles.changeType}>H</span>
-                    <span className={classChangeHour}>{changeHour}%</span>
-                </li>
-                <li>
+                <span className={classChangeHour}>{changeHour}%</span>
+              </li>
+            <li>
                     <span className={styles.changeType}>D</span>
-                    <span className={classChangeDay}>{changeDay}%</span>
+                  <span className={classChangeDay}>{changeDay}%</span>
                 </li>
                 <li>
                     <span className={styles.changeType}>W</span>
-                    <span className={classChangeWeek}>{changeWeek}%</span>
-                </li>
-            </ul>
+                <span className={classChangeWeek}>{changeWeek}%</span>
+              </li>
+          </ul>
         );
     }
 
     renderChangeTotal() {
-        const { boughtCurrency, boughtPrice, amount, price, changeDay, settings } = this.props;
+        const changeTotal = this.props.profitInPercent;
+        const profit = this.props.profit;
+        const paid = this.props.paid;
 
-        // in USD
-        const boughtAllCoinsPrice = boughtPrice / boughtCurrency.rate * amount;
-        const currentAllCoinsPrice = price * amount;
+        const { settings } = this.props;
 
-        // const changeTotal = boughtPrice ? gained(boughtAllCoinsPrice, currentAllCoinsPrice) : changeDay;
-        const changeTotal = changeDay;
-        // const coinProfit = round(currentAllCoinsPrice - boughtAllCoinsPrice, 7);
-
+        // // in USD
         const classChangeTotal =
-            changeTotal >= 0
-                ? cx(styles.changeTotal, styles.positive)
-                : cx(styles.changeTotal, styles.negative);
+            parseFloat(changeTotal) >= 0 ?
+                cx(styles.changeTotal, styles.positive) :
+                cx(styles.changeTotal, styles.negative);
 
         const coinProfitClass =
-            coinProfit > 0 ? cx(styles.value, styles.positive) : cx(styles.value, styles.negative);
-        const coinProfitDisplay = settings.price ? (
-            <div className={coinProfitClass}>{isNaN(coinProfit) ? undefined : coinProfit}</div>
-        ) : null;
+            parseFloat(changeTotal) > 0 ?
+                cx(styles.value, styles.positive) :
+                cx(styles.value, styles.negative);
+
+        const coinProfitDisplay =
+            settings.price && paid != 0 ? (
+                <div className={coinProfitClass}>
+                    <span dangerouslySetInnerHTML={{ __html: profit }} />
+              </div>
+            ) : null;
 
         const priceChangeIndicator = this.renderIndicator();
 
         return (
             <div className={classChangeTotal}>
                 <div className={styles.percentage}>
-                    {round(changeTotal, 2)}%
+                    {changeTotal}%
                     {priceChangeIndicator}
-                </div>
+              </div>
                 {coinProfitDisplay}
-            </div>
+          </div>
         );
     }
 
     renderCalculations() {
         const { currency, price, amount } = this.props;
 
-        const priceFormated = CurrencyHelper.format(
-            currency.symbolFormat,
-            round(price * currency.rate, 6),
-        );
-        const total = CurrencyHelper.format(
-            currency.symbolFormat,
-            round(price * currency.rate * amount, 6),
-        );
+        const priceFormated = CurrencyHelper.format(currency.symbolFormat, round(price, 6));
+        const total = CurrencyHelper.format(currency.symbolFormat, round(price * amount, 6));
 
         const calculations = `${priceFormated} * ${amount} = ${total}`;
 
@@ -199,19 +196,19 @@ class PortfolioTrackerItem extends Component {
                 <span
                     className={styles.calculations}
                     dangerouslySetInnerHTML={{ __html: calculations }}
-                />
-            </div>
+              />
+          </div>
         );
     }
 
     render() {
-        const { name, symbol, id, settings } = this.props;
+        const { name, symbol, id, settings, price, amount } = this.props;
 
         const loader = this.props.isUpdating ? (
             <Loader className={styles.loader} color="#848484" />
         ) : null;
 
-        let prices, changeTotalContainer, statistics;
+        let statistics, prices, changeTotalContainer;
 
         if (settings.amount && settings.price) {
             prices = this.renderCalculations();
@@ -228,12 +225,12 @@ class PortfolioTrackerItem extends Component {
                 <div className={styles.details}>
                     <h2>
                         <img src={getCoinImage(id)} alt="Coin" /> {name} ({symbol})
-                    </h2>
-                    {statistics}
+                  </h2>
+                {statistics}
                     {prices}
-                </div>
+              </div>
                 {changeTotalContainer}
-            </div>
+          </div>
         );
     }
 }
@@ -245,8 +242,7 @@ PortfolioTrackerItem.propTypes = {
     changeHour: PropTypes.number.isRequired,
     changeDay: PropTypes.number.isRequired,
     changeWeek: PropTypes.number.isRequired,
-    boughtPrice: PropTypes.number.isRequired,
-    boughtCurrency: PropTypes.object.isRequired,
+    boughtPrice: PropTypes.number,
     price: PropTypes.number.isRequired,
     amount: PropTypes.number.isRequired,
     isUpdating: PropTypes.bool.isRequired,

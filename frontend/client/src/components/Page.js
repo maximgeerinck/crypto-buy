@@ -9,7 +9,6 @@ import * as AuthActions from "../authentication/AuthenticationActions";
 
 // import ErrorContainer from "../error/ErrorContainer";
 import page from "./page.scss";
-import SponsorEnjin from "./SponsorEnjin";
 import { browserHistory } from "react-router";
 import FlashContainer from "../notification/FlashContainer";
 import Feedback from "../feedback/Feedback";

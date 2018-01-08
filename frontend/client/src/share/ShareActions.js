@@ -1,5 +1,5 @@
 import * as types from "./ShareActionTypes";
-import api, { GetRequest } from "../app/api";
+import api, { buildGetRequest } from "../app/api";
 import * as ErrorActions from "../error/ErrorActions";
 
 const loadShareSuccess = share => ({ type: types.SHARE_LOAD_SUCCESS, body: share });
@@ -15,7 +15,8 @@ export const loadShare = token => {
     return (dispatch, getState) => {
         dispatch(loadShareRequest());
 
-        return new GetRequest(`share/${token}`, getState().auth.token)
+        return buildGetRequest(`share/${token}`)
+            .auth(getState().auth.token)
             .onTimeout(() => {
                 dispatch(ErrorActions.timeout("Could not fetch share"));
             }, 60 * 1000)

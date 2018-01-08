@@ -1,0 +1,138 @@
+@import "../colors.scss";
+
+.portfolioItem {
+    width: 240px;
+    border-radius: 5px;
+    position: relative;
+    background: rgba(41, 41, 41, 0.7); // padding: 10px 15px;
+    margin: 10px;
+    flex-direction: column;
+    display: flex;
+    align-items: flex-start;
+    box-sizing: border-box;
+    flex: 1;
+    flex-basis: 200px;
+
+    .heading {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+
+        h2 {
+            font-size: 10pt;
+            color: white;
+            padding: 0;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+    }
+
+    .holdings {
+        display: flex;
+        padding: 0 10px;
+        width: 100%;
+        box-sizing: border-box;
+        .indicator {
+            height: 20px;
+            width: 20px;
+            text-align: center;
+            color: white;
+            margin: 0 10px 10px 0;
+
+            .caret {
+                font-size: 10pt;
+                opacity: 0.6;
+                width: 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                background: none !important;
+
+                & > span {
+                    position: relative;
+                    top: -7px;
+
+                    &:nth-child(3) {
+                        top: -14px;
+                    }
+                    &:first-child {
+                        top: 0;
+                    }
+                }
+            }
+        }
+        .totalChange {
+            flex: 1;
+            margin-left: 25px;
+            font-size: 9pt;
+            text-align: center;
+            .amount {
+                font-size: 14pt;
+                line-height: 12px;
+            }
+        }
+        ul {
+            margin: 0;
+            padding: 0;
+            color: #bfbfbf;
+            font-size: 9pt;
+            li {
+                list-style: none;
+                line-height: 15px;
+
+                &:first-child {
+                    color: white;
+                    font-weight: 100;
+                }
+            }
+        }
+    }
+}
+
+.change {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    color: white;
+    margin-top: 10px;
+    width: 100%;
+    justify-content: center;
+
+    .changeType {
+        margin-right: 5px;
+        font-weight: bold;
+    }
+
+    li {
+        list-style: none;
+        flex: 1;
+        padding: 10px;
+        font-size: 9pt;
+        text-align: center;
+
+        &.negative {
+            background: transparentize($negative, 0.8);
+            color: white;
+        }
+
+        &.positive {
+            background: transparentize($positive, 0.8);
+            color: white;
+        }
+    }
+}
+
+.negative {
+    color: $negative;
+}
+.positive {
+    color: $positive;
+}
+
+.loader {
+    position: absolute;
+    right: -15px;
+    top: 0;
+    transform: scale(0.3);
+}

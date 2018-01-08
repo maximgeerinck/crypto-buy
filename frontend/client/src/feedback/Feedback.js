@@ -6,8 +6,6 @@ import styles from "./feedback.scss";
 import FeedbackForm from "./FeedbackForm";
 import * as FeedbackActions from "./FeedbackActions";
 import cx from "classnames";
-import FontAwesome from "react-fontawesome";
-import * as FeedbackHelper from "./FeedbackHelper";
 import Rating from "./Rating";
 import CollapsedRating from "./CollapsedRating";
 import ThankYou from "./ThankYou";
@@ -63,7 +61,6 @@ class Feedback extends Component {
     }
 
     renderWrapper(content) {
-        const { rating, submitted } = this.state;
         const { collapsed } = this.props.feedback;
 
         const form = this.attachMessage();
@@ -74,8 +71,6 @@ class Feedback extends Component {
 
     //TODO: Rewrite to state pattern
     render() {
-        const { rating, collapsed, submitted } = this.state;
-
         // did you already submit a form? don't show
         if (this.hidden()) {
             return this.renderWrapper(<CollapsedRating toggle={this.toggleCollapse} />);

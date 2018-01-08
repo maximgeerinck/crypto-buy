@@ -1,5 +1,5 @@
 import * as types from "./PortfolioActionTypes";
-import api, { GetRequest } from "../app/api";
+import api, { buildGetRequest } from "../app/api";
 import { reduceItems } from "./PortfolioHelper";
 import moment from "moment";
 import * as ErrorHelper from "../helpers/ErrorHelper";
@@ -33,7 +33,8 @@ export const retrieve = callback => {
     return (dispatch, getState) => {
         dispatch(retrieveItemsRequest());
 
-        return new GetRequest("portfolio/load", getState().auth.token)
+        return buildGetRequest("portfolio/load")
+            .auth(getState().auth.token)
             .onTimeout(() => {
                 dispatch(ErrorActions.timeout("Could not fetch portfolio"));
             }, 60 * 1000)

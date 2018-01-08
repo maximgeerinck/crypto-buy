@@ -1,5 +1,5 @@
 import * as types from "./NotificationActionTypes";
-import { GetRequest } from "../app/api";
+import { buildGetRequest } from "../app/api";
 
 const loadNotificationsSuccess = notifications => ({
     type: types.NOTIFICATION_LOAD_SUCCESS,
@@ -12,7 +12,7 @@ export const loadNotifications = () => {
     return dispatch => {
         dispatch(loadNotificationsRequest());
 
-        return new GetRequest("notifications/active")
+        return buildGetRequest("notifications/active")
             .send()
             .then(notifications => dispatch(loadNotificationsSuccess(notifications)))
             .catch(err => loadNotificationsFailure(err));

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import styles from "./feedback.scss";
 import formStyles from "../forms.scss";
 
 class FeedbackForm extends Component {
@@ -8,8 +7,8 @@ class FeedbackForm extends Component {
         super(props);
         this.state = {
             form: {
-                message: ""
-            }
+                message: "",
+            },
         };
     }
 
@@ -41,21 +40,24 @@ class FeedbackForm extends Component {
             <form className={formStyles.form} onSubmit={this.submit}>
                 {header}
                 <div className={formStyles.group}>
-                    <textarea value={message} onChange={e => this.changeForm("message", e.target.value)} />
-              </div>
+                    <textarea
+                        value={message}
+                        onChange={e => this.changeForm("message", e.target.value)}
+                    />
+                </div>
                 <div className={formStyles.group}>
                     <button type="submit" className={formStyles.button}>
                         Submit feedback
-                  </button>
-              </div>
-          </form>
+                    </button>
+                </div>
+            </form>
         );
     }
 }
 
 FeedbackForm.propTypes = {
     onSubmit: PropTypes.func,
-    headerMessage: PropTypes.string
+    headerMessage: PropTypes.string,
 };
 
 export default FeedbackForm;

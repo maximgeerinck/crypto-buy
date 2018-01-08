@@ -7,7 +7,6 @@ const sendFeedbackFailure = err => ({ type: types.FEEDBACK_SEND_FAILURE, body: e
 
 const updateFeedbackSuccess = feedback => ({ type: types.FEEDBACK_UPDATE_SUCCESS, body: feedback });
 const updateFeedbackRequest = () => ({ type: types.FEEDBACK_UPDATE_REQUEST });
-const updateFeedbackFailure = err => ({ type: types.FEEDBACK_UPDATE_FAILURE, body: err });
 
 const collapseType = collapsed => ({ type: types.FEEDBACK_COLLAPSE, body: collapsed });
 

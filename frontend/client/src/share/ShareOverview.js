@@ -17,8 +17,6 @@ import PortfolioTrackerItem from "../portfolio/NewPortfolioTrackerItem";
 import PortfolioPieChart from "../portfolio/PortfolioPieChart";
 import Loader from "../components/Loader";
 import NotFoundPage from "../components/NotFoundPage";
-import { round } from "../helpers/MathHelper";
-import * as CurrencyHelper from "../helpers/CurrencyHelper";
 
 const SORT = {
     NAME: "name",
@@ -35,7 +33,7 @@ class ShareOverview extends Component {
     }
 
     componentWillMount() {
-        const { currencyActions, portfolioActions } = this.props;
+        const { currencyActions } = this.props;
 
         // load currencies
         currencyActions.index();
@@ -77,7 +75,6 @@ class ShareOverview extends Component {
         default:
             return items.sort((coinA, coinB) => coinA.name.localeCompare(coinB.name));
         }
-        return items;
     }
 
     renderPortfolioItems(items) {
@@ -129,7 +126,6 @@ class ShareOverview extends Component {
     }
 
     portfolioView = () => {
-        const initialState = this.props.portfolio;
         const portfolio = this.props.share.coins.get("items").toObject();
 
         // // link the current market value to it
@@ -176,7 +172,7 @@ class ShareOverview extends Component {
     }
 
     render() {
-        const { currencies, share } = this.props;
+        const { share } = this.props;
 
         if (share.notFound) {
             return this.notFoundPage();
