@@ -43,8 +43,8 @@ export const fetchPrice = async () => {
         .catch((err: any) => {
             if(err.status && err.status === 503) {
                 console.log(`[Price task] Service Unavailable`);
-            } else {
-                console.log(err);
+            } else {                
+                console.log(`[Price task] Service Unavailable ${err.substr(0, 20)}`);
             }            
         });
 };

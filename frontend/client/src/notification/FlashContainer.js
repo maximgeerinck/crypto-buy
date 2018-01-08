@@ -38,7 +38,7 @@ class FlashNotification extends Component {
           .map((notification) => <FlashMessage notification={notification} onDismiss={this.dismiss} />)
 
       return (
-        <div>{messages}</div>
+        <div style={{ marginBottom: "10px"}}>{messages}</div>
       );
   }
 }

@@ -17,6 +17,7 @@
     "canvas": "2.0.0-alpha.6",
     "coinbase-node": "^0.2.1",
     "crypto": "^1.0.1",
+    "express-static-gzip": "^0.3.2",
     "flat": "^4.0.0",
     "gm": "^1.23.0",
     "hapi": "^16.4.1",

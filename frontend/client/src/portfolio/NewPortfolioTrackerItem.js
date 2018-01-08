@@ -181,7 +181,7 @@ class PortfolioTrackerItem extends Component {
     renderHoldings() {
         const { symbol, amount, price, currency, settings } = this.props;
 
-        const total = CurrencyHelper.format(currency.symbolFormat, round(price * amount, 6));
+        const total = CurrencyHelper.format(currency.symbolFormat, round(price * amount, 7));
         const indicator = this.renderIndicator();
         const totalChange = this.renderChangeTotal();
 
@@ -193,9 +193,10 @@ class PortfolioTrackerItem extends Component {
             ) : (
                 undefined
             );
+        console.log(amount);
         const am = settings.price ? (
             <li>
-                {Math.round(amount, 3)} {symbol}
+                {Math.round(amount, 7)} {symbol}
             </li>
         ) : (
             undefined
@@ -214,7 +215,7 @@ class PortfolioTrackerItem extends Component {
     }
 
     render() {
-        const { name, id, settings } = this.props;
+        const { name, id, settings, currency, price } = this.props;
 
         const loader = this.props.isUpdating ? (
             <Loader className={itemStyles.loader} color="#848484" />
@@ -226,6 +227,8 @@ class PortfolioTrackerItem extends Component {
             statistics = this.renderChange();
         }
 
+        const priceFormatted = CurrencyHelper.format(currency.symbolFormat, round(price, 7));
+
         const holdings = settings.amount || settings.price ? this.renderHoldings() : undefined;
 
         return (
@@ -233,7 +236,13 @@ class PortfolioTrackerItem extends Component {
                 {loader}
                 <div className={itemStyles.heading}>
                     <img src={getCoinImage(id)} alt="Coin" />
-                    <h2>{name}</h2>
+                    <h2>
+                        {name}
+                        <span
+                            className={itemStyles.coinPrice}
+                            dangerouslySetInnerHTML={{ __html: priceFormatted }}
+                        />
+                    </h2>
                 </div>
 
                 {holdings}
