@@ -18,107 +18,111 @@ export class LoginForm extends Component {
         this.state = {
             email: "",
             password: null,
-            rememberMe: false
+            rememberMe: false,
         };
     }
 
-  _onLogin = e => {
-      e.preventDefault();
-      this.props.onSubmit(this.state.email, this.state.password);
-      return 0;
-  };
+    _onLogin = e => {
+        e.preventDefault();
+        this.props.onSubmit(this.state.email, this.state.password);
+        return 0;
+    };
 
-  render() {
-      let errorContainer = this.props.isInvalid ?
-          <div className={formStyles.validationSummary}>
-          {ValidationHelper.constructMessage(ValidationType.V_LOGIN_COMBO_INCORRECT)}
-        </div> :
-          null;
-
-      if (this.props.error) {
-          errorContainer = (
+    render() {
+        let errorContainer = this.props.isInvalid ? (
             <div className={formStyles.validationSummary}>
-                {ValidationHelper.constructMessage(ValidationType.TIMEOUT)}
-              </div>
-          );
-      }
+                {ValidationHelper.constructMessage(ValidationType.V_LOGIN_COMBO_INCORRECT)}
+            </div>
+        ) : null;
 
-      return (
-        <form className={formStyles.formFullPage} onSubmit={this._onLogin}>
-              <div className={formStyles.group}>
-                  <label htmlFor="Email">Email</label>
-            <input
-                      type="email"
-                      placeholder="name@provider.com"
-                    value={this.state.email}
-                    onChange={e => this.setState({ email: e.target.value })}
-                  />
-          </div>
+        if (this.props.error) {
+            errorContainer = (
+                <div className={formStyles.validationSummary}>
+                    {ValidationHelper.constructMessage(ValidationType.TIMEOUT)}
+                </div>
+            );
+        }
 
-            <div className={formStyles.group}>
-                  <label htmlFor="password">Password</label>
-                <input type="password" placeholder="Password" onChange={e => this.setState({ password: e.target.value })} />
-              </div>
-            <div className={formStyles.forgotPassword}>
-                <Link to="/forgot">Forgot password?</Link>
-              </div>
+        return (
+            <form className={formStyles.formFullPage} onSubmit={this._onLogin}>
+                <div className={formStyles.group}>
+                    <label htmlFor="Email">Email</label>
+                    <input
+                        type="email"
+                        placeholder="name@provider.com"
+                        value={this.state.email}
+                        onChange={e => this.setState({ email: e.target.value })}
+                    />
+                </div>
 
-              {errorContainer}
+                <div className={formStyles.group}>
+                    <label htmlFor="password">Password</label>
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        onChange={e => this.setState({ password: e.target.value })}
+                    />
+                </div>
+                <div className={formStyles.forgotPassword}>
+                    <Link to="/forgot">Forgot password?</Link>
+                </div>
 
-            <div className={formStyles.group}>
-                <button type="submit" className={formStyles.button}>
-            Login
-                  </button>
-              </div>
-            <div className={formStyles.noAccount}>
-                <Link to="/register">Don't have an account yet?</Link>
-              </div>
-          </form>
-      );
-  }
+                {errorContainer}
+
+                <div className={formStyles.group}>
+                    <button type="submit" className={formStyles.button}>
+                        Login
+                    </button>
+                </div>
+                <div className={formStyles.noAccount}>
+                    <Link to="/register">Don't have an account yet?</Link>
+                </div>
+            </form>
+        );
+    }
 }
 
 LoginForm.PropTypes = {
-    onSubmit: PropTypes.func.isRequired
+    onSubmit: PropTypes.func.isRequired,
 };
 
 class LoginPage extends Component {
-  _onLogin = (email, password) => {
-      this.props.authActions.authenticate(email, password);
-  };
+    _onLogin = (email, password) => {
+        this.props.authActions.authenticate(email, password);
+    };
 
-  render() {
-      const isInvalid = this.props.auth.form.get("isInvalid");
-      const error = this.props.auth.error;
+    render() {
+        const isInvalid = this.props.auth.form.get("isInvalid");
+        const error = this.props.auth.error;
 
-      let submitting, form;
-      if (this.props.auth.form.get("isSubmitting")) {
-          submitting = (
-            <div className={pageStyle.container}>
-                <Loader />
-                <div>Logging in...</div>
-              </div>
-          );
-      } else {
-          form = <LoginForm onSubmit={this._onLogin} isInvalid={isInvalid} error={error} />;
-      }
+        let submitting, form;
+        if (this.props.auth.form.get("isSubmitting")) {
+            submitting = (
+                <div className={pageStyle.container}>
+                    <Loader />
+                    <div>Logging in...</div>
+                </div>
+            );
+        } else {
+            form = <LoginForm onSubmit={this._onLogin} isInvalid={isInvalid} error={error} />;
+        }
 
-      return (
-        <Page title="Login" custom className={pageStyle.focused}>
-            {submitting}
-            {form}
-          </Page>
-      );
-  }
+        return (
+            <Page title="Login" custom className={pageStyle.focused}>
+                {submitting}
+                {form}
+            </Page>
+        );
+    }
 }
 
 const mapStateToProps = state => ({
-    auth: state.auth
+    auth: state.auth,
 });
 
 const mapDispatchToProps = dispatch => {
     return {
-        authActions: bindActionCreators(AuthActions, dispatch)
+        authActions: bindActionCreators(AuthActions, dispatch),
     };
 };
 

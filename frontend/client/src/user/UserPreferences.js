@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import CurrencyChooser from "../currency/CurrencyChooser";
 import formStyles from "../forms.scss";
 import debounce from "debounce";
+import ValidationHelper from "../helpers/ValidationHelper";
 
 class UserCurrencyPreference extends Component {
     render() {
@@ -52,52 +53,67 @@ class UserPreferences extends Component {
         this.delayedCallback(e);
     };
 
+    renderBittrexError() {
+        const validation = this.props.validationErrors;
+        return (
+            <div className={formStyles.validationSummary}>
+                {ValidationHelper.parse(validation, "exchanges.bittrex", [
+                    "Your Bittrex key or secret",
+                ])}
+            </div>
+        );
+    }
+
     render() {
         const { currency } = this.props;
         const { initialInvestment, exchanges } = this.state;
+        const validation = this.props.validationErrors;
+        const bittrexError =
+            validation && validation["exchanges.bittrex"] ? this.renderBittrexError() : undefined;
+
         return (
             <form className={formStyles.form}>
                 <div className={formStyles.group}>
-                <label htmlFor="currency">Prefered currency</label>
+                    <label htmlFor="currency">Prefered currency</label>
                     <UserCurrencyPreference
-                    currency={currency}
-                    id="currency"
-                    className={formStyles.input}
-                    onSave={preference => this.props.onSave({ currency: preference })}
-                  />
+                        currency={currency}
+                        id="currency"
+                        className={formStyles.input}
+                        onSave={preference => this.props.onSave({ currency: preference })}
+                    />
                     <span className={formStyles.descriptor}>
                         Which currency would you like your dashboard to be displayed in?
-                  </span>
-              </div>
+                    </span>
+                </div>
                 <div className={formStyles.group}>
-                <label htmlFor="initialInvestment">Initial investment</label>
-                <input
-                type="number"
-                placeholder="0.00"
-                value={initialInvestment}
+                    <label htmlFor="initialInvestment">Initial investment</label>
+                    <input
+                        type="number"
+                        placeholder="0.00"
+                        value={initialInvestment}
                         id="initialInvestment"
-                onChange={this._onChangeInvestment}
-              />
+                        onChange={this._onChangeInvestment}
+                    />
                     <span className={formStyles.descriptor}>
                         Here you can enter a total initial investment if you don't remember the
                         amount spend per coin (if this is > 0, then the price per coin will be
                         ignored)
-              </span>
+                    </span>
                 </div>
 
                 <h3>Bittrex API</h3>
                 <div className={formStyles.group}>
                     <label htmlFor="bittrexApiKey">API Key</label>
-                <input
-                      type="text"
-                      value={exchanges.bittrex.apiKey}
+                    <input
+                        type="text"
+                        value={exchanges.bittrex.apiKey}
                         id="bittrexApiKey"
                         onChange={this.changeBittrexApiKey}
                     />
                     <span className={formStyles.descriptor}>
                         This is your API key, it should have read-only permissions
-                  </span>
-              </div>
+                    </span>
+                </div>
 
                 <div className={formStyles.group}>
                     <label htmlFor="bittrexApiSecret">API Secret</label>
@@ -106,12 +122,13 @@ class UserPreferences extends Component {
                         value={exchanges.bittrex.apiSecret}
                         id="bittrexApiSecret"
                         onChange={this.changeBittrexApiSecret}
-                  />
+                    />
                     <span className={formStyles.descriptor}>
                         This is your API Secret, it should have read-only permissions
-                  </span>
-              </div>
-          </form>
+                    </span>
+                </div>
+                {bittrexError}
+            </form>
         );
     }
 }

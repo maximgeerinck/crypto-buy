@@ -49,7 +49,12 @@ class PortfolioService {
 
             }
         } catch (ex) {
-            console.log(ex);
+            if (ex.statusCode === 503) {
+                console.log("[Bittrex] Service unavailable, most likely wrong api key " + ex.options.url);
+            } else {
+                console.log(ex);
+            }
+
         }
 
         CacheHelper.cache(key(user.id), portfolio, CacheHelper.TEN_MIN);

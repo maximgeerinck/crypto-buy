@@ -4,9 +4,6 @@ import * as math from "mathjs";
 import * as querystring from "querystring";
 import * as request from "request-promise";
 
-const API_KEY = "43e231774c8444e5966ebd7bc3f48775";
-const API_SECRET = "d12554054ec04c2f8fe9754f35ff60dc";
-
 const BASE_URL = "https://bittrex.com/api/v1.1";
 
 export interface IBalance {
@@ -25,12 +22,15 @@ export interface IResponse {
 
 class BittrexExchange {
 
-    constructor(readonly apiKey: string, readonly apiSecret: string) {
+    private apiKey: string;
+    private apiSecret: string;
 
+    constructor(apiKey: string, apiSecret: string) {
+        this.apiKey = apiKey;
+        this.apiSecret = apiSecret;
     }
 
-    public withCredentials(path: string) {
-        const apiKey = this.apiKey;
+    public withCredentials(path: string, apiKey: string = this.apiKey, apiSecret: string = this.apiSecret) {
         const nonce = new Date().getTime();
 
         const query = querystring.stringify({ apiKey, nonce });
@@ -39,7 +39,7 @@ class BittrexExchange {
         return request({
             url: uri,
             headers: {
-                apisign: crypto.createHmac("sha512", this.apiSecret).update(uri).digest("hex")
+                apisign: crypto.createHmac("sha512", apiSecret).update(uri).digest("hex")
             }
         });
     }
@@ -86,6 +86,16 @@ class BittrexExchange {
         });
 
         return costMap;
+    }
+
+    public async validateSettings() {
+        const response = await this.withCredentials(`account/getbalances`, this.apiKey, this.apiSecret);
+        const result = JSON.parse(response);
+        if (!result.success && result.message === "APIKEY_INVALID") {
+            return false;
+        } else {
+            return result.success;
+        }
     }
 
     public async orderHistory() {

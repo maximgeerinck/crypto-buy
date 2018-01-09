@@ -16,7 +16,7 @@ const creationFailedValidation = errors => ({
 const creationRequest = () => ({ type: types.CREATION_REQUEST });
 
 const updateSucceeded = user => ({ type: types.UPDATE_SUCCESS, body: user });
-// const updateFailed = err => ({ type: types.UPDATE_FAILURE, body: err });
+const updateFailed = err => ({ type: types.UPDATE_FAILURE, body: err });
 
 const requestPasswordRequest = () => ({ type: types.REQUEST_PASSWORD_REQUEST });
 
@@ -101,7 +101,11 @@ export const updatePreferences = preferences => {
                 dispatch(updateSucceeded(user));
             })
             .catch((err, obj) => {
-                dispatch(ErrorHelper.handle(err));
+                if ((err && err.error === "E_VALIDATION") || (err && err.validation)) {
+                    dispatch(updateFailed(err.validation));
+                } else {
+                    dispatch(ErrorHelper.handle(err));
+                }
             });
     };
 };

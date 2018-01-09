@@ -35,9 +35,10 @@ export const get = (key: string): Promise<any> => {
 export const invalidate = (key: string): Promise<boolean> => {
     return new Promise((resolve, reject) => {
         client.del(key, (err: any, response: any) => {
-            if (response === 1) {
+            if (!err) {
                 return resolve(true);
             }
+            return reject(err);
         });
     });
 };
