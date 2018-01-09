@@ -187,7 +187,11 @@ class ShareController {
             ctx.fillText("My portfolio at cryptotrackr.com", 10, height - 5);
 
         } catch (err) {
-            console.log(err);
+            if(err.indexOf("error while reading from input stream") > -1) {
+                console.log(`[Image error] Could not load: ${Object.keys(portfolio)[i]}.png`)
+            } else {
+                console.log(err);
+            }
         }
 
         reply(stream).header("Content-Type", "image/png");
