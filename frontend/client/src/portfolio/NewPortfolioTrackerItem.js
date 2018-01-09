@@ -173,7 +173,14 @@ class PortfolioTrackerItem extends Component {
         return (
             <div className={classChangeTotal}>
                 <span className={itemStyles.amount}>{coinProfitDisplay}</span>
-                <span className={itemStyles.percentage}>{changeTotal}%</span>
+                <span
+                    className={cx(
+                        itemStyles.percentage,
+                        !coinProfitDisplay ? itemStyles.bigPercent : undefined,
+                    )}
+                >
+                    {changeTotal}%
+                </span>
             </div>
         );
     }
