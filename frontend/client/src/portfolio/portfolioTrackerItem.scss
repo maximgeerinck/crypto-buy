@@ -67,6 +67,9 @@
             margin-left: 25px;
             font-size: 9pt;
             text-align: right;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
             .amount {
                 font-size: 14pt;
                 line-height: 12px;

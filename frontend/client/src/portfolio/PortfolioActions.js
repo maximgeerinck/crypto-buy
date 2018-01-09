@@ -37,6 +37,7 @@ export const retrieve = callback => {
             .auth(getState().auth.token)
             .onTimeout(() => {
                 dispatch(ErrorActions.timeout("Could not fetch portfolio"));
+                callback();
             }, 60 * 1000)
             .send()
             .then(items => {
@@ -45,6 +46,7 @@ export const retrieve = callback => {
             })
             .catch(err => {
                 dispatch(retrieveItemsFailure(err.data));
+                callback();
             });
     };
 };
