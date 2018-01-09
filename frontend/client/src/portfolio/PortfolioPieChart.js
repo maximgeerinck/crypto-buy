@@ -37,10 +37,10 @@ class PortfolioPieChart extends Component {
 
         return (
             <div className={styles.portfolioChart}>
-                <PieChart width={300} height={300}>
+                <PieChart width={300} height={270}>
                     <Pie
                         isAnimationActive={false}
-                    data={data}
+                        data={data}
                         dataKey="total"
                         nameKey="symbol"
                         cx={150}
@@ -48,15 +48,15 @@ class PortfolioPieChart extends Component {
                         innerRadius={80}
                         outerRadius={120}
                         fill="#8884d8"
-                  >
+                    >
                         {data.map((entry, index) => (
                             <Cell key={index} fill={COLORS[index % COLORS.length]} />
                         ))}
-                  </Pie>
+                    </Pie>
                     <Legend />
                     {tooltip}
-              </PieChart>
-          </div>
+                </PieChart>
+            </div>
         );
     }
 }

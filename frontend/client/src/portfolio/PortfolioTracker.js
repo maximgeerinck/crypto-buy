@@ -142,7 +142,7 @@ class PortfolioTrackerPage extends Component {
     };
 
     renderPortfolioItems(items) {
-        const isFetching = !this.props.portfolio.stats.get("loaded");
+        const isFetching = this.props.portfolio.page.get("isFetching");
 
         return items.map(item => {
             const boughtCurrency = this.getCurrency(item.boughtCurrency || "USD");

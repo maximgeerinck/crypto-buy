@@ -193,7 +193,7 @@ class PortfolioTrackerItem extends Component {
             ) : (
                 undefined
             );
-        console.log(amount);
+
         const am = settings.price ? (
             <li>
                 {Math.round(amount, 7)} {symbol}

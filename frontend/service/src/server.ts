@@ -1,6 +1,5 @@
 import * as compression from "compression";
 import * as express from "express";
-import * as expressStaticGzip from "express-static-gzip";
 import * as fs from "fs";
 import * as path from "path";
 
@@ -8,8 +7,17 @@ import * as path from "path";
 const app = express();
 app.disable("x-powered-by");
 
+app.get("*.js", (req, res, next) => {
+    if (req.get("Accept-Encoding").indexOf("gzip") > -1 && process.env.NODE_ENV !== "development") {
+        res.set("Content-Encoding", "gzip");
+        res.set("Content-Type", "text/javascript");
+        req.url = req.url.replace(".js", ".js.gz");
+    }
+    next();
+});
+
 // universal routing and rendering
-app.get("*.js", expressStaticGzip(__dirname + "/../static/static/js"));
+// app.get("*.js", expressStaticGzip(__dirname + "/../static/static/js"));
 // app.get("*.js", (req, res, next) => {
 //     if (process.env.NODE_ENV !== "production") {
 //         return next();
