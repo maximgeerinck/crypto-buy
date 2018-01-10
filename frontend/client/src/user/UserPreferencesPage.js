@@ -36,7 +36,6 @@ class ChangePasswordPage extends Component {
 
         const user = this.props.user.get("user").toObject();
 
-        console.log(this.props.user.get("preferences").toObject().validationErrors);
         const bittrex = user.preferences.exchanges ? user.preferences.exchanges.bittrex : {};
 
         return (

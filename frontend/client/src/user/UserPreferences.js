@@ -34,6 +34,12 @@ class UserPreferences extends Component {
         }, 500);
     }
 
+    _onChangeCurrency = currency => {
+        const state = { ...this.state, currency };
+        this.props.onSave({ ...state });
+        this.setState({ currency });
+    };
+
     _onChangeInvestment = (value, e) => {
         e.persist();
         this.setState({ initialInvestment: parseInt(e.target.value, 10) || 0 });
@@ -92,7 +98,7 @@ class UserPreferences extends Component {
                         currency={currency}
                         id="currency"
                         className={formStyles.input}
-                        onSave={preference => this.props.onSave({ currency: preference })}
+                        onSave={this._onChangeCurrency}
                     />
                     <span className={formStyles.descriptor}>
                         Which currency would you like your dashboard to be displayed in?

@@ -47,20 +47,14 @@ class PortfolioTrackerPage extends Component {
 
         if (!user.loaded || user.retrievedOn < Date.now() + 3600) userActions.me();
 
-        if (!this.props.portfolio.isLoading) {
-            portfolioActions.details();
-        }
-
-        // load portfolio
-        portfolioActions.retrieve(() => {
-            // load portfolio stats
-            portfolioActions.details();
+        portfolioActions.retrieve().then(coins => {
+            portfolioActions.details(coins);
         });
     }
 
     componentDidMount() {
         // load portfolio stats
-        setInterval(this.props.portfolioActions.details, 10000);
+        // setInterval(this.props.portfolioActions.details, 10000);
     }
 
     sort = e => {

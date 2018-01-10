@@ -21,10 +21,13 @@
                 color: #68999c;
                 transition: 150ms all ease-in-out;
                 text-align: center;
+                width: 100%;
 
                 &:hover {
                     background-color: #68999c;
                     color: white;
+                    text-decoration: none;
+                    cursor: pointer;
                 }
             }
 

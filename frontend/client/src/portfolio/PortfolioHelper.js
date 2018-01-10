@@ -50,10 +50,13 @@ export const portfolioView = (portfolio, initialInvestment, currency, currencies
     };
 
     for (const key of Object.keys(portfolio)) {
-        let portfolioItem = portfolio[key];
-        let viewItem = portfolioItemView(portfolioItem, currency, currencies);
-        view.items.push(viewItem);
-        view.netWorth += portfolio[key].market.price.usd * currency.rate * portfolio[key].amount;
+        if (portfolio[key].market && portfolio[key].market.price) {
+            let portfolioItem = portfolio[key];
+            let viewItem = portfolioItemView(portfolioItem, currency, currencies);
+            view.items.push(viewItem);
+            view.netWorth +=
+                portfolio[key].market.price.usd * currency.rate * portfolio[key].amount;
+        }
     }
 
     const profit = view.netWorth - initialInvestment;
@@ -71,6 +74,9 @@ export const portfolioView = (portfolio, initialInvestment, currency, currencies
 };
 
 export const portfolioItemView = (portfolioItem, currency, currencies) => {
+    if (!portfolioItem.market || !portfolioItem.market.price) {
+        return;
+    }
     let view = {
         price: portfolioItem.market.price.usd * currency.rate,
         paid: portfolioItem.boughtPrice * currency.rate,

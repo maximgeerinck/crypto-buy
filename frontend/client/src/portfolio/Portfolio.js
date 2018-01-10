@@ -9,7 +9,7 @@ import Loader from "../components/Loader";
 
 class Portfolio extends Component {
     componentWillMount() {
-        this.props.portfolioActions.retrieve(() => this.props.portfolioActions.details());
+        this.props.portfolioActions.retrieve();
         this.props.coinActions.retrieve();
     }
 
