@@ -12,16 +12,27 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)App.xaml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)API\AccountService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Account.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AccountLogin.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AccountToken.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Coin.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\AccountService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\ServiceManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\IDataStore.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\MockDataStore.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Settings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AboutViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BaseViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\CoinDetailViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\CoinsViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Views\AccountLoginPage.xaml.cs">
+      <DependentUpon>AccountLoginPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -54,6 +65,12 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\NewCoinPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AccountLoginPage.xaml">
+      <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

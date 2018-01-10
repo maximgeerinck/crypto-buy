@@ -1,5 +1,5 @@
 ﻿using System;
-
+using Tracker.Services;
 using Tracker.Views;
 using Xamarin.Forms;
 
@@ -7,12 +7,13 @@ namespace Tracker
 {
 	public partial class App : Application
 	{
+        public static ServiceManager ServiceManager { get; private set; }
 
 		public App ()
 		{
 			InitializeComponent();
 
-
+            ServiceManager = new ServiceManager();
             MainPage = new MainPage();
         }
 
