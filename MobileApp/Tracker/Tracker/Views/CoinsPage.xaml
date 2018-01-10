@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+             x:Class="Tracker.Views.CoinsPage"
+              Title="{Binding Title}"
+             x:Name="BrowseCoinsPage"
+             BackgroundColor="#112632">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Clicked="AddCoin_Clicked" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+
+            <Grid VerticalOptions="Center" Padding="10" Margin="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40" />
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" TextColor="{StaticResource TextColor}" Text="Icon" HorizontalTextAlignment="Center" Font="Bold" />
+                <Label Grid.Column="1" TextColor="{StaticResource TextColor}" Text="Currency"  Font="Bold" />
+                <Label Grid.Column="2" TextColor="{StaticResource TextColor}" Text="Holdings" Font="Bold" />
+                <!--<Label Grid.Column="3" TextColor="{StaticResource TextColor}" Text="Sparkline" Font="Bold" HorizontalTextAlignment="Center" />-->
+                <Label Grid.Column="4" TextColor="{StaticResource TextColor}" Text="Price" HorizontalTextAlignment="End" Font="Bold" />
+            </Grid>
+
+            <ListView x:Name="CoinsListView" 
+                ItemsSource="{Binding Coins}"
+                VerticalOptions="FillAndExpand"
+                 HasUnevenRows="true"
+                 RefreshCommand="{Binding LoadItemsCommand}"
+                 IsPullToRefreshEnabled="true"
+                 IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                 CachingStrategy="RecycleElement"
+                 ItemSelected="OnItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid VerticalOptions="Center" Margin="10, 2, 10, 2" Padding="15" BackgroundColor="#142D3B">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40" />
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="2*" />
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Name and Amount, note: Margin: Left, Top, Right, Bottom -->
+                                <Image Source="{Binding Icon}" Grid.Column="0" Margin="0, 0, 10, 0"/>
+                               
+                                <!-- Spacing: Spacing between elements: https://developer.xamarin.com/api/property/Xamarin.Forms.StackLayout.Spacing/ -->
+                                <StackLayout Spacing="2" Grid.Column="1">
+                                    <Label TextColor="{StaticResource TextColor}" Text="{Binding Name}" Font="Bold, 18" />
+                                    <Label TextColor="{StaticResource TextColor}" Text="{Binding Symbol}" Font="10" />
+                                </StackLayout>
+
+                                <!-- My Holdings -->
+                                <!-- Spacing: Spacing between elements: https://developer.xamarin.com/api/property/Xamarin.Forms.StackLayout.Spacing/ -->
+                                <StackLayout Spacing="2" Grid.Column="2">
+                                    <Label TextColor="{StaticResource TextColor}" Text="12698.25" Font="Bold, 18" />
+                                    <!-- Todo: calculate this by doing Amount * Price -->
+                                    <Label TextColor="{StaticResource TextColor}" Text="{Binding Amount}" />
+                                </StackLayout>
+
+                                <!--<microcharts:ChartView Grid.Column="3" Chart="{Binding Chart}" WidthRequest="100"/>-->
+
+                                <!-- Show Price Increase -->
+                                <StackLayout Grid.Column="3" HorizontalOptions="End" Spacing="2">
+                                    <Label TextColor="{StaticResource TextColor}" Text="{Binding Price}" Font="Bold, 18" HorizontalTextAlignment="End" />
+                                    <Label TextColor="{StaticResource TextColorStockIncrease}" Text="+2.2%" HorizontalTextAlignment="End" />
+                                </StackLayout>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="Tracker.Views.NewCoinPage"
+		     Title="New Coin">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Save" Clicked="Save_Clicked" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout Spacing="20" Padding="15">
+            <Label Text="Symbol" FontSize="Medium" />
+            <Entry Text="{Binding Coin.Symbol}" FontSize="Small" />
+            <Label Text="Amount" FontSize="Medium" />
+            <Editor Text="{Binding Coin.Amount}" FontSize="Small" Margin="0" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

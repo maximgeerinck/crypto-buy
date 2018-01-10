@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+             x:Class="Tracker.Views.CoinDetailPage"
+             Title="{Binding Title}">
+    <StackLayout BackgroundColor="{StaticResource Primary}" Padding="0, 20, 0, 20">
+        <StackLayout Spacing="1">
+            <Label Text="{Binding Coin.Name}" TextColor="{StaticResource TextColor}" FontSize="Large"  HorizontalTextAlignment="Center" />
+            <Label Text="{Binding Coin.Symbol}" TextColor="{StaticResource TextColorLight}" FontSize="Small" HorizontalTextAlignment="Center" />
+        </StackLayout>
+
+        <!-- Select Chart Size -->
+        <Grid Margin="0, 10, 0, 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0" TextColor="{StaticResource TextColor}" Text="1H" HorizontalTextAlignment="Center" />
+            <Label Grid.Column="1" TextColor="{StaticResource TextColor}" Text="1D" HorizontalTextAlignment="Center" />
+            <Label Grid.Column="2" TextColor="{StaticResource TextColor}" Text="1W" HorizontalTextAlignment="Center" />
+            <Label Grid.Column="3" TextColor="{StaticResource TextColor}" Text="1M" HorizontalTextAlignment="Center" />
+            <Label Grid.Column="4" TextColor="{StaticResource TextColor}" Text="3M" HorizontalTextAlignment="Center" />
+            <Label Grid.Column="5" TextColor="{StaticResource TextColor}" Text="MAX" HorizontalTextAlignment="Center" />
+        </Grid>
+
+        <microcharts:ChartView Chart="{Binding Coin.Chart}" HeightRequest="150" BackgroundColor="Transparent" />
+        
+        <!-- Stock change -->
+        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Padding="0, 40, 0, 5">
+            <Label Text="$" FontSize="Large" VerticalTextAlignment="End" TextColor="{StaticResource TextColor}" />
+            <Label Text="137,71" FontSize="36" TextColor="{StaticResource TextColor}" />
+        </StackLayout>
+
+        <Label Text="-10.32 (2.50%)" TextColor="{StaticResource TextColorStockDecrease}" HorizontalTextAlignment="Center" />
+
+        <!-- Coin Details -->
+        <!-- Select Chart Size -->
+        <Grid RowSpacing="2" ColumnSpacing="15" Margin="0, 20, 0, 20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+
+
+            <Label Grid.Column="0" Grid.Row="0" Text="MARKET CAP" TextColor="{StaticResource TextColorLight}" HorizontalTextAlignment="End" />
+            <Label Grid.Column="1" Grid.Row="0" Text="{Binding Coin.MarketCap}" TextColor="{StaticResource TextColor}" HorizontalTextAlignment="Start" />
+
+
+            <Label Grid.Column="0" Grid.Row="1" Text="24H VOLUME" TextColor="{StaticResource TextColorLight}" HorizontalTextAlignment="End" />
+            <Label Grid.Column="1" Grid.Row="1" Text="$20,269,239.01" TextColor="{StaticResource TextColor}" HorizontalTextAlignment="Start" />
+
+            <Label Grid.Column="0" Grid.Row="2" Text="CIRCULATING SUPPLY" TextColor="{StaticResource TextColorLight}" HorizontalTextAlignment="End" />
+            <StackLayout HorizontalOptions="Start" Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
+                <Label Text="{Binding Coin.CirculatingSupply}" TextColor="{StaticResource TextColor}"  />
+                <Label Text="{Binding Coin.Symbol}" TextColor="{StaticResource TextColor}"  />
+            </StackLayout>
+
+            <Label Grid.Column="0" Grid.Row="3" Text="MAX SUPPLY" TextColor="{StaticResource TextColorLight}" HorizontalTextAlignment="End" />
+            <StackLayout HorizontalOptions="Start" Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
+                <Label Text="{Binding Coin.MaxSupply}" TextColor="{StaticResource TextColor}"  />
+                <Label Text="{Binding Coin.Symbol}" TextColor="{StaticResource TextColor}"  />
+            </StackLayout>
+            
+        </Grid>
+
+        <!-- Info  -->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+
+            <StackLayout Grid.Column="0">
+                <Label TextColor="{StaticResource TextColor}" Text="1.51" HorizontalTextAlignment="Center" />
+                <Label TextColor="{StaticResource TextColorLight}" Text="# SHARES" HorizontalTextAlignment="Center" />
+            </StackLayout>
+
+            <StackLayout Grid.Column="1">
+                <Label TextColor="{StaticResource TextColor}" Text="$10,259.25" HorizontalTextAlignment="Center" />
+                <Label TextColor="{StaticResource TextColorLight}" Text="VALUE" HorizontalTextAlignment="Center" />
+            </StackLayout>
+
+            <StackLayout Grid.Column="2">
+                <Label TextColor="{StaticResource TextColor}" Text="+$30.29" HorizontalTextAlignment="Center" />
+                <Label TextColor="{StaticResource TextColorLight}" Text="GAIN" HorizontalTextAlignment="Center" />
+            </StackLayout>
+        </Grid>
+    </StackLayout>
+</ContentPage>
