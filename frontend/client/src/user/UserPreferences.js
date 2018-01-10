@@ -4,6 +4,7 @@ import CurrencyChooser from "../currency/CurrencyChooser";
 import formStyles from "../forms.scss";
 import debounce from "debounce";
 import ValidationHelper from "../helpers/ValidationHelper";
+import InputWithLabel from "../components/InputWithLabel";
 
 class UserCurrencyPreference extends Component {
     render() {
@@ -22,7 +23,7 @@ class UserPreferences extends Component {
         this.state = {
             initialInvestment: props.initialInvestment,
             exchanges: {
-                bittrex: props.bittrex,
+                bittrex: props.bittrex || {},
             },
         };
     }
@@ -33,22 +34,34 @@ class UserPreferences extends Component {
         }, 500);
     }
 
-    _onChangeInvestment = e => {
+    _onChangeInvestment = (value, e) => {
         e.persist();
         this.setState({ initialInvestment: parseInt(e.target.value, 10) || 0 });
         this.delayedCallback(e);
     };
 
-    changeBittrexApiKey = e => {
+    changeBittrexApiKey = (value, e) => {
         const exchanges = this.state.exchanges;
-        exchanges.bittrex.apiKey = e.target.value.trim();
+        exchanges.bittrex.apiKey = value.trim();
+        if (exchanges.bittrex.apiKey === "") {
+            delete exchanges.bittrex.apiKey;
+        }
+        if (exchanges.bittrex.apiKey === "" && exchanges.bittrex.apiSecret === "") {
+            delete exchanges.bittrex;
+        }
         this.setState({ exchanges });
         this.delayedCallback(e);
     };
 
-    changeBittrexApiSecret = e => {
+    changeBittrexApiSecret = (value, e) => {
         const exchanges = this.state.exchanges;
-        exchanges.bittrex.apiSecret = e.target.value.trim();
+        exchanges.bittrex.apiSecret = value.trim();
+        if (exchanges.bittrex.apiSecret === "") {
+            delete exchanges.bittrex.apiSecret;
+        }
+        if (exchanges.bittrex.apiKey === "" && exchanges.bittrex.apiSecret === "") {
+            delete exchanges.bittrex;
+        }
         this.setState({ exchanges });
         this.delayedCallback(e);
     };
@@ -67,7 +80,7 @@ class UserPreferences extends Component {
     render() {
         const { currency } = this.props;
         const { initialInvestment, exchanges } = this.state;
-        const validation = this.props.validationErrors;
+        const validation = this.props.validationErrors || {};
         const bittrexError =
             validation && validation["exchanges.bittrex"] ? this.renderBittrexError() : undefined;
 
@@ -86,46 +99,39 @@ class UserPreferences extends Component {
                     </span>
                 </div>
                 <div className={formStyles.group}>
-                    <label htmlFor="initialInvestment">Initial investment</label>
-                    <input
+                    <InputWithLabel
                         type="number"
+                        name="initial_investment"
                         placeholder="0.00"
                         value={initialInvestment}
-                        id="initialInvestment"
                         onChange={this._onChangeInvestment}
-                    />
-                    <span className={formStyles.descriptor}>
+                        validation={validation["initialInvestment"]}
+                    >
                         Here you can enter a total initial investment if you don't remember the
                         amount spend per coin (if this is > 0, then the price per coin will be
                         ignored)
-                    </span>
+                    </InputWithLabel>
                 </div>
 
                 <h3>Bittrex API</h3>
                 <div className={formStyles.group}>
-                    <label htmlFor="bittrexApiKey">API Key</label>
-                    <input
-                        type="text"
+                    <InputWithLabel
+                        name="bittrex_api_key"
                         value={exchanges.bittrex.apiKey}
-                        id="bittrexApiKey"
                         onChange={this.changeBittrexApiKey}
-                    />
-                    <span className={formStyles.descriptor}>
+                        validation={validation["exchanges.bittrex.apiKey"]}
+                    >
                         This is your API key, it should have read-only permissions
-                    </span>
-                </div>
-
-                <div className={formStyles.group}>
-                    <label htmlFor="bittrexApiSecret">API Secret</label>
-                    <input
-                        type="password"
+                    </InputWithLabel>
+                    <InputWithLabel
+                        name="bittrex_api_secret"
                         value={exchanges.bittrex.apiSecret}
-                        id="bittrexApiSecret"
                         onChange={this.changeBittrexApiSecret}
-                    />
-                    <span className={formStyles.descriptor}>
+                        validation={validation["exchanges.bittrex.apiSecret"]}
+                        type="password"
+                    >
                         This is your API Secret, it should have read-only permissions
-                    </span>
+                    </InputWithLabel>
                 </div>
                 {bittrexError}
             </form>

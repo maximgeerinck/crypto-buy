@@ -19,6 +19,10 @@ const validationRules = {
         rule: new RegExp("[a-z]*.email"),
         message: "%s is not a valid email",
     },
+    empty: {
+        rule: new RegExp("any.empty"),
+        message: "%s can not be empty",
+    },
     email_inUse: {
         rule: new RegExp("email.inUse"),
         message: "%s is already in use",
@@ -57,6 +61,13 @@ export default class ValidationHelper {
         }
     }
 
+    static parseMessage(message, parameters = []) {
+        for (let i = 0; i < parameters.length; i++) {
+            message = message.replace("%s", parameters[i]);
+        }
+        return message;
+    }
+
     /**   
    * 
    * @static
@@ -71,20 +82,19 @@ export default class ValidationHelper {
    * @memberof ValidationHelper
    */
     static parse(validation, validationKey, parameters = []) {
-        if (!validation || !validation[validationKey]) return;
+        if (!validation) return;
+        const validationObject =
+            validation.code && validation.path ? validation : validation[validationKey];
 
-        const validationObject = validation[validationKey];
+        if (!validationObject) return;
 
         // start matching regex
         for (let key in validationRules) {
             if (validationObject.code.match(validationRules[key].rule)) {
-                let message = validationRules[key].message;
-
-                for (let i = 0; i < parameters.length; i++) {
-                    message = message.replace("%s", parameters[i]);
-                }
-                return message;
+                return this.parseMessage(validationRules[key].message, parameters);
             }
         }
+
+        return this.parseMessage(validationRules["default"].message, parameters);
     }
 }

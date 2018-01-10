@@ -20,14 +20,14 @@ export class ValidationError implements IValidationError {
 }
 
 class Validator {
-    errors: Array<ValidationError> = [];
-    constraints: Array<ValidationConstraint> = [];
+    errors: ValidationError[] = [];
+    constraints: ValidationConstraint[] = [];
 
     addError(error: IValidationError) {
         if (error) this.errors.push(error);
     }
 
-    addErrors(errors: Array<IValidationError>) {
+    addErrors(errors: IValidationError[]) {
         if (!errors) return;
         for (let i = 0; i < errors.length; i++) {
             this.addError(errors[i]);
@@ -47,10 +47,7 @@ class Validator {
     }
 
     generateBadRequest(key: string = "E_VALIDATION"): Boom.BoomError {
-        console.log("generating bad request");
-        // let boomErr = Boom.badRequest(key, this.toObject());
-
-        var error: any = Boom.badRequest();
+        let error: any = Boom.badRequest();
         error.reformat();
         error.output.payload.validation = this.toObject();
         // boomErr.output.payload.data = boomErr.data;
@@ -62,7 +59,7 @@ class Validator {
     }
 
     validate(): Promise<any> {
-        let self = this;
+        const self = this;
         return Promise.all(this.constraints.map((constraint) => constraint.validate()))
             .then((errors) => {
                 this.addErrors(errors);

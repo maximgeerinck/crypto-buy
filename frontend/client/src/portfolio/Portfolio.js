@@ -9,7 +9,7 @@ import Loader from "../components/Loader";
 
 class Portfolio extends Component {
     componentWillMount() {
-        this.props.portfolioActions.retrieve();
+        this.props.portfolioActions.retrieve(() => this.props.portfolioActions.details());
         this.props.coinActions.retrieve();
     }
 
@@ -25,13 +25,13 @@ class Portfolio extends Component {
             return (
                 <PortfolioItem
                     key={i.id}
-                coin={i}
-                details={this.props.coins.coins.toObject()[i.coinId]}
+                    coin={i}
+                    details={this.props.coins.coins.toObject()[i.coinId]}
                     onEdit={coin => this.props.portfolioActions.updateCoin(key, i)}
-                onDelete={() => this.onDelete(i.id)}
-                validationErrors={validationErrors}
+                    onDelete={() => this.onDelete(i.id)}
+                    validationErrors={validationErrors}
                     editMode={false}
-              />
+                />
             );
         });
     }
@@ -47,7 +47,7 @@ class Portfolio extends Component {
                     details={this.props.coins.coins.toObject()[i.coinId]}
                     validationErrors={validationErrors}
                     editMode={false}
-              />
+                />
             );
         });
     }
@@ -73,7 +73,7 @@ class Portfolio extends Component {
                 <div className={styles.automatic}>
                     {automaticComponents}
                     <p className={styles.source}>Automatically added from bittrex.com</p>
-              </div>,
+                </div>,
             );
         }
 

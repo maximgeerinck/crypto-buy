@@ -7,7 +7,7 @@ services:
       - ./backend/config/app_dev.json:/usr/crypto_buy/build/config/app_dev.json:ro
       - ./backend/config:/usr/crypto_buy/config:ro
       - ./backend/public:/usr/crypto_buy/public
-      - ./backend/package.json:/usr/crypto_buy/package.json:ro       
+      # - ./backend/package.json:/usr/crypto_buy/package.json:ro       
       - ./backend/tests:/usr/crypto_buy/tests:ro   
       - ./backend/tests/jest.json:/usr/crypto_buy/tests/jest.json:ro   
     ports: ["56745:56745"]
@@ -26,7 +26,7 @@ services:
       - ./frontend/client/.eslintignore:/usr/crypto_buy/frontend/client/.eslintignore
       - ./frontend/service/src:/usr/crypto_buy/frontend/service/src
       - ./frontend/service/package.json:/usr/crypto_buy/frontend/service/package.json
-      - ./frontend/service/tsconfig.json:/usr/crypto_buy/frontend/service/tsconfig.json
+      # - ./frontend/service/tsconfig.json:/usr/crypto_buy/frontend/service/tsconfig.json
       - ./frontend/service/tslint.json:/usr/crypto_buy/frontend/service/tslint.json
     ports: ["3001:3001", "3002:3002"]
     environment:

@@ -1,10 +1,8 @@
 @import "../colors.scss";
-
 .portfolioItem {
     width: 240px;
     border-radius: 5px;
-    position: relative;
-    background: rgba(41, 41, 41, 0.7); // padding: 10px 15px;
+    position: relative; // background: rgba(41, 41, 41, 0.7); // padding: 10px 15px;
     margin: 10px;
     flex-direction: column;
     display: flex;
@@ -12,21 +10,20 @@
     box-sizing: border-box;
     flex: 1;
     flex-basis: 200px;
-
+    background: rgb(20, 103, 133);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
     .heading {
         display: flex;
         align-items: center;
         padding: 10px;
-
         h2 {
-            font-size: 10pt;
-            color: white;
+            font-size: 10pt; // color: white;
+            color: #fff;
             padding: 0;
             margin-left: 10px;
             font-weight: bold;
         }
     }
-
     .holdings {
         display: flex;
         padding: 0 10px;
@@ -38,7 +35,6 @@
             text-align: center;
             color: white;
             margin: 0 10px 10px 0;
-
             .caret {
                 font-size: 10pt;
                 opacity: 0.6;
@@ -48,11 +44,9 @@
                 align-items: center;
                 justify-content: center;
                 background: none !important;
-
-                & > span {
+                &>span {
                     position: relative;
                     top: -7px;
-
                     &:nth-child(3) {
                         top: -14px;
                     }
@@ -83,7 +77,6 @@
             li {
                 list-style: none;
                 line-height: 15px;
-
                 &:first-child {
                     color: white;
                     font-weight: 100;
@@ -101,24 +94,20 @@
     margin-top: 10px;
     width: 100%;
     justify-content: center;
-
     .changeType {
         margin-right: 5px;
         font-weight: bold;
     }
-
     li {
         list-style: none;
         flex: 1;
         padding: 10px;
         font-size: 9pt;
         text-align: center;
-
         &.negative {
-            background: transparentize($negative, 0.8);
+            background: rgba(230, 46, 46, 0.35);
             color: white;
         }
-
         &.positive {
             background: transparentize($positive, 0.8);
             color: white;
@@ -129,6 +118,7 @@
 .negative {
     color: $negative;
 }
+
 .positive {
     color: $positive;
 }
@@ -144,8 +134,8 @@
     display: block;
     font-size: 8pt;
     font-family: "Open Sans";
-    font-weight: 100;
-    color: #b9b9b9;
+    font-weight: 100; // color: #b9b9b9;
+    color: #9c9c9c;
 }
 
 .bigPercent {

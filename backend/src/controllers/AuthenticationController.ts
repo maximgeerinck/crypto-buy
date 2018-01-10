@@ -57,7 +57,7 @@ class AuthenticationController {
                 reply({ success: true });
             })
             .catch((err) => {
-                console.log(err);
+                console.log(`[forgot]User not found: ${email}`);
                 reply({ success: false });
             });
     }

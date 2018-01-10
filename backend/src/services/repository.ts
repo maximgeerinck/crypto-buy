@@ -36,6 +36,9 @@ export class MongoRepository<Model extends AbstractModel> {
         return this._model
             .findOneAndUpdate(cond, fields, { new: original })
             .then((item) => {
+                if (!item) {
+                    throw new NotFoundException(JSON.stringify(cond));
+                }
                 const obj = this.parse(item);
                 return obj;
             })

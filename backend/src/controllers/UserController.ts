@@ -3,7 +3,6 @@ import * as Hapi from "hapi";
 import { MongoError } from "mongodb";
 import { Error as MongooseError } from "mongoose";
 import { IUser, User } from "../models/user";
-import BittrexExchange from "../portfolio/exchange/bittrex";
 import UserRepository from "../services/UserRepository";
 import UserService from "../services/UserService";
 import { comparePassword } from "../utils/cypher-util";
@@ -63,19 +62,7 @@ class UserController {
 
     public async updatePreferences(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         const preferences = req.payload;
-        const validator = new Validator();
-
         const user = req.auth.credentials;
-        if (JSON.stringify(user.preferences) !== JSON.stringify(preferences)) {
-            const bittrexExchange = new BittrexExchange(
-                preferences.exchanges.bittrex.apiKey, preferences.exchanges.bittrex.apiSecret);
-            const validSettings = await bittrexExchange.validateSettings();
-
-            if (!validSettings) {
-                validator.addError(new ValidationError("exchanges.bittrex", "string.invalid"));
-                return reply(validator.generateBadRequest());
-            }
-        }
 
         Object.assign(user.preferences, preferences);
 
