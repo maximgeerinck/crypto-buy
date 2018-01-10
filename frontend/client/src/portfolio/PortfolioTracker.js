@@ -54,7 +54,8 @@ class PortfolioTrackerPage extends Component {
 
     componentDidMount() {
         // load portfolio stats
-        // setInterval(this.props.portfolioActions.details, 10000);
+        setInterval(this.props.portfolioActions.details, 10000);
+        setInterval(this.props.portfolioActions.retrieve, 60000);
     }
 
     sort = e => {
