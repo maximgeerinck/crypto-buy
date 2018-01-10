@@ -6,7 +6,9 @@ import { IUser, User } from "../models/user";
 import UserRepository from "../services/UserRepository";
 import UserService from "../services/UserService";
 import { comparePassword } from "../utils/cypher-util";
-import Validator, { ValidationError } from "../validation/Validator";
+import BittrexApiConstraint from "../validation/BittrexApiKeyConstraint";
+import ValidationError from "../validation/ValidationError";
+import Validator from "../validation/Validator";
 // interface ICreateValidationErrors {
 //     email?: string,
 //     password?: string,
@@ -64,15 +66,17 @@ class UserController {
         const preferences = req.payload;
         const user = req.auth.credentials;
 
-        Object.assign(user.preferences, preferences);
+        const validator = new Validator();
+        validator.addConstraint(new BittrexApiConstraint(
+            preferences.exchanges.bittrex.apiKey, preferences.exchanges.bittrex.apiSecret));
 
         try {
+            await validator.validate();
+            Object.assign(user.preferences, preferences);
             const newUser = await UserService.update(user);
             return reply(user);
         } catch (err) {
-            console.log("bad request");
-            console.log(err);
-            return reply(Boom.badRequest());
+            return validator.isValid() ? reply(Boom.badRequest()) : reply(validator.generateBadRequest());
         }
     }
 

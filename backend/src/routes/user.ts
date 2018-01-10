@@ -1,9 +1,7 @@
+import * as Joi from "joi";
 import UserController from "../controllers/UserController";
-const BaseJoi = require("joi");
 import BittrexApiConstraint from "../validation/BittrexApiKeyConstraint";
 import EmailInUseConstraint from "../validation/EmailInUseConstraint";
-
-const Joi = BaseJoi.extend([EmailInUseConstraint, BittrexApiConstraint]);
 
 const exchanges = Joi.object().keys({
     // bittrex:  Joi.bittrexApi()

@@ -28,7 +28,7 @@ const server = new Hapi.Server({
                 failAction: "log"
             },
             validate: {
-                failAction: function(request: any, reply: any, source: any, err: any) {
+                failAction: (request: any, reply: any, source: any, err: any) => {
                     const adapter = new JoiValidationErrorAdapter(err.data.details);
 
                     // var formattedErrors = FormatErrors(error);
@@ -81,7 +81,6 @@ export let createServer = (port: number, host: string = "0.0.0.0"): Promise<Hapi
                 verifyOptions: { algorithms: [ "HS256" ] }
             });
 
-            
             // load routes
             console.log(`registered ${routes.length} routes`);
 
@@ -91,7 +90,6 @@ export let createServer = (port: number, host: string = "0.0.0.0"): Promise<Hapi
 
             server.route(routes);
             
-
             return resolve(server);
         });
     });

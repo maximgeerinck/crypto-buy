@@ -1,11 +1,16 @@
-import { ValidationError } from './Validator';
+import ValidationError from "./ValidationError";
 
 abstract class ValidationConstraint {
-    constraint: string;
-    constructor(constraint: string = "ValidationConstraint") { 
+    public constraint: string;
+    public isValid: boolean = false;
+    constructor(constraint: string = "ValidationConstraint") {
         this.constraint = constraint;
     }
-    abstract validate(): Promise<ValidationError>;
+    public valid(): Promise<any> {
+        this.isValid = true;
+        return Promise.resolve(null);
+    }
+    public abstract validate(): Promise<ValidationError>;
 }
 
 export default ValidationConstraint;

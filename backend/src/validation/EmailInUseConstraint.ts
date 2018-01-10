@@ -17,6 +17,7 @@ export default {
 
     UserService.findUserByEmail(value)
       .then(user => {
+        console.log("found");
         if (user) return this.createError('email.emailInUse', { value }, state, options);
         return value;
       })
