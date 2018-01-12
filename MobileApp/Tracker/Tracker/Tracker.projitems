@@ -16,11 +16,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Constants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Exceptions\APIException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Account.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\AccountLogin.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\AccountToken.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\APIError.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Coin.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\AccountTokenService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\AccountService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\RestService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ServiceManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\IDataStore.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\MockDataStore.cs" />
