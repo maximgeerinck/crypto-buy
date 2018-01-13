@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,10 +27,16 @@ namespace Tracker.Services
             try
             {
                 var response = await _client.GetAsync(uri);
+                Debug.WriteLine("========== [GET START] ==========");
+                Debug.WriteLine("Token: " + _client.DefaultRequestHeaders.GetValues("Authorization").First());
+                Debug.WriteLine("Request Headers: " + response.RequestMessage);
+                Debug.WriteLine("Uri: " + uri + " gave response: " + response);
+                Debug.WriteLine("========== [GET END] ==========");
 
                 if (response.IsSuccessStatusCode)
                 {
                     var responseJson = await response.Content.ReadAsStringAsync();
+                    Debug.WriteLine(responseJson);
                     result = JsonConvert.DeserializeObject<T>(responseJson);
                 }
                 else
@@ -41,12 +48,17 @@ namespace Tracker.Services
             }
             catch (APIException ex)
             {
+                Debug.WriteLine("[APIException] " + ex.Message);
                 throw ex; // Throw this one up
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.Message);
-                Debug.WriteLine(ex.InnerException.Message);
+                Debug.WriteLine("[EXCEPTION] " + ex.Message);
+
+                if (ex.InnerException != null)
+                {
+                    Debug.WriteLine("[EXCEPTION] " + ex.InnerException.Message);
+                }
             }
 
             return result;
@@ -54,6 +66,8 @@ namespace Tracker.Services
 
         public async Task<T> PostRequest(string uri, Object requestBody)
         {
+            Debug.WriteLine("Loading: " + uri);
+            Debug.WriteLine("Loading: " + requestBody);
             var result = default(T);
 
             try

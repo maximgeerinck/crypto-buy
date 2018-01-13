@@ -4,22 +4,17 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Tracker.Models;
+using Tracker.Repositories;
 
 namespace Tracker.Services
 {
     public class AccountTokenService
     {
-        private RestService<AccountToken> Service;
+        public AccountTokenRepository Repository { get; set; }
 
         public AccountTokenService(HttpClient client)
         {
-            Service = new RestService<AccountToken>(client);
-        }
-
-        public async Task<AccountToken> LoginAccount(AccountLogin accountLogin)
-        {
-            AccountToken result = await Service.PostRequest(Constants.ApiUrlBase + "/authenticate", accountLogin);
-            return result;
+            Repository = new AccountTokenRepository(client);
         }
     }
 }

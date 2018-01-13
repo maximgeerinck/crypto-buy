@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -29,8 +30,15 @@ namespace Tracker.Services
 
         public void setAuthenticationToken(string token)
         {
+            Debug.WriteLine("Setting token: " + token);
             IsAuthenticated = true;
-            _client.DefaultRequestHeaders.Add("Authorization", token);
+
+            // First remove it (since we Add it and could end up having duplicates)
+            _client.DefaultRequestHeaders.Remove("Authorization");
+            _client.DefaultRequestHeaders.Remove("authorization");
+
+            // Then add it
+            _client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", token);
         }
     }
 }
