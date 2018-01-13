@@ -20,9 +20,7 @@ namespace Tracker.Views
 		public AccountLoginPage()
 		{
 			InitializeComponent ();
-
             AccountLogin = new AccountLogin(); // We can only bind on the view if the object exists
-
             BindingContext = this;
         }
 
@@ -44,18 +42,10 @@ namespace Tracker.Views
             }
             catch (APIException ex)
             {
-                Debug.WriteLine("API Exception"); ;
-                Debug.WriteLine(@"Error: {0}", ex.Error.Error);
-                Debug.WriteLine(@"Message: {0}", ex.Error.Message);
                 await DisplayAlert("An error ocurred", ex.Error.Message, "");
             }
             
             await Navigation.PushModalAsync(new NavigationPage(new AccountLoadingPage()));
-            //Debug.WriteLine("Found Account: " + );
-
-            // Say to the messaging center that we have an account login so that we can update our AI with this account
-            //MessagingCenter.Send(this, "AccountLogin", Account);
-            //await Navigation.PopModalAsync();
         }
 	}
 }

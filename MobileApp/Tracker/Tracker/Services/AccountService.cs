@@ -29,6 +29,12 @@ namespace Tracker.Services
             XamarinAccount = AccountStore.FindAccountsForService(Constants.AppName).FirstOrDefault();
         }
 
+        public async Task<Models.Account> RegisterAccount(AccountRegister accountRegister)
+        {
+            var result = await _accountRepository.RegisterAccount(accountRegister);
+            return result;
+        }
+
         public async Task<Models.Account> LoginAccount(AccountLogin login)
         {
             var accountToken = await _accountTokenRepository.LoginAccount(login);

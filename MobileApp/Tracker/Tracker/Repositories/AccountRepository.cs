@@ -23,5 +23,11 @@ namespace Tracker.Repositories
             var result = await _service.GetRequest(string.Format("{0}/user/me", Constants.ApiUrlBase));
             return result;
         }
+
+        public async Task<Account> RegisterAccount(AccountRegister accountRegister)
+        {
+            var result = await _service.PostRequest(string.Format("{0}/user/create", Constants.ApiUrlBase), accountRegister);
+            return result;
+        }
     }
 }

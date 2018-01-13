@@ -19,6 +19,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\APIException.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Account.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\AccountLogin.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AccountRegister.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\AccountToken.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\APIError.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Coin.cs" />
@@ -42,6 +43,10 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\AccountLoginPage.xaml.cs">
       <DependentUpon>AccountLoginPage.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\AccountRegisterPage.xaml.cs">
+      <DependentUpon>AccountRegisterPage.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\MainPage.xaml.cs">
@@ -87,6 +92,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AccountLoadingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\AccountRegisterPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
