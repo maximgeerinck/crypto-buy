@@ -23,20 +23,30 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\AccountToken.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\APIError.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Coin.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CoinChange.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CoinHistoryTick.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CoinPrice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Portfolio.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\PortfolioCoin.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\RequestGetCoins.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ObservableDictionary.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\AccountRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Repositories\AccountTokenRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\CoinRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Repositories\PortfolioRepository.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\AccountTokenService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\AccountService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\CoinService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\PortfolioService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\RestService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\ServiceManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\IDataStore.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\MockDataStore.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Settings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AboutViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AccountLoadingViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\BaseViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\CoinDetailViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\CoinsViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PortfolioViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\AccountLoadingPage.xaml.cs">
       <DependentUpon>AccountLoadingPage.xaml</DependentUpon>
       <SubType>Code</SubType>

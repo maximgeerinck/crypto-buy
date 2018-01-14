@@ -13,7 +13,9 @@ namespace Tracker.Services
         public Boolean IsAuthenticated { get; private set; }
         public AccountService AccountService { get; set; }
         public AccountTokenService AccountTokenService { get; set; }
-        
+        public PortfolioService PortfolioService { get; set; }
+        public CoinService CoinService { get; set; }
+
         private HttpClient _client;
 
         public ServiceManager()
@@ -26,6 +28,8 @@ namespace Tracker.Services
 
             AccountTokenService = new AccountTokenService(_client);
             AccountService = new AccountService(_client);
+            PortfolioService = new PortfolioService(_client);
+            CoinService = new CoinService(_client);
         }
 
         public void setAuthenticationToken(string token)

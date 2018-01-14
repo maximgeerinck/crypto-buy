@@ -11,7 +11,7 @@ using Tracker.Models;
 
 namespace Tracker.Services
 {
-    public class RestService<T>
+    public class RestService
     {
         private HttpClient _client;
 
@@ -20,7 +20,7 @@ namespace Tracker.Services
             _client = client;
         }
 
-        public async Task<T> GetRequest(string uri)
+        public async Task<T> GetRequest<T>(string uri)
         {
             var result = default(T);
 
@@ -36,7 +36,6 @@ namespace Tracker.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var responseJson = await response.Content.ReadAsStringAsync();
-                    Debug.WriteLine(responseJson);
                     result = JsonConvert.DeserializeObject<T>(responseJson);
                 }
                 else
@@ -64,7 +63,7 @@ namespace Tracker.Services
             return result;
         }
 
-        public async Task<T> PostRequest(string uri, Object requestBody)
+        public async Task<T> PostRequest<T>(string uri, Object requestBody)
         {
             Debug.WriteLine("Loading: " + uri);
             Debug.WriteLine("Loading: " + requestBody);

@@ -18,13 +18,13 @@ namespace Tracker.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class PortfolioPage : ContentPage
 	{
-        CoinsViewModel viewModel;
+        PortfolioViewModel viewModel;
 
         public PortfolioPage()
         {
             InitializeComponent();
 
-            BindingContext = viewModel = new CoinsViewModel();
+            BindingContext = viewModel = new PortfolioViewModel();
         }
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
@@ -48,8 +48,8 @@ namespace Tracker.Views
         {
             base.OnAppearing();
 
-            if (viewModel.Coins.Count == 0)
-                viewModel.LoadItemsCommand.Execute(null);
+            if (viewModel.PortfolioCoins.Count() == 0)
+                viewModel.LoadDetailsCommand.Execute(null);
         }
     }
 }

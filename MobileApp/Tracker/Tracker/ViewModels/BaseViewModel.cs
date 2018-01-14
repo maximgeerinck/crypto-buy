@@ -12,8 +12,6 @@ namespace Tracker.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Coin> DataStore => DependencyService.Get<IDataStore<Coin>>() ?? new MockDataStore();
-
         bool isBusy = false;
         public bool IsBusy
         {

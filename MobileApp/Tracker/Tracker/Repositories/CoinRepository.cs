@@ -8,18 +8,18 @@ using Tracker.Services;
 
 namespace Tracker.Repositories
 {
-    public class AccountTokenRepository
+    public class CoinRepository
     {
         private RestService _service;
 
-        public AccountTokenRepository(HttpClient client)
+        public CoinRepository(HttpClient client)
         {
             _service = new RestService(client);
         }
-        
-        public async Task<AccountToken> LoginAccount(AccountLogin accountLogin)
+
+        public async Task<List<Coin>> GetCoinsByIds(List<string> coinIds)
         {
-            AccountToken result = await _service.PostRequest<AccountToken>(string.Format("{0}/authenticate", Constants.ApiUrlBase), accountLogin);
+            var result = await _service.PostRequest<List<Coin>>(string.Format("{0}/coin/details", Constants.ApiUrlBase), new RequestGetCoins(coinIds));
             return result;
         }
     }

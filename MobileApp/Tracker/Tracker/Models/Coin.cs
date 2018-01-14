@@ -1,21 +1,44 @@
 ﻿using Microcharts;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace Tracker.Models
 {
     public class Coin
     {
+        [JsonProperty(PropertyName = "_id")]
         public string Id { get; set; }
-        public string Symbol { get; set; }
+
+        [JsonProperty(PropertyName = "coin_id")]
+        public string CoinId { get; set; }
+
+        [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
-        public string Icon { get; set; }
-        public double Amount { get; set; }
-        public string CirculatingSupply { get; set; }
-        public string MaxSupply { get; set; }
-        public string MarketCap { get; set; }
-        public string Price { get; set; }
-        public double PriceChange1D { get; set; }
-        public double PriceChange1DPercentage { get; set; }
-        public Chart Chart { get; set; }
+
+        [JsonProperty(PropertyName = "symbol")]
+        public string Symbol { get; set; }
+
+        [JsonProperty(PropertyName = "rank")]
+        public double Rank { get; set; }
+
+        [JsonProperty(PropertyName = "history")]
+        public List<CoinHistoryTick> History { get; set; }
+
+        [JsonProperty(PropertyName = "change")]
+        public CoinChange Change { get; set; }
+
+        [JsonProperty(PropertyName = "price")]
+        public CoinPrice Price { get; set; }
+
+        public Coin()
+        {
+
+        }
+
+        public Coin(string name)
+        {
+
+        }
     }
 }
