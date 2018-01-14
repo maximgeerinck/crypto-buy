@@ -59,8 +59,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Views\CoinDetailPage.xaml.cs">
       <DependentUpon>CoinDetailPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Views\CoinsPage.xaml.cs">
-      <DependentUpon>CoinsPage.xaml</DependentUpon>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\PortfolioPage.xaml.cs">
+      <DependentUpon>PortfolioPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\NewCoinPage.xaml.cs">
       <DependentUpon>NewCoinPage.xaml</DependentUpon>
@@ -77,7 +77,7 @@
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\CoinDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\CoinsPage.xaml">
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\PortfolioPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\NewCoinPage.xaml">

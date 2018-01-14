@@ -16,11 +16,11 @@ using SkiaSharp;
 namespace Tracker.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class CoinsPage : ContentPage
+	public partial class PortfolioPage : ContentPage
 	{
         CoinsViewModel viewModel;
 
-        public CoinsPage()
+        public PortfolioPage()
         {
             InitializeComponent();
 

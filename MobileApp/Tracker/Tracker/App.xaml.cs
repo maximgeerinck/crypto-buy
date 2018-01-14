@@ -14,7 +14,15 @@ namespace Tracker
 			InitializeComponent();
 
             ServiceManager = new ServiceManager();
-            MainPage = new AccountLoginPage(); // Start Page
+
+            // If already logged in, skip and go to the next page
+            if (ServiceManager.AccountService.IsLoggedIn())
+            {
+                MainPage = new AccountLoadingPage();
+                return;
+            }
+
+            MainPage = new AccountLoginPage();
         }
 
 		protected override void OnStart ()

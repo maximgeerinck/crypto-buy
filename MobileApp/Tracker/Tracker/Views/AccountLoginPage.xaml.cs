@@ -24,16 +24,6 @@ namespace Tracker.Views
             BindingContext = this;
         }
 
-        protected override async void OnAppearing()
-        {
-            // If already logged in, skip and go to the next page
-            if (App.ServiceManager.AccountService.IsLoggedIn())
-            {
-                await Navigation.PushAsync(new AccountLoadingPage());
-                return;
-            }
-        }
-
         async void Login_Clicked(object sender, EventArgs e)
         {
             try
