@@ -14,7 +14,7 @@ namespace Tracker
 			InitializeComponent();
 
             ServiceManager = new ServiceManager();
-            MainPage = new MainPage();
+            MainPage = new AccountLoginPage(); // Start Page
         }
 
 		protected override void OnStart ()

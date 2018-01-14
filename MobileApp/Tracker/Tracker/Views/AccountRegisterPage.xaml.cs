@@ -40,7 +40,7 @@ namespace Tracker.Views
                 await DisplayAlert("An error ocurred", ex.Error.Message, "");
             }
 
-            await Navigation.PushModalAsync(new NavigationPage(new AccountLoadingPage()));
+            await Navigation.PushAsync(new AccountLoadingPage());
         }
     }
 }

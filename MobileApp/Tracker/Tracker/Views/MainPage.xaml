@@ -4,27 +4,6 @@
             xmlns:views="clr-namespace:Tracker.Views"
             x:Class="Tracker.Views.MainPage">
     <TabbedPage.Children>
-        <NavigationPage Title="Register">
-            <NavigationPage.Icon>
-                <OnPlatform x:TypeArguments="FileImageSource">
-                    <On Platform="iOS" Value="tab_about.png"/>
-                </OnPlatform>
-            </NavigationPage.Icon>
-            <x:Arguments>
-                <views:AccountRegisterPage />
-            </x:Arguments>
-        </NavigationPage>
-
-        <NavigationPage Title="Login">
-            <NavigationPage.Icon>
-                <OnPlatform x:TypeArguments="FileImageSource">
-                    <On Platform="iOS" Value="tab_about.png"/>
-                </OnPlatform>
-            </NavigationPage.Icon>
-            <x:Arguments>
-                <views:AccountLoginPage />
-            </x:Arguments>
-        </NavigationPage>
         <NavigationPage Title="Browse">
             <NavigationPage.Icon>
                 <OnPlatform x:TypeArguments="FileImageSource">

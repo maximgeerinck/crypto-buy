@@ -9,6 +9,7 @@
             <Label Text="Password" FontSize="Medium" />
             <Entry Text="{Binding AccountLogin.Password}" FontSize="Small" Margin="0" IsPassword="True" />
             <Button Text="Login" Clicked="Login_Clicked" />
+            <Button Text="Register" Clicked="Register_Clicked" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

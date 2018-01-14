@@ -29,7 +29,7 @@ namespace Tracker.Views
             // If already logged in, skip and go to the next page
             if (App.ServiceManager.AccountService.IsLoggedIn())
             {
-                await Navigation.PushModalAsync(new NavigationPage(new AccountLoadingPage()));
+                await Navigation.PushAsync(new AccountLoadingPage());
                 return;
             }
         }
@@ -45,7 +45,12 @@ namespace Tracker.Views
                 await DisplayAlert("An error ocurred", ex.Error.Message, "");
             }
             
-            await Navigation.PushModalAsync(new NavigationPage(new AccountLoadingPage()));
+            await Navigation.PushAsync(new AccountLoadingPage());
         }
-	}
+
+        async void Register_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new AccountRegisterPage());
+        }
+    }
 }
