@@ -35,6 +35,11 @@ namespace Tracker.Services
             return result;
         }
 
+        public void Logout()
+        {
+            AccountStore.Delete(XamarinAccount, Constants.AppName);
+        }
+
         public async Task<Models.Account> LoginAccount(AccountLogin login)
         {
             var accountToken = await _accountTokenRepository.LoginAccount(login);

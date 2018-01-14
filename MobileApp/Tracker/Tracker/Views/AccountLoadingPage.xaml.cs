@@ -31,13 +31,13 @@ namespace Tracker.Views
             // If we got the email, we can continue
             if (result.Email != null)
             {
-                viewModel.IsLoaded = "YES";
-                OnPropertyChanged("IsLoaded");
+                // Finish login
+                App.Current.MainPage = new MainPage();
+                return;
             }
 
             // Else I would go back to signin
-            Navigation.InsertPageBefore(new AccountLoginPage(), this);
-            await Navigation.PopAsync();
+            App.Current.MainPage = new AccountLoginPage();
         }
     }
 }

@@ -36,17 +36,15 @@ namespace Tracker.Views
             }
 
             // We do not want to let the user use the back button to come on the Login page
-            // Therefor insert a page before it and pop this one for navigation
+            // Therefor we set a different root page
             // In a normal navigation we would use await Navigation.PushAsync(new AccountLoadingPage());
-            Navigation.InsertPageBefore(new AccountLoadingPage(), this);
-            await Navigation.PopAsync();
+            App.Current.MainPage = new AccountLoadingPage();
         }
 
         async void Register_Clicked(object sender, EventArgs e)
         {
             // We also insert the register in the root, since we automatically log in!
-            Navigation.InsertPageBefore(new AccountRegisterPage(), this);
-            await Navigation.PopAsync();
+            App.Current.MainPage = new AccountRegisterPage();
         }
     }
 }
