@@ -26,16 +26,18 @@ namespace Tracker.Views
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            Debug.WriteLine("LOADING ACCOUNT");
             var result = await App.ServiceManager.AccountService.GetAccount();
-            Debug.WriteLine("ACCOUNT: " + result.Email);
 
+            // If we got the email, we can continue
             if (result.Email != null)
             {
-                Debug.WriteLine("Changing binding");
                 viewModel.IsLoaded = "YES";
                 OnPropertyChanged("IsLoaded");
             }
+
+            // Else I would go back to signin
+            Navigation.InsertPageBefore(new AccountLoginPage(), this);
+            await Navigation.PopAsync();
         }
     }
 }
