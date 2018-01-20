@@ -22,11 +22,14 @@ var InitialState = new Record({
         view: {}, // the coins in a view
         validationErrors: List([]),
     }),
-    // the coin details (aka stats)
-    stats: Map({
+    // the coin details (aka details)
+    details: Map({
         coins: [],
         loaded: false,
     }),
+
+    // coin stats by identifier
+    stats: {},
 });
 
 let initialState = new InitialState();
@@ -39,8 +42,8 @@ if (localStorage.getItem(COINS)) {
 
 if (localStorage.getItem(DETAILS)) {
     initialState = initialState
-        .setIn(["stats", "coins"], JSON.parse(localStorage.getItem(DETAILS)))
-        .setIn(["stats", "loaded"], true);
+        .setIn(["details", "coins"], JSON.parse(localStorage.getItem(DETAILS)))
+        .setIn(["details", "loaded"], true);
 }
 
 const PortfolioReducer = (state = initialState, action) => {
@@ -60,11 +63,17 @@ const PortfolioReducer = (state = initialState, action) => {
         case types.COIN_DETAILS_REQUEST:
             return state.setIn(["page", "isFetching"], true);
 
+        case types.COIN_STATS_SUCCESS:
+            return state.set("stats", action.body);
+
         case types.COIN_DETAILS_SUCCESS:
             let coinsMerged = action.body;
             // merge arrays
-            if (state.stats.get("coins") && state.stats.get("coins").length >= action.body.length) {
-                coinsMerged = state.stats
+            if (
+                state.details.get("coins") &&
+                state.details.get("coins").length >= action.body.length
+            ) {
+                coinsMerged = state.details
                     .get("coins")
                     .map(coin =>
                         Object.assign(coin, action.body.find(c => c.coinId === coin.coinId)),
@@ -74,8 +83,8 @@ const PortfolioReducer = (state = initialState, action) => {
             localStorage.setItem(DETAILS, JSON.stringify(coinsMerged));
 
             return state
-                .setIn(["stats", "coins"], coinsMerged)
-                .setIn(["stats", "loaded"], true)
+                .setIn(["details", "coins"], coinsMerged)
+                .setIn(["details", "loaded"], true)
                 .setIn(["page", "isFetching"], false);
 
         case types.COIN_DETAILS_FAILURE:

@@ -29,6 +29,9 @@ const coinDeleteSuccess = items => ({ type: types.COIN_DELETE_SUCCESS, body: ite
 const coinDeleteRequest = () => ({ type: types.COIN_DELETE_REQUEST });
 const coinDeleteFailure = errors => ({ type: types.COIN_DELETE_FAILURE, body: errors });
 
+const coinStatsSuccess = items => ({ type: types.COIN_STATS_SUCCESS, body: items });
+const coinStatsFailure = errors => ({ type: types.COIN_STATS_FAILURE, body: errors });
+
 export const retrieve = callback => {
     return (dispatch, getState) => {
         dispatch(retrieveItemsRequest());
@@ -51,6 +54,26 @@ export const retrieve = callback => {
     };
 };
 
+export const stats = items => {
+    return (dispatch, getState) => {
+        const coins = items
+            ? reduceItems(items)
+            : reduceItems(getState().portfolio.coins.get("items"));
+
+        const url = "coin/stats/weekly";
+
+        return api
+            .post(url, { coins: Object.keys(coins) }, getState().auth.token)
+            .then(stats => {
+                console.log(stats);
+                dispatch(coinStatsSuccess(stats));
+            })
+            .catch(err => {
+                dispatch(coinStatsFailure(err.data));
+            });
+    };
+};
+
 export const details = items => {
     return (dispatch, getState) => {
         dispatch(coinDetailsRequest());
@@ -59,7 +82,7 @@ export const details = items => {
             ? reduceItems(items)
             : reduceItems(getState().portfolio.coins.get("items"));
 
-        const url = getState().portfolio.stats.get("loaded")
+        const url = getState().portfolio.details.get("loaded")
             ? "coin/details/increment"
             : "coin/details";
 

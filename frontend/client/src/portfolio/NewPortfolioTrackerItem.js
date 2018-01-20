@@ -8,6 +8,7 @@ import itemStyles from "./portfolioTrackerItem.scss";
 
 import { round } from "../helpers/MathHelper";
 import * as CurrencyHelper from "../helpers/CurrencyHelper";
+import { LineChart, Line } from "recharts";
 
 class PortfolioTrackerItem extends Component {
     static childContextTypes = {
@@ -221,6 +222,24 @@ class PortfolioTrackerItem extends Component {
         );
     }
 
+    renderSparkline() {
+        const { stats } = this.props;
+        if (!stats) {
+            return;
+        }
+
+        const data = Object.keys(stats).map(key => ({
+            name: key,
+            avg: stats[key].avgPrice,
+        }));
+
+        return (
+            <LineChart width={50} height={30} data={data} className={itemStyles.sparkline}>
+                <Line type="monotone" dataKey="avg" stroke="#8884d8" strokeWidth={2} dot={false} />
+            </LineChart>
+        );
+    }
+
     render() {
         const { name, id, settings, currency, price } = this.props;
 
@@ -238,6 +257,8 @@ class PortfolioTrackerItem extends Component {
 
         const holdings = settings.amount || settings.price ? this.renderHoldings() : undefined;
 
+        const chart = this.renderSparkline();
+
         return (
             <div className={itemStyles.portfolioItem}>
                 {loader}
@@ -250,6 +271,7 @@ class PortfolioTrackerItem extends Component {
                             dangerouslySetInnerHTML={{ __html: priceFormatted }}
                         />
                     </h2>
+                    {chart}
                 </div>
 
                 {holdings}

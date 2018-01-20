@@ -17,3 +17,6 @@ export const COIN_UPDATE_FAILURE = "coin/update/failure";
 export const COIN_DELETE_REQUEST = "coin/delete/request";
 export const COIN_DELETE_SUCCESS = "coin/delete/success";
 export const COIN_DELETE_FAILURE = "coin/delete/failure";
+
+export const COIN_STATS_SUCCESS = "coin/stats/success";
+export const COIN_STATS_FAILURE = "coin/stats/failure";

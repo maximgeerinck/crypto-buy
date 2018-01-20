@@ -78,7 +78,7 @@ class ShareOverview extends Component {
     }
 
     renderPortfolioItems(items) {
-        const isFetching = !this.props.portfolio.stats.get("loaded");
+        const isFetching = !this.props.portfolio.details.get("loaded");
 
         return items.map((item, i) => {
             const boughtCurrency = item.boughtCurrency || this.getCurrency("USD");

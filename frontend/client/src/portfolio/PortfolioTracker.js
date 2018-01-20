@@ -49,11 +49,12 @@ class PortfolioTrackerPage extends Component {
 
         portfolioActions.retrieve().then(coins => {
             portfolioActions.details(coins);
+            portfolioActions.stats(coins);
         });
     }
 
     componentDidMount() {
-        // load portfolio stats
+        // load portfolio details
         setInterval(this.props.portfolioActions.details, 10000);
         setInterval(this.props.portfolioActions.retrieve, 60000);
     }
@@ -63,13 +64,13 @@ class PortfolioTrackerPage extends Component {
     };
 
     hasCoins() {
-        return this.props.portfolio.stats.get("coins").length > 0;
+        return this.props.portfolio.details.get("coins").length > 0;
     }
 
     isLoading() {
         return (
             !this.props.portfolio.coins.get("loaded") ||
-            !this.props.portfolio.stats.get("loaded") ||
+            !this.props.portfolio.details.get("loaded") ||
             !this.props.currency.loaded ||
             !this.props.user.loaded
         );
@@ -128,7 +129,7 @@ class PortfolioTrackerPage extends Component {
         // link the current market value to it
         const linkedPortfolio = PortfolioHelper.linkPortfolioToMarket(
             portfolio,
-            initialState.stats.get("coins"),
+            initialState.details.get("coins"),
         );
 
         return PortfolioHelper.portfolioView(
@@ -141,6 +142,8 @@ class PortfolioTrackerPage extends Component {
 
     renderPortfolioItems(items) {
         const isFetching = this.props.portfolio.page.get("isFetching");
+        const stats = this.props.portfolio.stats;
+
         return items.map(item => {
             const boughtCurrency = this.getCurrency(item.boughtCurrency || "USD");
             return (
@@ -162,6 +165,7 @@ class PortfolioTrackerPage extends Component {
                     profit={item.profit}
                     profitInPercent={item.profitInPercent}
                     paid={item.paid}
+                    stats={stats[item.id]}
                 />
             );
         });
