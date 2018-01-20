@@ -1,8 +1,10 @@
 import * as Hapi from "hapi";
 import User from "../models/user";
+import * as CacheHelper from "../utils/CacheHelper";
 import { Coin } from "./Coin";
-import CoinCollection from "./CoinCollection";
-import CoinCollectionRepository from "./CoinCollectionRepository";
+import CoinRepository from "./CoinRepository";
+
+const CACHE_ALL = "coins/all/name_and_symbol";
 
 class CoinController {
     /**
@@ -12,24 +14,27 @@ class CoinController {
      * @param {Hapi.ReplyNoContinue} reply
      * @memberof CoinController
      */
-    public all(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
+    public async all(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         const limit = req.params.limit;
 
-        CoinCollection.find({})
-            .select("coins.coin_id coins.name coins.symbol coins.price.usd coins.change")
-            .sort({ _id: -1 })
-            .limit(parseInt(limit, 10))
-            .then((result: any) => {
-                const output = result.map((res: any) => {
-                    const map: any = {};
-                    for (let i = 0; i < res.coins.length; i++) {
-                        map[res.coins[i].coin_id] = res.coins[i];
-                    }
-                    return map;
-                });
+        const cacheResult = await CacheHelper.get(CACHE_ALL);
+        if (cacheResult) {
+            return reply(cacheResult);
+        }
 
-                reply(output);
-            });
+        const coins = await CoinRepository.findDistinctMappedByIdentifier();
+        for (const key of Object.keys(coins)) {
+            delete coins[key].history;
+            delete coins[key].id;
+            delete coins[key].rank;
+            delete coins[key].marketCap;
+            delete coins[key].supply;
+            delete coins[key].coinId;
+        }
+
+        CacheHelper.cache(CACHE_ALL, coins, CacheHelper.HOUR);
+
+        return reply(coins);
     }
 
     /**
@@ -42,14 +47,63 @@ class CoinController {
     public details(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         const { coins } = req.payload;
 
-        CoinCollectionRepository.findAllWithHistory().then((result: any) => {
+        CoinRepository.findAllWithHistory().then((result: any) => {
+            if (result) {
+                const output = [];
+                for (const coin of coins) {
+                    if (result[coin]) {
+                        const res = { ...result[coin] };
+                        res.price = res.history[res.history.length - 1].usd;
+                        res.changes = res.history[res.history.length - 1].change;
+                        output.push(res);
+                    }
+
+                }
+
+                return reply(output);
+            }
+            return reply([]);
+
+        });
+    }
+
+    public detailsIncrement(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
+        const { coins } = req.payload;
+
+        CoinRepository.findAllWithHistory().then((result: any) => {
             const output = [];
             for (const coin of coins) {
-                output.push(result[coin]);
+                const res = { ...result[coin] };
+                res.price = res.history[res.history.length - 1].usd;
+                res.changes = res.history[res.history.length - 1].change;
+                delete res.history;
+                delete res.price.change;
+                delete res.name;
+                delete res.symbol;
+                delete res.rank;
+                delete res.marketCap;
+                delete res.supply;
+                delete res.price.timestamp;
+                delete res.id;
+                output.push(res);
             }
 
             reply(output);
         });
+    }
+
+    public async stats(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
+
+        const { coins } = req.payload;
+        const stats = await CoinRepository.stats();
+
+        const output: any = {};
+
+        for (const key of coins) {
+            output[key] = stats[key];
+        }
+        return reply(output);
+
     }
 }
 

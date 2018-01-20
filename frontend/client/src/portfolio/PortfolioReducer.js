@@ -24,7 +24,7 @@ var InitialState = new Record({
     }),
     // the coin details (aka stats)
     stats: Map({
-        coins: {},
+        coins: [],
         loaded: false,
     }),
 });
@@ -61,9 +61,20 @@ const PortfolioReducer = (state = initialState, action) => {
             return state.setIn(["page", "isFetching"], true);
 
         case types.COIN_DETAILS_SUCCESS:
-            localStorage.setItem(DETAILS, JSON.stringify(action.body));
+            let coinsMerged = action.body;
+            // merge arrays
+            if (state.stats.get("coins") && state.stats.get("coins").length >= action.body.length) {
+                coinsMerged = state.stats
+                    .get("coins")
+                    .map(coin =>
+                        Object.assign(coin, action.body.find(c => c.coinId === coin.coinId)),
+                    );
+            }
+
+            localStorage.setItem(DETAILS, JSON.stringify(coinsMerged));
+
             return state
-                .setIn(["stats", "coins"], action.body)
+                .setIn(["stats", "coins"], coinsMerged)
                 .setIn(["stats", "loaded"], true)
                 .setIn(["page", "isFetching"], false);
 

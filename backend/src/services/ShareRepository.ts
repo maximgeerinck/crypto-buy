@@ -1,13 +1,10 @@
-import CoinRepository from "../coin/CoinCollectionRepository";
 import mongoose from "../db";
 import { User } from "../models/user";
 import ShareModel, { UserShareSettings } from "../models/UserShareSettings";
 import NotFoundException from "./NotFoundException";
 import { IRepositoryAdapter, MongoRepository } from "./repository";
 
-interface IShareRepository { }
-
-class ShareRepository extends MongoRepository<UserShareSettings> implements IShareRepository {
+class ShareRepository extends MongoRepository<UserShareSettings> {
     constructor() {
         super(ShareModel, "Share");
     }

@@ -34,18 +34,18 @@ class PortfolioTrackerItem extends Component {
 
         while (history.length) {
             hItem = history.pop();
-            if (hItem.price !== previous.price && hItem.price !== price) {
+            if (hItem.usd !== previous.usd && hItem.usd !== price) {
                 // current coin is dropping
-                if (hItem.price > price) {
+                if (hItem.usd > price) {
                     if (indicator > 0) {
                         indicator = -1;
-                    } else if (hItem.price > previous.price) {
+                    } else if (hItem.usd > previous.usd) {
                         indicator--;
                     }
                 } else {
                     if (indicator < 0) {
                         indicator = 1;
-                    } else if (hItem.price < previous.price) {
+                    } else if (hItem.usd < previous.usd) {
                         indicator++;
                     }
                 }

@@ -23,6 +23,12 @@ export class MongoRepository<Model extends AbstractModel> {
         });
     }
 
+    public async createMany(items: Model[]): Promise<Model[]> {
+        const itemDaos = items.map((item) => item.toDAO());
+        const inserted = await this._model.insertMany(itemDaos);
+        return inserted.map(this.parse);
+    }
+
     public update(id: mongoose.Types.ObjectId, item: Model): Promise<Model> {
         return this._model.update({ _id: id }, item.toDAO()).then((result) => {
             if (result && !result.ok) {
@@ -70,6 +76,7 @@ export class MongoRepository<Model extends AbstractModel> {
     public find(cond?: object, fields?: object, options?: object): Promise<Model[]> {
         const self = this;
         return this._model.find(cond, options).then((daos) => {
+            console.log(`Found ${daos.length}`);
             return daos.map((dao) => self.parse(dao));
         });
         // .catch(err => console.log(err));

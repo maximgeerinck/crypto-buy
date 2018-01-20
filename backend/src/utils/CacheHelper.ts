@@ -43,4 +43,6 @@ export const invalidate = (key: string): Promise<boolean> => {
     });
 };
 
+export const MIN = 60;
 export const TEN_MIN = 60 * 10;
+export const HOUR = 3600;

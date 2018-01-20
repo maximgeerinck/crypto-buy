@@ -69,14 +69,14 @@ class PortfolioBanner extends Component {
 
     //   return Object.keys(items).map((key) => {
     //     const coin = items[key];
-    //     const posOrNeg = coin.change.percent_24h < 0 ? styles.negative : styles.positive;
+    //     const posOrNeg = coin.change.percentDay < 0 ? styles.negative : styles.positive;
 
     //     return (
     //       <li key={key}>
     //           <img src={CoinHelper.getCoinImage(coin.coinId)} alt={coin.coinId} />
     //           <div className={styles.details}>
     //               <h4>{coin.name}</h4>
-    //               <p className={posOrNeg}>{MathHelper.formatSigned(coin.change.percent_24h)}</p>
+    //               <p className={posOrNeg}>{MathHelper.formatSigned(coin.change.percentDay)}</p>
     //           </div>
     //       </li>
     //     )

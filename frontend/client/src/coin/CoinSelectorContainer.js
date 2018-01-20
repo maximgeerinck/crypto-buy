@@ -14,7 +14,9 @@ class CoinSelectorContainer extends Component {
     }
 
     componentWillMount() {
-        this.props.coinActions.retrieve();
+        if (!this.props.coins.loaded) {
+            this.props.coinActions.retrieve();
+        }
     }
 
     _onSelect = val => {

@@ -18,7 +18,7 @@ export class MongoRepository<Model extends AbstractModel> {
         });
     }
 
-    public insertMany(items: Model[]) {
+    public createMany(items: Model[]) {
         return this.model.insertMany(items.map((item: Model) => item.toModel()));
     }
 

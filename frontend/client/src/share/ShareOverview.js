@@ -61,19 +61,19 @@ class ShareOverview extends Component {
 
     sortItems(items) {
         switch (this.state.sort) {
-        case SORT.NAME:
-            return items.sort((coinA, coinB) => coinA.name.localeCompare(coinB.name));
-        case SORT.PERCENTAGE:
-            return items.sort(
-                (coinA, coinB) =>
-                    parseFloat(coinB.profitInPercent) - parseFloat(coinA.profitInPercent),
-            );
-        case SORT.PRICE:
-            return items.sort(
-                (coinA, coinB) => coinB.amount * coinB.price - coinA.amount * coinA.price,
-            );
-        default:
-            return items.sort((coinA, coinB) => coinA.name.localeCompare(coinB.name));
+            case SORT.NAME:
+                return items.sort((coinA, coinB) => coinA.name.localeCompare(coinB.name));
+            case SORT.PERCENTAGE:
+                return items.sort(
+                    (coinA, coinB) =>
+                        parseFloat(coinB.profitInPercent) - parseFloat(coinA.profitInPercent),
+                );
+            case SORT.PRICE:
+                return items.sort(
+                    (coinA, coinB) => coinB.amount * coinB.price - coinA.amount * coinA.price,
+                );
+            default:
+                return items.sort((coinA, coinB) => coinA.name.localeCompare(coinB.name));
         }
     }
 
@@ -85,24 +85,24 @@ class ShareOverview extends Component {
             return (
                 <PortfolioTrackerItem
                     key={i}
-                id={item.id}
+                    id={item.id}
                     name={item.name}
-                symbol={item.symbol}
-                changeHour={item.changes.percent_1h}
-                changeDay={item.changes.percent_24h}
-                changeWeek={item.changes.percent_7d}
+                    symbol={item.symbol}
+                    changeHour={item.changes.percentHour}
+                    changeDay={item.changes.percentDay}
+                    changeWeek={item.changes.percentWeek}
                     boughtPrice={item.price}
                     currency={this.props.currencies.get("items")[this.props.share.currency]}
                     boughtCurrency={boughtCurrency}
-                price={item.price}
+                    price={item.price}
                     amount={item.amount}
-                isUpdating={isFetching}
-                history={item.history}
-                profit={item.profit}
-                profitInPercent={item.profitInPercent}
-                paid={item.paid}
-                settings={this.props.share.settings}
-              />
+                    isUpdating={isFetching}
+                    history={item.history}
+                    profit={item.profit}
+                    profitInPercent={item.profitInPercent}
+                    paid={item.paid}
+                    settings={this.props.share.settings}
+                />
             );
         });
     }
@@ -110,10 +110,10 @@ class ShareOverview extends Component {
     notFoundPage() {
         return (
             <NotFoundPage
-            title="Portfolio not found"
+                title="Portfolio not found"
                 text="We could not find the portfolio you were looking for"
                 className={pageStyles.shareNotFoundPage}
-          />
+            />
         );
     }
 
@@ -121,7 +121,7 @@ class ShareOverview extends Component {
         return (
             <Page custom className={cx(pageStyles.focused, homeStyles.main)}>
                 <Loader />
-          </Page>
+            </Page>
         );
     }
 
@@ -154,9 +154,9 @@ class ShareOverview extends Component {
                 symbol: items[key].symbol,
                 label: items[key].netWorth,
                 total:
-                    share.settings.amount && share.settings.price ?
-                        parseFloat(items[key].amount * items[key].price) :
-                        items[key].amount,
+                    share.settings.amount && share.settings.price
+                        ? parseFloat(items[key].amount * items[key].price)
+                        : items[key].amount,
             });
         }
 
@@ -164,8 +164,8 @@ class ShareOverview extends Component {
             <PortfolioPieChart
                 data={data}
                 customTooltip
-            viewLabel={share.settings.amount && share.settings.price}
-          />
+                viewLabel={share.settings.amount && share.settings.price}
+            />
         );
 
         return chart;
@@ -190,15 +190,15 @@ class ShareOverview extends Component {
                 <h3
                     className={styles.portfolioTotal}
                     dangerouslySetInnerHTML={{ __html: view.netWorth }}
-              />
+                />
             ) : (
                 undefined
             );
 
         return (
             <Page custom className={cx(pageStyles.focused, homeStyles.main)}>
-            <div className={styles.portfolioStats}>
-                  {total}
+                <div className={styles.portfolioStats}>
+                    {total}
                     {chart}
                 </div>
                 <div className={styles.settings}>
@@ -208,11 +208,11 @@ class ShareOverview extends Component {
                             <option value={SORT.PRICE}>Price</option>
                             <option value={SORT.PERCENTAGE}>Percentage</option>
                             <option value={SORT.NAME}>name</option>
-                      </select>
-                  </div>
-              </div>
+                        </select>
+                    </div>
+                </div>
                 <PortfolioTracker> {portfolioItemContainers} </PortfolioTracker>
-          </Page>
+            </Page>
         );
     }
 }

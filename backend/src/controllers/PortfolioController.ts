@@ -2,7 +2,6 @@ import * as Boom from "boom";
 import * as Hapi from "hapi";
 import * as moment from "moment";
 import { Coin } from "../coin/Coin";
-import CoinCollectionRepository from "../coin/CoinCollectionRepository";
 import User, { User as DomainUser } from "../models/user";
 import UserCoin, { IUserCoin } from "../models/UserCoin";
 import UserShareSettings, { IUserShareSettings } from "../models/UserShareSettings";

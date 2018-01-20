@@ -1,11 +1,6 @@
 import { Document, Schema } from "mongoose";
 import mongoose from "../db";
-import AbstractModel from "../models/AbstractModel";
-
-export interface IPrice {
-    usd: number;
-    btc: number;
-}
+import AbstractModel from "../models/NewAbstractModel";
 
 export interface ISupply {
     available: number;
@@ -23,6 +18,12 @@ export interface IChangeDAO {
     percent_24h: number;
     percent_7d: number;
 }
+export interface IHistoryEntry {
+    btc: number;
+    usd: number;
+    timestamp: Date;
+    change: IChange;
+}
 
 export interface ICoin {
     id: any;
@@ -30,51 +31,34 @@ export interface ICoin {
     name: string;
     symbol: string;
     rank: number;
-    price: IPrice;
     marketCap: number;
     supply: ISupply;
-    change: IChange;
     volume: number;
-    timestamp: number;
+    history: IHistoryEntry[];
 }
 
-export interface ICoinDAO {
+export interface ICoinDAO extends ICoin, mongoose.Document {
     _id: any;
-    coin_id: string;
-    name: string;
-    symbol: string;
-    rank: number;
-    price: IPrice;
-    market_cap: number;
-    supply: ISupply;
-    change: IChangeDAO;
-    volume: number;
-    timestamp: number;
+    id: null;
 }
 
 export class Coin extends AbstractModel implements ICoin {
     public static parse(coinDAO: ICoinDAO) {
-        const coin: Coin = new Coin(coinDAO.coin_id, coinDAO.name, coinDAO.symbol);
+        const coin: Coin = new Coin(coinDAO.coinId, coinDAO.name, coinDAO.symbol);
         coin.rank = coinDAO.rank;
-        coin.price = coinDAO.price;
-        coin.marketCap = coinDAO.market_cap;
+        coin.marketCap = coinDAO.marketCap;
         coin.supply = coinDAO.supply;
-        coin.change = {
-            percentHour: coinDAO.change.percent_1h,
-            percentDay: coinDAO.change.percent_24h,
-            percentWeek: coinDAO.change.percent_7d
-        };
-        coin.timestamp = coinDAO.timestamp;
+        coin.history = coinDAO.history;
         return coin;
     }
 
     public volume: number;
     public rank: number;
-    public price: IPrice;
     public marketCap: number;
     public supply: ISupply;
     public change: IChange;
     public timestamp: number;
+    public history: IHistoryEntry[];
 
     constructor(
         readonly coinId: string,
@@ -84,24 +68,37 @@ export class Coin extends AbstractModel implements ICoin {
     ) {
         super();
     }
-
-    public toDAO() {
-        return {
-            _id: this.id,
-            coin_id: this.coinId,
-            name: this.name,
-            symbol: this.symbol,
-            rank: this.rank,
-            price: this.price,
-            market_cap: this.marketCap,
-            supply: this.supply,
-            volume: this.volume,
-            change: {
-                percent_1h: this.change.percentHour,
-                percent_24h: this.change.percentDay,
-                percent_7d: this.change.percentWeek
-            },
-            timestamp: this.timestamp
-        } as ICoinDAO;
-    }
 }
+
+export const CoinSchema = new Schema(
+    {
+        coinId: { type: String },
+        name: { type: String },
+        symbol: { type: String },
+        rank: { type: Number },
+        price: {
+            usd: { type: Number },
+            btc: { type: Number }
+        },
+        marketCap: { type: Number },
+        supply: {
+            available: { type: Number },
+            total: { type: Number }
+        },
+        volume: { type: Number },
+        history: [{
+            timestamp: { type: Date, default: Date.now },
+            btc: { type: Number },
+            usd: { type: Number },
+            change: {
+                percentHour: { type: Number },
+                percentDay: { type: Number },
+                percentWeek: { type: Number }
+            },
+            _id : {id: false}
+        }]
+    },
+    { timestamps: { createdAt: "created_on", updatedAt: "updated_on" }, strict: false }
+);
+
+export default mongoose.model("Coin", CoinSchema);

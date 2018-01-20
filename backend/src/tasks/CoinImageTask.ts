@@ -1,8 +1,8 @@
-import AbstractTask from "./AbstractTask";
-import CoinRepository from "../coin/CoinCollectionRepository";
+import CoinRepository from "../coin/CoinRepository";
 import * as CoinHelper from "../utils/CoinHelper";
 import * as DownloadHelper from "../utils/DownloadHelper";
 import * as ImageHelper from "../utils/ImageHelper";
+import AbstractTask from "./AbstractTask";
 
 class CoinImageTask extends AbstractTask {
     public key: string = "coin-image-task";
@@ -27,7 +27,7 @@ class CoinImageTask extends AbstractTask {
 
                 Object.keys(coins).forEach((coin: any) => {
                     promises.push(async () => ImageHelper.downloadImage(
-                        CoinHelper.getCoinImage(coins[coin].coin_id), coins[coin].coin_id, "coins"));
+                        CoinHelper.getCoinImage(coins[coin].coinId), coins[coin].coinId, "coins"));
                 });
 
                 console.log(`Downloading ${promises.length} images`);

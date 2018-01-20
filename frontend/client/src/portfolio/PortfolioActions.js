@@ -59,8 +59,12 @@ export const details = items => {
             ? reduceItems(items)
             : reduceItems(getState().portfolio.coins.get("items"));
 
+        const url = getState().portfolio.stats.get("loaded")
+            ? "coin/details/increment"
+            : "coin/details";
+
         return api
-            .post("coin/details", { coins: Object.keys(coins) }, getState().auth.token)
+            .post(url, { coins: Object.keys(coins) }, getState().auth.token)
             .then(coins => {
                 dispatch(coinDetailsSuccess(coins));
             })

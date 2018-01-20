@@ -2,7 +2,7 @@ import * as Boom from "boom";
 import * as Hapi from "hapi";
 import * as moment from "moment";
 import * as path from "path";
-import CoinRepository from "../coin/CoinCollectionRepository";
+import CoinRepository from "../coin/CoinRepository";
 import User, { User as DomainUser } from "../models/user";
 import UserShareSettings, { IUserShareSettings } from "../models/UserShareSettings";
 import PortfolioService from "../portfolio/PortfolioService";
@@ -105,24 +105,24 @@ class ShareController {
         //                     continue;
         //                 }
 
-        //                 portfolio[coinDetail.coin_id].details = coinDetail;
+        //                 portfolio[coinDetail.coinId].details = coinDetail;
 
         //                 if (!share.graph && !share.amount) {
-        //                     delete portfolio[coinDetail.coin_id].amount;
+        //                     delete portfolio[coinDetail.coinId].amount;
         //                 }
 
         //                 // if show graph but not amount, feed it percentages 0-1
         //                 if (share.graph && (!share.amount || !share.price)) {
-        //                     portfolio[coinDetail.coin_id].amount =
-        //                         portfolio[coinDetail.coin_id].amount *
-        //                         portfolio[coinDetail.coin_id].boughtPrice /
+        //                     portfolio[coinDetail.coinId].amount =
+        //                         portfolio[coinDetail.coinId].amount *
+        //                         portfolio[coinDetail.coinId].boughtPrice /
         //                         totalAmount;
         //                 }
 
         //                 // if you don't want to share price, delete them
         //                 if (!share.price) {
-        //                     delete portfolio[coinDetail.coin_id].boughtPrice;
-        //                     delete portfolio[coinDetail.coin_id].boughtAt;
+        //                     delete portfolio[coinDetail.coinId].boughtPrice;
+        //                     delete portfolio[coinDetail.coinId].boughtAt;
         //                 }
         //             }
 

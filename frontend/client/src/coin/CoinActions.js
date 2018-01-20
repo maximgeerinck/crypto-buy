@@ -13,7 +13,7 @@ export const retrieve = () => {
             }, 60 * 1000)
             .send()
             .then(coins => {
-                dispatch(retrieveCoinsSuccess(coins[0]));
+                dispatch(retrieveCoinsSuccess(coins));
             });
     };
 };

@@ -13,7 +13,7 @@ export interface IUserCoin {
 }
 export interface IUserCoinDAO {
     _id: any;
-    coin_id: string;
+    coinId: string;
     amount: number;
     source: string;
     bought_price: number; // per coin
@@ -23,7 +23,7 @@ export interface IUserCoinDAO {
 export default class UserCoin extends AbstractModel implements IUserCoin {
     public static parse(userCoin: IUserCoinDAO): UserCoin {
         const userCoinObj = new UserCoin(
-            userCoin.coin_id,
+            userCoin.coinId,
             userCoin.amount,
             userCoin.source,
             userCoin.bought_price,
@@ -78,7 +78,7 @@ export default class UserCoin extends AbstractModel implements IUserCoin {
     public toDAO() {
         const userCoinDAO: IUserCoinDAO = {
             _id: this.id,
-            coin_id: this.coinId,
+            coinId: this.coinId,
             amount: this.amount,
             source: this.source,
             currency: this.currency,

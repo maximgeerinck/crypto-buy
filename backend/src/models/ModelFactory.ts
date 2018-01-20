@@ -1,5 +1,4 @@
 import { Coin } from "../coin/Coin";
-import { CoinCollection } from "../coin/CoinCollection";
 import { Feedback } from "../feedback/Feedback";
 import { Notification } from "../notification/Notification";
 import { User } from "./user";
@@ -16,8 +15,6 @@ export default class ModelFactory {
                 return Coin.parse(dao);
             case "Notification":
                 return Notification.parse(dao);
-            case "CoinCollection":
-                return CoinCollection.parse(dao);
             case "Feedback":
                 return Feedback.parse(dao);
         }

@@ -24,7 +24,7 @@ export const reduceItems = items => {
 export const marketItemsToMap = marketItems => {
     let map = {};
     for (const item of marketItems) {
-        map[item.coin_id] = item;
+        map[item.coinId] = item;
     }
     return map;
 };
@@ -54,8 +54,7 @@ export const portfolioView = (portfolio, initialInvestment, currency, currencies
             let portfolioItem = portfolio[key];
             let viewItem = portfolioItemView(portfolioItem, currency, currencies);
             view.items.push(viewItem);
-            view.netWorth +=
-                portfolio[key].market.price.usd * currency.rate * portfolio[key].amount;
+            view.netWorth += portfolio[key].market.price * currency.rate * portfolio[key].amount;
         }
     }
 
@@ -78,12 +77,12 @@ export const portfolioItemView = (portfolioItem, currency, currencies) => {
         return;
     }
     let view = {
-        price: portfolioItem.market.price.usd * currency.rate,
+        price: portfolioItem.market.price * currency.rate,
         paid: portfolioItem.boughtPrice * currency.rate,
         amount: portfolioItem.amount,
         name: portfolioItem.market.name,
-        id: portfolioItem.market.coin_id,
-        changes: portfolioItem.market.change,
+        id: portfolioItem.market.coinId,
+        changes: portfolioItem.market.changes,
         history: portfolioItem.market.history,
         symbol: portfolioItem.market.symbol,
         boughtCurrency: currencies[portfolioItem.currency || "USD"],
@@ -104,7 +103,7 @@ export const portfolioItemView = (portfolioItem, currency, currencies) => {
     view.profit = CurrencyHelper.format(currency.symbolFormat, MathHelper.round(profit, 2));
     view.profitInPercent = MathHelper.round(MathHelper.gained(netWorth - profit, netWorth), 2);
     if (view.paid === 0) {
-        view.profitInPercent = MathHelper.round(view.changes.percent_24h, 2);
+        view.profitInPercent = MathHelper.round(view.changes.percentHour, 2);
     }
 
     return view;

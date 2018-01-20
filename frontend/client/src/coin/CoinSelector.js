@@ -38,9 +38,9 @@ class CoinOption extends Component {
             >
                 <img
                     src={`https://files.coinmarketcap.com/static/img/coins/32x32/${
-                        this.props.option.coin_id
+                        this.props.option.coinId
                     }.png`}
-                    alt={this.props.option.coin_id}
+                    alt={this.props.option.coinId}
                     className={styles.icon}
                 />
                 {this.props.children}
@@ -62,9 +62,9 @@ class CoinValue extends Component {
                 <span className={cx("Select-value-label", styles.label)}>
                     <img
                         src={`https://files.coinmarketcap.com/static/img/coins/32x32/${
-                            this.props.value.coin_id
+                            this.props.value.coinId
                         }.png`}
-                        alt={this.props.value.coin_id}
+                        alt={this.props.value.coinId}
                         className={styles.icon}
                     />
                     {this.props.children}
@@ -79,24 +79,43 @@ class CoinSelector extends Component {
         this.props.onSelect(val.value);
     };
 
-    render() {
+    coinToInput = coinId => {
         const coins = this.props.coins;
-        const selectedValue = this.props.value;
+        if (!coins[coinId]) {
+            return;
+        }
+        return {
+            value: coinId,
+            label: `${coins[coinId].symbol} (${coins[coinId].name})`,
+            coinId: coinId,
+        };
+    };
 
-        const options = Object.keys(coins).map(key => {
-            let coin = coins[key];
-            return {
-                value: key,
-                label: `${coin.symbol} (${coin.name})`,
-                coin_id: coin.coin_id,
-            };
+    getCoins = input => {
+        const coins = this.props.coins;
+
+        if (!input && coins["ethereum"]) {
+            return Promise.resolve({ options: ["bitcoin", "ethereum"].map(this.coinToInput) });
+        }
+
+        const output = [];
+        Object.keys(coins).forEach(key => {
+            if (key.indexOf(input) >= 0 && coins[key]) {
+                output.push(this.coinToInput(key));
+            }
         });
 
+        return Promise.resolve({ options: output });
+    };
+
+    render() {
+        const selectedValue = this.coinToInput(this.props.value);
+
         return (
-            <Select
+            <Select.Async
                 name="coins"
                 value={selectedValue}
-                options={options}
+                loadOptions={this.getCoins}
                 onChange={this._onSelect}
                 className={cx(styles.coinSelector, this.props.className)}
                 optionComponent={CoinOption}

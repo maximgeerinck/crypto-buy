@@ -1,5 +1,5 @@
 import * as math from "mathjs";
-import CoinCollectionRepository from "../coin/CoinCollectionRepository";
+import CoinRepository from "../coin/CoinRepository";
 import User, { User as DomainUser } from "../models/user";
 import UserCoin from "../models/UserCoin";
 import BittrexExchange from "../portfolio/exchange/bittrex";
@@ -26,13 +26,13 @@ class PortfolioService {
                 const balance = await bittrexExchange.balance();
 
                 // map coinId of coins to symbol
-                const coinMap = await CoinCollectionRepository.findDistinctMappedBySymbol();
+                const coinMap = await CoinRepository.findDistinctMappedBySymbol();
 
                 if (balance) {
                     balance.forEach((coin: any) => {
                         if (coin.Balance > 0.000001 && coinMap[coin.Currency]) {
                             portfolio.push(
-                                new UserCoin(coinMap[coin.Currency].coin_id,
+                                new UserCoin(coinMap[coin.Currency].coinId,
                                     coin.Balance,
                                     "bittrex.com",
                                     0,

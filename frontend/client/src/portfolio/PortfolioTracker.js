@@ -125,7 +125,6 @@ class PortfolioTrackerPage extends Component {
 
         // get coins user owns and reduce them
         const portfolio = PortfolioHelper.reduceItems(initialState.coins.get("items"));
-
         // link the current market value to it
         const linkedPortfolio = PortfolioHelper.linkPortfolioToMarket(
             portfolio,
@@ -142,7 +141,6 @@ class PortfolioTrackerPage extends Component {
 
     renderPortfolioItems(items) {
         const isFetching = this.props.portfolio.page.get("isFetching");
-
         return items.map(item => {
             const boughtCurrency = this.getCurrency(item.boughtCurrency || "USD");
             return (
@@ -151,9 +149,9 @@ class PortfolioTrackerPage extends Component {
                     id={item.id}
                     name={item.name}
                     symbol={item.symbol}
-                    changeHour={item.changes.percent_1h}
-                    changeDay={item.changes.percent_24h}
-                    changeWeek={item.changes.percent_7d}
+                    changeHour={item.changes.percentHour}
+                    changeDay={item.changes.percentDay}
+                    changeWeek={item.changes.percentWeek}
                     boughtPrice={item.price}
                     currency={this.getUserCurrency()}
                     boughtCurrency={boughtCurrency}
@@ -253,94 +251,6 @@ class PortfolioTrackerPage extends Component {
                 {noCoins}
             </Page>
         );
-
-        // const { portfolio, currency } = this.props;
-        // const user = this.props.user.get("user").toObject();
-
-        // if (this.isLoading())
-        //     return (
-        //         <Page custom className={homeStyles.main}>
-        //             <Loader />
-        //         </Page>
-        //     );
-
-        // const noCoins = !this.hasCoins() ? this.renderNoCoins() : null;
-        // const userCurrency = user.preferences.currency || "USD";
-        // const userInitialInvestment = user.preferences.initialInvestment || 0;
-        // const isFetching = !portfolio.stats.get("loaded");
-
-        // let totalPrice = 0,
-        //     invested = userInitialInvestment > 0 ? userInitialInvestment : 0,
-        //     coinDetails = this.getSortedPortfolio(),
-        //     currencyObj = currency.items[userCurrency],
-        //     reducedPortfolio = reduceItems(portfolio.coins.get("items"));
-
-        // let data = {
-        //     graph: [],
-        //     itemContainers: []
-        // };
-
-        // for (const coin of coinDetails) {
-        //     if (!coin || !reducedPortfolio[coin.coin_id]) continue;
-
-        //     const boughtCurrency = currency.items[reducedPortfolio[coin.coin_id].currency] || currencyObj;
-        //     const item = reducedPortfolio[coin.coin_id];
-        //     const price = round(coin.price.usd * currencyObj.rate * item.amount, 2);
-
-        //     totalPrice += parseFloat(price);
-
-        //     if (item.boughtPrice && invested === 0) {
-        //         invested += item.boughtPrice * item.amount;
-        //     }
-
-        //     data.itemContainers.push(
-        //         <PortfolioTrackerItem
-        //             key={coin._id}
-        //             id={coin.coin_id}
-        //             name={coin.name}
-        //             symbol={coin.symbol}
-        //             changeHour={coin.change.percent_1h}
-        //             changeDay={coin.change.percent_24h}
-        //             changeWeek={coin.change.percent_7d}
-        //             boughtPrice={item.boughtPrice}
-        //             price={coin.price.usd}
-        //             boughtCurrency={boughtCurrency}
-        //             currency={currencyObj}
-        //             amount={item.amount}
-        //             isUpdating={isFetching}
-        //             history={coin.history}
-        //         />
-        //     );
-
-        //     data.graph.push({
-        //         id: coin.coin_id,
-        //         name: coin.symbol,
-        //         symbol: coin.symbol,
-        //         label: `${userCurrency} ${parseFloat(price)}`,
-        //         total: parseFloat(price)
-        //     });
-        // }
-
-        // const investment = this.getInvestmentStats(invested, totalPrice);
-        // const chart = this.hasCoins() ? (
-        //     <PortfolioPieChart data={data.graph} customTooltip inPercent={false} />
-        // ) : (
-        //     undefined
-        // );
-
-        // // set document title
-        // AppActions.setDocumentTitle(`${round(totalPrice, 2)} ${userCurrency} (${investment.percentage}%)`);
-
-        // const view = {
-        //     worth: `${CurrencyHelper.format(currencyObj.symbolFormat, round(totalPrice, 2))}`,
-        //     gained: `${CurrencyHelper.format(currencyObj.symbolFormat, round(investment.amount, 2))} (${
-        //         investment.percentage
-        //     }%)`,
-        //     investment: `(based on investment of ${CurrencyHelper.format(
-        //         currencyObj.symbolFormat,
-        //         round(invested, 6)
-        //     )})`
-        // };
     }
 }
 
