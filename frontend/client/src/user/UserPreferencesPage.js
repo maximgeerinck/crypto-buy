@@ -17,7 +17,9 @@ class ChangePasswordPage extends Component {
     }
 
     componentWillMount() {
-        if (!this.props.user.loaded) this.props.userActions.me();
+        if (!this.props.user.loaded) {
+            this.props.userActions.me();
+        }
     }
 
     onSavePreferences = preferences => {

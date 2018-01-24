@@ -15,7 +15,7 @@ import Feedback from "../feedback/Feedback";
 
 class Page extends Component {
     componentDidMount() {
-        if (this.props.auth.isAuthenticated && !this.props.user) {
+        if (!this.props.user.loaded && this.props.auth.isAuthenticated) {
             this.props.userActions.me();
         }
     }
@@ -39,20 +39,20 @@ class Page extends Component {
 
         return (
             <div className={cx(page.page, className)}>
-            {navbar}
-            <FlashContainer />
+                {navbar}
+                <FlashContainer />
                 <div className={page.body}>
-                {/* <ErrorContainer /> */}
-                {titleContainer}
+                    {/* <ErrorContainer /> */}
+                    {titleContainer}
                     {childrenWrapper}
-              </div>
+                </div>
 
-            <Feedback />
+                <Feedback />
 
-            <footer>
+                <footer>
                     <p className={page.copyright}>
-                <a href="https://cryptotrackr.com">&copy; Cryptotrackr 2017</a>
-              </p>
+                        <a href="https://cryptotrackr.com">&copy; Cryptotrackr 2017</a>
+                    </p>
                     {/* <SponsorEnjin /> */}
                     <ul className={page.donation}>
                         Support us by using one of the following currencies
@@ -64,7 +64,7 @@ class Page extends Component {
                             />
                             <span className={page.address}>
                                 0x82C3CE03a9ed41DD047B7DD833751E031C451017
-                          </span>
+                            </span>
                         </li>
                         <li>
                             Donate
@@ -73,18 +73,18 @@ class Page extends Component {
                                 alt="bitcoin"
                             />
                             <span className={page.address}>14FG4SPBZAECiogAB3a2KZqCQmBG2zh69Z</span>
-                      </li>
+                        </li>
                         <li>
                             Donate
                             <img
                                 src="https://files.coinmarketcap.com/static/img/coins/16x16/litecoin.png"
                                 alt="litecoin"
                             />
-                        <span className={page.address}>LMQ1uyDeQRZa6y2J8nefwkzapfGLpHVDHN</span>
-                      </li>
-              </ul>
+                            <span className={page.address}>LMQ1uyDeQRZa6y2J8nefwkzapfGLpHVDHN</span>
+                        </li>
+                    </ul>
                 </footer>
-          </div>
+            </div>
         );
     }
 }

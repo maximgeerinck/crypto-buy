@@ -65,13 +65,23 @@ export const stats = items => {
         return api
             .post(url, { coins: Object.keys(coins) }, getState().auth.token)
             .then(stats => {
-                console.log(stats);
                 dispatch(coinStatsSuccess(stats));
             })
             .catch(err => {
                 dispatch(coinStatsFailure(err.data));
             });
     };
+};
+
+export const isPortfolioLoadedCorrectly = state => {
+    const details = state.portfolio.details;
+    let coinsCorrectlySet = true;
+    details.get("coins").forEach(coin => {
+        if (!coin.name || !coin.symbol) {
+            coinsCorrectlySet = false;
+        }
+    });
+    return state.portfolio.details.get("loaded") && coinsCorrectlySet;
 };
 
 export const details = items => {
@@ -82,7 +92,7 @@ export const details = items => {
             ? reduceItems(items)
             : reduceItems(getState().portfolio.coins.get("items"));
 
-        const url = getState().portfolio.details.get("loaded")
+        const url = isPortfolioLoadedCorrectly(getState())
             ? "coin/details/increment"
             : "coin/details";
 

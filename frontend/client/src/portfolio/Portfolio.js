@@ -10,50 +10,42 @@ import Loader from "../components/Loader";
 class Portfolio extends Component {
     componentWillMount() {
         this.props.portfolioActions.retrieve();
-        this.props.coinActions.retrieve();
+        if (!this.props.coins.loaded) {
+            this.props.coinActions.retrieve();
+        }
     }
 
     onDelete = id => {
         this.props.portfolioActions.removeCoin(id);
     };
 
-    renderNonAutomatic() {
-        const coins = this.props.portfolio.coins.get("items");
-
-        return coins.filter(coin => coin.automatic !== true).map((i, key) => {
-            const validationErrors = this.props.portfolio.coins.get("validationErrors")[key];
-            return (
-                <PortfolioItem
-                    key={i.id}
-                    coin={i}
-                    details={this.props.coins.coins.toObject()[i.coinId]}
-                    onEdit={coin => this.props.portfolioActions.updateCoin(key, i)}
-                    onDelete={() => this.onDelete(i.id)}
-                    validationErrors={validationErrors}
-                    editMode={false}
-                />
-            );
-        });
-    }
-    renderAutomatic() {
-        const coins = this.props.portfolio.coins.get("items");
-
-        return coins.filter(coin => coin.automatic === true).map((i, key) => {
-            const validationErrors = this.props.portfolio.coins.get("validationErrors")[key];
-            return (
-                <PortfolioItem
-                    key={i.id}
-                    coin={i}
-                    details={this.props.coins.coins.toObject()[i.coinId]}
-                    validationErrors={validationErrors}
-                    editMode={false}
-                />
-            );
-        });
-    }
-
     isLoading() {
         return !this.props.portfolio.coins.get("loaded") || !this.props.coins.get("loaded");
+    }
+
+    renderCoins(automatic) {
+        const coins = this.props.portfolio.coins.get("items");
+
+        return coins.filter(coin => coin.automatic === automatic).map((i, key) => {
+            const validationErrors = this.props.portfolio.coins.get("validationErrors")[key];
+            return (
+                <PortfolioItem
+                    coin={i}
+                    details={this.props.coins.coins.toObject()[i.coinId]}
+                    onEdit={coin => this.props.portfolioActions.updateCoin(key, coin)}
+                    onDelete={!automatic ? () => this.onDelete(i.id) : undefined}
+                    validationErrors={validationErrors}
+                    editMode={false}
+                />
+            );
+        });
+    }
+
+    renderNonAutomatic() {
+        return this.renderCoins(false);
+    }
+    renderAutomatic() {
+        return this.renderCoins(true);
     }
 
     render() {
@@ -70,14 +62,13 @@ class Portfolio extends Component {
         const automaticComponents = this.renderAutomatic();
         if (automaticComponents.length > 0) {
             components.push(
-                <div className={styles.automatic}>
+                <div className={styles.automatic} key="bittrex-api">
                     {automaticComponents}
                     <p className={styles.source}>Automatically added from bittrex.com</p>
                 </div>,
             );
         }
-
-        return <div className={styles.portfolio}>{components}</div>;
+        return <ul className={styles.portfolio}>{components}</ul>;
     }
 }
 

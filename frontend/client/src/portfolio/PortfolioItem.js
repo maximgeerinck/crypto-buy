@@ -71,7 +71,7 @@ class PortfolioItem extends Component {
         const buttons = this.props.onDelete ? this.renderButtons() : undefined;
 
         return (
-            <div className={styles.item} key={this.props.key}>
+            <li className={styles.item} key={this.props.coin.id}>
                 <div className={styles.itemHeader}>
                     <div className={styles.details}>
                         {image}
@@ -85,7 +85,7 @@ class PortfolioItem extends Component {
                     {buttons}
                 </div>
                 {editForm}
-            </div>
+            </li>
         );
     }
 }

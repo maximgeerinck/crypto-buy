@@ -5,14 +5,15 @@ import ReactGA from "react-ga";
 import { browserHistory } from "react-router";
 import "./index.scss";
 import * as Constants from "./constants";
-import { USER } from "../user/UserReducer";
+import { AUTH_TOKEN } from "../authentication/AuthenticationConstants";
+import * as CacheHelper from "../helpers/CacheHelper";
 
 const TRACKING_ID = Constants.TRACKING_ID;
 
 ReactGA.initialize(TRACKING_ID);
 window.cryptotrackr = {
     version: Constants.APP_VERSION,
-    originalDocumentTitle: Constants.TITLE
+    originalDocumentTitle: Constants.TITLE,
 };
 const VERSION_KEY = "cryptotrackr_version";
 
@@ -23,14 +24,14 @@ class ImageRotatorApp extends Component {
     }
 
     componentWillMount() {
-        let userLoggedIn = localStorage.getItem(USER) != null;
+        let userLoggedIn = CacheHelper.getCache(AUTH_TOKEN) !== null;
 
         if (
-            localStorage.getItem(VERSION_KEY) === null ||
-            parseInt(localStorage.getItem(VERSION_KEY), 10) !== window.cryptotrackr.version
+            !CacheHelper.getCache(VERSION_KEY) ||
+            parseInt(CacheHelper.getCache(VERSION_KEY), 10) !== window.cryptotrackr.version
         ) {
-            localStorage.clear();
-            localStorage.setItem(VERSION_KEY, window.cryptotrackr.version);
+            CacheHelper.deleteAll();
+            CacheHelper.cache(VERSION_KEY, window.cryptotrackr.version, CacheHelper.MONTH);
 
             // only redirect if user key was found
             if (userLoggedIn) {

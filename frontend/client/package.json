@@ -62,6 +62,7 @@
         "express": "^4.15.2",
         "immutable": "^3.8.1",
         "inert": "^4.1.0",
+        "lodash.debounce": "^4.0.8",
         "moment": "^2.18.1",
         "pleasejs": "^0.4.2",
         "prop-types": "^15.5.6",
@@ -93,8 +94,12 @@
         "run-server": "pushstate-server build/"
     },
     "jest": {
-        "collectCoverageFrom": ["src/**/*.{js,jsx}"],
-        "setupFiles": ["<rootDir>/config/polyfills.js"],
+        "collectCoverageFrom": [
+            "src/**/*.{js,jsx}"
+        ],
+        "setupFiles": [
+            "<rootDir>/config/polyfills.js"
+        ],
         "testMatch": [
             "<rootDir>/src/**/__tests__/**/*.js?(x)",
             "<rootDir>/src/**/?(*.)(spec|test).js?(x)"
@@ -106,14 +111,24 @@
             "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
             "^(?!.*\\.(js|jsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
         },
-        "transformIgnorePatterns": ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"],
+        "transformIgnorePatterns": [
+            "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
+        ],
         "moduleNameMapper": {
             "^react-native$": "react-native-web"
         },
-        "moduleFileExtensions": ["web.js", "js", "json", "web.jsx", "jsx"]
+        "moduleFileExtensions": [
+            "web.js",
+            "js",
+            "json",
+            "web.jsx",
+            "jsx"
+        ]
     },
     "babel": {
-        "presets": ["react-app"]
+        "presets": [
+            "react-app"
+        ]
     },
     "eslintConfig": {
         "extends": "react-app"

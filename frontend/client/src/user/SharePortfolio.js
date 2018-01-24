@@ -15,7 +15,9 @@ import * as PortfolioHelper from "../helpers/PortfolioHelper";
 class SharePortfolio extends Component {
     componentWillMount() {
         this.props.portfolioActions.retrieve(() => this.props.portfolioActions.details());
-        this.props.coinActions.retrieve();
+        if (!this.props.coins.loaded) {
+            this.props.coinActions.retrieve();
+        }
     }
 
     isLoading() {

@@ -43,9 +43,13 @@ class PortfolioTrackerPage extends Component {
         const { currencyActions, userActions, user, portfolioActions } = this.props;
 
         // load currencies
-        currencyActions.index();
+        if (!this.props.currency.get("loaded")) {
+            currencyActions.index();
+        }
 
-        if (!user.loaded || user.retrievedOn < Date.now() + 3600) userActions.me();
+        if (!user.loaded) {
+            userActions.me();
+        }
 
         portfolioActions.retrieve().then(coins => {
             portfolioActions.details(coins);

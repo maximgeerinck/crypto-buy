@@ -55,6 +55,8 @@ class PortfolioController {
 
         const user: DomainUser = req.auth.credentials;
 
+        console.log(req.payload);
+
         for (let i = 0; i < user.portfolio.length; i++) {
             const coin = user.portfolio[i];
 

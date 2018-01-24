@@ -36,7 +36,9 @@ class ShareOverview extends Component {
         const { currencyActions } = this.props;
 
         // load currencies
-        currencyActions.index();
+        if (!this.props.currencies.get("loaded")) {
+            currencyActions.index();
+        }
 
         this.props.shareActions.loadShare(this.props.routeParams.shareLink);
     }

@@ -1,6 +1,7 @@
 import * as types from "./PortfolioActionTypes";
 import { LOGOUT } from "../authentication/AuthenticationActionTypes";
 import { List, Map, Record } from "immutable";
+import * as CacheHelper from "../helpers/CacheHelper";
 
 const COINS = "portfolio_coins";
 const DETAILS = "portfolio_details"; // the coin statistics
@@ -34,15 +35,15 @@ var InitialState = new Record({
 
 let initialState = new InitialState();
 
-if (localStorage.getItem(COINS)) {
+if (CacheHelper.getCache(COINS)) {
     initialState = initialState
-        .setIn(["coins", "items"], JSON.parse(localStorage.getItem(COINS)))
+        .setIn(["coins", "items"], CacheHelper.getCache(COINS))
         .setIn(["coins", "loaded"], true);
 }
 
-if (localStorage.getItem(DETAILS)) {
+if (CacheHelper.getCache(DETAILS)) {
     initialState = initialState
-        .setIn(["details", "coins"], JSON.parse(localStorage.getItem(DETAILS)))
+        .setIn(["details", "coins"], CacheHelper.getCache(DETAILS))
         .setIn(["details", "loaded"], true);
 }
 
@@ -54,7 +55,7 @@ const PortfolioReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case types.RETRIEVE_ITEMS_SUCCESS:
-            localStorage.setItem(COINS, JSON.stringify(action.body));
+            CacheHelper.cache(COINS, action.body);
             return state
                 .setIn(["coins", "items"], action.body)
                 .setIn(["coins", "validationErrors"], action.body.map(coin => null))
@@ -80,7 +81,7 @@ const PortfolioReducer = (state = initialState, action) => {
                     );
             }
 
-            localStorage.setItem(DETAILS, JSON.stringify(coinsMerged));
+            CacheHelper.cache(DETAILS, coinsMerged);
 
             return state
                 .setIn(["details", "coins"], coinsMerged)
@@ -96,6 +97,7 @@ const PortfolioReducer = (state = initialState, action) => {
         case types.COINS_ADD_SUCCESS:
         case types.COIN_UPDATE_SUCCESS:
         case types.COIN_DELETE_SUCCESS:
+            CacheHelper.remove(DETAILS);
             return state
                 .setIn(["coins", "items"], action.body)
                 .setIn(["form", "isSubmitting"], false);
@@ -115,8 +117,8 @@ const PortfolioReducer = (state = initialState, action) => {
             return state.setIn(["coins", "validationErrors"], changedErrors);
 
         case LOGOUT:
-            localStorage.removeItem(COINS);
-            localStorage.removeItem(DETAILS);
+            CacheHelper.remove(COINS);
+            CacheHelper.remove(DETAILS);
             return new InitialState();
 
         default:

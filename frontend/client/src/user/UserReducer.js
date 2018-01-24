@@ -4,8 +4,9 @@ import * as shareTypes from "../share/ShareActionTypes";
 import { Map, Record } from "immutable";
 import * as errorTypes from "../error/ErrorActionTypes";
 import { LOCATION_CHANGE } from "react-router-redux";
+import * as CacheHelper from "../helpers/CacheHelper";
 
-export const USER = "auth_user";
+export const KEY_USER = "auth_user";
 export const USER_CACHE = "auth_user_createdOn";
 
 var InitialState = new Record({
@@ -28,12 +29,9 @@ var InitialState = new Record({
 let initialState = new InitialState();
 
 // restore user
-if (
-    localStorage.getItem(USER) &&
-    parseInt(localStorage.getItem(USER_CACHE), 10) > Date.now() - 3600 * 1000
-) {
+if (CacheHelper.getCache(KEY_USER)) {
     initialState = initialState
-        .set("user", new Map(JSON.parse(localStorage.getItem(USER))))
+        .set("user", new Map(CacheHelper.getCache(KEY_USER)))
         .set("loaded", true);
 }
 
@@ -50,8 +48,7 @@ const UserReducer = (state = initialState, action) => {
             return state.setIn(["form", "isSubmitting"], false).setIn(["form", "succeeded"], true);
 
         case types.USER_SUCCESS:
-            localStorage.setItem(USER, JSON.stringify(action.body));
-            localStorage.setItem(USER_CACHE, Date.now());
+            CacheHelper.cache(KEY_USER, action.body, CacheHelper.SHORT);
             return state
                 .set("user", new Map(action.body))
                 .set("loaded", true)
@@ -59,7 +56,7 @@ const UserReducer = (state = initialState, action) => {
         case types.CREATION_FAILED_VALIDATION:
             return state.setIn(["form", "validationErrors"], action.body);
         case types.UPDATE_SUCCESS:
-            localStorage.setItem(USER, JSON.stringify(action.body));
+            CacheHelper.cache(KEY_USER, action.body, CacheHelper.SHORT);
             return state
                 .set("user", new Map(action.body))
                 .setIn(["preferences", "validationErrors"], undefined);

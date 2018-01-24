@@ -62,6 +62,8 @@ class CoinForm extends Component {
 
         if (e.target.name === "symbol") {
             coin.symbol = e.target.value.toUpperCase();
+        } else if (e.target.name === "amount" || e.target.name === "boughtPrice") {
+            coin[e.target.name] = parseFloat(e.target.value);
         } else {
             coin[e.target.name] = e.target.value;
         }

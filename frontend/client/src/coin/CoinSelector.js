@@ -3,18 +3,9 @@ import PropTypes from "prop-types";
 import Select from "react-select";
 import styles from "./coin.scss";
 import cx from "classnames";
+import debounce from "lodash.debounce";
 
 class CoinOption extends Component {
-    // propTypes: {
-    // 	children: PropTypes.node,
-    // 	className: PropTypes.string,
-    // 	isDisabled: PropTypes.bool,
-    // 	isFocused: PropTypes.bool,
-    // 	isSelected: PropTypes.bool,
-    // 	onFocus: PropTypes.func,
-    // 	onSelect: PropTypes.func,
-    // 	option: PropTypes.object.isRequired,
-    // },
     handleMouseDown = event => {
         event.preventDefault();
         event.stopPropagation();
@@ -50,12 +41,6 @@ class CoinOption extends Component {
 }
 
 class CoinValue extends Component {
-    // propTypes: {
-    // 	children: PropTypes.node,
-    // 	placeholder: PropTypes.string,
-    // 	value: PropTypes.object
-    // },
-
     render() {
         return (
             <div className="Select-value" title={this.props.value.title}>
@@ -91,26 +76,46 @@ class CoinSelector extends Component {
         };
     };
 
-    getCoins = input => {
-        const coins = this.props.coins;
-
-        if (!input && coins["ethereum"]) {
-            return Promise.resolve({ options: ["bitcoin", "ethereum"].map(this.coinToInput) });
-        }
-
+    searchCoinByNameOrSymbol(term) {
+        const coins = this.props.coins || [];
         const output = [];
         Object.keys(coins).forEach(key => {
-            if (key.indexOf(input) >= 0 && coins[key]) {
-                output.push(this.coinToInput(key));
+            if (!coins[key] || !coins[key].symbol || !coins[key].name) {
+                return;
+            }
+
+            const coin = coins[key];
+            if (
+                coin.name.toLowerCase().indexOf(term) >= 0 ||
+                coin.symbol.toLowerCase().indexOf(term) >= 0
+            ) {
+                output.push(key);
             }
         });
+        return output;
+    }
 
-        return Promise.resolve({ options: output });
-    };
+    getCoins = debounce((searchTerm, callback) => {
+        const coins = this.props.coins || [];
+
+        const output = [];
+        if (!searchTerm) {
+            output.push(
+                ...Object.keys(coins)
+                    .slice(0, 5)
+                    .map(this.coinToInput),
+            );
+        } else {
+            output.push(
+                ...this.searchCoinByNameOrSymbol(searchTerm.toLowerCase()).map(this.coinToInput),
+            );
+        }
+
+        callback(null, { options: output });
+    }, 250);
 
     render() {
         const selectedValue = this.coinToInput(this.props.value);
-
         return (
             <Select.Async
                 name="coins"

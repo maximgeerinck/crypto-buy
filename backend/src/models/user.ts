@@ -169,7 +169,7 @@ export const UserSchema = new mongoose.Schema(
         ],
         portfolio: [
             {
-                coinId: { type: String, required: true },
+                coin_id: { type: String, required: true },
                 amount: { type: Number, required: true, default: 0.0 },
                 source: { type: String, required: true },
                 bought_price: { type: Number, required: false },

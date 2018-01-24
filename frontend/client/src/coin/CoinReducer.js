@@ -12,7 +12,9 @@ var InitialState = new Record({
 let initialState = new InitialState();
 
 if (CacheHelper.getCache(KEY_COINS)) {
-    initialState.set("coins", new Map(CacheHelper.getCache(KEY_COINS))).set("loaded", true);
+    initialState = initialState
+        .set("coins", new Map(CacheHelper.getCache(KEY_COINS)))
+        .set("loaded", true);
 }
 
 const CoinReducer = (state = initialState, action) => {

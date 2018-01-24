@@ -76,6 +76,7 @@ export const portfolioItemView = (portfolioItem, currency, currencies) => {
     if (!portfolioItem.market || !portfolioItem.market.price) {
         return;
     }
+
     let view = {
         price: portfolioItem.market.price * currency.rate,
         paid: portfolioItem.boughtPrice * currency.rate,
@@ -95,7 +96,7 @@ export const portfolioItemView = (portfolioItem, currency, currencies) => {
 
     const netWorth = view.price * view.amount;
     const profit =
-        (portfolioItem.market.price.usd - portfolioItem.boughtPrice * view.boughtCurrency.rate) *
+        (portfolioItem.market.price - portfolioItem.boughtPrice * view.boughtCurrency.rate) *
         portfolioItem.amount *
         currency.rate;
 

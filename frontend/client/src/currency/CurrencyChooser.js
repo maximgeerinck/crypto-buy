@@ -10,7 +10,9 @@ import "../react-select.css";
 class CurrencyChooser extends Component {
     componentWillMount() {
         // load currencies
-        this.props.currencyActions.index();
+        if (!this.props.currencies.get("loaded")) {
+            this.props.currencyActions.index();
+        }
     }
 
     render() {

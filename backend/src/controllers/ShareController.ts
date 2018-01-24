@@ -17,132 +17,62 @@ import * as fs from "fs";
 class ShareController {
     public async retrieve(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
 
-        // await PortfolioService.aggregatePortfolio(newUser);
-        const share = await ShareRepository.findOneByToken(req.params.token);
-        const coins = await CoinRepository.findAllWithHistory();
-        const p = await PortfolioService.aggregatePortfolio(share.user);
+        try {
+            const share = await ShareRepository.findOneByToken(req.params.token);
+            const coins = await CoinRepository.findAllWithHistory();
+            const p = await PortfolioService.aggregatePortfolio(share.user);
 
-        // bind
-        const portfolio = PortfolioHelper.bindPortfolioToCoin(p, coins);
+            // bind
+            const portfolio = PortfolioHelper.bindPortfolioToCoin(p, coins);
 
-        const totalAmount = Object.keys(portfolio).reduce((sum, value) => {
-            if (portfolio[value]) {
-                return sum + portfolio[value].amount * portfolio[value].details.price.usd;
-            }
-        }, 0);
-
-        // apply share rules
-        Object.keys(portfolio).forEach((item: any) => {
-            if (!share.amount) {
-                // amount in percents to make graph work
-                // delete portfolio[item].amount;
-                if (share.graph) {
-                    portfolio[item].amount = portfolio[item].amount * portfolio[item].details.price.usd / totalAmount;
-                } else {
-                    delete portfolio[item].amount;
+            const totalAmount = Object.keys(portfolio).reduce((sum, value) => {
+                if (portfolio[value] && portfolio[value].details.history) {
+                    const price = portfolio[value].details.history[portfolio[value].details.history.length - 1].usd;
+                    return sum + portfolio[value].amount * price;
                 }
-            }
-            if (!share.price) {
-                delete portfolio[item].boughtPrice;
-                delete portfolio[item].boughtAt;
-            }
-        });
+            }, 0);
 
-        const settings = {
-            amount: share.amount,
-            graph: share.graph,
-            change: share.change,
-            price: share.price
-        };
+            // apply share rules
+            Object.keys(portfolio).forEach((item: any) => {
 
-        reply({
-            settings,
-            currency: share.user.preferences.currency,
-            portfolio
-        });
+                portfolio[item].details = {
+                    ...portfolio[item].details,
+                    price: portfolio[item].details.history[portfolio[item].details.history.length - 1].usd,
+                    changes: portfolio[item].details.history[portfolio[item].details.history.length - 1].change
+                };
 
-        // ShareRepository.findOneByToken(req.params.token)
-        //     .then((share) => {
-        //         const portfolio: any = {};
-        //         let totalAmount = 0;
-        //         // unique values
-        //         for (const coin of share.user.portfolio) {
-        //             if (portfolio[coin.coinId]) {
-        //                 portfolio[coin.coinId].amount += coin.amount;
+                if (!share.amount) {
+                    // amount in percents to make graph work
+                    // delete portfolio[item].amount;
+                    if (share.graph) {
+                        portfolio[item].amount = portfolio[item].amount * portfolio[item].details.price / totalAmount;
+                    } else {
+                        delete portfolio[item].amount;
+                    }
+                }
+                if (!share.price) {
+                    delete portfolio[item].boughtPrice;
+                    delete portfolio[item].boughtAt;
+                }
+            });
 
-        //                 // weighted average of price
-        //                 portfolio[coin.coinId].boughtPrice =
-        //                     (portfolio[coin.coinId].boughtPrice * portfolio[coin.coinId].amount +
-        //                         coin.boughtPrice * coin.amount) /
-        //                     (portfolio[coin.coinId].amount + coin.amount);
-        //             } else {
-        //                 portfolio[coin.coinId] = coin;
-        //             }
-        //         }
+            const settings = {
+                amount: share.amount,
+                graph: share.graph,
+                change: share.change,
+                price: share.price
+            };
 
-        //         // // link them to current value
+            reply({
+                settings,
+                currency: share.user.preferences.currency,
+                portfolio
+            });
+        } catch (ex) {
+            console.log(ex);
+            reply(Boom.badRequest());
+        }
 
-        //         return CoinRepository.findAllWithHistory().then((results: any) => {
-        //             const details = [];
-        //             for (const coin of Object.keys(portfolio)) {
-        //                 details.push(results[coin]);
-        //             }
-
-        //             // get total amount
-        //             if (!share.user.preferences.initialInvestment || share.user.preferences.initialInvestment === 0) {
-        //                 totalAmount = details.reduce((sum, value) => {
-        //                     if (portfolio[value.coinId]) {
-        //                         return sum + portfolio[value.coinId].amount * portfolio[value.coinId].boughtPrice;
-        //                     }
-        //                 }, 0);
-        //             } else {
-        //                 totalAmount = share.user.preferences.initialInvestment;
-        //             }
-
-        //             // coin details
-        //             for (const coinDetail of details) {
-        //                 if (!coinDetail) {
-        //                     continue;
-        //                 }
-
-        //                 portfolio[coinDetail.coinId].details = coinDetail;
-
-        //                 if (!share.graph && !share.amount) {
-        //                     delete portfolio[coinDetail.coinId].amount;
-        //                 }
-
-        //                 // if show graph but not amount, feed it percentages 0-1
-        //                 if (share.graph && (!share.amount || !share.price)) {
-        //                     portfolio[coinDetail.coinId].amount =
-        //                         portfolio[coinDetail.coinId].amount *
-        //                         portfolio[coinDetail.coinId].boughtPrice /
-        //                         totalAmount;
-        //                 }
-
-        //                 // if you don't want to share price, delete them
-        //                 if (!share.price) {
-        //                     delete portfolio[coinDetail.coinId].boughtPrice;
-        //                     delete portfolio[coinDetail.coinId].boughtAt;
-        //                 }
-        //             }
-
-        //             reply({
-        //                 settings: {
-        //                     amount: share.amount,
-        //                     graph: share.graph,
-        //                     change: share.change,
-        //                     price: share.price
-        //                 },
-        //                 currency: share.currency,
-        //                 portfolio
-        //             });
-        //         });
-        //     })
-        //     .catch((err) => {
-        //         console.log(`ERROR IN ${req.params.token}`);
-        //         console.log(err);
-        //         reply(Boom.badRequest("E_NOT_FOUND"));
-        //     });
     }
 
     public async banner(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
@@ -154,37 +84,37 @@ class ShareController {
 
         // bind
         const portfolio = PortfolioHelper.bindPortfolioToCoin(p, coins);
-
-        const coinAmount = Object.keys(portfolio).length;
-        const iconSize = 32;
-        const padding = 10;
-
-        const PROMOTION_TEXT_HEIGHT = 10;
-        const height = iconSize + padding * 2 + PROMOTION_TEXT_HEIGHT;
-        let width = iconSize * coinAmount + padding * (coinAmount + 1) + PROMOTION_TEXT_HEIGHT;
-
-        if (width <= 50) {
-            width = 50;
-        }
-
-        const canvas = createCanvas(width, height);
-        const ctx = canvas.getContext("2d");
-        const stream = canvas.pngStream();
-
         try {
+            const coinAmount = Object.keys(portfolio).length;
+            const iconSize = 32;
+            const padding = 10;
+
+            const PROMOTION_TEXT_HEIGHT = 10;
+            const height = iconSize + padding * 2 + PROMOTION_TEXT_HEIGHT;
+            let width = iconSize * coinAmount + padding * (coinAmount + 1) + PROMOTION_TEXT_HEIGHT;
+
+            if (width <= 50) {
+                width = 50;
+            }
+
+            const canvas = createCanvas(width, height);
+            const ctx = canvas.getContext("2d");
+            const stream = canvas.pngStream();
+
             for (let i = 0; i < coinAmount; i++) {
 
-                const x = i * iconSize + (i + 1) * padding;
-                const y = padding;
+                    const x = i * iconSize + (i + 1) * padding;
+                    const y = padding;
 
-                const image = await loadImage(
-                    path.join(__dirname, "../../public/coins", `${Object.keys(portfolio)[i]}.png`));
+                    const image = await loadImage(
+                        path.join(__dirname, "../../public/coins", `${Object.keys(portfolio)[i]}.png`));
 
-                ctx.drawImage(image, x, y, iconSize, iconSize);
-            }
+                    ctx.drawImage(image, x, y, iconSize, iconSize);
+                }
 
             ctx.font = "10px Impact";
             ctx.fillText("My portfolio at cryptotrackr.com", 10, height - 5);
+            reply(stream).header("Content-Type", "image/png");
 
         } catch (err) {
             if (err.indexOf("error while reading from input stream") > -1) {
@@ -192,9 +122,8 @@ class ShareController {
             } else {
                 console.log(err);
             }
+            reply(Boom.badRequest());
         }
-
-        reply(stream).header("Content-Type", "image/png");
     }
 
     /**
