@@ -20,6 +20,7 @@ interface ICoinStatistic {
 
 const CACHE_COINS_ALL: string = "coins/all";
 const CACHE_COINS_STATS_WEEK: string = "coins/stats/week";
+const CACHE_COINS_TODAY: string = "coins/today";
 
 class CoinRepository extends MongoRepository<Coin> {
     constructor() {
@@ -45,14 +46,20 @@ class CoinRepository extends MongoRepository<Coin> {
     }
 
     public async findAllToday(): Promise<Coin[]> {
+
+        const coinsToday: any = await CacheHelper.get(CACHE_COINS_TODAY);
+        if (coinsToday) {
+            return Promise.resolve(coinsToday);
+        }
+
         const start = moment().startOf("day");
         const end = moment().endOf("day");
         const self = this;
+        const daos = await this.model.find({ created_on: { $gte: start, $lt: end }});
+        const objs = daos.map((dao: any) => self.parse(dao));
+        CacheHelper.cache(CACHE_COINS_TODAY, objs, CacheHelper.HOUR * 2);
 
-        return this.model.find({ created_on: { $gte: start, $lt: end }}).lean()
-            .then((daos: any) => {
-                return daos.map((dao: any) => self.parse(dao));
-            });
+        return Promise.resolve(objs);
     }
 
     public async findDistinctMappedBySymbol(): Promise<any> {
@@ -89,8 +96,8 @@ class CoinRepository extends MongoRepository<Coin> {
         }
     }
 
-    public async addHistoryEntry(coinId: string, entry: any): Promise<Coin> {
-        return this.model.update({ coinId }, { $push: {history: entry }});
+    public async addHistoryEntry(id: any, entry: any): Promise<Coin> {
+        return this.model.update({ _id: id }, { $push: {history: entry }});
     }
 
     public async stats(): Promise<any> {

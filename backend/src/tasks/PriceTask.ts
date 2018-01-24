@@ -11,8 +11,11 @@ const ETH_ENDPOINT = API + "/ticker?limit=10000";
 
 export const fetchPrice = async () => {
 
+    console.time("FETCH_PRICE");
     const response = await request.get(ETH_ENDPOINT);
+    console.timeEnd("FETCH_PRICE");
 
+    console.time("map");
     const coins = response.body.map((coin: any) => {
         const coinObject = new Coin(coin.id, coin.name, coin.symbol);
         coinObject.rank = Number(coin.rank);
@@ -35,21 +38,28 @@ export const fetchPrice = async () => {
         coinObject.timestamp = coin.timestamp;
         return coinObject;
     });
+    console.timeEnd("map");
 
     // check if record for today exists, then append it (can be random)
+    console.time("existing");
     const existingCoins: Coin[] = await CoinRepository.existingCoinToday();
+    console.timeEnd("existing");
+
     // console.log(existingCoins);
     if (!existingCoins || !existingCoins.length) {
-        console.log("creating many");
         CoinRepository.createMany(coins);
     } else {
-        console.log("exists, appending");
-        for (const coin of coins) {
-            CoinRepository.addHistoryEntry(coin.coinId, { ...coin.history[0] });
-            // const coin = coins.find((c: any) => c.coinId === existingCoin.coinId );
-            // existingCoin.history.push({ ...coin.price, timestamp: Date.now() });
-            // CoinRepository.update(existingCoin.id, existingCoin);
+        for (const coin of existingCoins) {
+            const c = coins.find((c: any) => c.coinId === coin.coinId );
+            CoinRepository.addHistoryEntry(coin.id, { ...c.history[0] });
         }
+        // for (const coin of coins) {
+        //     // const c = existingCoins.find((c: any) => c.coinId === coin.coinId );
+        //     CoinRepository.addHistoryEntry(c.id, { ...coin.history[0] });
+        //     // const coin = coins.find((c: any) => c.coinId === existingCoin.coinId );
+        //     // existingCoin.history.push({ ...coin.price, timestamp: Date.now() });
+        //     // CoinRepository.update(existingCoin.id, existingCoin);
+        // }
     }
 
     // request

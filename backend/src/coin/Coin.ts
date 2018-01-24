@@ -44,7 +44,7 @@ export interface ICoinDAO extends ICoin, mongoose.Document {
 
 export class Coin extends AbstractModel implements ICoin {
     public static parse(coinDAO: ICoinDAO) {
-        const coin: Coin = new Coin(coinDAO.coinId, coinDAO.name, coinDAO.symbol);
+        const coin: Coin = new Coin(coinDAO.coinId, coinDAO.name, coinDAO.symbol, coinDAO._id);
         coin.rank = coinDAO.rank;
         coin.marketCap = coinDAO.marketCap;
         coin.supply = coinDAO.supply;
@@ -101,4 +101,5 @@ export const CoinSchema = new Schema(
     { timestamps: { createdAt: "created_on", updatedAt: "updated_on" }, strict: false }
 );
 
+CoinSchema.index({ created_on: 1 });
 export default mongoose.model("Coin", CoinSchema);
