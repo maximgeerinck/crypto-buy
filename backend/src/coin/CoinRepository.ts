@@ -57,7 +57,7 @@ class CoinRepository extends MongoRepository<Coin> {
         const self = this;
         const daos = await this.model.find({ created_on: { $gte: start, $lt: end }});
         const objs = daos.map((dao: any) => self.parse(dao));
-        CacheHelper.cache(CACHE_COINS_TODAY, objs, CacheHelper.HOUR * 2);
+        CacheHelper.cache(CACHE_COINS_TODAY, objs, CacheHelper.MIN * 5);
 
         return Promise.resolve(objs);
     }
