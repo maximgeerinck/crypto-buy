@@ -20,20 +20,20 @@ class CoinImageTask extends AbstractTask {
     }
 
     public downloadImages() {
-        return CoinRepository.findAllWithHistory()
-            .then((coins) => {
+        return CoinRepository.findAllToday()
+        .then((daos) => {
 
-                const promises: any = [];
+            const promises: any = [];
 
-                Object.keys(coins).forEach((coin: any) => {
-                    promises.push(async () => ImageHelper.downloadImage(
-                        CoinHelper.getCoinImage(coins[coin].coinId), coins[coin].coinId, "coins"));
-                });
-
-                console.log(`Downloading ${promises.length} images`);
-
-                DownloadHelper.batch(promises, 10, 200);
+            daos.forEach((coin: any) => {
+                promises.push(async () =>
+                    ImageHelper.downloadImage(CoinHelper.getCoinImage(coin.coinId), coin.coinId, "coins"));
             });
+
+            console.log(`Downloading ${promises.length} images`);
+
+            DownloadHelper.batch(promises, 10, 200);
+        });
 
     }
 }

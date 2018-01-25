@@ -19,7 +19,7 @@ class ShareController {
 
         try {
             const share = await ShareRepository.findOneByToken(req.params.token);
-            const coins = await CoinRepository.findAllWithHistory();
+            const coins = await CoinRepository.findWithHistory(PortfolioHelper.extractIds(share.user.portfolio));
             const p = await PortfolioService.aggregatePortfolio(share.user);
 
             // bind
@@ -79,7 +79,7 @@ class ShareController {
 
         // get coins and their images from your portfolio
         const share = await ShareRepository.findShare(req.params.token);
-        const coins = await CoinRepository.findAllWithHistory();
+        const coins = await CoinRepository.findWithHistory(PortfolioHelper.extractIds(share.user.portfolio));
         const p = await PortfolioService.aggregatePortfolio(share.user);
 
         // bind

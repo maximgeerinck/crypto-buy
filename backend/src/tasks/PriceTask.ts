@@ -2,7 +2,9 @@ import * as moment from "moment";
 import * as schedule from "node-schedule";
 import * as request from "superagent";
 import { Coin } from "../coin/Coin";
-import CoinRepository from "../coin/CoinRepository";
+import CoinRepository, { CACHE_COINS_TODAY, cacheKeyCoin } from "../coin/CoinRepository";
+import mongoose from "../db";
+import * as CacheHelper from "../utils/CacheHelper";
 
 // get data
 // const API = "https://coinmarketcap-nexuist.rhcloud.com/api";
@@ -42,7 +44,8 @@ export const fetchPrice = async () => {
 
     // check if record for today exists, then append it (can be random)
     console.time("existing");
-    const existingCoins: Coin[] = await CoinRepository.existingCoinToday();
+    CacheHelper.invalidate(CACHE_COINS_TODAY);
+    const existingCoins: any[] = await CoinRepository.existingCoinToday();
     console.timeEnd("existing");
 
     // console.log(existingCoins);
@@ -51,15 +54,13 @@ export const fetchPrice = async () => {
     } else {
         for (const coin of existingCoins) {
             const c = coins.find((c: any) => c.coinId === coin.coinId );
-            CoinRepository.addHistoryEntry(coin.id, { ...c.history[0] });
+            CoinRepository.addHistoryEntry(coin._id, { ...c.history[0] });
         }
-        // for (const coin of coins) {
-        //     // const c = existingCoins.find((c: any) => c.coinId === coin.coinId );
-        //     CoinRepository.addHistoryEntry(c.id, { ...coin.history[0] });
-        //     // const coin = coins.find((c: any) => c.coinId === existingCoin.coinId );
-        //     // existingCoin.history.push({ ...coin.price, timestamp: Date.now() });
-        //     // CoinRepository.update(existingCoin.id, existingCoin);
-        // }
+    }
+
+    // create cache entry for each coin
+    for (const coin of existingCoins) {
+        CoinRepository.findCoinToday(coin.coinId);
     }
 
     // request

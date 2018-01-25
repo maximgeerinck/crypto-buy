@@ -20,32 +20,66 @@ interface ICoinStatistic {
 
 const CACHE_COINS_ALL: string = "coins/all";
 const CACHE_COINS_STATS_WEEK: string = "coins/stats/week";
-const CACHE_COINS_TODAY: string = "coins/today";
+export const CACHE_COINS_TODAY: string = "coins/today";
+export const cacheKeyCoin = (coinId: string) => `coin/identifier/${coinId}`;
+export const CACHE_SYMBOL_TO_IDENTIFIER = "coins/symbol_to_identifier";
 
 class CoinRepository extends MongoRepository<Coin> {
     constructor() {
         super(CoinModel, "Coin");
     }
 
-    public async findAllWithHistory(): Promise<any> {
-        let allCoins: any = await CacheHelper.get(CACHE_COINS_ALL);
-        if (allCoins) {
-            return Promise.resolve(allCoins);
+    public async findWithHistory(coinIds: string[]): Promise<any> {
+
+        const coinsMap: any = {};
+        for (const coinId of coinIds) {
+            const coin = await this.findCoinToday(coinId);
+            coinsMap[coinId] = coin;
         }
 
-        allCoins = await this.findAllToday();
-        const coinMap: any = {};
-        for (const coin of allCoins) {
-            const history = coin.history.splice(coin.history.length >= 3 ? coin.history.length - 3 : 0);
-            coinMap[coin.coinId] = {...coin, history};
-        }
-
-        CacheHelper.cache(CACHE_COINS_ALL, coinMap, CacheHelper.MIN);
-
-        return Promise.resolve(coinMap);
+        return Promise.resolve(coinsMap);
     }
 
-    public async findAllToday(): Promise<Coin[]> {
+    public async findCoinToday(coinId: string) {
+        const cachedCoin = await CacheHelper.get(cacheKeyCoin(coinId));
+        if (cachedCoin) {
+            return Promise.resolve(cachedCoin);
+        }
+
+        // find coin and cache
+        const start = moment().startOf("day");
+        const end = moment().endOf("day");
+        const dao = await this.model
+            .findOne({ coinId, created_on: { $gte: start, $lt: end }}, {history: { $slice: -3 }}).lean();
+
+        const obj = this.parse(dao);
+        CacheHelper.cache(cacheKeyCoin(coinId), obj, CacheHelper.MIN * 5);
+        return Promise.resolve(obj);
+    }
+
+    public async findCoinTodayBySymbol(symbol: string) {
+        const idMap = await this.symbolToIdentifier([symbol]);
+        return await this.findCoinToday(idMap[symbol]);
+    }
+
+    public async symbolToIdentifier(symbols: string[]): Promise<any> {
+        const cacheEntry = await CacheHelper.get(CACHE_SYMBOL_TO_IDENTIFIER);
+        if (cacheEntry) {
+            return Promise.resolve(cacheEntry);
+        }
+
+        const coins = await this.findAllToday();
+        const coinMap: any = {};
+        for (const coin of coins) {
+            coinMap[coin.symbol] = coin.coinId;
+        }
+
+        CacheHelper.cache(CACHE_SYMBOL_TO_IDENTIFIER, coinMap, CacheHelper.HOUR);
+
+        return coinMap;
+    }
+
+    public async findAllToday(): Promise<any[]> {
 
         const coinsToday: any = await CacheHelper.get(CACHE_COINS_TODAY);
         if (coinsToday) {
@@ -55,15 +89,17 @@ class CoinRepository extends MongoRepository<Coin> {
         const start = moment().startOf("day");
         const end = moment().endOf("day");
         const self = this;
-        const daos = await this.model.find({ created_on: { $gte: start, $lt: end }});
-        const objs = daos.map((dao: any) => self.parse(dao));
-        CacheHelper.cache(CACHE_COINS_TODAY, objs, CacheHelper.MIN * 5);
+        const daos = await this.model
+            .find({ created_on: { $gte: start, $lt: end }})
+            .select("coinId _id name symbol");
+        // const objs = daos.map((dao: any) => self.parse(dao));
+        CacheHelper.cache(CACHE_COINS_TODAY, daos, CacheHelper.MIN * 2);
 
-        return Promise.resolve(objs);
+        return Promise.resolve(daos);
     }
 
-    public async findDistinctMappedBySymbol(): Promise<any> {
-        const map = await this.findAllWithHistory();
+    public async findDistinctMappedBySymbol(coinIds: string[]): Promise<any> {
+        const map = await this.findWithHistory(coinIds);
         const newMap: any = {};
         Object.keys(map).forEach((key: string) => {
             const coin: any = map[key];
@@ -73,8 +109,8 @@ class CoinRepository extends MongoRepository<Coin> {
         return newMap;
     }
 
-    public async findDistinctMappedByIdentifier(): Promise<any> {
-        const map = await this.findAllWithHistory();
+    public async findDistinctMappedByIdentifier(coinIds: string[]): Promise<any> {
+        const map = await this.findWithHistory(coinIds);
         const newMap: any = {};
         Object.keys(map).forEach((key: string) => {
             const coin: any = map[key];
@@ -84,7 +120,7 @@ class CoinRepository extends MongoRepository<Coin> {
         return newMap;
     }
 
-    public async existingCoinToday(): Promise<Coin[]> {
+    public async existingCoinToday(): Promise<any[]> {
         try {
             const exists = await this.findAllToday();
             if (!exists) {

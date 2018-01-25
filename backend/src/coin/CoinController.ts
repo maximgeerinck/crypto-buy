@@ -22,17 +22,14 @@ class CoinController {
             return reply(cacheResult);
         }
 
-        const coins = await CoinRepository.findDistinctMappedByIdentifier();
-        for (const key of Object.keys(coins)) {
-            delete coins[key].history;
-            delete coins[key].id;
-            delete coins[key].rank;
-            delete coins[key].marketCap;
-            delete coins[key].supply;
-            delete coins[key].coinId;
+        const coins = await CoinRepository.findAllToday();
+        const coinMap: any = {};
+        for (const coin of coins) {
+            coinMap[coin.coinId] = coin;
+            delete coinMap[coin.coinId].coinId;
         }
 
-        CacheHelper.cache(CACHE_ALL, coins, CacheHelper.HOUR);
+        CacheHelper.cache(CACHE_ALL, coinMap, CacheHelper.HOUR);
 
         return reply(coins);
     }
@@ -47,7 +44,7 @@ class CoinController {
     public details(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         const { coins } = req.payload;
 
-        CoinRepository.findAllWithHistory().then((result: any) => {
+        CoinRepository.findWithHistory(coins).then((result: any) => {
             if (result) {
                 const output = [];
                 for (const coin of coins) {
@@ -70,7 +67,7 @@ class CoinController {
     public detailsIncrement(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         const { coins } = req.payload;
 
-        CoinRepository.findAllWithHistory().then((result: any) => {
+        CoinRepository.findWithHistory(coins).then((result: any) => {
             const output = [];
             for (const coin of coins) {
                 const res = { ...result[coin] };
