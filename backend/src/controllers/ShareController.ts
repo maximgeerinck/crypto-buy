@@ -19,12 +19,11 @@ class ShareController {
 
         try {
             const share = await ShareRepository.findOneByToken(req.params.token);
-            const coins = await CoinRepository.findWithHistory(PortfolioHelper.extractIds(share.user.portfolio));
             const p = await PortfolioService.aggregatePortfolio(share.user);
+            const coins = await CoinRepository.findWithHistory(PortfolioHelper.extractIds(p));
 
             // bind
             const portfolio = PortfolioHelper.bindPortfolioToCoin(p, coins);
-
             const totalAmount = Object.keys(portfolio).reduce((sum, value) => {
                 if (portfolio[value] && portfolio[value].details.history) {
                     const price = portfolio[value].details.history[portfolio[value].details.history.length - 1].usd;
@@ -79,28 +78,28 @@ class ShareController {
 
         // get coins and their images from your portfolio
         const share = await ShareRepository.findShare(req.params.token);
-        const coins = await CoinRepository.findWithHistory(PortfolioHelper.extractIds(share.user.portfolio));
         const p = await PortfolioService.aggregatePortfolio(share.user);
+        const coins = await CoinRepository.findWithHistory(PortfolioHelper.extractIds(p));
+        const portfolio = PortfolioHelper.bindPortfolioToCoin(p, coins);
 
         // bind
-        const portfolio = PortfolioHelper.bindPortfolioToCoin(p, coins);
+        const coinAmount = Object.keys(portfolio).length;
+        const iconSize = 32;
+        const padding = 10;
+
+        const PROMOTION_TEXT_HEIGHT = 10;
+        const height = iconSize + padding * 2 + PROMOTION_TEXT_HEIGHT;
+        let width = iconSize * coinAmount + padding * (coinAmount + 1) + PROMOTION_TEXT_HEIGHT;
+
+        if (width <= 50) {
+            width = 50;
+        }
+
+        const canvas = createCanvas(width, height);
+        const ctx = canvas.getContext("2d");
+        const stream = canvas.pngStream();
+
         try {
-            const coinAmount = Object.keys(portfolio).length;
-            const iconSize = 32;
-            const padding = 10;
-
-            const PROMOTION_TEXT_HEIGHT = 10;
-            const height = iconSize + padding * 2 + PROMOTION_TEXT_HEIGHT;
-            let width = iconSize * coinAmount + padding * (coinAmount + 1) + PROMOTION_TEXT_HEIGHT;
-
-            if (width <= 50) {
-                width = 50;
-            }
-
-            const canvas = createCanvas(width, height);
-            const ctx = canvas.getContext("2d");
-            const stream = canvas.pngStream();
-
             for (let i = 0; i < coinAmount; i++) {
 
                     const x = i * iconSize + (i + 1) * padding;
@@ -122,7 +121,7 @@ class ShareController {
             } else {
                 console.log(err);
             }
-            reply(Boom.badRequest());
+            reply(stream).header("Content-Type", "image/png");
         }
     }
 
