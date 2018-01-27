@@ -114,7 +114,11 @@ class CoinRepository extends MongoRepository<Coin> {
         const newMap: any = {};
         Object.keys(map).forEach((key: string) => {
             const coin: any = map[key];
-            newMap[coin.coinId] = coin;
+            if (coin) {
+                newMap[coin.coinId] = coin;
+            } else {
+                console.log("could not find coin " + key);
+            }
         });
 
         return newMap;

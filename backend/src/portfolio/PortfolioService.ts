@@ -34,7 +34,7 @@ class PortfolioService {
                     const coinDetails = await CoinRepository.findCoinTodayBySymbol(coin.Currency);
                     if (!coinDetails) {
                         console.log(`could not find ${coin.Currency}`);
-                        return;
+                        continue;
                     }
                     portfolio.push(new UserCoin(coinDetails.coinId,
                         coin.Balance,
@@ -45,10 +45,9 @@ class PortfolioService {
                         true
                     ));
                 }
-                CacheHelper.cache(key(user.id), portfolio, CacheHelper.TEN_MIN);
-                return portfolio;
-
             }
+            CacheHelper.cache(key(user.id), portfolio, CacheHelper.TEN_MIN);
+            return portfolio;
         } catch (ex) {
             if (ex.statusCode === 503) {
                 console.log("[Bittrex] Service unavailable, most likely wrong api key " + ex.options.url);

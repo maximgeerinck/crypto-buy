@@ -33,6 +33,10 @@ class CoinImageTask extends AbstractTask {
             console.log(`Downloading ${promises.length} images`);
 
             DownloadHelper.batch(promises, 10, 200);
+        })
+        .catch((ex) => {
+            console.log(`could not download image`);
+            console.log(ex);
         });
 
     }

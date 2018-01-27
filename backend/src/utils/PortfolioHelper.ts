@@ -9,5 +9,8 @@ export const bindPortfolioToCoin = (portfolio: any, coins: any) => {
 };
 
 export const extractIds = (portfolio: any): string[] => {
+    if (!portfolio) {
+        return [];
+    }
     return Array.from(new Set(portfolio.map((coin: any) => coin.coinId)));
 };
