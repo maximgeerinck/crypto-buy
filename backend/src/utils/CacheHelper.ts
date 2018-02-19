@@ -8,6 +8,13 @@ bluebird.promisifyAll(redis.Multi.prototype);
 const client = redis.createClient({ host: "redis", port: 6379 }) as any;
 
 export const cache = (key: string, obj: any, expiration: number = 60) => {
+    if (!key || !obj || !expiration) {
+        console.log(`All args should be set`);
+        console.log(`key: ${key}`);
+        console.log(`obj: ${obj}`);
+        console.log(`Expiration: ${expiration}`);
+        return;
+    }
     client.setex(key, expiration, JSON.stringify(obj));
 };
 

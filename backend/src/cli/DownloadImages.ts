@@ -4,20 +4,26 @@ import * as DownloadHelper from "../utils/DownloadHelper";
 import * as ImageHelper from "../utils/ImageHelper";
 
 CoinRepository.findAllToday()
-    .then((daos) => {
-
+    .then((daos: any) => {
         const promises: any = [];
 
         daos.forEach((coin: any) => {
-            promises.push(async () =>
-                ImageHelper.downloadImage(CoinHelper.getCoinImage(coin.coinId), coin.coinId, "coins"));
+            promises.push(async () => {
+                if (coin) {
+                    return ImageHelper.downloadImage(
+                        CoinHelper.getCoinImage(coin.coinId),
+                        coin.coinId,
+                        "coins",
+                    );
+                }
+            });
         });
 
         console.log(`Downloading ${promises.length} images`);
 
         DownloadHelper.batch(promises, 10, 200);
     })
-    .catch((ex) => {
+    .catch((ex: any) => {
         console.log(`could not download image`);
         console.log(ex);
     });

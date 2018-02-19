@@ -44,6 +44,9 @@ export interface ICoinDAO extends ICoin, mongoose.Document {
 
 export class Coin extends AbstractModel implements ICoin {
     public static parse(coinDAO: ICoinDAO) {
+        if (!coinDAO) {
+            return;
+        }
         const coin: Coin = new Coin(coinDAO.coinId, coinDAO.name, coinDAO.symbol, coinDAO._id);
         coin.rank = coinDAO.rank;
         coin.marketCap = coinDAO.marketCap;
@@ -64,7 +67,7 @@ export class Coin extends AbstractModel implements ICoin {
         readonly coinId: string,
         readonly name: string,
         readonly symbol: string,
-        readonly id: mongoose.Types.ObjectId = new mongoose.Types.ObjectId()
+        readonly id: mongoose.Types.ObjectId = new mongoose.Types.ObjectId(),
     ) {
         super();
     }
@@ -78,27 +81,29 @@ export const CoinSchema = new Schema(
         rank: { type: Number },
         price: {
             usd: { type: Number },
-            btc: { type: Number }
+            btc: { type: Number },
         },
         marketCap: { type: Number },
         supply: {
             available: { type: Number },
-            total: { type: Number }
+            total: { type: Number },
         },
         volume: { type: Number },
-        history: [{
-            timestamp: { type: Date, default: Date.now },
-            btc: { type: Number },
-            usd: { type: Number },
-            change: {
-                percentHour: { type: Number },
-                percentDay: { type: Number },
-                percentWeek: { type: Number }
+        history: [
+            {
+                timestamp: { type: Date, default: Date.now },
+                btc: { type: Number },
+                usd: { type: Number },
+                change: {
+                    percentHour: { type: Number },
+                    percentDay: { type: Number },
+                    percentWeek: { type: Number },
+                },
+                _id: { id: false },
             },
-            _id : {id: false}
-        }]
+        ],
     },
-    { timestamps: { createdAt: "created_on", updatedAt: "updated_on" }, strict: false }
+    { timestamps: { createdAt: "created_on", updatedAt: "updated_on" }, strict: false },
 );
 
 CoinSchema.index({ created_on: 1 });

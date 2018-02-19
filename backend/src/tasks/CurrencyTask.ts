@@ -17,15 +17,15 @@ export const fetchCurrency = async () => {
     const currencyObj = {
         base: data.body.base,
         rates: data.body.rates,
-        source: "openexchangerates.org"
+        source: "openexchangerates.org",
     };
     let currency = new Currency(currencyObj);
-    currency.save().catch((err) => console.log(err));
+    currency.save().catch(err => console.log(err));
 };
 
 class CurrencyTask {
     start() {
-        schedule.scheduleJob("0 12 * * *", () => {
+        schedule.scheduleJob("0 0 */3 * *", () => {
             console.log(`${moment.now()}: fetching latest currency rates...`);
             fetchCurrency();
         });

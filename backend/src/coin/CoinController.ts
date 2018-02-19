@@ -25,8 +25,10 @@ class CoinController {
         const coins = await CoinRepository.findAllToday();
         const coinMap: any = {};
         for (const coin of coins) {
-            coinMap[coin.coinId] = coin;
-            delete coinMap[coin.coinId].coinId;
+            if (coin) {
+                coinMap[coin.coinId] = coin;
+                delete coinMap[coin.coinId].coinId;
+            }
         }
 
         CacheHelper.cache(CACHE_ALL, coinMap, CacheHelper.HOUR);
@@ -41,35 +43,39 @@ class CoinController {
      * @param {Hapi.ReplyNoContinue} reply
      * @memberof CoinController
      */
-    public details(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
+    public async details(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         const { coins } = req.payload;
 
-        CoinRepository.findWithHistory(coins).then((result: any) => {
-            if (result) {
-                const output = [];
-                for (const coin of coins) {
-                    if (result[coin]) {
-                        const res = { ...result[coin] };
-                        res.price = res.history[res.history.length - 1].usd;
-                        res.changes = res.history[res.history.length - 1].change;
-                        output.push(res);
-                    }
+        const result = await CoinRepository.findWithHistory(coins);
 
-                }
-
-                return reply(output);
-            }
+        if (!result) {
             return reply([]);
+        }
 
-        });
+        const output = [];
+        for (const coin of coins) {
+            if (result[coin] && result[coin].history) {
+                const res = { ...result[coin] };
+                res.price = res.history[res.history.length - 1].usd;
+                res.changes = res.history[res.history.length - 1].change;
+                output.push(res);
+            }
+        }
+
+        return reply(output);
     }
 
-    public detailsIncrement(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
+    public async detailsIncrement(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         const { coins } = req.payload;
 
-        CoinRepository.findWithHistory(coins).then((result: any) => {
-            const output = [];
-            for (const coin of coins) {
+        const result = await CoinRepository.findWithHistory(coins);
+        if (!result) {
+            return reply([]);
+        }
+
+        const output = [];
+        for (const coin of coins) {
+            if (result[coin] && result[coin].history) {
                 const res = { ...result[coin] };
                 res.price = res.history[res.history.length - 1].usd;
                 res.changes = res.history[res.history.length - 1].change;
@@ -84,13 +90,12 @@ class CoinController {
                 delete res.id;
                 output.push(res);
             }
+        }
 
-            reply(output);
-        });
+        reply(output);
     }
 
     public async stats(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
-
         const { coins } = req.payload;
         const stats = await CoinRepository.stats();
 
@@ -100,7 +105,6 @@ class CoinController {
             output[key] = stats[key];
         }
         return reply(output);
-
     }
 }
 

@@ -14,23 +14,26 @@ const URI = "mongodb://mongo/crypto_buy";
 mongoose.connect(URI);
 
 // start tasks
-(new CurrencyTask()).start();
-(new PriceTask()).start();
-(new ResetDemoTask()).start();
-(new MarketTask()).start();
+new CurrencyTask().start();
+new PriceTask().start();
+new ResetDemoTask().start();
+// (new MarketTask()).start();
 
 const taskRepository = TaskRepository.getInstance();
-taskRepository.addTask(new CoinImageTask());
+// taskRepository.addTask(new CoinImageTask());
 // taskRepository.execute("coin-image-task");
+// taskRepository.execute("currency-task");
 
 if (!DEVELOPMENT) {
-  taskRepository.scheduleAll();
-  taskRepository.execute("coin-image-task");
+    taskRepository.scheduleAll();
+    // taskRepository.execute("coin-image-task");
 }
 
-createServer(5000, "0.0.0.0").then((server) => {
-  server.start((err: any) => {
-    if (err) { throw err; }
-    console.log("Server running at: ", server.info.uri);
-  });
+createServer(5000, "0.0.0.0").then(server => {
+    server.start((err: any) => {
+        if (err) {
+            throw err;
+        }
+        console.log("Server running at: ", server.info.uri);
+    });
 });

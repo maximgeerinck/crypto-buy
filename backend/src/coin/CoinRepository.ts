@@ -30,11 +30,12 @@ class CoinRepository extends MongoRepository<Coin> {
     }
 
     public async findWithHistory(coinIds: string[]): Promise<any> {
-
         const coinsMap: any = {};
         for (const coinId of coinIds) {
             const coin = await this.findCoinToday(coinId);
-            coinsMap[coinId] = coin;
+            if (coin) {
+                coinsMap[coinId] = coin;
+            }
         }
 
         return Promise.resolve(coinsMap);
@@ -50,9 +51,15 @@ class CoinRepository extends MongoRepository<Coin> {
         const start = moment().startOf("day");
         const end = moment().endOf("day");
         const dao = await this.model
-            .findOne({ coinId, created_on: { $gte: start, $lt: end }}, {history: { $slice: -3 }}).lean();
+            .findOne({ coinId, created_on: { $gte: start, $lt: end } }, { history: { $slice: -3 } })
+            .lean();
 
         const obj = this.parse(dao);
+        if (!obj) {
+            // coin not found, most likely it changed name
+            console.log(`Coin with id ${coinId} most likely changed name`);
+            return Promise.resolve(null);
+        }
         CacheHelper.cache(cacheKeyCoin(coinId), obj, CacheHelper.MIN * 5);
         return Promise.resolve(obj);
     }
@@ -80,7 +87,6 @@ class CoinRepository extends MongoRepository<Coin> {
     }
 
     public async findAllToday(): Promise<any[]> {
-
         const coinsToday: any = await CacheHelper.get(CACHE_COINS_TODAY);
         if (coinsToday) {
             return Promise.resolve(coinsToday);
@@ -90,7 +96,7 @@ class CoinRepository extends MongoRepository<Coin> {
         const end = moment().endOf("day");
         const self = this;
         const daos = await this.model
-            .find({ created_on: { $gte: start, $lt: end }})
+            .find({ created_on: { $gte: start, $lt: end } })
             .select("coinId _id name symbol");
         // const objs = daos.map((dao: any) => self.parse(dao));
         CacheHelper.cache(CACHE_COINS_TODAY, daos, CacheHelper.MIN * 2);
@@ -137,11 +143,10 @@ class CoinRepository extends MongoRepository<Coin> {
     }
 
     public async addHistoryEntry(id: any, entry: any): Promise<Coin> {
-        return this.model.update({ _id: id }, { $push: {history: entry }});
+        return this.model.update({ _id: id }, { $push: { history: entry } });
     }
 
     public async stats(): Promise<any> {
-
         const coins: any = await CacheHelper.get(CACHE_COINS_STATS_WEEK);
         if (coins) {
             return Promise.resolve(coins);
@@ -150,49 +155,57 @@ class CoinRepository extends MongoRepository<Coin> {
         const end = moment();
         const start = moment().subtract("7", "days");
 
-        return this.model.aggregate([
-            {
-                $project: {
-                    avgPrice: {
-                        $avg: "$history.usd"
+        return this.model
+            .aggregate([
+                {
+                    $project: {
+                        avgPrice: {
+                            $avg: "$history.usd",
+                        },
+                        coinId: "$coinId",
+                        created_on: "$created_on",
                     },
-                    coinId: "$coinId",
-                    created_on: "$created_on"
+                },
+                { $match: { created_on: { $gt: start.toDate(), $lt: end.toDate() } } },
+                {
+                    $group: {
+                        _id: {
+                            date: { $dateToString: { format: "%Y-%m-%d", date: "$created_on" } },
+                            coinId: "$coinId",
+                        },
+                        count: { $sum: 1 },
+                        avgPrice: { $max: "$avgPrice" },
+                    },
+                },
+            ])
+            .then((results: any) => {
+                // map on identifier
+                const map: any = {};
+                for (const result of results) {
+                    if (!result._id) {
+                        continue;
+                    }
+                    if (!map[result._id.coinId]) {
+                        map[result._id.coinId] = {};
+                    }
+                    map[result._id.coinId][result._id.date] = { ...result, _id: undefined };
                 }
-            },
-            { $match: { created_on: { $gt: start.toDate(), $lt: end.toDate() } } },
-            { $group: {
-                 _id: { date: { $dateToString: { format: "%Y-%m-%d", date: "$created_on" }}, coinId: "$coinId"},
-                 count: { $sum: 1 },
-                 avgPrice: { $max: "$avgPrice" }
-            } },
+                CacheHelper.cache(CACHE_COINS_STATS_WEEK, map, CacheHelper.HOUR);
 
-        ]).then((results: any) => {
-            // map on identifier
-            const map: any = {};
-            for (const result of results) {
-                if (!map[result._id.coinId]) {
-                    map[result._id.coinId] = {};
-                }
-                map[result._id.coinId][result._id.date] = { ...result, _id: undefined};
-            }
-            CacheHelper.cache(CACHE_COINS_STATS_WEEK, map, CacheHelper.HOUR);
-
-            return map;
-        });
+                return map;
+            });
     }
 
     public async sparklineWeek(ids: string[]): Promise<any> {
-
         const end = moment();
         const start = moment().subtract("20", "days");
 
-        const coins: any = await CoinModel.find({created_on: {$gte: start.toDate(), $lt: end}})
-            .sort({ _id: -1 });
+        const coins: any = await CoinModel.find({
+            created_on: { $gte: start.toDate(), $lt: end },
+        }).sort({ _id: -1 });
 
         const history: any = {};
         for (const coin of coins) {
-
             const date = moment(coin.created_on);
             if (!history[date.format("YYYY-MM-DD")]) {
                 history[date.format("YYYY-MM-DD")] = [coin];

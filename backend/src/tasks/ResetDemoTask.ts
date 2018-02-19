@@ -8,29 +8,57 @@ import UserService from "../services/UserService";
 const DEMO_USER = "demo@cryptotrackr.com";
 
 const portfolioDemo = [
-    new UserCoin("ethereum", 12.568, "gdax.com", 211.6938, "EUR", moment("2017, 05, 31", "YYYY, MM, DD").toDate()),
-    new UserCoin("ethereum", 1.478, "liqui.io", 211.6938, "EUR", moment("2017, 05, 31", "YYYY, MM, DD").toDate()),
-    new UserCoin("bitcoin", 1, "poloniex", 3000, "EUR", moment("2017, 06, 04", "YYYY, MM, DD").toDate()),
+    new UserCoin(
+        "ethereum",
+        12.568,
+        "gdax.com",
+        211.6938,
+        "EUR",
+        moment("2017, 05, 31", "YYYY, MM, DD").toDate(),
+    ),
+    new UserCoin(
+        "ethereum",
+        1.478,
+        "liqui.io",
+        211.6938,
+        "EUR",
+        moment("2017, 05, 31", "YYYY, MM, DD").toDate(),
+    ),
+    new UserCoin(
+        "bitcoin",
+        1,
+        "poloniex",
+        3000,
+        "EUR",
+        moment("2017, 06, 04", "YYYY, MM, DD").toDate(),
+    ),
     new UserCoin("stratis", 235.59520371, "liqui.io", 2.2, "EUR"),
-    new UserCoin("ripple", 1000, "liqui.io", 0.17, "EUR", moment("2017, 06, 01", "YYYY, MM, DD").toDate())
+    new UserCoin(
+        "ripple",
+        1000,
+        "liqui.io",
+        0.17,
+        "EUR",
+        moment("2017, 06, 01", "YYYY, MM, DD").toDate(),
+    ),
 ];
 
 const resetDemoUser = () => {
     return UserService.findOneById("595feaa4017f8a001444893d")
-        .then((user) => {
+        .then(user => {
             user.preferences.currency = "USD";
             user.preferences.initialInvestment = 3500;
             user.portfolio = portfolioDemo;
             user.shares = [];
             UserService.update(user);
         })
-        .catch((err) => console.log(err));
+        .catch(err => console.log(err));
 };
 
 class ResetDemoTask {
     public start() {
-        // execute every time the minute = 1
-        schedule.scheduleJob("*/5 * * * *", () => {
+        // at minute 0 past every 2nd hour
+        schedule.scheduleJob("0 */2 * * *", () => {
             // console.log(`${moment.now()}: reseting demo user...`);
             resetDemoUser();
         });
