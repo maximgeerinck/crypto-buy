@@ -22,28 +22,22 @@ app.get("*.js", (req, res, next) => {
 //     if (process.env.NODE_ENV !== "production") {
 //         return next();
 //     }
-
 //     req.url = `${req.url.replace(".js", ".js.gz")}`;
 //     // console.log(req.url);
-
 //     res.set("Content-Encoding", "gzip");
 //     res.set("Content-Type", "text/javascript");
 //     next();
-
 //     // const regex = /([^?]+).*/gi;
 //     // const match = regex.exec(req.url);
-
 //     // if (!match || match.length < 1) {
 //     //     next();
 //     // }
-
 //     // only if file exists
 //     // const file = match[1];
 //     // if (!fs.existsSync(`${__dirname}/../public${file}.gz`)) {
 //     //     return next();
 //     // }
 // });
-
 app.use("/assets", express.static(__dirname + "/../static/static/media"));
 app.use("/static", express.static(__dirname + "/../static/static"));
 
@@ -56,11 +50,9 @@ app.use("/static", express.static(__dirname + "/../static/static"));
 //     console.log("old css file... redirecting...");
 //     res.sendFile(path.join(__dirname, "../static/static/css/main.js"));
 // });
-
 // // define the folder that will be used for static assets
 // // app.use(compression());
 // app.use(express.static(path.join(__dirname, "../static")));
-
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "../static/index.html"));
 });

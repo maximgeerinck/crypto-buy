@@ -28,7 +28,7 @@ class CoinOption extends Component {
                 title={this.props.option.title}
             >
                 <img
-                    src={`https://files.coinmarketcap.com/static/img/coins/32x32/${
+                    src={`https://cryptotrackr.com/assets/${
                         this.props.option.coinId
                     }.png`}
                     alt={this.props.option.coinId}
@@ -46,7 +46,7 @@ class CoinValue extends Component {
             <div className="Select-value" title={this.props.value.title}>
                 <span className={cx("Select-value-label", styles.label)}>
                     <img
-                        src={`https://files.coinmarketcap.com/static/img/coins/32x32/${
+                        src={`https://cryptotrackr.com/assets/${
                             this.props.value.coinId
                         }.png`}
                         alt={this.props.value.coinId}

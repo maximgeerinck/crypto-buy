@@ -36,3 +36,11 @@ db.getCollection('users').updateMany(
     }}
 )
 ```
+
+
+# Disable RDB redis
+```
+docker exec cryptobuy_redis_1 redis-cli config set auto-aof-rewrite-percentage 0
+docker exec cryptobuy_redis_1 redis-cli bgsave
+docker exec cryptobuy_redis_1 redis-cli config set stop-writes-on-bgsave-error no
+```

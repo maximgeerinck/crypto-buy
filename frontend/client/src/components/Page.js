@@ -59,7 +59,7 @@ class Page extends Component {
                         <li>
                             Donate
                             <img
-                                src="https://files.coinmarketcap.com/static/img/coins/16x16/ethereum.png"
+                                src="https://cryptotrackr.com/assets/ethereum.png"
                                 alt="ethereum"
                             />
                             <span className={page.address}>
@@ -69,7 +69,7 @@ class Page extends Component {
                         <li>
                             Donate
                             <img
-                                src="https://files.coinmarketcap.com/static/img/coins/16x16/bitcoin.png"
+                                src="https://cryptotrackr.com/assets/bitcoin.png"
                                 alt="bitcoin"
                             />
                             <span className={page.address}>14FG4SPBZAECiogAB3a2KZqCQmBG2zh69Z</span>
@@ -77,7 +77,7 @@ class Page extends Component {
                         <li>
                             Donate
                             <img
-                                src="https://files.coinmarketcap.com/static/img/coins/16x16/litecoin.png"
+                                src="https://cryptotrackr.com/assets/litecoin.png"
                                 alt="litecoin"
                             />
                             <span className={page.address}>LMQ1uyDeQRZa6y2J8nefwkzapfGLpHVDHN</span>
