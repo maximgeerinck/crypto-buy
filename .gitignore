@@ -329,5 +329,6 @@ __pycache__/
 # End of https://www.gitignore.io/api/visualstudio
 
 
-coinImages/"backend/config/app_dev.json" 
-"backend/config/app_prod.json" 
+coinImages/
+backend/config/app_dev.json
+backend/config/app_prod.json
