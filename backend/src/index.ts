@@ -1,5 +1,5 @@
 import { DEVELOPMENT } from "./constants";
-import mongoose from "./db";
+import mongoose, { URI } from "./db";
 import { createServer } from "./server";
 import CurrencyTask from "./tasks/CurrencyTask";
 import MarketTask from "./tasks/MarketTask";
@@ -10,8 +10,7 @@ import CoinImageTask from "./tasks/CoinImageTask";
 import TaskRepository from "./tasks/TaskRepository";
 
 // connect mongodb
-const URI = "mongodb://mongo/crypto_buy";
-mongoose.connect(URI);
+mongoose.connect(URI, { useNewUrlParser: true, keepAlive: 1 });
 
 // start tasks
 new CurrencyTask().start();
@@ -29,7 +28,7 @@ if (!DEVELOPMENT) {
     // taskRepository.execute("coin-image-task");
 }
 
-createServer(5000, "0.0.0.0").then(server => {
+createServer(5000, "0.0.0.0").then((server) => {
     server.start((err: any) => {
         if (err) {
             throw err;
