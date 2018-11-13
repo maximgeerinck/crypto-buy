@@ -330,3 +330,4 @@ __pycache__/
 
 
 coinImages/"backend/config/app_dev.json" 
+"backend/config/app_prod.json" 
