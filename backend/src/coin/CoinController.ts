@@ -67,8 +67,8 @@ class CoinController {
 
     public async detailsIncrement(req: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         const { coins } = req.payload;
-
         const result = await CoinRepository.findWithHistory(coins);
+
         if (!result) {
             return reply([]);
         }

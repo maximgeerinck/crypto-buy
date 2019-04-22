@@ -130,6 +130,7 @@ class PortfolioTrackerPage extends Component {
 
         // get coins user owns and reduce them
         const portfolio = PortfolioHelper.reduceItems(initialState.coins.get("items"));
+
         // link the current market value to it
         const linkedPortfolio = PortfolioHelper.linkPortfolioToMarket(
             portfolio,
@@ -156,6 +157,7 @@ class PortfolioTrackerPage extends Component {
                     id={item.id}
                     name={item.name}
                     symbol={item.symbol}
+                    image={item.image}
                     changeHour={item.changes.percentHour}
                     changeDay={item.changes.percentDay}
                     changeWeek={item.changes.percentWeek}
@@ -277,4 +279,7 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PortfolioTrackerPage);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(PortfolioTrackerPage);

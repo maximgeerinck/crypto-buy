@@ -50,6 +50,14 @@ class CoinRepository extends MongoRepository<Coin> {
         // find coin and cache
         const start = moment().startOf("day");
         const end = moment().endOf("day");
+
+        // monkey patch
+        switch (coinId.toLowerCase()) {
+            case "enjin-coin":
+                coinId = "enjincoin";
+                break;
+        }
+
         const dao = await this.model
             .findOne({ coinId, created_on: { $gte: start, $lt: end } }, { history: { $slice: -3 } })
             .lean();
@@ -60,13 +68,22 @@ class CoinRepository extends MongoRepository<Coin> {
             console.log(`Coin with id ${coinId} most likely changed name`);
             return Promise.resolve(null);
         }
+
+        // monkey patch
+        switch (coinId.toLowerCase()) {
+            case "enjincoin":
+                coinId = "enjin-coin";
+                obj.coinId = "enjin-coin";
+                break;
+        }
+
         CacheHelper.cache(cacheKeyCoin(coinId), obj, CacheHelper.MIN * 5);
         return Promise.resolve(obj);
     }
 
     public async findCoinTodayBySymbol(symbol: string) {
-        const idMap = await this.symbolToIdentifier([symbol]);
-        return await this.findCoinToday(idMap[symbol]);
+        const idMap = await this.symbolToIdentifier([symbol.toLowerCase()]);
+        return await this.findCoinToday(idMap[symbol.toLowerCase()]);
     }
 
     public async symbolToIdentifier(symbols: string[]): Promise<any> {

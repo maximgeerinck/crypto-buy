@@ -74,7 +74,7 @@ function getClientEnvironment(publicUrl) {
                 // images into the `src` and `import` them in code to get their paths.
                 PUBLIC_URL: publicUrl,
                 SERVICE_URL: DEVELOPMENT
-                    ? "http://192.168.1.5:5000/"
+                    ? "http://192.168.1.25:5000/"
                     : "https://api.cryptotrackr.com/",
             },
     );

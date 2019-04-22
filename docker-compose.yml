@@ -1,31 +1,30 @@
-version: '2'
+version: "2"
 services:
-  mongo:
-    image: mongo
-    volumes:
-      - volume_database:/data/db
-    ports: ["127.0.0.1:27017:27017"]
-    environment:
-      - MONGO_PORT_27017_TCP_ADDR=127.0.0.1
-  app:
-    build:
-      context: ./backend
-    ports: ["5000:5000"]
-    depends_on: ["mongo"]
-    environment: [ "NODE_ENV=production" ]   
+    mongo:
+        image: mongo
+        volumes:
+            - volume_database:/data/db
+        ports: ["127.0.0.1:27017:27017"]
+        environment:
+            - MONGO_PORT_27017_TCP_ADDR=127.0.0.1
+    app:
+        build:
+            context: ./backend
+        ports: ["5000:5000"]
+        depends_on: ["mongo"]
+        environment: ["NODE_ENV=production"]
 
-  frontend:
-    build:
-      context: ./frontend      
-    ports: ["3000:5000"]
-    environment: ["NODE_ENV=production"]
+    frontend:
+        build:
+            context: ./frontend
+        ports: ["3000:5000"]
+        environment: ["NODE_ENV=production"]
 
-  redis:
-    image: redis
-    restart: always
-    ports: ["6379:6379"]
-
+    redis:
+        image: redis
+        restart: always
+        ports: ["6379:6379"]
 
 volumes:
-  volume_database:
-    external: true
+    volume_database:
+        external: true

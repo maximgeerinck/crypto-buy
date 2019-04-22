@@ -10,7 +10,7 @@ import CoinImageTask from "./tasks/CoinImageTask";
 import TaskRepository from "./tasks/TaskRepository";
 
 // connect mongodb
-mongoose.connect(URI, { useNewUrlParser: true, keepAlive: 1 });
+mongoose.connect(URI, { useNewUrlParser: true, keepAlive: true });
 
 // start tasks
 new CurrencyTask().start();

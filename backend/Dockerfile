@@ -1,5 +1,4 @@
-# image built on official nodejs v6
-FROM node:latest
+FROM node:10.15.3
 MAINTAINER Maxim Geerinck <geerinck.maxim@gmail.com>
 
 # Install yarn

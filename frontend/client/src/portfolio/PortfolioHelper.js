@@ -87,6 +87,7 @@ export const portfolioItemView = (portfolioItem, currency, currencies) => {
         history: portfolioItem.market.history,
         symbol: portfolioItem.market.symbol,
         boughtCurrency: currencies[portfolioItem.currency || "USD"],
+        image: portfolioItem.market.image,
         _id: portfolioItem._id,
     };
 
@@ -95,14 +96,19 @@ export const portfolioItemView = (portfolioItem, currency, currencies) => {
     }
 
     const netWorth = view.price * view.amount;
-    const profit =
+    if (!portfolioItem.boughtPrice || isNaN(portfolioItem.boughtPrice)) {
+        portfolioItem.boughtPrice = 0;
+    }
+    let profit =
         (portfolioItem.market.price - portfolioItem.boughtPrice * view.boughtCurrency.rate) *
         portfolioItem.amount *
         currency.rate;
 
     view.netWorth = CurrencyHelper.format(currency.symbolFormat, MathHelper.round(netWorth, 2));
     view.profit = CurrencyHelper.format(currency.symbolFormat, MathHelper.round(profit, 2));
-    view.profitInPercent = MathHelper.round(MathHelper.gained(netWorth - profit, netWorth), 2);
+
+    const gained = MathHelper.gained(netWorth - profit, netWorth);
+    view.profitInPercent = MathHelper.round(gained, 2);
     if (view.paid === 0) {
         view.profitInPercent = MathHelper.round(view.changes.percentHour, 2);
     }

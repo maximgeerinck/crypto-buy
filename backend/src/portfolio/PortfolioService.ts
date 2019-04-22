@@ -10,7 +10,6 @@ export const key = (userId: any) => `portfolio/aggregate/${userId}`;
 
 class PortfolioService {
     public async aggregatePortfolio(user: DomainUser): Promise<UserCoin[]> {
-
         const cacheResult = await CacheHelper.get(key(user.id));
         if (cacheResult) {
             return cacheResult;
@@ -19,15 +18,20 @@ class PortfolioService {
         const portfolio = user.portfolio;
 
         try {
-            if (user.preferences.exchanges && user.preferences.exchanges.bittrex
-                && user.preferences.exchanges.bittrex.apiKey && user.preferences.exchanges.bittrex.apiSecret) {
-
+            if (
+                user.preferences.exchanges &&
+                user.preferences.exchanges.bittrex &&
+                user.preferences.exchanges.bittrex.apiKey &&
+                user.preferences.exchanges.bittrex.apiSecret
+            ) {
                 const bittrexSettings = user.preferences.exchanges.bittrex;
-                const bittrexExchange = new BittrexExchange(bittrexSettings.apiKey, bittrexSettings.apiSecret);
-                const balance = await bittrexExchange.balance() || [];
+                const bittrexExchange = new BittrexExchange(
+                    bittrexSettings.apiKey,
+                    bittrexSettings.apiSecret,
+                );
+                const balance = (await bittrexExchange.balance()) || [];
 
                 for (const coin of balance) {
-
                     if (coin.Balance <= 0.000001) {
                         continue;
                     }
@@ -36,28 +40,32 @@ class PortfolioService {
                         console.log(`could not find ${coin.Currency}`);
                         continue;
                     }
-                    portfolio.push(new UserCoin(coinDetails.coinId,
-                        coin.Balance,
-                        "bittrex.com",
-                        0,
-                        "BTC",
-                        new Date(),
-                        true
-                    ));
+                    portfolio.push(
+                        new UserCoin(
+                            coinDetails.coinId,
+                            coin.Balance,
+                            "bittrex.com",
+                            0,
+                            "BTC",
+                            new Date(),
+                            true,
+                        ),
+                    );
                 }
             }
             CacheHelper.cache(key(user.id), portfolio, CacheHelper.TEN_MIN);
             return portfolio;
         } catch (ex) {
             if (ex.statusCode === 503) {
-                console.log("[Bittrex] Service unavailable, most likely wrong api key " + ex.options.url);
+                console.log(
+                    "[Bittrex] Service unavailable, most likely wrong api key " + ex.options.url,
+                );
             } else {
                 console.log(ex);
             }
             CacheHelper.cache(key(user.id), portfolio, CacheHelper.TEN_MIN);
             return portfolio;
         }
-
     }
 }
 

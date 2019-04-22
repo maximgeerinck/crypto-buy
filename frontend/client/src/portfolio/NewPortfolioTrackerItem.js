@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import cx from "classnames";
 import Loader from "../components/Loader";
-import { getCoinImage } from "../helpers/CoinHelper";
 import FontAwesome from "react-fontawesome";
 import itemStyles from "./portfolioTrackerItem.scss";
 
@@ -124,24 +123,24 @@ class PortfolioTrackerItem extends Component {
 
     renderChange() {
         const { changeHour, changeDay, changeWeek } = this.props;
-        const classChangeHour = changeHour >= 0 ? itemStyles.positive : itemStyles.negative;
+        // const classChangeHour = changeHour >= 0 ? itemStyles.positive : itemStyles.negative;
         const classChangeDay = changeDay >= 0 ? itemStyles.positive : itemStyles.negative;
-        const classChangeWeek = changeWeek >= 0 ? itemStyles.positive : itemStyles.negative;
+        // const classChangeWeek = changeWeek >= 0 ? itemStyles.positive : itemStyles.negative;
 
         return (
             <ul className={itemStyles.change}>
-                <li className={classChangeHour}>
+                {/* <li className={classChangeHour}>
                     <span className={itemStyles.changeType}>H</span>
-                    <span>{changeHour}%</span>
-                </li>
+                    <span>{round(changeHour, 2)}%</span>
+                </li> */}
                 <li className={classChangeDay}>
                     <span className={itemStyles.changeType}>D</span>
-                    <span>{changeDay}%</span>
+                    <span>{round(changeDay, 2)}%</span>
                 </li>
-                <li className={classChangeWeek}>
+                {/* <li className={classChangeWeek}>
                     <span className={itemStyles.changeType}>W</span>
-                    <span>{changeWeek}%</span>
-                </li>
+                    <span>{round(changeWeek, 2)}%</span>
+                </li> */}
             </ul>
         );
     }
@@ -241,7 +240,7 @@ class PortfolioTrackerItem extends Component {
     }
 
     render() {
-        const { name, id, settings, currency, price } = this.props;
+        const { name, settings, currency, price, image } = this.props;
 
         const loader = this.props.isUpdating ? (
             <Loader className={itemStyles.loader} color="#848484" />
@@ -263,7 +262,7 @@ class PortfolioTrackerItem extends Component {
             <div className={itemStyles.portfolioItem}>
                 {loader}
                 <div className={itemStyles.heading}>
-                    <img src={getCoinImage(id)} alt="Coin" />
+                    <img src={image} alt="Coin" className={itemStyles.coinIcon} />
                     <h2>
                         {name}
                         <span

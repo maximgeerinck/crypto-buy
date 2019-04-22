@@ -2,59 +2,65 @@ import * as moment from "moment";
 import * as schedule from "node-schedule";
 import * as request from "superagent";
 import { Coin } from "../coin/Coin";
-import CoinRepository, { CACHE_COINS_TODAY, cacheKeyCoin } from "../coin/CoinRepository";
+import CoinRepository, { CACHE_COINS_TODAY } from "../coin/CoinRepository";
 import mongoose from "../db";
 import * as CacheHelper from "../utils/CacheHelper";
+import { batch } from "../utils/DownloadHelper";
 
 // get data
 // const API = "https://coinmarketcap-nexuist.rhcloud.com/api";
-const API = "https://api.coinmarketcap.com/v1/";
-const ETH_ENDPOINT = API + "/ticker?limit=10000";
+// const API = "https://api.coinmarketcap.com/v1/";
+// const ETH_ENDPOINT = API + "/ticker?limit=10000";
+
+const composeApi = (page: number) =>
+    `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&page=${page}`;
 
 export const fetchPrice = async () => {
+    const response = await request.get("https://api.coingecko.com/api/v3/coins/list");
+    const amountOfCoins = response.body.length;
 
-    console.time("FETCH_PRICE");
-    const response = await request.get(ETH_ENDPOINT);
-    console.timeEnd("FETCH_PRICE");
-
-    console.time("map");
+    const pages = amountOfCoins / 100;
+    const pricePromises: any = [];
     const responseCoinMap: any = {};
 
-//     FETCH_PRICE: 343.379ms
-//     map: 4.316ms
-//     existing: 107.632ms
-    for (const coin of response.body) {
-        const coinObject = new Coin(coin.id, coin.name, coin.symbol);
-        coinObject.rank = Number(coin.rank);
-        coinObject.history = [{
-            timestamp: new Date(),
-            btc: Number(coin.price_btc),
-            usd: Number(coin.price_usd),
-            change: {
-                percentHour: coin.percent_change_1h,
-                percentDay: coin.percent_change_24h,
-                percentWeek: coin.percent_change_7d
+    for (let i = 1; i <= pages; i++) {
+        pricePromises.push(async () => {
+            const res = await request.get(composeApi(i));
+
+            if (res.status !== 200) {
+                return;
             }
-        }];
-        coinObject.volume = coin["24h_volume_usd"];
-        coinObject.marketCap = Number(coin.market_cap_usd);
-        coinObject.supply = {
-            total: Number(coin.total_supply),
-            available: Number(coin.available_supply)
-        };
-        coinObject.timestamp = coin.timestamp;
-        responseCoinMap[coin.id] = coinObject;
+
+            for (const coin of res.body) {
+                const coinObject = new Coin(coin.id, coin.name, coin.symbol);
+                coinObject.image = coin.image;
+                coinObject.rank = Number(coin.market_cap_rank);
+                coinObject.history = [
+                    {
+                        timestamp: new Date(),
+                        usd: Number(coin.current_price),
+                        change: {
+                            percentDay: coin.price_change_percentage_24h,
+                        },
+                    },
+                ];
+                coinObject.marketCap = Number(coin.market_cap);
+                coinObject.supply = {
+                    total: Number(coin.total_supply),
+                    available: Number(coin.circulating_supply),
+                };
+                coinObject.timestamp = coin.last_updated;
+                responseCoinMap[coin.id] = coinObject;
+            }
+        });
     }
 
-    console.timeEnd("map");
+    await batch(pricePromises, 5, 500);
 
     // check if record for today exists, then append it (can be random)
-    console.time("existing");
     CacheHelper.invalidate(CACHE_COINS_TODAY);
     const existingCoins: any[] = await CoinRepository.existingCoinToday();
-    console.timeEnd("existing");
 
-    // console.log(existingCoins);
     if (!existingCoins || !existingCoins.length) {
         const array = Object.keys(responseCoinMap).map((key: string) => responseCoinMap[key]);
         CoinRepository.createMany(array);
@@ -66,7 +72,6 @@ export const fetchPrice = async () => {
             } else {
                 console.log(`Coin doesn't exist: ${coin.coinId}`);
             }
-
         }
     }
 

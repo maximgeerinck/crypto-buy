@@ -30,7 +30,7 @@ export default class UserCoin extends AbstractModel implements IUserCoin {
             userCoin.currency,
             userCoin.bought_at,
             false,
-            userCoin._id
+            userCoin._id,
         );
         return userCoinObj;
     }
@@ -44,7 +44,7 @@ export default class UserCoin extends AbstractModel implements IUserCoin {
             userCoin.currency,
             userCoin.boughtAt,
             userCoin.automatic || false,
-            userCoin.id
+            userCoin.id,
         );
         return userCoinObj;
     }
@@ -64,7 +64,7 @@ export default class UserCoin extends AbstractModel implements IUserCoin {
         currency: string,
         boughtAt: Date = null,
         readonly automatic: boolean = false,
-        readonly id: mongoose.Types.ObjectId = new mongoose.Types.ObjectId()
+        readonly id: mongoose.Types.ObjectId = new mongoose.Types.ObjectId(),
     ) {
         super();
         this.coinId = coinId;
@@ -82,7 +82,7 @@ export default class UserCoin extends AbstractModel implements IUserCoin {
             amount: this.amount,
             source: this.source,
             currency: this.currency,
-            bought_price: this.boughtPrice
+            bought_price: this.boughtPrice,
         };
 
         if (this.boughtAt) {

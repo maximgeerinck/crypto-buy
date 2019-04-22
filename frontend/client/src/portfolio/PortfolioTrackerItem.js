@@ -149,7 +149,7 @@ class PortfolioTrackerItem extends Component {
         const { boughtCurrency, boughtPrice, amount, price, changeDay, settings } = this.props;
 
         // in USD
-        const boughtAllCoinsPrice = boughtPrice / boughtCurrency.rate * amount;
+        const boughtAllCoinsPrice = (boughtPrice / boughtCurrency.rate) * amount;
         const currentAllCoinsPrice = price * amount;
 
         // const changeTotal = boughtPrice ? gained(boughtAllCoinsPrice, currentAllCoinsPrice) : changeDay;
@@ -172,8 +172,7 @@ class PortfolioTrackerItem extends Component {
         return (
             <div className={classChangeTotal}>
                 <div className={styles.percentage}>
-                    {round(changeTotal, 2)}%
-                    {priceChangeIndicator}
+                    {round(changeTotal, 2)}%{priceChangeIndicator}
                 </div>
                 {coinProfitDisplay}
             </div>
@@ -205,7 +204,7 @@ class PortfolioTrackerItem extends Component {
     }
 
     render() {
-        const { name, symbol, id, settings } = this.props;
+        const { name, symbol, settings, image } = this.props;
 
         const loader = this.props.isUpdating ? (
             <Loader className={styles.loader} color="#848484" />
@@ -227,7 +226,7 @@ class PortfolioTrackerItem extends Component {
                 {loader}
                 <div className={styles.details}>
                     <h2>
-                        <img src={getCoinImage(id)} alt="Coin" /> {name} ({symbol})
+                        <img src={image} alt="Coin" /> {name} ({symbol})
                     </h2>
                     {statistics}
                     {prices}

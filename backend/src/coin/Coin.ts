@@ -8,9 +8,9 @@ export interface ISupply {
 }
 
 export interface IChange {
-    percentHour: number;
-    percentDay: number;
-    percentWeek: number;
+    percentHour?: number;
+    percentDay?: number;
+    percentWeek?: number;
 }
 
 export interface IChangeDAO {
@@ -19,7 +19,7 @@ export interface IChangeDAO {
     percent_7d: number;
 }
 export interface IHistoryEntry {
-    btc: number;
+    btc?: number;
     usd: number;
     timestamp: Date;
     change: IChange;
@@ -28,6 +28,7 @@ export interface IHistoryEntry {
 export interface ICoin {
     id: any;
     coinId: string;
+    image?: string;
     name: string;
     symbol: string;
     rank: number;
@@ -52,6 +53,9 @@ export class Coin extends AbstractModel implements ICoin {
         coin.marketCap = coinDAO.marketCap;
         coin.supply = coinDAO.supply;
         coin.history = coinDAO.history;
+        if (coinDAO.image) {
+            coin.image = coinDAO.image;
+        }
         return coin;
     }
 
@@ -62,6 +66,7 @@ export class Coin extends AbstractModel implements ICoin {
     public change: IChange;
     public timestamp: number;
     public history: IHistoryEntry[];
+    public image: string;
 
     constructor(
         readonly coinId: string,
@@ -83,6 +88,7 @@ export const CoinSchema = new Schema(
             usd: { type: Number },
             btc: { type: Number },
         },
+        image: { type: String },
         marketCap: { type: Number },
         supply: {
             available: { type: Number },
