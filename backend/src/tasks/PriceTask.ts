@@ -67,11 +67,14 @@ export const fetchPrice = async () => {
     } else {
         for (const coin of existingCoins) {
             const c = responseCoinMap[coin.coinId];
-            if (c) {
+            if (c !== undefined) {
                 CoinRepository.addHistoryEntry(coin._id, { ...c.history[0] });
-            } else {
-                console.log(`Coin doesn't exist: ${coin.coinId}`);
+                delete responseCoinMap[coin.coinId];
             }
+        }
+
+        for (const coinKey of Object.keys(responseCoinMap)) {
+            CoinRepository.create(responseCoinMap[coinKey]);
         }
     }
 

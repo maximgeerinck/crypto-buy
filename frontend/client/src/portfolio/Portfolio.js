@@ -26,19 +26,24 @@ class Portfolio extends Component {
     renderCoins(automatic) {
         const coins = this.props.portfolio.coins.get("items");
 
-        return coins.filter(coin => coin.automatic === automatic).map((i, key) => {
-            const validationErrors = this.props.portfolio.coins.get("validationErrors")[key];
-            return (
-                <PortfolioItem
-                    coin={i}
-                    details={this.props.coins.coins.toObject()[i.coinId]}
-                    onEdit={coin => this.props.portfolioActions.updateCoin(key, coin)}
-                    onDelete={!automatic ? () => this.onDelete(i.id) : undefined}
-                    validationErrors={validationErrors}
-                    editMode={false}
-                />
-            );
-        });
+        console.log(coins["iota"]);
+        console.log(coins["ethereum"]);
+        console.log(this.props.coins.coins.toObject());
+        return coins
+            .filter(coin => coin.automatic === automatic)
+            .map((i, key) => {
+                const validationErrors = this.props.portfolio.coins.get("validationErrors")[key];
+                return (
+                    <PortfolioItem
+                        coin={i}
+                        details={this.props.coins.coins.toObject()[i.coinId]}
+                        onEdit={coin => this.props.portfolioActions.updateCoin(key, coin)}
+                        onDelete={!automatic ? () => this.onDelete(i.id) : undefined}
+                        validationErrors={validationErrors}
+                        editMode={false}
+                    />
+                );
+            });
     }
 
     renderNonAutomatic() {
@@ -56,7 +61,7 @@ class Portfolio extends Component {
         const components = [];
 
         // non automatic containers
-        components.push(this.renderNonAutomatic());
+        components.push(...this.renderNonAutomatic());
 
         // render automatic containers
         const automaticComponents = this.renderAutomatic();
@@ -68,7 +73,9 @@ class Portfolio extends Component {
                 </div>,
             );
         }
-        return <ul className={styles.portfolio}>{components}</ul>;
+
+        console.log(components);
+        return <ul className={styles.portfolio}>HI{components}</ul>;
     }
 }
 
@@ -84,4 +91,7 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Portfolio);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(Portfolio);

@@ -49,6 +49,7 @@ class PortfolioItem extends Component {
         const { validationErrors, details } = this.props;
         const { coin, editMode } = this.state;
 
+        console.log(this.props);
         if (!details) {
             return <div />;
         }

@@ -42,14 +42,14 @@ class CoinRepository extends MongoRepository<Coin> {
     }
 
     public async findCoinToday(coinId: string) {
+        if (coinId === undefined) {
+            return Promise.reject();
+        }
+
         const cachedCoin = await CacheHelper.get(cacheKeyCoin(coinId));
         if (cachedCoin) {
             return Promise.resolve(cachedCoin);
         }
-
-        // find coin and cache
-        const start = moment().startOf("day");
-        const end = moment().endOf("day");
 
         // monkey patch
         switch (coinId.toLowerCase()) {
@@ -58,9 +58,7 @@ class CoinRepository extends MongoRepository<Coin> {
                 break;
         }
 
-        const dao = await this.model
-            .findOne({ coinId, created_on: { $gte: start, $lt: end } }, { history: { $slice: -3 } })
-            .lean();
+        const dao = await this.model.findOne({ coinId }, { history: { $slice: -3 } }).lean();
 
         const obj = this.parse(dao);
         if (!obj) {
@@ -77,7 +75,7 @@ class CoinRepository extends MongoRepository<Coin> {
                 break;
         }
 
-        CacheHelper.cache(cacheKeyCoin(coinId), obj, CacheHelper.MIN * 5);
+        CacheHelper.cache(cacheKeyCoin(coinId), obj, CacheHelper.TEN_MIN);
         return Promise.resolve(obj);
     }
 
@@ -109,11 +107,8 @@ class CoinRepository extends MongoRepository<Coin> {
             return Promise.resolve(coinsToday);
         }
 
-        const start = moment().startOf("day");
-        const end = moment().endOf("day");
-        const self = this;
         const daos = await this.model
-            .find({ created_on: { $gte: start, $lt: end } })
+            .find({}, { history: { $slice: -3 } })
             .select("coinId _id name symbol");
         // const objs = daos.map((dao: any) => self.parse(dao));
         CacheHelper.cache(CACHE_COINS_TODAY, daos, CacheHelper.MIN * 2);
@@ -169,9 +164,6 @@ class CoinRepository extends MongoRepository<Coin> {
             return Promise.resolve(coins);
         }
 
-        const end = moment();
-        const start = moment().subtract("7", "days");
-
         return this.model
             .aggregate([
                 {
@@ -180,10 +172,8 @@ class CoinRepository extends MongoRepository<Coin> {
                             $avg: "$history.usd",
                         },
                         coinId: "$coinId",
-                        created_on: "$created_on",
                     },
                 },
-                { $match: { created_on: { $gt: start.toDate(), $lt: end.toDate() } } },
                 {
                     $group: {
                         _id: {

@@ -14,7 +14,6 @@ class PortfolioService {
         if (cacheResult) {
             return cacheResult;
         }
-
         const portfolio = user.portfolio;
 
         try {
@@ -35,7 +34,9 @@ class PortfolioService {
                     if (coin.Balance <= 0.000001) {
                         continue;
                     }
+
                     const coinDetails = await CoinRepository.findCoinTodayBySymbol(coin.Currency);
+
                     if (!coinDetails) {
                         console.log(`could not find ${coin.Currency}`);
                         continue;
